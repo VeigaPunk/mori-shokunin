@@ -196,8 +196,8 @@ def selfcheck(scratch):
             "SURFACE watchdog: pid=1 state=ok\n"
             "FINDING OOM_KILL_JOURNAL severity=crit paths=a\n"
             "lane.mori fields=1\nMORI_CENSUS: DRIFT (findings=0 drift=0)\n")
-    stub = ("#!/bin/sh\nprintf 'MORI_DRIFT: +SURFACE:lane.new +audit fields +VERDICT\\n'\n"
-            "exit 1\n")
+    stub_body = ("#!/bin/sh\necho 'MORI_DRIFT: +SURFACE:lane.new +audit fields +VERDICT'\n"
+                 "exit 1\n")
     good = {
         "+SURFACE:lane.new": "added-since-r10",
         "+audit": "added-since-r10",
@@ -212,9 +212,11 @@ def selfcheck(scratch):
         "baseline-r10-20261015T2231Z.json fully classified at "
         "corpus/evidence/drift-classification-r82.txt | 82 |\n")
 
-    def build(label, classes, cards=cards_clean, rc=1):
+    def build(label, classes, cards=cards_clean, rc=1, stub=None):
         d = tempfile.mkdtemp(dir=scratch, prefix="c2-" + label + "-")
-        for name, body in ((CENSUS, stub), (BASELINE, base), (CARDS, cards)):
+        census_body = stub if stub is not None else (
+            stub_body if rc == 1 else "#!/bin/sh\necho 'MORI_DRIFT: none'\nexit 0\n")
+        for name, body in ((CENSUS, census_body), (BASELINE, base), (CARDS, cards)):
             target = os.path.join(d, name)
             os.makedirs(os.path.dirname(target), exist_ok=True)
             open(target, "w", encoding="utf-8").write(body)
@@ -222,7 +224,7 @@ def selfcheck(scratch):
             target = os.path.join(d, CLASSES)
             os.makedirs(os.path.dirname(target), exist_ok=True)
             open(target, "w", encoding="utf-8").write(classes)
-        if rc != 1:
+        if rc != 1 and stub is None:
             open(os.path.join(d, CENSUS), "w", encoding="utf-8").write(
                 "#!/bin/sh\nprintf 'MORI_DRIFT: none\\n'\nexit 0\n")
         loader = lambda path: (open(os.path.join(d, path), encoding="utf-8").read()
@@ -261,6 +263,56 @@ def selfcheck(scratch):
                   tail))
     met, tail, _ = build("noclass", None)
     cases.append(("classification_file_absent", not met, tail))
+    # r83 arms
+    dup2 = text(good) + "DRIFT_CLASS +audit added-since-r10\n"
+    met, tail, _ = build("dupline", dup2)
+    cases.append(("duplicate_line_residual", (not met) and "residual=1" in tail, tail))
+    no_path = cards_clean.replace("drift-classification-r82.txt | 82 |",
+                                  "other-evidence.txt | 82 |")
+    met, tail, _ = build("nopath", text(good), cards=no_path)
+    cases.append(("retired_row_missing_path", (not met) and "retired=0" in tail, tail))
+    both = cards_clean.replace("r10 pin retired at",
+                               "r10 pin retired; round-10 drift pin still red; at")
+    met, tail, _ = build("bothlit", text(good), cards=both)
+    cases.append(("red_literal_under_retired", (not met) and "cell=0" in tail, tail))
+    gstub = ("#!/bin/sh\necho 'MORI_DRIFT: +SURFACE:lane.new +audit fields"
+             " +VERDICT'\nexit 0\n")
+    met, tail, notes = build("greenrc", text(good), rc=0, stub=gstub)
+    cases.append(("green_rc_with_tokens",
+                  (not met) and any("census-rc:0" in n for n in notes) and "tokens=4" in tail,
+                  tail))
+    fbase = base + "FINDING OOM_KILL_JOURNAL severity=crit paths=a\n"
+    fstub = ("#!/bin/sh\necho 'MORI_DRIFT: +FINDING:OOM_KILL_JOURNAL"
+             " +FINDING:NOT_IN_BASELINE'\nexit 1\n")
+    fgood = {"+FINDING:OOM_KILL_JOURNAL": "value-changed",
+             "+FINDING:NOT_IN_BASELINE": "added-since-r10"}
+    d = tempfile.mkdtemp(dir=scratch, prefix="c2-find-")
+    for name, body in ((CENSUS, fstub), (BASELINE, fbase), (CARDS, cards_clean),
+                       (CLASSES, text(fgood))):
+        target = os.path.join(d, name)
+        os.makedirs(os.path.dirname(target), exist_ok=True)
+        open(target, "w", encoding="utf-8").write(body)
+    loader2 = lambda path: (open(os.path.join(d, path), encoding="utf-8").read()
+                            if os.path.exists(os.path.join(d, path)) else None)
+    met, tail, _ = grade(loader2, scratch, d)
+    cases.append(("finding_branch", met and "agreed=2" in tail, tail))
+    mal = text(good) + "DRIFT_CLASS broken line\n"
+    met, tail, _ = build("malformed", mal)
+    cases.append(("malformed_line_in_residual", (not met) and "residual=1" in tail, tail))
+    ks = {"+SURFACE:lane.new": "added-since-r10", "lane.mori": "value-changed",
+          "+audit": "added-since-r10", "fields": "value-changed", "+VERDICT": "value-changed"}
+    ksstub = ("#!/bin/sh\necho 'MORI_DRIFT: +SURFACE:lane.new lane.mori +audit fields"
+              " +VERDICT'\nexit 1\n")
+    d2 = tempfile.mkdtemp(dir=scratch, prefix="c2-keyshape-")
+    for name, body in ((CENSUS, ksstub), (BASELINE, base), (CARDS, cards_clean),
+                       (CLASSES, text(ks))):
+        target = os.path.join(d2, name)
+        os.makedirs(os.path.dirname(target), exist_ok=True)
+        open(target, "w", encoding="utf-8").write(body)
+    loader3 = lambda path: (open(os.path.join(d2, path), encoding="utf-8").read()
+                            if os.path.exists(os.path.join(d2, path)) else None)
+    met, tail, _ = grade(loader3, scratch, d2)
+    cases.append(("keyshape_anything_else", met and "tokens=5" in tail, tail))
     ok = sum(1 for _, good_case, _ in cases if good_case)
     for label, good_case, line in cases:
         print(f"{'PASS' if good_case else 'FAIL'} {label} {line}")

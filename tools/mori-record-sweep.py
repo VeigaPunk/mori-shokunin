@@ -116,6 +116,12 @@ def contains_value(text, key, value):
     return re.search(r'(?<![\w.-])%s(?![\w.-])' % re.escape(token), text) is not None
 
 
+def contains_anchored(text, row_contains, key, value):
+    """ANCHORED_OCCURRENCE: the value must sit on a line that carries the row anchor."""
+    return any(row_contains in line and contains_value(line, key, value)
+               for line in text.splitlines())
+
+
 def revision_sweep(texts, bindings, git_reader):
     """Grade each binding in order, reporting its first failed requirement."""
     findings = []
@@ -137,7 +143,8 @@ def revision_sweep(texts, bindings, git_reader):
                 rc, blob = git_reader(['show', commit.strip() + ':' + binding['path']])
                 if rc != 0:
                     detail = 'path-absent'
-                elif not contains_value(blob, binding['key'], binding['value']):
+                elif not contains_anchored(blob, binding['row_contains'],
+                                           binding['key'], binding['value']):
                     detail = 'rev-bytes'
                 else:
                     continue
@@ -250,7 +257,8 @@ def selftest():
     revision = dict(carrier='SCORECARD.md', row_contains='tool', key='pointers',
                     value=240, rev='A', path='SCORECARD.md')
 
-    def revision_case(rows, revisions, resolved=True, present=True, blob='pointers=240'):
+    def revision_case(rows, revisions, resolved=True, present=True,
+                      blob='| tool pointers=240 |'):
         calls = []
 
         def git_reader(command):
@@ -267,7 +275,7 @@ def selftest():
     check('revision-conformant', not found and calls == [
         ['rev-parse', '--verify', '--end-of-options', 'A^{commit}'],
         ['show', 'commit-a:SCORECARD.md']])
-    found, _ = revision_case(row, [revision], blob='pointers=237')
+    found, _ = revision_case(row, [revision], blob='| tool pointers=237 |')
     check('revision-D81-1', found == [('revision', 'SCORECARD.md', 1, 'rev-bytes')])
     found, calls = revision_case(row, [revision], resolved=False)
     check('revision-unresolvable', found == [
@@ -292,6 +300,16 @@ def selftest():
     revision_json = json.dumps({'revisions': [revision]})
     check('revision-only-pins', parse_pins(revision_json) == []
           and parse_revisions(revision_json) == [revision])
+    # r83 anchored-occurrence arms
+    check('anchored-occurrence',
+          contains_anchored('| Row A | x | row_tally=19 | 80 |', 'Row A', 'row_tally', 19))
+    check('elsewhere-line-only',
+          not contains_anchored('| Row A | x | row_tally=18 |\n| Note | y | row_tally=19 |',
+                                'Row A', 'row_tally', 19))
+    check('anchor-absent',
+          not contains_anchored('| Other | x | row_tally=19 |', 'Row A', 'row_tally', 19))
+    check('anchored-token-boundary',
+          not contains_anchored('| Row A | x | row_tally=190 |', 'Row A', 'row_tally', 19))
     print('RECORD_SWEEP_SELFTEST pass=%d fail=%d' % (passed, failed))
     return int(bool(failed))
 

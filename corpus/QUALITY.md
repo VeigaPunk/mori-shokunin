@@ -1830,3 +1830,22 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
      unrelated line from the graded one, cannot re-run the command that produced the
      value, and grades only the bindings the lane registers. Ground: SCORECARD round-81
      correction D81-1 and `corpus/lessons/round-81-verifier-spotcheck.md`.
+
+169. A revision-arm occurrence test scopes its match to the line carrying the
+     binding's row anchor: the `key=value` token and the binding's `row_contains`
+     string must occur on one and the same line of `git show <rev>:<path>`. A
+     value that occurs only on an unrelated line of the same file is
+     `REVISION_MISMATCH <carrier>:<line> rev-bytes`, never a pass.
+     Ground: QUALITY 168's own named limit ("cannot tell a coincidental
+     occurrence of `key=value` in an unrelated line from the graded one"),
+     closed from round 83 by the anchored arm in `tools/mori-record-sweep.py`
+     (marker `ANCHORED_OCCURRENCE`) and graded by
+     `.ufo/waves/round-83/count-c3.py`'s `elsewhere` fixture.
+     Shown able to fail: the same fixture (carrier row states `row_tally=19`,
+     the bound revision's anchored row states `row_tally=18`, and `row_tally=19`
+     appears only on an unrelated note row) makes the r82 tool print
+     `RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=1 revisions=0`, rc 0,
+     while the anchored arm must report `REVISION_MISMATCH ... rev-bytes`.
+     Not covered: a `row_contains` that is a substring of another row's text
+     selects the first such row as the anchor; values split across lines and
+     non-numeric tokens are outside the binding grammar.

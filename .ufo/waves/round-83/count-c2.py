@@ -43,6 +43,7 @@ CLASS_LINE = re.compile(r"^DRIFT_CLASS\s+(\S+)\s+(\S+)\s*$")
 DRIFT = re.compile(r"^MORI_DRIFT:\s*(.*)$")
 KEY = re.compile(r"(?:^|\s)([A-Za-z0-9_]+)=")
 KEYSHAPE = re.compile(r"^[A-Za-z0-9_]+$")
+FROZEN_SNAPSHOT = ".ufo/waves/round-82/evidence/drift-r82-live.txt"
 SNAP_LINE = re.compile(r"^#\s*Snapshot:\s*(\S+)\s*$")
 SNAP_SHA = re.compile(r"^#\s*Snapshot-sha256:\s*([0-9a-f]{64})\s*$")
 ASOF = re.compile(r"^#\s*As-of:\s*(\S+)\s*$")
@@ -94,22 +95,33 @@ def classifications(text):
 
 
 def header(text):
-    """The provenance block: snapshot path, its sha256 and the as-of moment."""
+    """The provenance block: snapshot path, its sha256 and the as-of moment.
+
+    R02 repair (pre-data): each line must occur exactly once, and the path must be the frozen
+    snapshot. A duplicate line would make the receipt true under one reading and false under
+    another, which the frozen sentence ("exactly one each") forbids.
+    """
     snap, digest, asof = None, None, None
+    seen = {"snap": 0, "sha": 0, "asof": 0}
     for line in text.splitlines():
         if not line.startswith("#"):
             break
         m = SNAP_LINE.match(line)
         if m:
+            seen["snap"] += 1
             snap = m.group(1)
             continue
         m = SNAP_SHA.match(line)
         if m:
+            seen["sha"] += 1
             digest = m.group(1)
             continue
         m = ASOF.match(line)
         if m:
+            seen["asof"] += 1
             asof = m.group(1)
+    if seen["snap"] != 1 or seen["sha"] != 1 or seen["asof"] != 1:
+        return None, None, None
     return snap, digest, asof
 
 
@@ -193,6 +205,9 @@ def grade(loader, scratch, fleet_root):
     snap_path, snap_sha, asof = header(classes)
     if snap_path is None:
         return False, "snapshot=absent tokens=0 agreed=0 residual=0 live=unavailable", []
+    if snap_path != FROZEN_SNAPSHOT:
+        return False, ("snapshot=unbound:path=%s tokens=0 agreed=0 residual=0 "
+                       "live=unavailable" % snap_path), []
     snapshot = loader(snap_path)
     if snapshot is None:
         return False, ("snapshot=unbound:snapshot-absent tokens=0 agreed=0 residual=0 "
@@ -353,6 +368,15 @@ def selfcheck(scratch):
     red_cards = cards_clean.replace("r10 pin retired", "round-10 drift pin still red")
     met, tail, _ = build("redcell", head, good, cards=red_cards)
     cases.append(("red_cell_keeps_unmet", (not met) and "live=derived" in tail, tail))
+    dup_head = head + "# Snapshot: .ufo/waves/round-82/evidence/drift-r82-live.txt\n"
+    met, tail, _ = build("duphead", dup_head, good)
+    cases.append(("duplicate_header_unmet", (not met) and "snapshot=absent" in tail, tail))
+    foreign = head.replace(".ufo/waves/round-82/evidence/drift-r82-live.txt",
+                           "corpus/evidence/other-snapshot.txt", 1)
+    met, tail, notes = build("foreign", foreign, good)
+    cases.append(("foreign_snapshot_path_unmet",
+                  (not met) and any("snapshot=unbound" in n for n in notes) is False
+                  and "snapshot=unbound" in tail, tail))
     ok = sum(1 for _, good_case, _ in cases if good_case)
     for label, good_case, line in cases:
         print("%s %s %s" % ("PASS" if good_case else "FAIL", label, line))

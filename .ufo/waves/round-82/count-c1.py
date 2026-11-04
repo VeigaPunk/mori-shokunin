@@ -175,6 +175,19 @@ def grade(loader, scratch, mutants=MUTANTS):
     return met, tail, lines, extras
 
 
+def detector_repo():
+    """Lane repo for the red-detector arm: the checkout this file lives in, else the
+    lane checkout under ~ — the arm also runs from scratch copies whose --selftest is
+    graded by a later counter (no --repo reaches them; those copies mirror the lane
+    layout but are not git checkouts, so the isfile probe alone is not enough)."""
+    here = os.path.abspath(os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+    if os.path.isfile(os.path.join(here, ".ufo", "waves", "round-82", "count-c1.py")):
+        if run(["git", "-C", here, "rev-parse", "--verify", "HEAD"]).returncode == 0:
+            return here
+    return os.path.expanduser(os.path.join("~", "Projects", "shokunin", "mori-shokunin"))
+
+
 def selfcheck(scratch):
     """Detector arms over synthetic selftest counters (no lane file is touched)."""
     cases = []
@@ -214,13 +227,106 @@ def selfcheck(scratch):
         disk, scratch, [("tools/dup.py", "twice", "GUARD = 1", "GUARD = 0"),
                         ("tools/dup.py", "second", "GUARD = 1", "GUARD = 2")])
     cases.append(("duplicate_anchor_excluded",
-                  "unanchored" in " ".join(extras) and "total=0" in tail, tail))
+                  (not met) and "unanchored" in " ".join(extras)
+                  and "total=0" in tail, tail))
     red = ("print('FAKE pass=0 fail=1')\nraise SystemExit(1)\n")
     write(d, "red.py", red, None)
     met, tail, lines, extras = grade(
         disk, scratch, [("tools/red.py", "self_red", "pass=0", "pass=0")])
     cases.append(("red_pristine_reported",
                   (not met) and "pristine=red" in tail, tail))
+    # green_ignores_fail_token: rc 0 while printing both fail=0 and a real fail=2 token
+    # must NOT read green — the pristine copy goes red, a green() without the FAIL clause
+    # would call it green and lose the arm.
+    liar = ("import sys\nGUARD = 1\n"
+            "print('FAKE pass=1 fail=0')\n"
+            "print('FAILTOKEN fail=2 probe')\n"
+            "sys.exit(0 if GUARD == 1 else 1)\n")
+    write(d, "liar.py", liar, None)
+    met, tail, lines, _ = grade(
+        disk, scratch, [("tools/liar.py", "liar_trip", "GUARD = 1", "GUARD = 0")])
+    cases.append(("pristine_fail_token_with_rc0",
+                  (not met) and "pristine=red" in tail,
+                  tail + " | " + ";".join(lines)))
+    # killed_ignores_rc: a mutant selftest that exits 1 printing no fail=<n> token
+    # (traceback shape) must still count killed; killed() may not lean on FAIL alone.
+    quiet = ("import sys\nGUARD = 1\n"
+             "print('FAKE pass=%d fail=0' % (1 if GUARD == 1 else 0))\n"
+             "sys.exit(0 if GUARD == 1 else 1)\n")
+    write(d, "quiet.py", quiet, None)
+    met, tail, _, _ = grade(
+        disk, scratch, [("tools/quiet.py", "quiet_trip", "GUARD = 1", "GUARD = 0")])
+    km = KILL_TOKEN.search(tail)
+    sm = SURVIVOR_TOKEN.search(tail)
+    cases.append(("rc_only_kill",
+                  met and km and sm and km.group(1) == "1" and sm.group(1) == "0", tail))
+    # ignore_pristine_red: a red pristine beside one really graded, really killed mutant
+    # must keep met False (the total=0 arm above cannot see the pristine clause).
+    met, tail, lines, _ = grade(
+        disk, scratch,
+        [("tools/red.py", "excuse_zero", "raise SystemExit(1)", "raise SystemExit(0)")])
+    cases.append(("red_pristine_with_real_mutant",
+                  (not met) and "pristine=red" in tail,
+                  tail + " | " + ";".join(lines)))
+    # accept_empty_population: a zero-mutant population with no disqualifying extras
+    # (no unanchored, no empty-mutation, green pristine) must stay unmet.
+    met, tail, _, extras = grade(disk, scratch, [])
+    cases.append(("empty_population_unmet",
+                  (not met) and "total=0" in tail and "pristine=green" in tail
+                  and not extras, tail))
+    # unanchored_excused: one anchor occurring twice beside a real killed mutant keeps
+    # met False — the kill alone must not carry the population.
+    met, tail, lines, extras = grade(
+        disk, scratch,
+        [("tools/dup.py", "twice", "GUARD = 1", "GUARD = 0"),
+         ("tools/sensitive.py", "trip_guard", "GUARD = 1", "GUARD = 0")])
+    cases.append(("unanchored_blocks_met",
+                  (not met) and "unanchored" in " ".join(extras),
+                  tail + " | " + ";".join(lines)))
+    # detector_gate_dropped: main's exit gate must honour the counter's own detector
+    # selftest. A copy of this counter whose ONLY change is a selftest summary printing
+    # fail=1 while still exiting 0, run in <rev> mode against the lane tip, must exit 1
+    # printing detector=red; a gate without own_ok would exit 0. Skipped inside the
+    # doctored copy itself (runtime-assembled marker in its own bytes) so the <rev> run's
+    # nested selftest does not recurse.
+    probe = "# doctored" + "-detector"
+    src = open(os.path.abspath(__file__), encoding="utf-8").read()
+    orig_line = ('print(f"C1_COUNTER_SELFTEST pass={ok} ' + 'fail={len(cases) - ok}")')
+    doct_line = ('print("C1_COUNTER_SELFTEST pass=%d fail=%d" % (ok, 1))  ' + probe)
+    detail, good = "arm-error unknown", False
+    if probe in src:
+        detail, good = "skipped-inside-doctored-copy", True
+    elif src.count(orig_line) != 1:
+        detail = "summary-print anchor not unique"
+    else:
+        repo = detector_repo()
+        top = run(["git", "-C", repo, "rev-parse", "--show-toplevel"])
+        repo = top.stdout.strip() if top.returncode == 0 else repo
+        tip = run(["git", "-C", repo, "rev-parse", "--verify", "HEAD"])
+        rev = tip.stdout.strip()
+        if not rev:
+            detail = "lane=unresolvable"
+        else:
+            work = tempfile.mkdtemp(dir=scratch)
+            env = dict(os.environ)
+            env.update(TMPDIR=work, GIT_CONFIG_GLOBAL=os.devnull,
+                       GIT_CONFIG_SYSTEM=os.devnull)
+            try:
+                doct = os.path.join(work, "doctored-count-c1.py")
+                open(doct, "w", encoding="utf-8").write(src.replace(orig_line, doct_line))
+                run_scratch = os.path.join(work, "run")
+                os.makedirs(run_scratch, exist_ok=True)
+                q = run(["python3", "-I", doct, rev, "--repo", repo,
+                         "--scratch", run_scratch], cwd=work, env=env, timeout=600)
+                out = (q.stdout or "") + (q.stderr or "")
+                detail = "doctored rc=%d detector-line=%s rev=%s" % (
+                    q.returncode, "detector=red" in out, rev[:12])
+                good = q.returncode == 1 and "detector=red" in out
+            except subprocess.TimeoutExpired:
+                detail = "doctored run timed out"
+            finally:
+                shutil.rmtree(work, ignore_errors=True)
+    cases.append(("red_detector_never_passes", good, detail))
     ok = sum(1 for _, good, _ in cases if good)
     for label, good, line in cases:
         print(f"{'PASS' if good else 'FAIL'} {label} {line}")

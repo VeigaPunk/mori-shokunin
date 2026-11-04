@@ -57,7 +57,7 @@ Round 2: land one note per surface family and the first watch receipts, and add 
 
 | Axis | Reason | Round |
 |---|---|---|
-| drift-pin-r10 | **r10 pin retired** as an *acceptance predicate*, never as evidence. The round-10 behavioural baseline of `tools/mori-census.sh` (`corpus/evidence/baseline-r10-20261015T2231Z.json`) predates 16 lane surfaces and nine finding ids the census has since adopted, so its red verdict is permanent by construction and cannot separate a behaviour change from census growth. The pin stays byte-unchanged and its red reading stays reproducible: `bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json` still exits 1. Replacement: a per-round derived classification of every live drift token at `corpus/evidence/drift-classification-r82.txt`, graded by `python3 -I .ufo/waves/round-82/count-c2.py <rev>`. Round-21's retained-evidence-loss blocker is untouched: no lifecycle closure, no disposition and no baseline acceptance is asserted here. | 82 |
+| drift-pin-r10 | **r10 pin retired** as an *acceptance predicate*, never as evidence. The round-10 behavioural baseline of `tools/mori-census.sh` (`corpus/evidence/baseline-r10-20261015T2231Z.json`) predates 16 lane surfaces and nine finding ids the census has since adopted, so its red verdict is permanent by construction and cannot separate a behaviour change from census growth. The pin stays byte-unchanged and its red reading stays reproducible: `bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json` still exits 1. Replacement: a per-round derived classification of every live drift token at `corpus/evidence/drift-classification-r82.txt`, bound to the committed raw snapshot `.ufo/waves/round-82/evidence/drift-r82-live.txt`, graded by `python3 -I .ufo/waves/round-82/count-c2.py <rev>`. Round-21's retained-evidence-loss blocker is untouched: no lifecycle closure, no disposition and no baseline acceptance is asserted here. | 82 |
 
 ## Round 2 — interactive cutover attempt (blocked, not completed)
 
@@ -4190,3 +4190,25 @@ uniqueness (C01). Predicates, kill rules and targets are byte-unchanged.
 3. **depth** — C3's occurrence test cannot tell a coincidental `key=value` in an unrelated line
    from the graded one: scope the occurrence to a line that also carries the binding's row anchor,
    and add the defeated shape for a value that occurs elsewhere in the same file.
+
+## Round-83 correction of record (D82-1 — record attribution)
+
+From `corpus/lessons/round-82-verifier-spotcheck.md` § "Routed defects the lane must fix next
+round", item 1. The Round-80 capabilities row (`Self-assessment claim sweep`, `SCORECARD.md:4038`)
+states `pointers=249` yet still ends "at this round's record commit `075574c8`". Measured
+2026-11-04 by wave seat Mo83E06D82 over committed bytes — `python3 -I tools/mori-claim-sweep.py
+--root . --pins .ufo/waves/round-80/claim-pins.json`, rc 0, run in `git archive` extractions of
+each named revision: `CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4
+pointers=249` at `f02ad83bf9c66722afa1de8ff974d57d2b57d3a2` (the r82 record commit, where the
+sentence was introduced: `git log -S pointers=249 -- SCORECARD.md` names only `f02ad83b`) and,
+unchanged, at `19d21175`, `d083c5fc`, `f573c946` (r82 tip), `68185d6e` (r83 entering),
+`9075c729` (r83 freeze) and `466d28bc` (current tip); the same command prints
+`CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4 pointers=237` at
+`075574c8`, `pointers=240` at `482dc48d` and `pointers=233` at `44bc941a`. Correction of
+record: the run that produced 249 is the r82 record commit `f02ad83b`, and 249 remains the
+landed value at every revision since; the historical `075574c8` attribution belongs with 237
+and is separated from the 249 reading. The defect was that r80 row sentence's revision label
+only, not its value: the r82 edit that raised the graded count 237→249 updated the number but
+left the r81-era revision label standing (the label entered with `b10e91ee`, "pointers=237
+measured at `075574c8`"). No frozen r80 or r82 text is rewritten by this paragraph; the
+r82-inserted in-row correction (240 at `482dc48d`, 237 at `075574c8`) stands.

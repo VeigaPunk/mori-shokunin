@@ -3,6 +3,9 @@
 # Census: bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json
 # Token count: 64
 # Keys use whitespace-delimited [A-Za-z0-9_]+= extraction (frozen counter semantics).
+# Snapshot: .ufo/waves/round-82/evidence/drift-r82-live.txt
+# Snapshot-sha256: 6091bc46cba5ef6e73f882f035f234d0ece023e6e12d98ca92368e2039bf9a5d
+# As-of: 2026-11-04T07:45:13Z
 DRIFT_CLASS +FINDING:CGROUP_OOM_KILL_CUMULATIVE added-since-r10
 DRIFT_CLASS +FINDING:COREDUMP_NOTICE_JOURNAL_USER added-since-r10
 DRIFT_CLASS +FINDING:JOURNAL_CLASSES_UNMEASURED added-since-r10

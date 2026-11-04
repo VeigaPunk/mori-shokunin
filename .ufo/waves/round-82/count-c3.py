@@ -21,6 +21,7 @@ Usage: count-c3.py <rev> [--repo DIR] [--scratch DIR] | count-c3.py --selftest
 Exit 0 met, 1 unmet, 2 setup. Read-only: `git show`, `git ls-tree`; files only under --scratch.
 """
 import argparse
+import io
 import json
 import os
 import re
@@ -175,6 +176,55 @@ def fixture_run(tool_path, scratch, kind):
     return ok, p.returncode, fields, out
 
 
+
+def lane_root():
+    """Lane checkout for the main-path arms: this file's checkout, else the lane under ~."""
+    here = os.path.abspath(os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+    if os.path.isfile(os.path.join(here, "tools", "mori-record-sweep.py")):
+        return here
+    return os.path.expanduser(os.path.join("~", "Projects", "shokunin", "mori-shokunin"))
+
+
+def met_verdict(caught, q, fields, bindings):
+    """The one met gate main uses (r83: lifted so a selftest can drive it)."""
+    met = (caught and q.returncode == 0 and fields.get("revisions", -1) == 0
+           and bindings >= 3)
+    return met
+
+
+def main_fixture(scratch, tool_text, pins, carrier_append=None, label="mf"):
+    """A scratch git repo holding one tool copy, one carrier and one pins file."""
+    repo = tempfile.mkdtemp(dir=scratch, prefix=label + "-")
+    env = ["-c", "user.name=t", "-c", "user.email=t@t"]
+    run(["git"] + env + ["-C", repo, "init", "-q"])
+    if run(["git", "-C", repo, "rev-parse", "--show-toplevel"]).stdout.strip() != repo:
+        return None
+    carrier = ("# t\n\n| Row | What | Evidence | First |\n|---|---|---|---|\n"
+               "| row_tally=19 | x | row_tally=19 | 80 |\n"
+               "| survivors=0 | x | survivors=0 | 80 |\n"
+               "| wrong=0 fixtures=7 | x | wrong=0 fixtures=7 | 80 |\n")
+    write_tree(repo, {TOOL: tool_text, "SCORECARD.md": carrier,
+                      PINS: json.dumps({"revisions": pins})})
+    run(["git"] + env + ["-C", repo, "add", "-A"])
+    run(["git"] + env + ["-C", repo, "commit", "-qm", "a"])
+    rev = run(["git", "-C", repo, "rev-parse", "HEAD"]).stdout.strip()
+    if carrier_append is not None:
+        open(os.path.join(repo, "SCORECARD.md"), "a", encoding="utf-8").write(carrier_append)
+    return repo, rev
+
+
+def main_run(repo, rev, scratch):
+    out, err = io.StringIO(), io.StringIO()
+    old_out, old_err = sys.stdout, sys.stderr
+    sys.stdout, sys.stderr = out, err
+    try:
+        rc = main([rev, "--repo", repo, "--scratch", scratch])
+    finally:
+        sys.stdout, sys.stderr = old_out, old_err
+    return rc, out.getvalue() + err.getvalue()
+
+
 def selfcheck(scratch):
     cases = []
     fields = summary("noise\nRECORD_SWEEP pending=0 pinned=0 revisions=2 bindings=5\n")
@@ -194,6 +244,50 @@ def selfcheck(scratch):
     cases.append(("population_triplicate_unmet", not population_ok(triplicated),
                   f"bindings={len(triplicated)}"))
     cases.append(("population_subset_unmet", not population_ok(frozen[:1]), "one binding"))
+    # r83 arms: one per r82 surviving mutant.
+    class Rc(object):
+        def __init__(self, code):
+            self.returncode = code
+
+    cases.append(("met_verdict_bindings_floor",
+                  met_verdict(True, Rc(0), {"revisions": 0}, 1) is False
+                  and met_verdict(True, Rc(0), {"revisions": 0}, 2) is False, "bindings<3"))
+    cases.append(("met_verdict_revisions_default",
+                  met_verdict(True, Rc(0), {}, 3) is False, "no revisions token"))
+    cases.append(("met_verdict_conformant",
+                  met_verdict(True, Rc(0), {"revisions": 0}, 3) is True, "green"))
+    cases.append(("summary_last_line",
+                  summary("RECORD_SWEEP revisions=2\nRECORD_SWEEP revisions=0\n")
+                  .get("revisions") == 0, "last wins"))
+    stub_dir = tempfile.mkdtemp(dir=scratch, prefix="stub-")
+    stub_tool = os.path.join(stub_dir, TOOL)
+    os.makedirs(os.path.dirname(stub_tool), exist_ok=True)
+    open(stub_tool, "w", encoding="utf-8").write("import sys\nsys.exit(1)\n")
+    got = fixture_run(stub_tool, scratch, "one-stale")
+    cases.append(("defeated_needs_mismatch_token", bool(got) and got[0] is False,
+                  "exit-1-only tool is not a catch"))
+    tool_path = os.path.join(lane_root(), "tools", "mori-record-sweep.py")
+    if not os.path.isfile(tool_path):
+        cases.append(("main_path_arms_skipped", False, "tool absent: " + tool_path))
+    else:
+        tool_text = open(tool_path, encoding="utf-8").read()
+        frozen = [{"carrier": c, "row_contains": r, "key": k, "value": v, "rev": rv,
+                   "path": pp} for c, r, k, v, rv, pp in FROZEN]
+        one = main_fixture(scratch, tool_text, frozen[:1], label="pop")
+        rc, out = main_run(one[0], one[1], scratch)
+        cases.append(("population_gate_named_refusal",
+                      rc == 1 and "frozen-population-mismatch" in out,
+                      out.strip()[-90:]))
+        drift = main_fixture(scratch, tool_text, frozen, carrier_append="\nedited\n",
+                             label="drift")
+        rc, out = main_run(drift[0], drift[1], scratch)
+        cases.append(("carrier_drift_setup", rc == 2 and "worktree differs" in out,
+                      out.strip()[-90:]))
+        red_tool = tool_text.replace("    return int(bool(failed))", "    return 1", 1)
+        red = main_fixture(scratch, red_tool, frozen, label="red")
+        rc, out = main_run(red[0], red[1], scratch)
+        cases.append(("selftest_red_refused", rc == 1 and "selftest=red" in out,
+                      out.strip()[-90:]))
     ok = sum(1 for _, good, _ in cases if good)
     for label, good, line in cases:
         print(f"{'PASS' if good else 'FAIL'} {label} {line}")
@@ -289,8 +383,7 @@ def main(argv):
         fields = summary(rout)
         bindings = fields.get("bindings", len(pins))
         revisions = fields.get("revisions", -1)
-        met = (caught and q.returncode == 0 and fields.get("revisions", -1) == 0
-               and bindings >= 3)
+        met = met_verdict(caught, q, fields, bindings)
         tail = (f"tool=present arms={arms} defeated={1 if caught else 0} "
                 f"fixtures={sum(1 for v in fixtures.values() if v)}/3 "
                 f"bindings={bindings} revisions={revisions}")
