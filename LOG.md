@@ -4818,3 +4818,89 @@ Assimilation: none — shokuknow unreachable.
 
 
 Post-landing addendum (same round, pre-report): commit B `2360cc3b` verified — 22 paths (14 A receipts + 5 M carriers + 3 A corpus files, +2118/-7), pushed (`ls-remote origin refs/heads/master` == HEAD), and every artifact the round claims as landed checked IN its tree (`.ufo/waves/round-78/evidence/post-landing-verify-r78.txt` — the receipt's first draft ran its check loop with an unset shell variable and printed false MISSING lines; caught by counting the verdict lines against the receipt's own 22-path header before use, rewritten, mined as lesson addendum mistake 6). The frozen-set audit stands: 14274 paths at `ecb916ce`, 14269 byte-identical, 5 round-carriers, 0 mismatches. Lane head after the final round commit: see the report's lane_head line.
+
+## Round 79 (2026-11-04, L1 MoriR79) — three claims across three axes: C1 operability the control-receipt binding guard lands (`tools/mori-control-receipt.py`, wave seat Mo79E01ReceiptTool, 7/7 mutants killed, registered SKILL row 13 + a SCORECARD capabilities row + QUALITY 164), C2 calibration the five stale axes-table `Last change` cells reconciled to the fleet record (`C2=met mismatches=0`), C3 freshness the RFC 9111 §4.1 Vary-selection ground opened and cited (`S594`, rows 366 -> 367, entry `ua-serving-normative-r79.md`)
+
+Entering `84c6cbc3b47c536a504aaee329c77897d389935e`; every claim frozen in `aa53b485` before any data (contract + three counters, each selftest 4/4, plus the do-nothing controls receipt and the round-start census).
+
+C1 (operability, capability acquisition). The r78 closure's routed D78-1 is discharged by a
+standing gate rather than a prose rule: `tools/mori-control-receipt.py` reads one receipt or a
+`--dir` of `*.txt` receipts, splits each at `## ` sections, and reports every section that
+carries a bare `key=<integer>` claim without a command line. Lands at `531d6b52` (19 in-script
+selftest arms, in-memory only; stdout only, no writes/children/network). Measured at `e3e2e27`:
+
+```
+$ python3 .ufo/waves/round-79/count-c1.py e3e2e272fb1ae559d6bf407803055293e32137f3
+item selftest pass=19 fail=0 rc=0
+item witness rc=1 named=True
+item after rc=0 unbound=0
+C1=met tool=531d6b524635 selftest=19/0 witness=yes after_rc=0 after_unbound=0
+```
+
+Before: `cat-file -e 84c6cbc3:tools/mori-control-receipt.py` rc 128, `log --all` 0 lines
+(controls receipt). The witness arm is the D78-1 class itself: the r78 receipts read
+`unbound=11`, including `controls-r78.txt#4. claims=1
+keys=correction_marker_in_LOG_at_entering`; the round's own receipts read `unbound=0`. The
+wave's attack seats: reviewer (no binding attack landed; one status-neutral diagnostic-channel
+disagreement — the contract's "stdout only" is the write-scope sentence, now stated in QUALITY
+164), mutation-tester (7/7 mutants KILLED, none survived; worst class green-selftest-plus-
+changed-live-verdict none), sentinel (no write/subprocess/socket/`/tmp` finding; the pin is
+public-document bytes; one LOW note on the integration helper `apply-c2.py` mutating by
+default, which its docstring states).
+
+C2 (calibration). The axes table's `Last change` cells led with rounds 47/51/51/28/50/19 while
+the fleet record's latest admitted improved closures are 56/78/76/78/78/19. Each cell now
+leads with its true round and verdict word, older clauses kept after the first `;`; the
+`Round-79 correction (C2, calibration)` paragraph pins `MANIFEST.json` blob `f817cfe6` at fleet
+`37c31371`. Measured at `4629dce4`:
+
+```
+$ python3 .ufo/waves/round-79/count-c2.py 4629dce4bc3bf0e0b160c974ae2b12eee32d7d88
+axis coverage cell=round_56_improved expect=round_56_improved state=ok
+... (all six ok)
+C2=met axes=6 mismatches=0 errors=0 rows=46 through=78
+```
+
+Before: `C2=unmet mismatches=5` at `84c6cbc3` (controls receipt). The first attempt
+(`e6f3fd09`) destroyed the five edited rows' newlines and was caught by this counter at that
+commit (`missing_row` x5), then repaired in `4629dce4` from the pre-edit copy — the correction
+of record is in the lesson's `## Mistakes` 1, no history rewritten. Counter limit named before
+data: it grades the `Last change` clause, not the `Evidence` cell; the mutation seat showed
+three selftest arms missing (all keep the real entering read) — routed to r80.
+
+C3 (freshness, sourced). RFC 9111 §4.1 "Calculating Cache Keys with the Vary Header Field" is
+opened, pinned and cited. Row `S594` at `SOURCES.md:375` (11 cells; `status mined`; `used-by`
+the new entry); pin `corpus/evidence/sources-r79/rfc9111.txt` sha256 `aeb52adb…` (84477 bytes,
+1956 lines), two independent fetches byte-identical; four located one-line quotes machine-
+verified PASS 4/4 with a mislocation arm FAIL rc 1. Entry
+`corpus/knowledge/ua-serving-normative-r79.md` (K1–K4 + Limits/Boundaries) grounds the lane's
+empirical `ua-serving` class in the normative mechanism and names what it does not prove (no
+observed `Vary: User-Agent`, no cache traversal, no cause). Measured at `f5460942`:
+
+```
+$ python3 .ufo/waves/round-79/count-c3.py f5460942c478020e1f13ad77a909aab8055db80d
+item rows count=367 want=367
+item row ok
+item pin ok
+item entry ok
+item index ok
+C3=met rows=367 row=ok pin=ok entry=ok index=ok
+```
+
+Before: rows 366, S594 absent, pin absent, entry absent (controls receipt); census at round
+start rc 0 (tolerated W04 class) and rc 0 after the append; D78-2 discharged by stating the
+tree each census receipt validates.
+
+L2: ONE v1 wave, 12 seats (validated under `ufo-wave-policy.json` band 8-16; dispatch
+`w1-dispatch.json`), roles 3 executor / 2 scribe / 1 connector / 1 scout / 1 reviewer / 1
+critic / 2 mutation-tester / 1 sentinel = attack share 4/12 (33%); zero dead seats; residual
+call none; round total 12. The planner seat is held by the L1 (validator rejects `planner`); a
+bounded planning data-walk rode the scout (`Mo79Sc01Recon`). Connector verdicts for all three
+claims: `adjacent` (closest siblings named; no duplicate).
+
+Assimilation: none — `merge/mori/` adoption stays closed behind the round-61 L0 (94/136 staged
+ids collide; document-keyed renumber pending). considerthese re-mined (newest named file
+2026-10-26.md); its still-unimplemented suggestion remains behind the mori | round-65
+instrument-change L0 and is not acted on.
+
+Open L0 lines (round-62, round-65, round-73) re-verified present and unanswered; routed around.

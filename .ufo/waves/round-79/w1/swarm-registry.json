@@ -1,0 +1,153 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r79-w1",
+  "createdAt": "2026-11-04T05:34:27.970Z",
+  "updatedAt": "2026-11-04T05:34:27.970Z",
+  "reportDir": ".ufo/waves/round-79/w1",
+  "members": {
+    "Mo79E01ReceiptTool": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "round 79 w1: C1 control-receipt guard, C2 axes-cell reconciliation, C3 RFC 9111 Vary row + entry"
+    },
+    "Mo79E02AxesCells": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "round 79 w1: C1 control-receipt guard, C2 axes-cell reconciliation, C3 RFC 9111 Vary row + entry"
+    },
+    "Mo79E03SourcePin": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "round 79 w1: C1 control-receipt guard, C2 axes-cell reconciliation, C3 RFC 9111 Vary row + entry"
+    },
+    "Mo79S01EntryProse": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "round 79 w1: C1 control-receipt guard, C2 axes-cell reconciliation, C3 RFC 9111 Vary row + entry"
+    },
+    "Mo79S02SourcesRow": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "round 79 w1: C1 control-receipt guard, C2 axes-cell reconciliation, C3 RFC 9111 Vary row + entry"
+    },
+    "Mo79C01Overlap": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "round 79 w1: C1 control-receipt guard, C2 axes-cell reconciliation, C3 RFC 9111 Vary row + entry"
+    },
+    "Mo79Sc01Recon": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "round 79 w1: C1 control-receipt guard, C2 axes-cell reconciliation, C3 RFC 9111 Vary row + entry"
+    },
+    "Mo79R01Review": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "round 79 w1: C1 control-receipt guard, C2 axes-cell reconciliation, C3 RFC 9111 Vary row + entry"
+    },
+    "Mo79K01Critic": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "round 79 w1: C1 control-receipt guard, C2 axes-cell reconciliation, C3 RFC 9111 Vary row + entry"
+    },
+    "Mo79M01Mutant": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "round 79 w1: C1 control-receipt guard, C2 axes-cell reconciliation, C3 RFC 9111 Vary row + entry"
+    },
+    "Mo79M02MutantCounter": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "round 79 w1: C1 control-receipt guard, C2 axes-cell reconciliation, C3 RFC 9111 Vary row + entry"
+    },
+    "Mo79N01Sentinel": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "sentinel",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "round 79 w1: C1 control-receipt guard, C2 axes-cell reconciliation, C3 RFC 9111 Vary row + entry"
+    }
+  }
+}

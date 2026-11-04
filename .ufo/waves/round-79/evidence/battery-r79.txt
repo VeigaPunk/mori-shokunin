@@ -1,0 +1,39 @@
+$ python3 tools/mori-register-check.py --selftest
+  REGCHECK_SELFTEST pass=12 fail=0
+rc=0
+$ python3 tools/mori-settlement-scan.py --selftest
+  SETSCAN_SELFTEST pass=10 fail=0
+rc=0
+$ python3 tools/mori-vote-bind.py --selftest
+  VOTE_BIND_SELFTEST pass=16 fail=0
+rc=0
+$ python3 tools/mori-pin-check.py --selftest
+  PIN_CHECK_SELFTEST pass=125 fail=0
+rc=0
+$ python3 tools/mori-drift-adjudicate.py --selftest
+  MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+rc=0
+$ python3 tools/mori-drift-recheck.py --selftest
+  MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+rc=0
+$ python3 tools/mori-ua-variance.py --selftest
+  MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)
+rc=0
+$ python3 tools/mori-uptime-win.py --selftest
+  UPTIME_WIN_SELFTEST: PASS (8 cases)
+rc=0
+$ python3 tools/mori-workstate-win.py --selftest
+  WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+rc=0
+$ python3 tools/mori-events-context-win.py --selftest
+  EVENTS_CONTEXT_SELFTEST: PASS (10 cases)
+rc=0
+$ python3 tools/mori-anchor-check.py --selftest
+  ANCHOR_CHECK_SELFTEST: PASS (11 cases)
+rc=0
+$ python3 tools/mori-rotation-schedule.py --selftest
+  MORI_ROTATION_SCHEDULE_SELFTEST: PASS (13 cases)
+rc=0
+$ python3 tools/mori-counter-win.py --selftest
+  COUNTER_WIN_SELFTEST: PASS (12 cases)
+rc=0
