@@ -1,0 +1,62 @@
+# mori round-86 do-nothing controls (measured before any after-value exists)
+# date: 2026-11-04
+# entering revision: fec2b328a4c83e0c61bc09d70e254ca47d547d34
+# counters: .ufo/waves/round-86/count-c1.py count-c2.py count-c3.py (this commit)
+
+# --- C1: the claim must not be reachable by skipping the work
+$ python3 -I .ufo/waves/round-86/count-c1.py fec2b328a4c83e0c61bc09d70e254ca47d547d34 --scratch /fast/scratch/hyaku/mori-r86
+MUTANT count-c3.py C3-01-rc-range survived rc=0
+MUTANT count-c3.py C3-02-rc-dropped survived rc=0
+MUTANT count-c3.py C3-04-agreed-skip survived rc=0
+MUTANT count-c3.py C3-07-subject-tokens survived rc=0
+EXTRA unanchored .ufo/waves/round-85/count-c3.py H-C3-metverdict occurrences=0
+EXTRA survivor .ufo/waves/round-85/count-c3.py C3-01-rc-range
+EXTRA survivor .ufo/waves/round-85/count-c3.py C3-02-rc-dropped
+EXTRA unanchored .ufo/waves/round-85/count-c3.py C3-03-order occurrences=0
+EXTRA survivor .ufo/waves/round-85/count-c3.py C3-04-agreed-skip
+EXTRA survivor .ufo/waves/round-85/count-c3.py C3-07-subject-tokens
+C1=unmet mutants=4 killed=0 survivors=4 total=4 arms=20 subject=arms rev=fec2b328a4c8
+C3_COUNTER_SELFTEST pass=20 fail=0
+rc=1
+
+# C1 label-only stub: six PASS labels, pass=26 fail=0, inert anchor comments, no assertions
+# fixture repo: /fast/scratch/hyaku/mori-r86/stub/repo (throwaway, user.name=t), subject = the stub
+$ python3 -I .ufo/waves/round-86/count-c1.py HEAD --repo /fast/scratch/hyaku/mori-r86/stub/repo --scratch /fast/scratch/hyaku/mori-r86
+MUTANT count-c3.py H-C3-metverdict survived rc=0
+MUTANT count-c3.py C3-01-rc-range survived rc=0
+MUTANT count-c3.py C3-02-rc-dropped survived rc=0
+MUTANT count-c3.py C3-03-order survived rc=0
+MUTANT count-c3.py C3-04-agreed-skip survived rc=0
+MUTANT count-c3.py C3-07-subject-tokens survived rc=0
+EXTRA survivor .ufo/waves/round-85/count-c3.py H-C3-metverdict
+EXTRA survivor .ufo/waves/round-85/count-c3.py C3-01-rc-range
+EXTRA survivor .ufo/waves/round-85/count-c3.py C3-02-rc-dropped
+EXTRA survivor .ufo/waves/round-85/count-c3.py C3-03-order
+EXTRA survivor .ufo/waves/round-85/count-c3.py C3-04-agreed-skip
+EXTRA survivor .ufo/waves/round-85/count-c3.py C3-07-subject-tokens
+C1=unmet mutants=6 killed=0 survivors=6 total=6 arms=26 detector=green rev=77052321fa19
+rc=1
+
+# --- C2: the claim needs the two r86 receipts and the subject replay pass
+$ python3 -I .ufo/waves/round-86/count-c2.py fec2b328a4c83e0c61bc09d70e254ca47d547d34 --scratch /fast/scratch/hyaku/mori-r86
+C2=unmet subject=stub missing=replay_match,replay_stale_mismatch,replay_none_requires_reason rev=fec2b328a4c8
+rc=1
+
+# --- C3: the capability (the counter file) is absent before the round
+$ git cat-file -e fec2b328a4c83e0c61bc09d70e254ca47d547d34:.ufo/waves/round-86/count-c3.py
+fatal: path '.ufo/waves/round-86/count-c3.py' exists on disk, but not in 'fec2b328a4c83e0c61bc09d70e254ca47d547d34'
+rc=128
+# DISCLOSED retroactive reading: the new counter applied to the entering bytes already reads met
+$ python3 -I .ufo/waves/round-86/count-c3.py fec2b328a4c83e0c61bc09d70e254ca47d547d34 --scratch /fast/scratch/hyaku/mori-r86
+VALUE round absent
+VALUE volatile_fields absent
+C3=met observations=2 aa=stable tokens=64 derived=64 name_agree=64 value_rows=14 contradicting=2 rev=fec2b328a4c8
+rc=0
+
+# --- counter detectors (each counter runs its own selftest in the same invocation)
+$ python3 -I .ufo/waves/round-86/count-c1.py --selftest
+C1_COUNTER_SELFTEST pass=15 fail=0
+$ python3 -I .ufo/waves/round-86/count-c2.py --selftest
+C2_COUNTER_SELFTEST pass=11 fail=0
+$ python3 -I .ufo/waves/round-86/count-c3.py --selftest
+C3_COUNTER_SELFTEST pass=22 fail=0
