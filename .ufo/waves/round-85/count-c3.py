@@ -131,12 +131,13 @@ def classifications(text):
 
 
 def subject_signal(output):
-    """The subject's last C2 tail fields and its LIVE_DELTA pairs."""
+    """The subject's last C2 tail fields, its verdict and its LIVE_DELTA pairs."""
     fields = {}
     for line in output.splitlines():
         m = TAIL.search(line.strip())
         if m:
             fields = dict(FIELD.findall(m.group(2)))
+            fields["verdict"] = m.group(1)
     pairs = []
     for line in output.splitlines():
         m = DELTA_LINE.match(line.strip())
@@ -251,7 +252,8 @@ def selfcheck():
     fields, pairs = subject_signal(
         "noise\nLIVE_DELTA X absent-live\n"
         "C2=met snapshot=bound live=derived live_tokens=64 live_agree=64 deltas=1\n")
-    cases.append(("subject_signal", fields.get("live") == "derived"
+    cases.append(("subject_signal", fields.get("verdict") == "met"
+                  and fields.get("live") == "derived"
                   and fields.get("live_tokens") == "64" and pairs == [("X", "absent-live")],
                   str(fields)))
     unmatched, unnamed, lines = reconcile(
@@ -268,6 +270,9 @@ def selfcheck():
                                     ("absent-live", "added-live", "agreed",
                                      "class-changed:a->b")), "words"))
     cases.append(("class_word_bogus", not CLASS_WORD.match("vanished"), "bogus"))
+    fields_u, _pairs_u = subject_signal(
+        "C2=unmet snapshot=absent live=derived live_tokens=64\n")
+    cases.append(("subject_verdict_required", fields_u.get("verdict") == "unmet", "unmet"))
     cases.append(("observations", OBSERVATIONS == 3, "3"))
     cases.append(("marker_literal", "OBSERVATIONS = 3" in open(os.path.abspath(__file__)).read(),
                   "marker"))
@@ -334,7 +339,7 @@ def main(argv):
             return 1
         rc, out = subject_run(subject, rev, repo, fleet, scratch)
         fields, subject_pairs = subject_signal(out)
-        if rc != 0 or fields.get("live") != "derived":
+        if rc != 0 or fields.get("verdict") != "met" or fields.get("live") != "derived":
             print("C3=unmet observed=%d aa=stable subject=unmet rc=%d rev=%s"
                   % (OBSERVATIONS, rc, rev[:12]))
             for line in out.splitlines():

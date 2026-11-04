@@ -152,6 +152,11 @@ clarifications; **no predicate, target value, receipt, class or kill rule change
   contract's rule list now states it).
 - C2: the headerless-receipt defeat control reads `C2=unmet ... mismatch>=1` (the counter has no
   `headers=<receipt>` literal); the stale-digest control reads `C2=unmet ... bound=4 mismatch=1`.
+**A3 (pre-data, 2026-11-04T08:20-03:00; connector row C3-D3).** `count-c3.py` now captures the
+subject's `C2=<verdict>` status and `met` requires `verdict=met` in addition to rc 0 and
+`live=derived`; the prose already said "prints a `C2=met` tail", so this is the code catching up to
+the frozen sentence. Selftest 19 → 20 arms; the entering retroactive run stays
+`C3=met observed=3 aa=stable own_tokens=64 ...`, rc 0.
 - C3: the exact printed tail is `C3=<verdict> observed=3 aa=... own_tokens=N subject_tokens=N
   subject_deltas=D unmatched=N unnamed=N`; `met` additionally requires the counter's own detector
   selftest green and the classification file to parse with `malformed=0 duplicates=0`. The entering
