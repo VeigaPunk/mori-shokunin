@@ -905,3 +905,9 @@ three rejected-closure entries (r59/r60/r61) rather than silently adopting them.
 | Ground | Entry | Bounded advance |
 |---|---|---|
 | Execution evidence (r86, S602) | `knowledge/execution-evidence-r86.md` (S602; `corpus/knowledge/execution-evidence-r86.md`) | The in-toto v1.0.0 spec records a step's command, materials, products and byproducts and states the limit the r86 C2 rule answers: "Byproducts are not verified by in-toto’s default verification routine." The entry carries that recorded-is-not-verified split into the replay rule — a receipt's body is evidence only when its recorded command reproduces it — and states the lane's limits: a replay proves the command's output at that revision, not authorship and not the command's own provenance. |
+
+## Round-87 knowledge addition — receipt supersede (new growth, indexed the round it lands)
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Receipt supersede (r87, S603; S600/S602 re-opened) | `knowledge/receipt-supersede-r87.md` (S603; `corpus/knowledge/receipt-supersede-r87.md`) | `git-clone(1)` states that a clone is a repository with branches and history (raw lines 2627-2628) and that `--shared` shares the object store through alternates (raw lines 2696-2699). The entry carries that into the supersede rule: a legacy receipt retires only when a present, problem-free successor names it and its body equals the stdout of its command replayed in a clone at that revision; a sparse tree export cannot resolve revisions, and the same command reads `revisions=3` rc 1 in a tree versus `revisions=0` rc 0 in a clone. Limits: a replay proves an output, not authorship, and a worktree count is not a revision count (`pointers=274` → `266`). |

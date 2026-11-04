@@ -5429,3 +5429,48 @@ digest_pins=11 mismatches=4 ... env=0 stale=4` at `c2bfded0` — the four stale 
 row 19's, already stale at the entering revision (scout R6), and row 20 supersedes them without
 deleting the old row. The three counters' own selftests read 15/11/22 pass, and the two graded
 subjects read 26/21 pass. No axis harmed; no score moved.
+
+## Round 87 — 2026-11-04 (L1 MoriR87, attempt 1)
+
+**Claims (frozen `142542e0`, A1 `b9e6f68d`).** C1 operability (7): the six clauses the round-87
+mutation probe found surviving in the three r86 counters get the failing arm each — the r86
+counters' selftests move 15/11/22 → 18/13/23 arms — and the new counter
+`.ufo/waves/round-87/count-c1.py` grades the population at any revision: `C1=met mutants=6
+killed=6 survivors=0 total=6 arms=54` at `03b66a43` (entering control `C1=unmet ... survivors=6
+total=6 arms=48`, and a label-only fixture also reads `survivors=6`). C2 calibration (5, tied
+lowest): two replay-capable successor receipts (`# replay: clone`, `# supersedes:`) retire two of
+the three legacy r85 receipts under a supersede rule that requires the successor's own replay —
+`C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6
+defeated=1 superseded=2 legacy=1 unexpected=0` at `98f48dba` (entering control `legacy=3
+absent=2`; header-only control `matched=4 superseded=0 legacy=3 unexpected=2`).
+
+**Wave.** One v1 wave, 12 seats (3 executor, 1 simplifier, 1 scout, 2 scribe, 2 reviewer,
+1 critic, 1 mutation-tester, 1 connector; attack 4/12 = 33.3 %), validated under policy v1
+(`w1-dispatch.json` counts `spawn 12`), reports under `.ufo/waves/round-87/w1/`.
+
+**Frontier step.** S603 (git-clone(1)) opened this round, two fetches byte-identical, sha256
+`d31b6c9f…`, 107882 bytes / 3391 lines, quotes at raw lines 2627-2628 (18 words) and 2696-2699
+(16 words); registry **375 → 376** by
+`grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|' corpus/SOURCES.md`; census rc 0 before
+(375) and after (376), 35 `W04` both times. S600 re-opened (byte-identical to its registered
+sha) and its `used-by` gained `corpus/knowledge/receipt-supersede-r87.md`; a new row for the same
+URL was rejected as a duplicate with a flip condition. `corpus/knowledge/receipt-supersede-r87.md`
+and the coverage-map row are the round's new ground. The mined mistake is the
+`supersede-by-presence` class: the first supersede call site read the successor's presence, not
+its verdict, and the header-only control caught it before data; the fix (`supersede_counts` over
+clean successors) is shown able to fail on one fixture (`superseded=2` pre-fix versus `0` fixed,
+`evidence/supersede-controls-r87.txt`). QUALITY 181–182 land the round's rules.
+`considerthese/2026-10-26.md` suggestion 3 is the C2 rule's standing motivation.
+`Assimilation: none`.
+
+**Routed-defect disposition.** The round-86 spot-check's eight routed defects belong to round 86;
+the only class that bears on this round's instruments (a cited output the receipt does not carry)
+is answered by every after-value naming its receipt and revision — `evidence/after-r87.txt` carries
+both counter runs, both digests and `# replay: clone`. The other seven are recorded as inherited
+and not re-litigated here.
+
+**No-harm.** Both counters' own selftests read `C1_COUNTER_SELFTEST pass=18 fail=0` and
+`C2_COUNTER_SELFTEST pass=17 fail=0`; the three r86 subjects read 18/13/23; the census is rc 0;
+no score moved; no existing arm, receipt byte or capability row was deleted (the r86 receipts and
+their `legacy` grades stay byte-unchanged). Detection and report only: no remediation, no lane or
+host state changed.

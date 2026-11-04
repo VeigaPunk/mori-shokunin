@@ -1,0 +1,27 @@
+# receipt: after-r87.txt
+# cmd: python3 -I .ufo/waves/round-87/count-c1.py 03b66a437e68d493ce0aacd1d80c321cc2e6bf7c; python3 -I .ufo/waves/round-87/count-c2.py 98f48dba3267a73714b862d0fd4fc8c0e82a1d04
+# rev: b9e6f68d887c570909c7bacc8bac86579d850d1d
+# counter-sha256: e2ff968721678cc61d6a1674def8da3e27a43f3fed8daab79d53c657ae2c266e .ufo/waves/round-87/count-c1.py
+# counter-sha256: 264a43f04af1f9f939da7b3890f608a669a0c7fc2922656ee83f35adb236b14d .ufo/waves/round-87/count-c2.py
+# replay: clone
+# limits: named limit — the body is the two counters' stdout in a --shared clone checked out at # rev:, reproducing from committed bytes; the C1 line names the C1 landing revision and the C2 line the C2 landing revision each counter measured, not # rev: itself
+# ---
+MUTANT count-c1.py M1-unanchored-conjunct killed rc=1
+MUTANT count-c1.py M2-total-floor killed rc=1
+MUTANT count-c1.py M3-arms-tally killed rc=1
+MUTANT count-c2.py M4-receipt-summary killed rc=1
+MUTANT count-c2.py M5-binding-digest killed rc=1
+MUTANT count-c3.py M6-keyshape killed rc=1
+C1=met mutants=6 killed=6 survivors=0 total=6 arms=54 rev=03b66a437e68
+RECEIPT after-r85.txt expect=met met problems=-
+RECEIPT record-sweep-r85.txt expect=met met problems=-
+RECEIPT claim-sweep-r85.txt expect=met met problems=-
+REPLAY after-c1-r86.txt mode=required rc=0 exported=1
+RECEIPT after-c1-r86.txt expect=met met problems=-
+REPLAY replay-defeat-r86.txt mode=required rc=0 exported=1
+RECEIPT replay-defeat-r86.txt expect=reject failed problems=replay-mismatch
+REPLAY record-sweep-r87.txt mode=clone rc=0 exported=1
+RECEIPT record-sweep-r87.txt expect=met met problems=-
+REPLAY claim-sweep-r87.txt mode=clone rc=0 exported=1
+RECEIPT claim-sweep-r87.txt expect=met met problems=-
+C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=98f48dba3267

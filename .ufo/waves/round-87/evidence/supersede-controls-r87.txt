@@ -1,0 +1,10 @@
+# mori round-87 — supersede call-site control (fix shown able to fail)
+# fixture: --shared clone at 98f48dba, both successor receipts' bodies changed by one field (record revisions=0->9, claim pointers=266->274), headers, digests and # rev: untouched
+# pre-fix variant = count-c2.py with the supersede call site reading presence instead of clean successors
+# run 2026-11-04 by the L1 in /fast/scratch/hyaku/mori-r87 (scratch deleted after the run)
+
+== PRE-FIX (call site uses presence) ==
+C2=unmet receipts=7 ... matched=4 defeated=1 superseded=2 legacy=1 unexpected=2   # rc 1 — the stale successors still retired both legacy receipts
+
+== FIXED (call site uses clean successors) ==
+C2=unmet receipts=7 ... matched=4 defeated=1 superseded=0 legacy=3 unexpected=2   # rc 1 — a failed successor supersedes nothing

@@ -2092,3 +2092,29 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
       `aa=unstable` (`evidence/c3-value-controls.txt`, controls 5a/5b).
       Not covered: a token whose name is absent from both sources and whose value channel is
       unreadable; the snapshot's own fetch-time drift (QUALITY 166).
+
+## Criteria added round 87 — a successor is not a supersession until it verifies, and the replay environment is part of the command
+
+181. A record retires an older record only when the successor's own verdict passes: presence in the
+      population is not supersession, and a successor whose replay failed supersedes nothing.
+      Ground: `.ufo/waves/round-87/count-c2.py` grades a legacy receipt `superseded` only when a
+      present, problem-free successor names it (`supersede_counts` over `clean_names`), and the
+      legacy bytes stay byte-unchanged. Shown able to fail: on one fixture (two successors whose
+      headers and digests are correct and whose bodies differ from their replay by one field) the
+      pre-fix call site reads `superseded=2 legacy=1` and the fixed one reads `superseded=0
+      legacy=3` (`evidence/supersede-controls-r87.txt`); the header-only control in
+      `evidence/controls-r87.txt` §C2 shows the same split before data existed. Two selftest arms
+      (`supersede_requires_clean`, `supersede_counts_positive`) pin the function.
+      Not covered: a successor that verifies but records the wrong revision; authorship.
+182. The replay environment is part of the recorded command: a command that resolves revisions is
+      not replayed by unpacking a tree, and its output in a bare export is not its result.
+      Ground: `RECORD_SWEEP` reads `revisions=3` rc 1 with three `rev-unresolvable` rows in a
+      `git archive` export and `revisions=0` rc 0 in a `git clone --shared` checked out at the same
+      revision; `CLAIM_SWEEP` reads `pointers=274` on the worktree and `266` in the clone, so the
+      successor records the clone value. S603 (git-clone(1)) states the difference: a clone is a
+      repository with history, and `--shared` shares the object store through alternates. Shown
+      able to fail: the counter's mode selection is graded by the population
+      (`# replay: clone` reproduces both successors; the sparse `required` mode is kept for the
+      r86 receipts and reproduces them at their own revisions).
+      Not covered: a shallow or filtered clone, a command whose output depends on the environment
+      outside the exported tree, and side effects outside stdout.

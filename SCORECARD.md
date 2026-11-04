@@ -4427,18 +4427,51 @@ names the two `value-changed` rows whose live value equals the baseline's (`-sub
 | Command-replay receipt gate (`.ufo/waves/round-85/count-c2.py` replay pass + `.ufo/waves/round-86/make-receipts-r86.sh`) | parses `# replay: required|none` and `# no-replay:`, executes each required receipt's `# cmd:` in a scratch export of the receipt's own `# rev:`, compares stdout to the body modulo trailing newlines, grades the five-receipt population with per-receipt expectations (`matched=4 defeated=1 legacy=3`), and keeps the three r85 receipts header-bound under a named limit; 21 selftest arms | `python3 -I .ufo/waves/round-85/count-c2.py --selftest` -> `C2_COUNTER_SELFTEST pass=21 fail=0`; `python3 -I .ufo/waves/round-86/count-c2.py 50d80df0` -> `C2=met ... replay=2 matched=4 defeated=1 legacy=3 unexpected=0`, rc 0 | 86 |
 | Value-channel class reconciliation (`.ufo/waves/round-86/count-c3.py`) | derives every stated class by the frozen name rule, observes the census twice through two surfaces (drift token line; full report's values), requires exact-order token stability and volatile-filtered atom stability, and splits the 14 bare-key `value-changed` rows into `differs`/`equal`/`masked`/`absent`, naming the contradictions; 22 selftest arms | `python3 -I .ufo/waves/round-86/count-c3.py --selftest` -> `C3_COUNTER_SELFTEST pass=22 fail=0`; at `50d80df0` it prints `C3=met observations=2 aa=stable tokens=64 derived=64 name_agree=64 value_rows=14 contradicting=2`, rc 0 | 86 |
 
-## Planned (round 87)
+## Round 87 (2026-11-04, L1 MoriR87, attempt 1) — six surviving r86-counter clauses armed, and two legacy receipts superseded by replaying successors
 
-1. **operability** — the r86 mutation probe's surviving counter clauses
-   (`.ufo/waves/round-86/evidence/mutation-r86.md`; if the probe's wave seat did not land, the
-   unarmed set is the named one in `.ufo/waves/round-86/evidence/controls-r86-defeated.txt` and the
-   r86 counters' printed-but-unguarded fields) get the arm each needs, starting with the three
-   counters' own `met` conjuncts and their target constants.
-2. **calibration** — the three r85 receipts stay header-bound `legacy`; retire the limit by adding a
-   `# replay:`-capable successor receipt set for the two sweeps (their commands are deterministic
-   over repo bytes at a revision), so `legacy=3` drops without weakening the existing receipts.
-3. **depth** — the value channel's `differs`/`masked`/`absent` counts are live-state dependent;
-   freeze a dated snapshot of the full report and let the counter classify the snapshot as a second
-   frozen observation, so the whole split (not just `contradicting`) becomes re-derivable from
-   committed bytes.
+Entering revision `6fc09d69edbb11e5070ff33258de49f062c0fb9b`; frozen contract
+`.ufo/waves/round-87/contract.md` (freeze `142542e0d853b4e8ec1aa1adb86708dc5786d9c0`; pre-data
+amendment A1 `b9e6f68d887c570909c7bacc8bac86579d850d1d` — the C2 counter's subject arm count follows
+C1's two extra arms, no target or population moved), do-nothing controls
+`.ufo/waves/round-87/evidence/controls-r87.txt`, the population probe
+`evidence/probe-r87.txt` and the supersede call-site control `evidence/supersede-controls-r87.txt`.
+Axes: operability (C1, score 7) and calibration (C2, score 5, tied lowest: depth 5, freshness 5,
+calibration 5). No score moves. The after cells were measured by the round's frozen counters in a
+`--shared` clone at `b9e6f68d` (receipt `.ufo/waves/round-87/evidence/after-r87.txt`).
 
+| Claim | Axis | Counting command | At entering `6fc09d69` | After (measured at `b9e6f68d`, C1 subject `03b66a43`, C2 subject `98f48dba`) |
+|---|---|---|---|---|
+| C1 the six r86-counter clauses the round-87 probe found surviving get the failing arm each; the three counters' selftests move 15/11/22 → 18/13/23 arms | operability | `python3 -I .ufo/waves/round-87/count-c1.py <rev>` | `C1=unmet mutants=6 killed=0 survivors=6 total=6 arms=48` rc 1; the label-only fixture also `survivors=6` | `C1=met mutants=6 killed=6 survivors=0 total=6 arms=54` rc 0 |
+| C2 a legacy receipt retires only when a present, problem-free successor reproduces its command in a clone at its own revision | calibration | `python3 -I .ufo/waves/round-87/count-c2.py <rev>` | `C2=unmet receipts=5 absent=2 bindings=7 bound=7 revs=5 limits=5 cmd=5 summary=5 replay=2 matched=4 defeated=1 superseded=0 legacy=3 unexpected=0` rc 1; the header-only fixture also reads `superseded=0 legacy=3` with `unexpected=2` | `C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0` rc 0 |
+
+The six C1 mutants are `M1-unanchored-conjunct`, `M2-total-floor`, `M3-arms-tally` (count-c1.py),
+`M4-receipt-summary`, `M5-binding-digest` (count-c2.py) and `M6-keyshape` (count-c3.py); each is
+killed by the arm added for it (measured line-by-line in the wave's `Mo87E01C1Arms` report). C2's
+two successors are `record-sweep-r87.txt` and `claim-sweep-r87.txt` (`# replay: clone`,
+`# supersedes:` the two r85 sweep receipts); `after-r85.txt` stays `legacy` because its body is a
+live-observation run (count-c3 observes the census three times), and that reason is recorded in
+`corpus/lessons/round-87.md` `## Gate`.
+
+### Capabilities (round 87)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Multi-subject population-control counter (`.ufo/waves/round-87/count-c1.py`) | re-derives a six-mutant population spread over three subject counters at ANY revision from that revision's bytes, requires each pristine copy green at its own frozen arm count (18/13/23) and the printed total `arms=54`, runs each mutated copy's own `--selftest` in scratch, and gates its own detector selftest in the same invocation; 18 detector arms; stdout only, writes only under `--scratch` | `python3 -I .ufo/waves/round-87/count-c1.py --selftest` -> `C1_COUNTER_SELFTEST pass=18 fail=0`; at `03b66a43` it prints `C1=met mutants=6 killed=6 survivors=0 total=6 arms=54`, rc 0 | 87 |
+| Clone-replay receipt gate with supersede (`.ufo/waves/round-87/count-c2.py`) | grades a seven-receipt population; replays `# replay: required` receipts in a sparse export and `# replay: clone` receipts in a `--shared` clone checked out at the receipt's own `# rev:`; counts a legacy receipt `superseded` only when a present, problem-free successor names it in `# supersedes:`; names absent and dangling links; 17 selftest arms | `python3 -I .ufo/waves/round-87/count-c2.py --selftest` -> `C2_COUNTER_SELFTEST pass=17 fail=0`; at `98f48dba` it prints the frozen target line, `superseded=2 legacy=1`, rc 0 | 87 |
+
+## Planned (round 88)
+
+1. **operability** — the round-87 C1 counter's own unarmed clauses and the r86 counters' remaining
+   survivors: the probe measured `c1-ownpass`, `c1-tailarms`, `c1-armsokmain`, `c1-splitmain`,
+   `c2-replaymismatch`, `c2-replayrc`, `c2-limits3`, `c2-ancestor`, `c2-revexists` and
+   `c2-unexpected` still surviving at the entering bytes, and the round-87 mutation-tester seat
+   reports the r87 counters' own survivors. Start with `main()` acceptance gates: the counters'
+   `main()` is still unexecuted by their selftests.
+2. **calibration** — `after-r85.txt` stays `legacy`: split its command into the deterministic half
+   (the `count-c1` run at a revision) and the live half (the `count-c3` census observation), give
+   the deterministic half a `# replay: clone` successor, and grade the live half as
+   `# replay: none` with its reason as a field, so `legacy=1` becomes `live=1` with a graded reason
+   instead of an ungraded limit.
+3. **depth** — freeze a dated snapshot of the full census report so the r86 value channel's
+   `differs`/`masked`/`absent` split (not just `contradicting`) is re-derivable from committed
+   bytes; carried from round 86's planned item 3, still open.
