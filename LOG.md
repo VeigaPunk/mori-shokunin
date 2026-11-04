@@ -5350,3 +5350,82 @@ Defect 4 (the r85 report's "each disclosed in the contract and the round lesson"
 answered by `corpus/lessons/round-85.md`'s *Errata* block; the filed report is not rewritten.
 Defect 5 (prompt attribution, D84-1 recurrence) is recorded only: `.ufo/prompts/mori-round-85.md`
 was committed by the lane identity, and regenerating prompts stays integrator-owned.
+
+## Round 86 — 2026-11-04 (L1 MoriR86, attempt 1) — six surviving r85-C3-counter mutants, the receipt body bound to its command, the classification's value channel
+
+Entering `fec2b328a4c83e0c61bc09d70e254ca47d547d34`; freeze `5e80229a450fa007d73ad0fb8bc3147e4adf5438`
+(contract + three counters + measured do-nothing controls; pre-data amendment A1 `98d15d8f`: the
+subject accepts `--scratch`, the stub guard is the labels and the 21-arm selftest; A2 `c2bfded0`: the
+subject's target line is a prefix, the C3 fleet root needs `--fleet-root` off a `-shokunin` path; no
+target moved).
+
+**Claims.** C1 (operability, score 7) — `.ufo/waves/round-85/count-c3.py` gains three pure helpers
+(`stability`, `subject_ok`, `met_verdict`) and six arms (selftest 20 → 26) that kill
+`H-C3-metverdict`, `C3-01-rc-range`, `C3-02-rc-dropped`, `C3-03-order`, `C3-04-agreed-skip` and
+`C3-07-subject-tokens`: `C1=unmet mutants=4 killed=0 survivors=4 total=4 arms=20 subject=arms` at the
+entering revision, `C1=met mutants=6 killed=6 survivors=0 total=6 arms=26` at
+`50d80df0`. C2 (calibration, 5 tied lowest) — `.ufo/waves/round-85/count-c2.py` gains the replay pass
+(selftest 18 → 21): a `# replay: required` receipt's body must equal the stdout of its `# cmd:`
+executed in a scratch export of its own `# rev:`; `C2=unmet subject=stub
+missing=replay_match,replay_stale_mismatch,replay_none_requires_reason` entering, `C2=met receipts=5
+bindings=7 bound=7 revs=5 limits=5 cmd=5 summary=5 replay=2 matched=4 defeated=1 legacy=3
+unexpected=0` after, with the stale-body defeat receipt (correct headers, correct digest, one changed
+body byte) rejected as `replay-mismatch`. C3 (depth, 5 tied lowest, capability acquisition) —
+`.ufo/waves/round-86/count-c3.py` observes the census twice through the drift token line and the full
+report, requires exact-order token and volatile-filtered atom stability, and reconciles the r82
+classification's 14 bare-key `value-changed` rows with a value channel: `C3=met observations=2
+aa=stable tokens=64 derived=64 name_agree=64 value_rows=14 contradicting=2`, naming
+`-subject_commits` (`yes`) and `-window` (`launch..NOW`) as rows whose live value equals the
+baseline's — the class label overstates what the name rule proved, and the counter says so without
+editing the classification. Disclosed: applied retroactively the counter reads met at the entering
+bytes; the row claims a capability.
+
+**Wave.** One v1 wave, 12 seats (4 executor, 2 scribe, 1 scout, 2 reviewer, 1 critic, 1
+mutation-tester, 1 connector; attack 4/12 = 33.3 %), validated under policy v1
+(`w1-dispatch.json` counts `spawn 12`), reports under `.ufo/waves/round-86/w1/`. **Dead seats.** Eight
+seats ended without a report on the provider's 5-hour usage limit (`Mo86E02C2Replay`'s wake turn
+carries the explicit `429 Usage limit reached for 5 hour`); five of them landed partial work:
+`Mo86E01C1Arms` wrote two of the three helpers (the L1 completed the third, the wiring and the six
+arms from the seat's own plan), `Mo86E02C2Replay` wrote the full replay subject and generator (the L1
+fixed one 4-tuple unpack and the generator's last-line guard and `LANE` depth), `Mo86E03C3Value`
+landed `evidence/c3-value-controls.txt` with all six controls measured, `Mo86E04Controls` died before
+its battery receipt. `Mo86R01ReviewC1`, `Mo86R02ReviewC2` and `Mo86C01Critic` died mid-work and filed
+nothing; their attacks are not replaced by the L1 (the non-author closure remains the outside check).
+Landed seats: `Mo86S01Lesson` (the lesson and Gate), `Mo86S02Sources` (S602 + the knowledge entry),
+`Mo86Sc01Scout` (consumer map; R1/R2/R3 fed the A1/A2 amendments) and `Mo86K01Conn` (sibling scan: no
+lane replays a command; kama/kengaku/chousa/tsukuroi hold adjacent rules). `Mo86M01Mut` also died before
+its report, but its last output (preserved at `.ufo/waves/round-86/evidence/mutation-r86.txt`) carries
+the 48-spec matrix (`47` run, `1` refused by the A1 amendment, `23` killed, `24` survived, `3`
+equivalent-by-coupling) and the confirmed flips (M1-08 arms plumbing, M1-12 fail floor, M3-01
+value_rows, M3-03 volatile drop, M3-06 name-agree, M3-10 malformed, M3-16/M3-19). Its finding 1 (a
+`SyntaxError` in `count-c2.py`) measured a mid-edit worktree snapshot, not committed bytes: no commit
+carries it (`98d15d8f` and later parse and run `pass=11`); finding 3 (the C3 counter's stale docstring
+and unreferenced `TARGET`) was real and is fixed at `b0aa564c`, which is why the after receipt was
+re-measured there.
+
+**Frontier step.** S602 (in-toto Specification v1.0.0) opened this round, pinned
+(`evidence/sources-r86/in-toto-spec-v1.0.md`, sha256 `17d3326e…`, 87108 bytes, 2217 lines, two
+fetches byte-identical), quoted at raw lines 1063-1064 ("Byproducts are not verified by in-toto’s
+default verification routine.", 9 words) and 1053-1054; rows 374 → 375 by
+`grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|' corpus/SOURCES.md`; census rc 0 before and
+after, 35 tolerated W04 both times. `corpus/knowledge/execution-evidence-r86.md` (K1–K3, cites S602)
+and the coverage-map row are the round's new ground. The mined mistake is the r85
+`predicate-underreach` class (a receipt bound a digest and a token but never executed its command),
+measured on `.ufo/waves/round-85/count-c2.py` at `57104423` with a rebuilt one-byte-stale fixture;
+QUALITY 177–180 land the round's rules. `considerthese/2026-10-26.md` suggestion 3 ("Re-execute what
+closures only evidence-verified") is the C2 rule's motivation and is cited by QUALITY 178.
+`Assimilation: none`.
+
+**Routed-defect corrections carried in.** `57104423` discharges the r85 spot-check's items 1–4 (the
+`LOG.md:5310` `<fill>` placeholder named and answered, the contradictory `controls-r85-entering.txt`
+rc lines corrected with the supersession named, the missing r85 contract A4 block added as an
+*Errata*, the lesson-side amendment disclosure written). Item 5 (prompt attribution) is recorded
+only.
+
+**No-harm.** The record sweep reads `RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3
+revisions=0` and the claim sweep `CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4
+pointers=274` at the measured revision; the pin check reads `PIN_CHECK=unmet tally_pins=87
+digest_pins=11 mismatches=4 ... env=0 stale=4` at `c2bfded0` — the four stale pins are SKILL registry
+row 19's, already stale at the entering revision (scout R6), and row 20 supersedes them without
+deleting the old row. The three counters' own selftests read 15/11/22 pass, and the two graded
+subjects read 26/21 pass. No axis harmed; no score moved.

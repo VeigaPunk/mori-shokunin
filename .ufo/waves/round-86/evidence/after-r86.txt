@@ -1,9 +1,9 @@
 # receipt: after-r86.txt
-# cmd: python3 -I .ufo/waves/round-86/count-c1.py 50d80df0b02e57642a71091d29978da7f231c9dd; python3 -I .ufo/waves/round-86/count-c2.py 50d80df0b02e57642a71091d29978da7f231c9dd; python3 -I .ufo/waves/round-86/count-c3.py 50d80df0b02e57642a71091d29978da7f231c9dd
-# rev: 50d80df0b02e57642a71091d29978da7f231c9dd
+# cmd: python3 -I .ufo/waves/round-86/count-c1.py b0aa564ca0dec352a9b42d5d74ecba9bdaab3d7f; python3 -I .ufo/waves/round-86/count-c2.py b0aa564ca0dec352a9b42d5d74ecba9bdaab3d7f; python3 -I .ufo/waves/round-86/count-c3.py b0aa564ca0dec352a9b42d5d74ecba9bdaab3d7f
+# rev: b0aa564ca0dec352a9b42d5d74ecba9bdaab3d7f
 # counter-sha256: 1912e87d767aabfaec4aa46992d6212ce9e1f8945792057c8ab9d89651d675f1 .ufo/waves/round-86/count-c1.py
 # counter-sha256: 94a645b562ef2917d0ca6978aa307c8d97e44067c5d14ac21db80af63320a011 .ufo/waves/round-86/count-c2.py
-# counter-sha256: 6b7fc2ddb560f58cb155605510fbf4e3f3801d1766050219abdec2ca5c5668c9 .ufo/waves/round-86/count-c3.py
+# counter-sha256: e5f7214163968d4a540bab6752fba52d1949d161a5c1c08ade2f0f82bff65d0b .ufo/waves/round-86/count-c3.py
 # limits: named limit — the C1/C2 bodies are counter runs at this revision (C2 re-executes its own after receipt), while the C3 body is a live observation of the host census from this revision's own bytes
 # ---
 MUTANT count-c3.py H-C3-metverdict killed rc=1
@@ -12,7 +12,7 @@ MUTANT count-c3.py C3-02-rc-dropped killed rc=1
 MUTANT count-c3.py C3-03-order killed rc=1
 MUTANT count-c3.py C3-04-agreed-skip killed rc=1
 MUTANT count-c3.py C3-07-subject-tokens killed rc=1
-C1=met mutants=6 killed=6 survivors=0 total=6 arms=26 rev=50d80df0b02e
+C1=met mutants=6 killed=6 survivors=0 total=6 arms=26 rev=b0aa564ca0de
 rc=0
 RECEIPT after-r85.txt expect=met met problems=-
 RECEIPT record-sweep-r85.txt expect=met met problems=-
@@ -21,7 +21,7 @@ REPLAY after-c1-r86.txt rc=0 exported=1
 RECEIPT after-c1-r86.txt expect=met met problems=-
 REPLAY replay-defeat-r86.txt rc=0 exported=1
 RECEIPT replay-defeat-r86.txt expect=reject failed problems=replay-mismatch
-C2=met receipts=5 bindings=7 bound=7 revs=5 limits=5 cmd=5 summary=5 replay=2 matched=4 defeated=1 legacy=3 unexpected=0 rev=50d80df0b02e
+C2=met receipts=5 bindings=7 bound=7 revs=5 limits=5 cmd=5 summary=5 replay=2 matched=4 defeated=1 legacy=3 unexpected=0 rev=b0aa564ca0de
 rc=0
 VALUE +attribution differs
 VALUE -attribution differs
@@ -37,5 +37,5 @@ VALUE launch_epoch masked
 VALUE obs differs
 VALUE round absent
 VALUE volatile_fields absent
-C3=met observations=2 aa=stable tokens=64 derived=64 name_agree=64 value_rows=14 contradicting=2 rev=50d80df0b02e
+C3=met observations=2 aa=stable tokens=64 derived=64 name_agree=64 value_rows=14 contradicting=2 rev=b0aa564ca0de
 rc=0
