@@ -1,97 +1,83 @@
-# Receipt counterfeits — a declared mode is verified against the receipt's own header
+source: S605 (supersedes S604's wrong locator) — https://theupdateframework.github.io/specification/v1.0.37/ — §5.3 Update the root role, step 5.3.5; sentence at raw lines 3505-3506
+verified-at: 2026-11-04; gate subject d5e2eda494877a85edaa4e287d6ad81843d9a8a1
+recheck: `mkdir -p "${HYAKU_SCRATCH:-/fast/scratch/hyaku}/mori-r88/recheck" && python3 -I .ufo/waves/round-88/count-c2.py d5e2eda494877a85edaa4e287d6ad81843d9a8a1 --scratch "${HYAKU_SCRATCH:-/fast/scratch/hyaku}/mori-r88/recheck"`; re-open S605 after 365 days
+evidence: `.ufo/waves/round-88/evidence/after-r88.txt`, committed at 9c775ac2131da13c4c4cfdf2b14077184076f557, measures d5e2eda494877a85edaa4e287d6ad81843d9a8a1
+coverage-map: `corpus/README.md`, Round-88 knowledge addition: receipt counterfeits
 
-source: S604 — The Update Framework Specification v1.0.37, §5.3 "Update the root role", step
-5.3.5, fetched
-2026-11-04, `https://theupdateframework.github.io/specification/v1.0.37/` (raw HTML lines
-3502-3506; sha256 `f20fda0dda7128f3b9cc1f12f3d90301b0f6e163576ba285bfe485d1671e8def`)
-source: the lane's own gate output `.ufo/waves/round-88/evidence/after-r88.txt` (committed at
-`9c775ac2131da13c4c4cfdf2b14077184076f557`, measuring revision `d5e2eda4`)
-verified-at: 2026-11-04
-recheck: `python3 -I .ufo/waves/round-88/count-c2.py d5e2eda4` prints `C2=met real=met fx=4
-clean=1 refused=2 absent=1 arms=23`; re-open S604 on release
+# Receipt counterfeits — declared mode, token binding and target presence
 
-## Rule
+## Observed rules
 
-A receipt in the lane's population is admitted only when all three hold, each failing as a named
-problem and an unmet run rather than a count:
+The round instrument `.ufo/waves/round-87/count-c2.py` adds three necessary conditions to its
+existing ancestry, digest, summary-token and replay checks. A failed condition appends a named
+problem, changes the counts, and prevents an expected-met row from being clean; these are not
+sufficient conditions for admission.
 
-1. **Declared mode is carried by the header.** A row the population declares `required` or `clone`
-   must carry a replay mode the gate accepts. An absent `# replay:` line *and* `# replay: none`
-   (which the header parser normalizes to "no replay" after requiring a `# no-replay:` reason)
-   both read `missing-replay` on such a row. The reason is not that replay is expensive: the
-   parser otherwise turns "declared replayable" and "carries no replay mode" into the same state,
-   so a stripped header is counted `met` without any replay having run.
-2. **A bound counter is named by the command.** On a row the population declares replayable
-   (`required`/`clone`) — or that carries an explicit `# replay:` marker — every
-   `# counter-sha256:` path must appear as a whitespace token of the `# cmd:` line
-   (`cmd-binding`). A digest binds bytes; it does not bind the *body* to the command, and a
-   command such as `printf '<body>'` reproduces any body while its digest stays genuine.
-3. **A superseded target is inside the population.** A `# supersedes:` naming a receipt that is
-   not one of the population's present basenames at the graded revision is `SUPERSEDE … absent=1`
-   and fails the run, so a dangling supersede chain cannot retire a legacy row by naming something
-   the gate never sees. Named limit: a target that *is* present but is not a legacy row passes
-   silently and retires nothing — the rule checks target existence, not that the named row is
-   supersedable (tameshi's `evidence-disposition.py` is the stronger lineage rule; cited, not
-   absorbed).
+1. A population row declared `required` or `clone` with parsed replay mode `None` is
+   `missing-replay`. This includes a missing `# replay:` line and `# replay: none` with a valid
+   waiver (the parser normalizes `none` to `None`). Required rows cannot waive their declaration.
+2. On a row declared `required`/`clone`, or carrying a parsed replay marker, each binding path
+   must be a whitespace token of the shell command text after stripping surrounding quotes and
+   semicolons; otherwise `cmd-binding`. This checks naming, not executed argv.
+3. A supersede target absent from the population's **present basenames** emits
+   `SUPERSEDE … absent=1` and fails. A present target that is not a legacy row passes this check
+   but retires nothing; target existence is not a proof of valid supersession lineage.
 
-A refused row can carry more than one problem — a `clone` row with no replay line whose command
-*also* omits a bound path is both `missing-replay` and `cmd-binding`, because the binding rule is
-keyed on the declared mode while the replay execution is keyed on the parsed marker. When the
-stripped receipt's command still names its bound path (the frozen `stripped` fixture), only
-`missing-replay` is reported. The counters report the joined problem list; neither problem
-suppresses the other.
+These conditions are exercised by the four fixtures in the r88 counter. The frozen stripped
+fixture still names its bound counter, so it reports **only** `missing-replay`. A different
+stripped row whose command also omits its binding can carry both problems.
 
-## Why S604 grounds it
+Observed complete summary, reproduced by the reviewer with the explicit scratch argument:
+`C2=met real=met fx=4 clean=1 refused=2 absent=1 arms=23 rev=d5e2eda49487`, rc 0.
 
-TUF's root-update procedure admits a new metadata record only when the record's version checks
-against the trusted record (`N+1` exactly); on a mismatch the record is discarded, the cycle
-aborts and the failure is reported. Located quote (raw HTML lines 3502-3506, 23 words, exactly
-once in the tag-stripped text): "If the version of the new root metadata file is not N+1, discard
-it, abort the update cycle, and report the rollback attack."  The transferable shape is verification-before-admission: the
-record does not earn a pass for existing, and the refusal is a named outcome, not a suppressed
-error.
+## Source and the limit of the analogy
 
-## Limits (named)
+Stored source: `.ufo/waves/round-88/evidence/sources-r88/tuf-spec-v1.0.37.html`, 248698 bytes,
+4997 lines; SHA-256 `f20fda0dda7128f3b9cc1f12f3d90301b0f6e163576ba285bfe485d1671e8def`.
+The page's root-update heading is §5.3; its fifth ordered-list item contains this 23-word quote
+(raw lines 3505-3506, once in tag-stripped text):
 
-- **Naming is not execution.** `binding_problems` splits the command text on whitespace; a path
-  named only inside a shell comment satisfies it while bash never executes it. Measured by the
-  round-88 C2 reviewer on fixture `a010047c`: a `clone` receipt whose `# cmd:` is
-  `printf 'RECORD_SWEEP fabricated=1\n' # tools/mori-record-sweep.py` reproduces the r87 target
-  line. Routed as R89-C2-comment-binding; this entry does not claim execution provenance.
-- **A self-printing command passes when it also names the path.** The rule is token presence, not
-  command shape: `printf 'RECORD_SWEEP fabricated=1 tools/mori-record-sweep.py\n'` with a matching
-  body replays, matches and names the bound path, so it reads `met` (critic fixture `3e84f588`).
-  Routed as R89-C2-selfprint-evasion; the round-88 claim covers only the frozen fixture whose body
-  omits the path token.
-- **Token spelling is not path identity.** `'tools/x.py'` and `"tools/x.py"` are accepted (the
-  token is stripped of quotes); `./tools/x.py` is refused although it is the same file. Routed as
-  R89-C2-path-identity. The real population is unaffected (`C2=met … unexpected=0`, measured).
-- The gate verifies that a body is produced by its command. It does not verify that the command
-  measures the thing the receipt claims to measure: `true` has a reproducible empty body.
-- Legacy rows stay header-bound only (no replay); their `# limits:` cell carries the reason, and
-  this gate does not re-derive their bodies. `binding_problems` is deliberately scoped to rows the
-  population declares replayable (or that carry a replay marker), because a legacy receipt's
-  `# limits:` is where its worktree-run exception is recorded and refusing those rows would trade
-  one silence for another. Measured: `SCOPE_TABLE rows=7 applied=4 would_refuse=0` on the real
-  population.
-- Fixture revisions built inside `--shared` clones embed their commit time, so their hashes are
-  not citable evidence; only the graded revision and the verdict line are.
+> If the version of the new root metadata file is not N+1, discard it, abort the update cycle,
+> and report the rollback attack.
 
-## Siblings (cited, not absorbed)
+TUF specifies update metadata, not mori receipts, command provenance or mutation coverage. Only
+the verification-before-admission shape transfers; the implementation claims come from the
+committed gate and observed reports, not from TUF.
 
-The round-88 connector measured these relations; the sibling owns the stronger rule and mori only
-cites it:
+## Measured limits
 
-- tameshi `tools/count-recheck.py` — value binding (a printed figure equals a recount at the named
-  revision). Mori's replay proves reproducibility, not that the figure is right.
-- tameshi `tools/receipt-revision-gate.py` — a required-line refusal set (11 codes) and
-  positive/verdict rev binding. Mori's rule 1 is one fixed instance of that shape.
-- mado `tools/mado-tripwire.py` — unpinned inputs are refused, not downgraded to legacy; its
-  provenance disclaimer ("provenance is the snapshot author's claim, not checked") is the sentence
-  mori must cite, not restate.
-- kotodama `tools/check-receipt-seq.py` — three-revision equality plus carrier parentage; a
-  receipt-sequence claim belongs there, not in a new mori rule.
-- chousa `corpus/knowledge/receipt-identity-r65.md` and `receipt-digest-provenance-r67.md` — the
-  command/body-binding limit and the committed-bytes provenance rule mori implements.
+- **Naming is not execution.** A path in a shell comment passes the token test although bash
+  never uses it. See `.ufo/waves/round-88/w1/Mo88R02ReviewC2.md:7-16`; the recorded command is
+  `printf 'RECORD_SWEEP fabricated=1\n' # tools/mori-record-sweep.py`.
+- **Self-printing still passes if the path is also a token.** The critic's command is exactly
+  `printf 'RECORD_SWEEP fabricated=1 tools/mori-record-sweep.py \n'`. The space before `\n` is
+  load-bearing: without it the path token includes the escape and is refused. See
+  `.ufo/waves/round-88/w1/Mo88C01Critic.md:115-136` and `Mo88S02Knowledge.md:207-221`.
+- **Token spelling is not path identity.** Quoted paths pass but `./tools/mori-record-sweep.py`
+  is refused despite a successful genuine replay; critic report `:97-113`.
+- Empty binding lists satisfy the path rule vacuously. The population's `bindings=9 bound=9`
+  target detects changes to its own fixed set, not arbitrary missing provenance.
+- `POPULATION` is lane-authored input, not independently trusted history. Declaring a row legacy
+  and stripping its marker bypasses both replay-related rules. A new receipt/count changes the
+  fixed target and reads unmet; this is a round instrument, not a general receipt validator.
+- A clean legacy successor can participate in supersession without replay; self-supersession is
+  not refused by the helper. Limits-cell content is not verified beyond word/count checks.
+- No current real row is falsely refused: `SCOPE_TABLE rows=7 applied=4 would_refuse=0`
+  (`.ufo/waves/round-88/w1/Mo88Sc01Scope.md:17-23`). This says nothing about other spellings.
+- Scratch fixture commit hashes in seat reports are run identifiers, not resolvable evidence.
+  The reports contain the transformations and output needed to reconstruct them.
+
+## Siblings — cited, not absorbed
+
+The connector's comparison is `.ufo/waves/round-88/w1/Mo88K01Conn.md:48-64,118-142`:
+
+- tameshi `tools/count-recheck.py:2-4` checks a printed value against a recount; reproducibility
+  alone does not establish correctness. `tools/receipt-revision-gate.py:28-30,139-159` carries
+  eleven revision/digest/required-line/ancestry codes, including content-drift refusal mori lacks.
+- tameshi `tools/evidence-disposition.py:1524-1542` checks stronger supersession lineage.
+- mado `tools/mado-tripwire.py:143-151` expressly leaves snapshot/transcript provenance unproved.
+- kotodama `tools/check-receipt-seq.py:131-157,179-196` owns revision equality and carrier parentage.
+- chousa `corpus/knowledge/receipt-identity-r65.md:16` and `receipt-digest-provenance-r67.md:15`
+  distinguish identity, content binding and provenance.
 
 `absorption: none`.

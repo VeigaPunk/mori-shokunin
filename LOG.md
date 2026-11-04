@@ -5529,3 +5529,34 @@ the r87 subjects are green at 24 and 23 arms; the census is rc 0; no score moved
 corpus entry was deleted or left stale (QUALITY 183–184 cite this round's controls and receipt).
 Detection and report only: no remediation, no lane or host state changed.
 
+
+### Round-88 correction of record — final integration after WAVE-DONE
+
+This append supersedes the Round-88 entry's interim `376 → 377`, its implication that no
+operability harm occurred, and E1's statement that no subject bytes changed. Final registry:
+**376 → 379** (S604 initial, S605 superseding its wrong locator, S606 retained duplicate rejection;
+one distinct TUF document). S604's original immutable cells are restored; its `used-by` changes
+to the lesson, logged there. `sources-census.sh census --root /home/vgpnk/Projects/shokunin mori`
+prints `rows 379`, tier A340/B19/C20, mined322/queued24/rejected33; validate exits 0 with zero
+errors, 35 inherited W04 warnings. Full commands/output:
+`.ufo/waves/round-88/evidence/final-verification-r88.txt`.
+
+The final knowledge-review output is `ENTRY needs-changes` (D1–D18); it was not a clean entry
+vote. Final integration answers those findings in the rewritten entry, narrows its claims, cites
+the reports instead of ephemeral fixture hashes, and adds the explicit scratch recheck. No
+fresh non-author review of that rewrite is claimed.
+
+`d5e2eda4` added tally lines in **both** the r87 subject and r88 detector after the first C1
+measurement. Counter targets, mutation population and kill rule are unchanged, but detector
+fixture bytes were not frozen throughout; contract E4 corrects E1. C1's real six arms are
+directly verified, while its canary control makes instrument assurance unprovable. C2's two
+exact refusals verify, but the new `cmd-binding` rule rejects a valid `./path` invocation:
+**operability harmed; final recommendation honest stop, not admission.** Scores remain
+unchanged; the two demonstrated instruments are not admitted repertoire additions.
+
+The parent sent **WAVE-DONE mori r88 w1**; `.ufo/waves/round-88/w1-results.json` contains twelve
+terminal outputs, matching the validated role mix. No death is reported, but IDs/status fields
+are absent from that handoff. Final verification re-ran the two detector selftests (25/0,17/0)
+and both met lines at d5e2eda4, all rc0; these results do not override the attack findings.
+QUALITY 185 learns the no-harm/control mistake. No new L0 question; existing mori r65/r73
+instrument ruling and r61 assimilation questions remain untouched.

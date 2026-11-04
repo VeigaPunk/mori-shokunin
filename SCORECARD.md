@@ -4477,6 +4477,16 @@ wrong-reason fixture defect below) and `d5e2eda4` (the fixture tally lines).
 | C1 six surviving r87-count-c1 clauses get the failing arm each; selftest 18 → 24 arms | operability | `python3 -I .ufo/waves/round-88/count-c1.py <rev>` | `C1=unmet mutants=6 killed=0 survivors=6 total=6 arms=18` rc 1; the label-only fixture reads `arms=24 survivors=6` rc 1 | `C1=met mutants=6 killed=6 survivors=0 total=6 arms=24` rc 0 |
 | C2 the r87 receipt gate refuses two counterfeit bodies and keeps the real population met at 23 arms | calibration | `python3 -I .ufo/waves/round-88/count-c2.py <rev>` | `C2=unmet real=met fx=4 clean=1 refused=0 absent=1 arms=17` rc 1 (both counterfeits print the exact r87 target tail) | `C2=met real=met fx=4 clean=1 refused=2 absent=1 arms=23` rc 0 |
 
+**Final verdict, after attacks:** C1's numeric target and six real killer arms verify, but the
+counterfeit checksum subject also meets the counter: instrument assurance is **unprovable**.
+C2's two frozen refusals verify, but a genuine `./path` replay is newly refused: operability
+is **harmed** outside the seven-row control. The round therefore recommends **honest stop,
+not admission**, with no score delta. A met line is not a no-trade verdict.
+The C1 detector fixture bytes changed after the first data point (contract E4 corrects E1:
+the subject and detector both changed). This record does not call that change pre-data.
+Final source curation uses S605, superseding S604's wrong locator, plus rejected duplicate S606;
+the final census and correction log are in the lesson's Gate supplement.
+
 The six C1 mutants are `M1-met-no-guard`, `M2-met-drop-empty`, `M3-killed-n`, `M4-arms-total`,
 `M5-split-field`, `M6-anchor-guard`; each dies under the arm the contract names for it
 (`met_guard_unanchored`, `met_guard_empty`, `killed_tally_mixed`, `arms_tally_passed`,
@@ -4508,7 +4518,10 @@ self-printing command that also names the bound path passes (fixture `3e84f588`)
 rule is spelling, not path identity (`./tools/...` is falsely refused; the real population is
 unaffected). Each is routed to round 89; no target, population, fixture or kill rule moved.
 
-### Capabilities (round 88)
+### Demonstrated instruments (round 88; not admitted repertoire additions)
+
+The runs below demonstrate narrow instruments, not admitted capabilities: the canary and genuine
+path refusal prevent the no-trade admission required for a capability-table addition.
 
 | Capability | What it can now do | Evidence pointer | First-working round |
 |---|---|---|---|
@@ -4533,7 +4546,7 @@ unaffected). Each is routed to round 89; no target, population, fixture or kill 
    fixture `3e84f588` prints the full target line), **R89-C2-path-identity** (`./path` and other
    spellings of the same file are falsely refused), and F3 hermeticity: the two r86 `required` receipts replay against the host lane path, so `replay=4`
    is host-local — move them to clone mode or record the limit in the graded row. Also from the r88
-   wave: delete the dead assignment `want_met = ...` at `.ufo/waves/round-87/count-c2.py:121`
+   wave: delete the dead assignment `want_met = ...` at `.ufo/waves/round-88/count-c2.py:121`
    (ruff F841) only with a superseding receipt, since the after receipt binds the counter's
    sha256; and rename the r88 C2 counter's `FX ... refused` wording so a clean fixture reads `ok`
    (legibility).

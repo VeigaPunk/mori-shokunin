@@ -53,7 +53,8 @@ are what C2 closes, 1 is discharged by the two SKILL.md gate rows (registry rows
 
 ## Gate
 
-Sources opened this round. One new row, one rejected candidate.
+Sources opened this round. Initial row S604 is superseded by corrected S605; duplicate S606 is
+retained as rejected. These are three tier-A registry rows but one distinct source document.
 
 | Candidate | Decision | Evidence / flip condition |
 |---|---|---|
@@ -66,31 +67,34 @@ Registry census, both runs on this worktree:
 ```text
 $ /home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori
 mori	ok	/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md          # before: rc 0, 376 rows
-mori	ok	/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md          # after:  rc 0, 377 rows
+mori	ok	/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md          # interim after: rc 0, 377 rows; final census below
 ```
 
 Row counts by the contract grammar `grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|'`:
-**376 → 377**; warnings 35 → 35 (all `W04` duplicate-URL, the entering tolerance), zero `E` codes
-both times.
+Interim **376 → 377**; warnings 35 → 35 (all `W04` duplicate-URL, the entering tolerance), zero
+`E` codes. The final registry adds a corrective and a rejected row; its census is recorded below.
 
 Gate limits, named: the quote is a raw-HTML line range and a reader must strip tags to see it as
 one sentence; the spec's own version is pinned by the URL path (`v1.0.37`) and the page's
 `dt-updated` date, not by a git tag. **Assimilation: none** — no `merge/mori/` package was read or
 adopted this round; `/home/vgpnk/Projects/shokuknow` was not touched.
 
-**S604 locator correction, in place and disclosed (old → new).** The row's anchor cell first read
-`§5.3.7 Update the root role, step Check for a rollback attack (raw HTML lines 3502-3506)`. The
-wave's knowledge reviewer (`w1/Mo88S02Knowledge.md` §2) measured that the heading containing those
-lines is `<h3 id="update-root">` at raw line 3465 — *§5.3, Update the root role* — and that the
-quoted paragraph is the **fifth** ordered-list item (`<li>` at raw line 3501, paragraph
-3502-3506); `grep -c '5\.3\.7'` over the stored copy prints **0**. The cell now reads `§5.3
-Update the root role, step 5.3.5 (fifth ordered-list item, raw line 3501; quoted paragraph raw
-lines 3502-3506)`; the URL, sha256, byte/line counts and quote are unchanged, and no `status`,
-`recheck` or `used-by` value moved. The same number was corrected in `corpus/README.md` and in
-`corpus/knowledge/receipt-counterfeit-r88.md`. **Named contract deviation:** `CORPUS.md` rule 2
-asks a correction to be a new row whose `teaches` opens `supersedes S0NN —`, but a second row for
-the same URL and scope would be an E04 within-scope duplicate, so the locator cell is corrected in
-place and this paragraph is the old→new record.
+**Append-only correction supersedes the earlier in-place locator edit.** S604 was initially
+committed with `§5.3.7`, an incorrect locator. An intermediate commit edited that cell in place
+and claimed E04 prevented a superseding row. That claim was wrong: the census explicitly exempts
+`teaches` beginning `supersedes S…` from its within-scope duplicate error
+(`scripts/sources-census.sh:646-649`). The original S604 locator is restored and S605 is appended
+with the correct §5.3, step 5.3.5 locator. No source row is deleted or ID reused.
+
+| Final candidate | Decision | Opening, located quote and disposition |
+|---|---|---|
+| S605 — https://theupdateframework.github.io/specification/v1.0.37/ | ADMIT; supersedes S604 locator; tier A spec, mined; 365d | Opened 2026-11-04. Same stored bytes and SHA as S604. §5.3 step 5.3.5, sentence at raw lines 3505-3506: “If the version of the new root metadata file is not N+1, discard it, abort the update cycle, and report the rollback attack.” 23 words. TUF says nothing about mori receipts; only the verification-before-admission shape is transferred. |
+| S606 — https://theupdateframework.github.io/specification/v1.0.37/index.html | REJECT; tier A spec, rejected; 365d | Opened 2026-11-04; HTTP 200, no redirects, 248698 bytes, 4997 lines; SHA f20fda0dda7128f3b9cc1f12f3d90301b0f6e163576ba285bfe485d1671e8def, byte-identical to S605. Same §5.3 step 5.3.5 quote: “If the version of the new root metadata file is not N+1, discard it, abort the update cycle, and report the rollback attack.” 23 words. Duplicate support, not a second authority. Flip: distinct opened content or scope. |
+
+S604 `used-by`: `corpus/knowledge/receipt-counterfeit-r88.md` → `corpus/lessons/round-88.md`
+(historical locator mistake). Its status `mined` and recheck `on-release` are unchanged.
+S605 starts `mined / 365d / corpus/knowledge/receipt-counterfeit-r88.md`; S606 starts
+`rejected / 365d / corpus/lessons/round-88.md`. No other existing status/recheck/used-by changes.
 
 ## Suggestion-adoption status (considerthese)
 
@@ -106,7 +110,7 @@ place and this paragraph is the old→new record.
 
 ## Seat findings merged at integration (wave w1)
 
-All twelve seats settled; every report is merged below. None of them authored the round and none wrote the corpus.
+All twelve seats settled. Seats are lane-owned, not the independent non-author closure reviewers.
 
 1. **Mo88E02C2Gate (executor, C2 re-measurement by hand).** Built the counterfeits with `write`/`edit`
    only, never importing the r88 counter's `mutate_receipt`. Verdict **C2 agrees**: clean `C2=met`
@@ -195,16 +199,63 @@ All twelve seats settled; every report is merged below. None of them authored th
     deletion (each deletion flips the target or the subject arm gate); the fixture tally lines are
     the only post-freeze edit and are disclosed as Erratum E1.
 
-12. **Mo88S02Knowledge (scribe, entry review).** Verdict **ENTRY needs-changes**, on a mid-round
-    snapshot of the entry. Its load-bearing defects were accepted and fixed before the entry was
-    committed: (a) rule 1's "no `# replay:` line" missed the `# replay: none` normalization (the
-    entry now says both); (b) rule 2's "replayed row" did not say the rule is keyed on the declared
-    mode (now stated); (c) the after-receipt `source:` line named the measured revision instead of
-    the commit that carries the receipt (now `9c775ac2` measuring `d5e2eda4`); (d) the S604
-    locator said §5.3.7 while the heading is §5.3 and the quoted paragraph is its fifth step
-    (corrected in `SOURCES.md`, `README.md` and the entry, disclosed above); (e) the "both
-    problems" example was false for the frozen `stripped` fixture (its command still names the
-    bound path, so only `missing-replay` fires — corrected); (f) rule 3's "outside the population"
-    was both narrower and wider than the code (now "not a present basename", with the
-    present-but-not-legacy limit named). Its `--selftest` and both counter runs reproduced the
-    after lines from its own scratch.
+12. **Mo88S02Knowledge (scribe, final entry review).** Its final `ENTRY needs-changes` identifies
+    D1–D18, not merely the earlier four fixes. Final integration rewrites the entry to answer
+    all remaining items: stored-copy provenance; report pointers rather than scratch-hash evidence;
+    explicit scratch and complete recheck tail; `coverage-map`; 365d cadence; necessary rather than
+    sufficient conditions; TUF source-silence; the load-bearing space before `\n` in the selfprint
+    example; zero-binding, declaration-trust, fixed-population, legacy-successor and limits-content
+    caveats; and cited sibling comparisons. The original `needs-changes` judgment remains in
+    the report. No fresh outside review of the final rewrite is claimed.
+
+## Final disposition and factual corrections
+
+The parent supplied `WAVE-DONE mori r88 w1` and `w1-results.json` after all twelve settled.
+The handoff has twelve terminal outputs but omits per-seat IDs/status fields; no seat death is
+reported. Both real target lines reproduce, but this is **not an admission**: C1's canary
+falsifies instrument assurance and C2's `./path` false refusal is an operability trade.
+No scores increase.
+
+The earlier E1 and lesson wording conflated subject and detector fixes. `d5e2eda4` changed the
+two tally literals in **both** r87 subject and r88 detector. “No subject byte moved” is false;
+contract E4 supersedes it. The M1 unique-anchor correction occurred before freeze, not in
+`d5e2eda4`. Initial source count 376 → interim 377 → final 379 includes one corrective row and
+one retained rejection; it is not three independent sources.
+
+## Final census and integration receipt
+
+The one post-wave verification pass is committed at
+`.ufo/waves/round-88/evidence/final-verification-r88.txt`:
+
+```text
+$ scripts/sources-census.sh census --file <git-show-entering-SOURCES-copy>
+file rows 376; tier.A 337; tier.B 19; tier.C 20; mined 320; queued 24; rejected 32
+rc=0
+$ /home/vgpnk/Projects/shokunin/scripts/sources-census.sh census --root /home/vgpnk/Projects/shokunin mori
+mori rows 379; tier.A 340; tier.B 19; tier.C 20; mined 322; queued 24; rejected 33
+rc=0
+$ /home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori
+mori ok /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+rc=0
+```
+
+The receipt preserves full TSV, all warning lines and exact commands (the block above is a
+labelled summary). Final validate has zero errors and the same 35 W04 warnings. C1/C2 detector
+selftests print 25/0 and 17/0, and both measured numeric targets at d5e2eda4 still print met;
+all seven commands exit 0. None cancels the recorded canary or valid-input trade.
+
+**Additional mistake — assuming a correction is impossible without reading the guard.**
+The earlier E04 explanation was refuted by the parser's explicit `supersedes` exemption.
+Evidence: `scripts/sources-census.sh:646-649`; captured-by: CORPUS append-only rule;
+fix: restore S604's immutable cells, append S605 with `supersedes S604`, retain rejection S606,
+and run final validate. It is able to fail: the parser's own E04 duplicate-URL arm distinguishes
+an unqualified duplicate from a superseding correction. No parser was changed.
+
+**Output self-evaluation, not an expertise/trend score:** accuracy 3/5 (E1's false statement and
+source-locator correction needed explicit errata); completeness 4/5 (both counters, all twelve
+seat outputs, final census and formal settlement retained; final corpus rewrite has no fresh
+outside spot-check); clarity 4/5 (final disposition distinguishes met from admission, but historical
+errata are lengthy); actionability 4/5 (counterexamples and exact repair populations are routed);
+conciseness 3/5 (round evidence is long). Mean 3.6/5. Highest-impact improvement: freeze a
+subject-identity/arm-attribution control before scoring and require semantic-equivalence
+positive controls. The operator should judge the actual trade, not the met labels.

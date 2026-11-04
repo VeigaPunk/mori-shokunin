@@ -182,3 +182,25 @@ findings, accepted and routed:
 
 No target, population, fixture or kill rule moved: all five items are scope statements about what
 the measured lines do and do not prove, and each is routed with a round-89 witness.
+
+### Erratum E4 — correction of E1 and final admission limits
+
+E1's statement **“No subject byte moved” is false**. Commit `d5e2eda4` changed the
+`dup.py`/`empty.py` tally literals in **both** `.ufo/waves/round-87/count-c1.py` (the subject)
+and `.ufo/waves/round-88/count-c1.py` (the detector). The subject change makes its six added
+arms load-bearing; the detector change strengthens its own analogous witnesses. The populations,
+numeric targets and kill rule stayed fixed, but detector fixture bytes changed after the
+first `killed=4 survivors=2` observation. This is post-data instrument drift, not a pre-data
+amendment. The original freeze and after digests are retained in `Mo88S01Lesson.md`.
+
+The critic executed the original freeze counter over the final real subject and reproduced
+the target (`Mo88C01Critic.md:10-17`); that does not cancel the checksum-canary forgery.
+C1's real arm improvements are directly measured, but the counter alone cannot prove its
+intended property. C2's exact fixtures verify, while its new token rule rejects the genuine
+`./tools/mori-record-sweep.py` spelling. The seven-row control is not a no-harm proof outside
+those rows. **Final L1 recommendation: honest stop, not admission** — C1 instrument assurance
+unprovable and C2 operability trade observed. No counter is repaired after these attacks.
+
+E2's “post-report” refers to the seat report, not the fleet round report; E3 was written after
+seat reports but before the formal WAVE-DONE handoff. The fleet report is filed only after
+the parent sent `WAVE-DONE mori r88 w1` and supplied `w1-results.json`.

@@ -2142,3 +2142,15 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
       a worktree run) are not falsely refused (`C2=met ... matched=6 ... unexpected=0`).
       Not covered: a command that faithfully reproduces a body about the wrong subject; argv reached
       through a shell wrapper.
+
+185. A green frozen fixture is not proof that the claim's whole class is handled, and no-harm is
+      checked against semantically equivalent valid inputs as well as the original population.
+      Ground: `corpus/lessons/round-88.md`, final disposition; `Mo88C01Critic.md` reproduced C1's
+      met line on an arms-free checksum canary and C2 rejected a genuine `./path` invocation.
+      Shown able to fail: those two executed counterexamples contradict the intended assurance
+      despite both target lines being met. The round stops honestly; a later rule must defeat
+      the canary and accept the equivalent spelling before claiming those classes closed.
+      Criterion 184 is a necessary token check only, not execution provenance; shell comments,
+      self-printing commands and empty binding lists expose its limits. Seat reports are under
+      `.ufo/waves/round-88/w1/`; `evidence/…` in criteria 183–184 means this round's wave evidence,
+      not a top-level directory.
