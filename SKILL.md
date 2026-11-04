@@ -1350,3 +1350,16 @@ around.
 | the mechanism layer | a challenge solve updates the token with the challenge solve timestamp and the client resubmits the original request with the UPDATED token — the mechanism consistent with per-response>0 / same-bytes=false windows | inferring the vendor's bot-management policy, a TTL, or a page state from the mechanism | S590 `:138/:144` (anchor-checked r75); S579/S580 |
 | `wall_s=` | the whole run's wall time (31+91+304 s of stated dwell + capture overhead — 429 s in both instrument runs) — informational | using wall_s as a verdict input | the r74/r75 live receipts |
 | limits that travel with every receipt | stdout carries counts/shapes/stamps/sha-prefixes only; capture bodies are scratch session artifacts, never pinned content; not a census surface; no liveness verdict; the lane decides no TTL value and names no vendor verdict — the vendor's bot management stays the vendor's | treating a schedule receipt as a fleet-health, liveness or census finding | the r74 C2 routed limits; `corpus/knowledge/rotation-receipt-grammar-r76.md` limits/boundaries |
+
+## Round79 — the control-receipt guard landed (registry row 13; the D78-1 discharge)
+
+The r78 closure's routed defect D78-1 (a control receipt stating a count with no counting
+command, and a report whose spelled-out command did not produce the zero it claimed) is
+discharged by a standing gate, not by a prose rule. `tools/mori-control-receipt.py` is
+registered here at the r79 landing; this section is append-only at this file's end (no earlier
+byte edited), and the instrument is not the tally-pinned drift family that the mori | round-65
+L0 governs.
+
+| name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
+|---|---|---|---|---|---|---|---|
+| control-receipt guard (r79 tool) | gate | `python tools/mori-control-receipt.py <receipt> [...]` or `--dir DIR` (`--selftest`, `--help`) | 0 -> every section that carries a `key=<integer>` claim also carries a command line (`CONTROL_RECEIPT_SUMMARY ... unbound=0`) · 1 -> any unbound section, named `unbound <path>#<section> claims=N keys=...` · 2 -> setup (usage, missing path, unreadable file, empty `--dir`) | `python tools/mori-control-receipt.py --selftest` -> `CONTROL_RECEIPT_SELFTEST pass=18 fail=0` at the r79 landing (re-run 2026-11-04) | frozen P-C1 in `.ufo/waves/round-79/contract.md`; the D78-1 witness `.ufo/waves/round-78/evidence/controls-r78.txt` | stdout only; no file writes, no child processes, no network, no `/tmp` path of its own | mori |

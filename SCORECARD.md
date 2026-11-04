@@ -4001,3 +4001,16 @@ for wall-clock distance (the r75 planned head (d) stands); (d) the boot-scoped
 events window stays behind the mori | round-65 L0; (e) the label-sweep instrument
 stays operator-material while the mori | round-73 L0 stays open.
 
+
+
+## Round 79 (2026-11-04, L1 MoriR79) — the capability row for the control-receipt guard (C1 operability)
+
+Capability acquisition under AXES.md section *Capabilities*: the instrument runs, its output
+verifies, and its row enters the capabilities table in the same round. Appended at end-of-file
+after the Round-78 section — every earlier line of this file is unchanged, the axes table above
+is corrected in place by the C2 claim (five `Last change` cells, older clauses retained) with
+its correction paragraph after the r50 one, and no score moved.
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Control-receipt binding guard (`tools/mori-control-receipt.py`) | reads one receipt or a `--dir` of `*.txt` receipts, splits each at `## ` section headings, and reports whether every section that carries a bare `key=<integer>` claim also carries a counting command line (a `$ command` line, a command-verb line, or a line with ` cmd=`): per-file `CONTROL_RECEIPT <path> sections=S claims=C bound=B unbound=U`, one `unbound <path>#<section> claims=N keys=...` per violating section, and a `CONTROL_RECEIPT_SUMMARY` total; rc 0 conformant, 1 any unbound section, 2 setup; selftest 18 in-memory cases; stdout only — no file writes, no child processes, no network, no `/tmp` path of its own. Detects the D78-1 class on the r78 receipts (`unbound=11`, `controls-r78.txt#4.` named with the key) and reads clean on the r79 receipts (`unbound=0`) | `tools/mori-control-receipt.py` at the r79 landing; `.ufo/waves/round-79/evidence/after-r79.txt` (selftest 18/18, both live dirs); registry row 13 in `SKILL.md`; rule `corpus/QUALITY.md` 164 | 79 |

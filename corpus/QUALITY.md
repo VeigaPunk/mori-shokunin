@@ -1748,3 +1748,24 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     Not covered: this file's other fenced blocks — each is extracted on its own evidence, and a
     block that runs verbatim needs no erratum; the §90 line numbers cited by earlier lessons are
     unchanged (this row appends at end-of-file).
+
+164. A control receipt states the counting command beside every count it asserts: every
+     section of a receipt that carries a bare `key=<integer>` claim also carries at least one
+     command line (a `$ <command>` line, a command-verb line, or a line with ` cmd=`), and a
+     count whose producing command is absent is not evidence. Mechanized by
+     `python tools/mori-control-receipt.py --dir DIR` (rc 0 iff
+     `CONTROL_RECEIPT_SUMMARY ... unbound=0`). "stdout only" in an instrument contract is the
+     write-scope sentence (no files, no children, no network); setup diagnostics on stderr
+     are not a write and do not breach it.
+     ← the r78 closure's routed defect D78-1: `.ufo/waves/round-78/evidence/controls-r78.txt`
+     states `correction_marker_in_LOG_at_entering=0` with no command anywhere in the file,
+     and the r78 report's spelled-out control read 6, not 0, on its own words.
+     Shown able to fail: `python tools/mori-control-receipt.py --dir
+     .ufo/waves/round-78/evidence` -> rc 1, `CONTROL_RECEIPT_SUMMARY files=15 sections=37
+     claims=40 unbound=11`, including `controls-r78.txt#4. claims=1
+     keys=correction_marker_in_LOG_at_entering`; the same command over
+     `.ufo/waves/round-79/evidence` -> rc 0, `unbound=0` (the round's own receipts carry the
+     command above every count). Receipts: `.ufo/waves/round-79/evidence/after-r79.txt`.
+     Not covered: a receipt that names a command which did not produce the count (text
+     binding is not provenance); claim shapes other than a bare `key=<integer>` line; the
+     report or lesson prose itself.
