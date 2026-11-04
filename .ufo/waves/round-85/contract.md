@@ -128,4 +128,12 @@ not a subject change.
 
 ### Amendments
 
-(none)
+**A1 (pre-data, 2026-11-04T08:12-03:00, before any after value existed).** `count-c2.py` verified a
+receipt's `# counter-sha256:` binding against the bytes at the GRADED TIP rather than at the
+receipt's own `# rev:`. P-C2's sentence already said "every bound path's bytes at that revision
+hash to the stated sha256", so the code — not the predicate — was wrong: `grade()` now takes a
+per-revision loader (`make_loader(rev)`) and `verify_bindings` reads the named revision's blob.
+No predicate, kill rule, target, receipt or class changed; the counter's selftest stays
+`pass=15 fail=0` and a hand-built receipt set committed after a code revision reads
+`C2=met receipts=3 bindings=5 bound=5 revs=3 limits=3 cmd=3 summary=3 mismatch=0`, rc 0 (L1 probe
+in scratch). `count-c1.py` (18 arms) and `count-c3.py` (19 arms) are unchanged.

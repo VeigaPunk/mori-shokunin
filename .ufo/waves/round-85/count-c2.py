@@ -148,8 +148,12 @@ def ancestor(rev, tip, git):
     return p.returncode == 0
 
 
-def grade(loader, rev_ok, tip):
-    """Grade the three frozen receipts. loader(path) reads bytes at `rev`."""
+def grade(loader, rev_ok, make_loader):
+    """Grade the three frozen receipts.
+
+    loader(path) reads bytes at the graded tip; make_loader(rev)(path) reads the bytes the
+    receipt's own `# rev:` names — the binding is verified at THAT revision, never at the tip.
+    """
     total_bindings, total_bound, revs, limits, cmds, summaries = 0, 0, 0, 0, 0, 0
     mismatch = 0
     lines = []
@@ -176,7 +180,7 @@ def grade(loader, rev_ok, tip):
             mismatch += 1
         total_bindings += len(fields["bindings"])
         if rev_ok_here:
-            bound, bad, why = verify_bindings(fields["bindings"], loader)
+            bound, bad, why = verify_bindings(fields["bindings"], make_loader(rev))
         else:
             bound, bad, why = 0, len(fields["bindings"]), ["rev-unresolved"]
         total_bound += bound
@@ -279,6 +283,12 @@ def main(argv):
         q = run(["git", "-C", repo, "show", "%s:%s" % (rev, path)])
         return q.stdout if q.returncode == 0 else None
 
+    def make_loader(candidate):
+        def load(path):
+            q = run(["git", "-C", repo, "show", "%s:%s" % (candidate, path)])
+            return q.stdout if q.returncode == 0 else None
+        return load
+
     def rev_ok(candidate):
         q = run(["git", "-C", repo, "rev-parse", "--verify", candidate + "^{commit}"])
         if q.returncode != 0:
@@ -293,7 +303,7 @@ def main(argv):
     own_out = (own.stdout or "") + (own.stderr or "")
     own_ok = (own.returncode == 0
               and re.search(r"C2_COUNTER_SELFTEST pass=(\d+) fail=0", own_out) is not None)
-    met, tail, lines = grade(loader, rev_ok, rev)
+    met, tail, lines = grade(loader, rev_ok, make_loader)
     for line in lines:
         print(line)
     if not own_ok:
