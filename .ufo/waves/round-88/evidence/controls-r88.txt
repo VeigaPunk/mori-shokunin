@@ -1,0 +1,73 @@
+# controls-r88.txt — do-nothing and label-only controls for mori round-88
+# lane: mori · round: 88 · attempt 1 · date: 2026-11-04 · L1: MoriR88
+# entering revision: 1bd5ec3fa260458f74eb32a2e5bb157209c5934d
+# Each section carries its command line immediately before the verbatim output it produced.
+
+## C1 — the frozen r88 C1 counter over the entering bytes (do-nothing control)
+
+$ python3 -I .ufo/waves/round-88/count-c1.py 1bd5ec3fa260458f74eb32a2e5bb157209c5934d --scratch /fast/scratch/hyaku/mori-r88/controls
+MUTANT count-c1.py M1-met-no-guard survived rc=0
+MUTANT count-c1.py M2-met-drop-empty survived rc=0
+MUTANT count-c1.py M3-killed-n survived rc=0
+MUTANT count-c1.py M4-arms-total survived rc=0
+MUTANT count-c1.py M5-split-field survived rc=0
+MUTANT count-c1.py M6-anchor-guard survived rc=0
+EXTRA pristine-arms .ufo/waves/round-87/count-c1.py arms=18 want=24
+EXTRA survivor .ufo/waves/round-87/count-c1.py M1-met-no-guard
+EXTRA survivor .ufo/waves/round-87/count-c1.py M2-met-drop-empty
+EXTRA survivor .ufo/waves/round-87/count-c1.py M3-killed-n
+EXTRA survivor .ufo/waves/round-87/count-c1.py M4-arms-total
+EXTRA survivor .ufo/waves/round-87/count-c1.py M5-split-field
+EXTRA survivor .ufo/waves/round-87/count-c1.py M6-anchor-guard
+C1=unmet mutants=6 killed=0 survivors=6 total=6 arms=18 detector=green rev=1bd5ec3fa260
+rc=1
+
+## C1b — label-only fixture: six passing arms with no assertion in a copy of the r87 counter
+
+$ git clone --shared /home/vgpnk/Projects/shokunin/mori-shokunin <scratch>/label-only
+$ python3 - <stub writer>   # appends six cases.append((label, True, ...)) rows
+$ git -C <scratch>/label-only -c user.name=t -c user.email=t@t commit -qam label-only
+$ python3 -I .ufo/waves/round-88/count-c1.py <fixture-rev> --repo <scratch>/label-only --scratch <scratch>
+
+## C1b — label-only fixture: six passing arms with no assertion in a copy of the r87 counter
+
+$ git clone --shared /home/vgpnk/Projects/shokunin/mori-shokunin /fast/scratch/hyaku/mori-r88/controls/label-only
+$ python3 - <stub writer>   # inserts six cases.append((label, True, "label-only")) rows in selfcheck
+$ git -C /fast/scratch/hyaku/mori-r88/controls/label-only -c user.name=t -c user.email=t@t commit -qam label-only
+clone rc=0
+checkout rc=0
+add rc=0
+commit rc=0
+fixture-rev: e598d4e7a16f34d38933f19b785822d121d02778
+$ python3 -I .ufo/waves/round-88/count-c1.py e598d4e7a16f34d38933f19b785822d121d02778 --repo /fast/scratch/hyaku/mori-r88/controls/label-only --scratch /fast/scratch/hyaku/mori-r88/controls/label-run
+MUTANT count-c1.py M1-met-no-guard survived rc=0
+MUTANT count-c1.py M2-met-drop-empty survived rc=0
+MUTANT count-c1.py M3-killed-n survived rc=0
+MUTANT count-c1.py M4-arms-total survived rc=0
+MUTANT count-c1.py M5-split-field survived rc=0
+MUTANT count-c1.py M6-anchor-guard survived rc=0
+EXTRA survivor .ufo/waves/round-87/count-c1.py M1-met-no-guard
+EXTRA survivor .ufo/waves/round-87/count-c1.py M2-met-drop-empty
+EXTRA survivor .ufo/waves/round-87/count-c1.py M3-killed-n
+EXTRA survivor .ufo/waves/round-87/count-c1.py M4-arms-total
+EXTRA survivor .ufo/waves/round-87/count-c1.py M5-split-field
+EXTRA survivor .ufo/waves/round-87/count-c1.py M6-anchor-guard
+C1=unmet mutants=6 killed=0 survivors=6 total=6 arms=24 detector=green rev=e598d4e7a16f
+rc=1
+
+## C2 — the frozen r88 C2 counter over the entering bytes (do-nothing control)
+
+$ python3 -I .ufo/waves/round-88/count-c2.py 1bd5ec3fa260458f74eb32a2e5bb157209c5934d --scratch /fast/scratch/hyaku/mori-r88/controls
+REAL rc=0 C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=1bd5ec3fa260
+FX clean rc=0 refused C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=1bd5ec3fa260
+FX stripped rc=0 ACCEPTED verdict=C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=0895a2aff6bc
+FX vacuous rc=0 ACCEPTED verdict=C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=0900bf3a50e4
+FX absent-target rc=1 refused supersede-absent=1
+C2=unmet real=met fx=4 clean=1 refused=0 absent=1 arms=17 subject=arms:(17, 0) rev=1bd5ec3fa260
+C2_COUNTER_SELFTEST pass=17 fail=0
+rc=1
+
+Read: the entering gate accepts both counterfeits (the `stripped` and `vacuous` FX lines above each
+print the exact r87 target tail), so the after value is not reachable by doing nothing. The fixture
+revisions named on the FX lines are the clone commits this run created; commit hashes embed the
+commit time, so a re-run names different ones — they are scratch-only and not evidence bytes.
