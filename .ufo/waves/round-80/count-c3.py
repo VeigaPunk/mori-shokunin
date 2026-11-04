@@ -7,7 +7,9 @@ receipt label are the same sentence):
   At revision R the set of `tools/*.py` and `tools/*.sh` basenames named in PROVINCE.md
   contains every path `git ls-tree -r --name-only R -- tools/` reports with that shape, and
   every named path exists at R; the counter prints `C3=met named=N present=M missing=0` and
-  exits 0. At the entering revision it prints `C3=unmet named=15 present=55 missing=40` rc 1.
+  exits 0. At the entering revision `d5888922` it prints
+  `C3=unmet named=14 present=55 missing=41 extra=0` rc 1 (measured; the earlier draft of this
+  line said 15/40 before the sibling-lane exclusion landed).
 
 `named` counts distinct tool basenames mentioned anywhere in PROVINCE.md (prose or table);
 `present` counts distinct `tools/<name>.py|.sh` paths in the tree at R (fixtures and

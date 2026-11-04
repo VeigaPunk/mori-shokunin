@@ -7,7 +7,9 @@ receipt label are the same sentence):
   At revision R this harness applies its six frozen mutants one at a time to a scratch copy
   of `.ufo/waves/round-79/count-c2.py` as it stands at R and runs `--selftest` after each; it
   prints `MUTATION_C2 survivors=0 killed=6 total=6` and exits 0. At the entering revision the
-  same harness prints `survivors=3 killed=3 total=6`.
+  same harness prints `survivors=2 killed=4 total=6` measured at `d5888922` (the round-79 seat
+  named three survivors; this frozen six-mutant set is the one that grades, and the contract
+  records both readings).
 
 Grade per mutant: KILLED iff the copied counter's `--selftest` exits nonzero or prints a
 nonzero `fail=`; SURVIVED iff it exits 0 with `pass=N fail=0`. Declared limit: the grade is
