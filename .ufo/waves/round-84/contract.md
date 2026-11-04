@@ -159,3 +159,40 @@ The L1's scratch prototype (not landed, not evidence) also confirmed two facts t
 on: with the rule applied the tool's own 40 arms stay `RECORD_SWEEP_SELFTEST pass=40 fail=0`, and
 the real lane run with the r82 pins reads `RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3
 revisions=0`, rc 0.
+
+## Pre-data amendment A2 — the M24b/M24c/M24d anchors corrected (no predicate, target or kill-rule change)
+
+Filed 2026-11-04 after the L1 ran the frozen counter's population control at the freeze commit
+`daa77bd5`; no after-value existed, no seat had landed an arm, and no seat had scored anything.
+Found independently by seat `Mo84S02Quality` (its report names the same three anchors) and by the
+L1's own run.
+
+The M24 table above took the r83 reviewer's anchor strings as quoted prose
+(`.ufo/waves/round-83/w1/Mo83R01C1.md` §6). Measured against the graded bytes, three do not occur
+exactly once — the frozen rule "each `old` anchor occurs exactly once at R" therefore read
+`unanchored` and the population control printed `mutants=1 killed=0 equivalent=0 survivors=1`
+instead of the declared `mutants=4 killed=0 equivalent=2 survivors=2`:
+
+| label | defect in the quoted anchor | measured |
+|---|---|---|
+| `M24b_green_fail_token` | `return rc == 0 and "fail=0" in out and not FAIL.search(out)` occurs twice: `green()`'s body (line 129) and the r83 counter's own MUTANTS table literal (line 33) | 2 occurrences |
+| `M24c_met_unclassified` | `and not unclassified and residual == 0` occurs zero times: the `met` expression wraps, `and not unclassified` ends line 241 and `and residual == 0` starts line 242 | 0 occurrences |
+| `M24d_met_residual` | same anchor as M24c | 0 occurrences |
+
+Replacement anchors (each measured exactly once at `daa77bd5` and at the entering revision
+`5adf4337`; the L1's count command is `python3 -c "s=open(P).read(); print(s.count(A))"` over
+`git show <rev>:<path>`):
+
+| label | file | old | new |
+|---|---|---|---|
+| `M24a_killed_tally` | `.ufo/waves/round-83/count-c1.py` | `killed_n = total - survivors - equivalent` | `killed_n = total - equivalent` |
+| `M24b_green_fail_token` | `.ufo/waves/round-83/count-c1.py` | `    return rc == 0 and "fail=0" in out and not FAIL.search(out)` (four-space indent, unique) | `    return rc == 0 and not FAIL.search(out)` |
+| `M24c_met_unclassified` | `.ufo/waves/round-83/count-c2.py` | `and not unclassified` | *(empty — the conjunct is deleted; the parenthesised `met` expression stays valid)* |
+| `M24d_met_residual` | `.ufo/waves/round-83/count-c2.py` | `and residual == 0` | *(empty)* |
+
+The mutants are the same edits the reviewer described; only their anchor strings change. The
+equivalence map, coupling markers, kill rule, target and controls are byte-unchanged. E01's two
+arms still kill M24a/M24b; E03's preservation obligation becomes: `and not unclassified`,
+`and residual == 0`, `agreed == len(snapshot_tokens)`, `residual += duplicates` and
+`duplicates == 0` each occur exactly once at the after revision (the two conjuncts may be wrapped,
+but not merged into one line and not deleted).

@@ -37,14 +37,12 @@ MUTANTS = (
      "killed_n = total - survivors - equivalent",
      "killed_n = total - equivalent"),
     (".ufo/waves/round-83/count-c1.py", "M24b_green_fail_token",
-     'return rc == 0 and "fail=0" in out and not FAIL.search(out)',
-     "return rc == 0 and not FAIL.search(out)"),
+     '    return rc == 0 and "fail=0" in out and not FAIL.search(out)',
+     "    return rc == 0 and not FAIL.search(out)"),
     (".ufo/waves/round-83/count-c2.py", "M24c_met_unclassified",
-     "and not unclassified and residual == 0",
-     "and residual == 0"),
+     "and not unclassified", ""),
     (".ufo/waves/round-83/count-c2.py", "M24d_met_residual",
-     "and not unclassified and residual == 0",
-     "and not unclassified"),
+     "and residual == 0", ""),
 )
 
 # A1-style adjudication: a surviving mutant is `equivalent` only while every coupling marker
