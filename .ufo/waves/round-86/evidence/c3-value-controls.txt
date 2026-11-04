@@ -1,0 +1,127 @@
+# mori round-86 w1 — C3 value-channel controls (seat Mo86E03C3Value)
+# date: 2026-11-04
+# counter under test: .ufo/waves/round-86/count-c3.py
+#   sha256 6b7fc2ddb560f58cb155605510fbf4e3f3801d1766050219abdec2ca5c5668c9 (read-only; never edited)
+# authority: .ufo/waves/round-86/contract.md (P-C3)
+#   sha256 5fafb32099c3304e3fb388fe3271f92c701a29af7046da45c82c63e45bf533c6 (never edited)
+# real-run revision R (freeze commit): 5e80229a450fa007d73ad0fb8bc3147e4adf5438
+#   (the commit that added the three r86 counters and this round's contract; located via
+#   `git log --diff-filter=A -- .ufo/waves/round-86/count-c3.py`)
+# lane HEAD at capture time: 98d15d8f784e55d979b84273aafb45225b8b8ccc (siblings landing; real run pinned to R)
+# method: fixtures only. Every fixture is a throwaway git repo built under
+#   /fast/scratch/hyaku/mori-r86/Mo86E03C3Value/ by a driver script (deleted with the scratch dir
+#   before this seat yielded): `git init -q`, `git rev-parse --show-toplevel` asserted equal to the
+#   fixture dir, single commit with `-c user.name=t -c user.email=t@t`, then
+#   `python3 -I .ufo/waves/round-86/count-c3.py HEAD --repo <fixture> --scratch <scratch>`.
+# Every fixture carries the four paths the counter loads at <rev>:
+#   tools/mori-census.sh (synthetic census, see per-section behaviour),
+#   corpus/evidence/baseline-r10-20261015T2231Z.json (synthetic baseline),
+#   corpus/evidence/drift-classification-r82.txt (`DRIFT_CLASS -window value-changed`),
+#   .ufo/waves/round-82/evidence/drift-r82-live.txt (existence-only placeholder).
+#   Baselines carry `# volatile_fields=wall_time`, a field no output prints, so the volatile-drop
+#   path is exercised without perturbing the verdict under test. The census always exits 1 with a
+#   non-empty MORI_DRIFT line in drift mode and prints a `SURFACE ` line in full mode.
+# Controls 1/2 differ by exactly one byte of census output (`window=launch..NOW` vs `window=other`);
+# their output lines differ only in the VALUE verdict and the contradicting count.
+
+## control 1 — equal / contradicting: a value-changed row whose field has the SAME value in the
+## baseline and in the live report reads 'equal' and increments contradicting
+# census: drift mode prints `MORI_DRIFT: -window`, exit 1; full mode prints
+#   `SURFACE lane.mori: ok` and `window=launch..NOW`, exit 0
+# baseline: `SURFACE lane.mori: ok` and `window=launch..NOW`
+# classification: `DRIFT_CLASS -window value-changed`
+$ bash /fast/scratch/hyaku/mori-r86/Mo86E03C3Value/c1.sh
+VALUE -window equal
+C3=unmet observations=2 aa=stable tokens=1 derived=1 name_agree=1 value_rows=1 contradicting=1 malformed=0 duplicates=0 detector=green rev=0b43f9d49506
+rc=1
+# unmet, not met, exactly as required: contradicting=1 (round floor is 2) and tokens=1 (fixture
+# carries 1 row, round floor is 64). The contradiction is produced by the value channel alone.
+
+## control 2 — differs: the same fixture with the live census printing `window=other`
+# (only that one byte changed; baseline/classification identical to control 1)
+$ bash /fast/scratch/hyaku/mori-r86/Mo86E03C3Value/c2.sh
+VALUE -window differs
+C3=unmet observations=2 aa=stable tokens=1 derived=1 name_agree=1 value_rows=1 contradicting=0 malformed=0 duplicates=0 detector=green rev=8ca896cfed49
+rc=1
+# verdict flips equal -> differs and contradicting 1 -> 0. Exact unmet reason: the run is red on
+# the token/derivation floors and the contradiction floor — tokens=1 (needs 64), derived=1
+# (needs 64), name_agree=1 (needs 64), value_rows=1 (needs 14), contradicting=0 (needs 2); aa and
+# the detector are green. Controls 1+2 together: the contradicting count moves only when the live
+# value stops equalling the recorded one — the value channel is the sole input to 'contradicting'.
+
+## control 3 — masked: baseline records `window=<V>`; the row reads masked and is never a
+## contradiction (census prints `window=launch..NOW`, everything else as control 1)
+$ bash /fast/scratch/hyaku/mori-r86/Mo86E03C3Value/c3.sh
+VALUE -window masked
+C3=unmet observations=2 aa=stable tokens=1 derived=1 name_agree=1 value_rows=1 contradicting=0 malformed=0 duplicates=0 detector=green rev=e2aa32a62c4d
+rc=1
+# <V> on the baseline side short-circuits before the equality test: contradicting stays 0 even
+# though the baseline value would otherwise equal a live `window=<V>`-shaped record.
+
+## control 4 — absent: the live report lacks the field entirely (census full mode prints only
+## `SURFACE lane.mori: ok`; baseline still carries `window=launch..NOW`)
+$ bash /fast/scratch/hyaku/mori-r86/Mo86E03C3Value/c4.sh
+VALUE -window absent
+C3=unmet observations=2 aa=stable tokens=1 derived=1 name_agree=1 value_rows=1 contradicting=0 malformed=0 duplicates=0 detector=green rev=62c5b8e981d0
+rc=1
+# no extractable live atom -> 'absent', no contradiction. All four verdicts of the frozen rule
+# (equal/differs/masked/absent) are now observed, each from its own minimal fixture.
+
+## control 5a — stability, exact-order rule: two drift runs print the same tokens in different
+## order -> aa=unstable
+# census counts its invocations in a seq file under the counter's scratch parent (dirname of
+# TMPDIR) and alternates the token order: run 1 prints `MORI_DRIFT: -window +boot`, run 2 prints
+# `MORI_DRIFT: +boot -window` (same multiset, different order); full mode is constant.
+$ bash /fast/scratch/hyaku/mori-r86/Mo86E03C3Value/c5a.sh
+VALUE -window equal
+C3=unmet observations=2 aa=unstable tokens=1 derived=1 name_agree=1 value_rows=1 contradicting=1 malformed=0 duplicates=0 detector=green rev=9aea82d6fbee
+rc=1
+# token lines agree as multisets, so only the exact-order comparison can fail: aa=unstable.
+
+## control 5b — stability, atom rule: same tokens in the same order but a non-volatile value
+## flips between the two full-report runs -> aa=unstable
+# census drift mode is constant (`MORI_DRIFT: -window +boot`); full mode prints `mem=1` on its
+# first invocation and `mem=2` on its second (seq-file alternation); `mem` is not in the
+# baseline's volatile_fields list, so the drop cannot mask it.
+$ bash /fast/scratch/hyaku/mori-r86/Mo86E03C3Value/c5b.sh
+VALUE -window equal
+C3=unmet observations=2 aa=unstable tokens=1 derived=1 name_agree=1 value_rows=1 contradicting=1 malformed=0 duplicates=0 detector=green rev=0798bbc5aa9a
+rc=1
+# rc lines and token lines agree; only the key=value multiset differs between the two full runs,
+# so only the atom rule can fail: aa=unstable. Both legs of `stability()` are load-bearing.
+
+## real run — the live value channel at the freeze commit
+$ python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-86/count-c3.py \
+    5e80229a450fa007d73ad0fb8bc3147e4adf5438 --scratch /fast/scratch/hyaku/mori-r86/Mo86E03C3Value
+VALUE +attribution differs
+VALUE -attribution differs
+VALUE -example absent
+VALUE -rowb_files absent
+VALUE -subject_commits equal
+VALUE -window equal
+VALUE age_s absent
+VALUE basis differs
+VALUE boot differs
+VALUE io_avg_unavailable differs
+VALUE launch_epoch masked
+VALUE obs differs
+VALUE round absent
+VALUE volatile_fields absent
+C3=met observations=2 aa=stable tokens=64 derived=64 name_agree=64 value_rows=14 contradicting=2 rev=5e80229a450f
+rc=0
+$ <same command> | grep -c '^VALUE '
+14
+$ <same command> | grep '^VALUE .* equal$'
+VALUE -subject_commits equal
+VALUE -window equal
+# The real run prints exactly 14 VALUE lines (= value_rows=14, one per stated value-changed row
+# with a bare-key token body), matches the frozen target line byte-for-byte, and the two
+# contradicting ('equal') rows are exactly the frozen static-string rows `-subject_commits`
+# (`yes`) and `-window` (`launch..NOW`) named in contract P-C3.
+
+# Summary: every branch of value_verdict() (equal, differs, masked, absent) and both stability
+# legs (exact token order, per-run key=value multiset) were driven to their observed verdict with
+# minimal synthetic fixtures, and the real-run contradiction count is produced by exactly the two
+# rows the contract names. The C3 value channel is load-bearing.
+# Controls are detection-only; no lane file outside this evidence file and the seat report was
+# written; no git/jj mutation in the lane repo; scratch deleted before yield.

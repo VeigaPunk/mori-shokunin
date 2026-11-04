@@ -31,3 +31,10 @@ VALUE -window equal
 C1=met mutants=6 killed=6 survivors=0 total=6 arms=26 rev=50d80df0b02e
 C2=met receipts=5 bindings=7 bound=7 revs=5 limits=5 cmd=5 summary=5 replay=2 matched=4 defeated=1 legacy=3 unexpected=0 rev=50d80df0b02e
 C3=met observations=2 aa=stable tokens=64 derived=64 name_agree=64 value_rows=14 contradicting=2 rev=50d80df0b02e
+
+# --- C2 negative control: a command naming a path absent at the receipt's revision
+# (the replay export writes only paths that exist at that rev, so the command fails; the counter
+# records `replay-rc:<n>` and the receipt cannot pass silently. Measured through the counter's own
+# replay_body() at the after revision.)
+$ python3 -I .ufo/waves/round-86/count-c2.py  # module-level replay_body(repo, rev, cmd, scratch)
+ghost rc=2 exported=0 stdout=''

@@ -2031,3 +2031,64 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
      prints the current tally, so the stale reading is detectable without opening the counter.
      Not covered: a tally quoted for a pinned historical revision (the round-72 pin families) —
      those keep their revision and are not re-pinned by this rule.
+
+## Criteria added round 86 — an arm the population control can fake is not an arm, a body is bound by replay, and a class label is a value claim
+
+177. An arm added to kill a named mutant is graded by a population control that can reach the
+      target without it: the counter that arms the population also runs a label-only stub (the
+      exact arm labels and tally, no assertions) and must read `unmet` with every mutant surviving.
+      Ground: this round's C1 (`.ufo/waves/round-86/contract.md` P-C1) adds six arms to
+      `.ufo/waves/round-85/count-c3.py` (selftest 20 → 26) and
+      `.ufo/waves/round-86/count-c1.py` applies each named mutation to the graded bytes, runs the
+      mutated copy's own selftest, and requires `killed=6 survivors=0 total=6`; the same counter
+      over a stub that prints the six `PASS` labels and `C3_COUNTER_SELFTEST pass=26 fail=0` while
+      implementing nothing reads `C1=unmet mutants=6 killed=0 survivors=6 total=6 arms=26`
+      (`evidence/controls-r86.txt`, rebuild recipe in the same file). Shown able to fail: the six
+      survivors are printed by name, and the stub is the cheapest edit that keeps the labels.
+      Not covered: an arm whose assertion is vacuous but still turns its own mutant red for an
+      unrelated reason; a population larger than the frozen six.
+
+178. A receipt that records a command is bound to that command only by re-executing it: a
+      `# replay: required` receipt's body must equal the stdout of its `# cmd:` run in a scratch
+      export of its own `# rev:`, and a stale body with correct headers and digests must be
+      rejected.
+      Ground: the r85 grammar bound a digest over the subject's bytes and searched the body for a
+      summary token, never running the command (`.ufo/waves/round-85/count-c2.py` at the entering
+      revision: `grade()` counts `fields["cmd"]` and every `run(` site passes git or a selftest);
+      this round's P-C2 adds the replay pass (selftest 18 → 21), and the stale-body defeat receipt
+      (`evidence/replay-defeat-r86.txt`: correct `# rev:`, correct `# counter-sha256:`, one changed
+      body byte) is `defeated=1` under the rule while a header-only gate reads it met. Motivation:
+      `considerthese/2026-10-26.md` suggestion 3 ("Re-execute what closures only evidence-verified",
+      2026-10-26). Shown able to fail: the defeat receipt is the population's negative control and
+      the counter prints `replay-mismatch`.
+      Not covered: a command that is nondeterministic or needs the live host (those receipts must
+      carry `# replay: none` and a reason); trailing-newline-only differences (the frozen
+      normalization); the three r85 receipts, which stay header-bound under a named limit.
+
+179. A class label over observed values distinguishes "could not measure here" from "measured and
+      different": `masked`, `absent` and `name-shape` are named classes and never read as a
+      contradiction, and `equal` does.
+      Ground: this round's C3 value channel (`.ufo/waves/round-86/count-c3.py`: `value_verdict`)
+      splits the r82 classification's 14 bare-key `value-changed` rows into
+      `differs`/`equal`/`masked`/`absent` and prints `contradicting=2` (`-subject_commits`,
+      `-window`); the same distinction `tools/mori-pin-check.py` draws between `env` and `stale`
+      (v5+, `tools/mori-pin-check.py:141-144`), whose absence produced the r85 contradiction the
+      spot-check routed (`controls-r85-entering.txt`'s rc lines). Every branch is driven to its
+      verdict by a minimal fixture (`evidence/c3-value-controls.txt`, controls 1–4). Shown able to
+      fail: the two equal rows are the negative controls; a run with a third equal row prints
+      `contradicting=3` and misses the frozen target.
+      Not covered: the truth of the baseline's recorded values; volatile fields are filtered by the
+      baseline's own list and never compared.
+
+180. A classification's stated class is re-derived from a second, differently-shaped observation
+      before it is cited: name existence is a derivation rule, not a measurement, and a row whose
+      value channel contradicts the label is named rather than silently re-labelled.
+      Ground: `.ufo/waves/round-86/count-c3.py` observes the census twice through the drift token
+      line and the full report, requires exact-order token stability and volatile-filtered atom
+      stability (`aa=stable`), derives every class by the r83 name rule (`name_agree=64`), and
+      prints the two contradicting rows without editing `corpus/evidence/drift-classification-r82.txt`
+      or any consumer. Shown able to fail: its 22 selftest arms cover the derivation table, the four
+      value verdicts and both stability legs, and reordered or value-changing fixture runs read
+      `aa=unstable` (`evidence/c3-value-controls.txt`, controls 5a/5b).
+      Not covered: a token whose name is absent from both sources and whose value channel is
+      unreadable; the snapshot's own fetch-time drift (QUALITY 166).

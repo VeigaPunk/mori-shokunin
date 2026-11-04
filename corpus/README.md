@@ -899,3 +899,9 @@ three rejected-closure entries (r59/r60/r61) rather than silently adopting them.
 | Ground | Entry | Bounded advance |
 |---|---|---|
 | Receipt provenance (r85, S600) | `knowledge/receipt-provenance-r85.md` (S600; `corpus/knowledge/receipt-provenance-r85.md`) | S600 grounds the property a receipt certifies (any party, same inputs, bit-identical bytes) and the verification rule (bit-by-bit comparison with cryptographically secure hash functions); K3 is the lane's frozen grammar — one `# cmd:`, one `# rev:`, one `# limits:` and one or more `# counter-sha256: <digest> <path>` header lines before the single `# ---`, each binding verified against that path's bytes at the named revision by `count-c2.py`. Limits: the page defines no receipt, revision binding or digest algorithm, and a correct digest over a stale body still passes (the round-86 head). |
+
+## Round-86 knowledge addition — execution evidence (new growth, indexed the round it lands)
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Execution evidence (r86, S602) | `knowledge/execution-evidence-r86.md` (S602; `corpus/knowledge/execution-evidence-r86.md`) | The in-toto v1.0.0 spec records a step's command, materials, products and byproducts and states the limit the r86 C2 rule answers: "Byproducts are not verified by in-toto’s default verification routine." The entry carries that recorded-is-not-verified split into the replay rule — a receipt's body is evidence only when its recorded command reproduces it — and states the lane's limits: a replay proves the command's output at that revision, not authorship and not the command's own provenance. |

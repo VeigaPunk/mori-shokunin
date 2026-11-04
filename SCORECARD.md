@@ -4389,16 +4389,56 @@ counter retroactively over those bytes already reads `C3=met` (disclosed in
 `evidence/controls-r85.txt` and in `.ufo/waves/round-85/contract.md` A2/A4) — this row claims a
 capability, not a subject-state or coverage move.
 
-## Planned (round 86)
+## Round 86 (2026-11-04, L1 MoriR86, attempt 1) — six surviving r85-C3-counter mutants, the receipt body bound to its command, and the classification's value channel
 
-1. **operability** — the r85 mutation probe's surviving unarmed clauses (`MUTANTS total=48 killed=18
-   survivors=30` at the freeze bytes, `19`/`29` at the amended bytes, `w1/Mo85M01Mut.md` §1 and §5)
-   get the arm each needs, starting with the duplicate-separator check (`H-C2-01`), the A1
-   bind-at-own-rev regression guard (`H-C2-A1`) and C3's met-level verdict conjunct
-   (`H-C3-metverdict`); C3's `observe_three` stability rule stays on the list.
-2. **calibration** — the C2 predicate's named stale-body limit (a correct digest over a stale body
-   passes) gets a body-versus-command binding: re-run `# cmd:` and compare, or record the limit in
-   the receipt grammar as a superseding row.
-3. **depth** — carry the own-observation rule into the drift classification: reconcile the
-   snapshot's `unexplainable` classes with two independent observations.
+Entering revision `fec2b328a4c83e0c61bc09d70e254ca47d547d34`; frozen contract
+`.ufo/waves/round-86/contract.md` (freeze `5e80229a450fa007d73ad0fb8bc3147e4adf5438`; pre-data
+amendments A1 `98d15d8f` and A2 `c2bfded0`, each disclosed in the contract), do-nothing controls
+`.ufo/waves/round-86/evidence/controls-r86.txt` and their defeat receipt
+`.ufo/waves/round-86/evidence/controls-r86-defeated.txt`. Axes: operability (C1, score 7),
+calibration (C2, score 5, tied lowest) and depth (C3, score 5, tied lowest; claim type: capability
+acquisition). No score moves. The after cells were measured at
+`50d80df0b02e57642a71091d29978da7f231c9dd` by the round's frozen counters (receipt
+`.ufo/waves/round-86/evidence/after-r86.txt`); the landing commit for the two subject files is
+`87644619078308ee523cd0c976c72bf079b0ff77`.
+
+| Claim | Axis | Counting command | At entering `fec2b328` | After (measured at `50d80df0`) |
+|---|---|---|---|---|
+| C1 six surviving r85-C3-counter mutants (`H-C3-metverdict`, `C3-01-rc-range`, `C3-02-rc-dropped`, `C3-03-order`, `C3-04-agreed-skip`, `C3-07-subject-tokens`) get the failing arm each; selftest 20 → 26 | operability | `python3 -I .ufo/waves/round-86/count-c1.py <rev> --scratch <dir>` | `C1=unmet mutants=4 killed=0 survivors=4 total=4 arms=20 subject=arms` rc 1 | `C1=met mutants=6 killed=6 survivors=0 total=6 arms=26` rc 0 |
+| C2 each `required` receipt's body is bound to its command by replay; selftest 18 → 21 | calibration | `python3 -I .ufo/waves/round-86/count-c2.py <rev> --scratch <dir>` | `C2=unmet subject=stub missing=replay_match,replay_stale_mismatch,replay_none_requires_reason` rc 1 | `C2=met receipts=5 bindings=7 bound=7 revs=5 limits=5 cmd=5 summary=5 replay=2 matched=4 defeated=1 legacy=3 unexpected=0` rc 0 |
+| C3 the classification's classes are reconciled with a value-level observation through two surfaces | depth (capability acquisition) | `python3 -I .ufo/waves/round-86/count-c3.py <rev> --scratch <dir>` (`--fleet-root` needed outside a `-shokunin` path) | counter file absent (`git cat-file -e` rc 128); retroactive reading disclosed as met | `C3=met observations=2 aa=stable tokens=64 derived=64 name_agree=64 value_rows=14 contradicting=2` rc 0 |
+
+The six C1 kills are behavioural: each mutated copy's own `--selftest` reads `pass=25 fail=1` rc 1
+and its FAIL line names the arm it kills; the label-only stub (all six labels, `pass=26 fail=0`, no
+assertions) reads `C1=unmet ... survivors=6`, so labels alone are not the work. C2's replay runs
+the `required` receipt's `# cmd:` in a scratch export of its own `# rev:` and reproduces its body
+modulo trailing newlines; the stale-body defeat receipt carries correct headers, the correct `# rev:`
+and the correct `# counter-sha256:` (`1912e87d…`, re-measured at `87644619`) and is still rejected
+(`problems=replay-mismatch`, `defeated=1`). C3 observes the census twice through the drift token line
+and the full report, requires exact-order token stability and volatile-filtered atom stability, and
+names the two `value-changed` rows whose live value equals the baseline's (`-subject_commits`
+`yes`, `-window` `launch..NOW`) as `contradicting=2` without editing the classification.
+
+### Capabilities (round 86)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Population-control counter (`.ufo/waves/round-86/count-c1.py`) | re-derives the six-mutant population at ANY revision from that revision's bytes, requires the exactly-once anchors in the graded r85 C3 counter, runs each mutated copy's own `--selftest` in scratch, binds the printed split to `killed=6 survivors=0 total=6`, requires exactly 26 arms and the six labels, and gates its own detector selftest in the same invocation; 15 detector arms; stdout only, writes only under `--scratch` | `python3 -I .ufo/waves/round-86/count-c1.py --selftest` -> `C1_COUNTER_SELFTEST pass=15 fail=0`; at `50d80df0` it prints `C1=met mutants=6 killed=6 survivors=0 total=6 arms=26`, rc 0 | 86 |
+| Command-replay receipt gate (`.ufo/waves/round-85/count-c2.py` replay pass + `.ufo/waves/round-86/make-receipts-r86.sh`) | parses `# replay: required|none` and `# no-replay:`, executes each required receipt's `# cmd:` in a scratch export of the receipt's own `# rev:`, compares stdout to the body modulo trailing newlines, grades the five-receipt population with per-receipt expectations (`matched=4 defeated=1 legacy=3`), and keeps the three r85 receipts header-bound under a named limit; 21 selftest arms | `python3 -I .ufo/waves/round-85/count-c2.py --selftest` -> `C2_COUNTER_SELFTEST pass=21 fail=0`; `python3 -I .ufo/waves/round-86/count-c2.py 50d80df0` -> `C2=met ... replay=2 matched=4 defeated=1 legacy=3 unexpected=0`, rc 0 | 86 |
+| Value-channel class reconciliation (`.ufo/waves/round-86/count-c3.py`) | derives every stated class by the frozen name rule, observes the census twice through two surfaces (drift token line; full report's values), requires exact-order token stability and volatile-filtered atom stability, and splits the 14 bare-key `value-changed` rows into `differs`/`equal`/`masked`/`absent`, naming the contradictions; 22 selftest arms | `python3 -I .ufo/waves/round-86/count-c3.py --selftest` -> `C3_COUNTER_SELFTEST pass=22 fail=0`; at `50d80df0` it prints `C3=met observations=2 aa=stable tokens=64 derived=64 name_agree=64 value_rows=14 contradicting=2`, rc 0 | 86 |
+
+## Planned (round 87)
+
+1. **operability** — the r86 mutation probe's surviving counter clauses
+   (`.ufo/waves/round-86/evidence/mutation-r86.md`; if the probe's wave seat did not land, the
+   unarmed set is the named one in `.ufo/waves/round-86/evidence/controls-r86-defeated.txt` and the
+   r86 counters' printed-but-unguarded fields) get the arm each needs, starting with the three
+   counters' own `met` conjuncts and their target constants.
+2. **calibration** — the three r85 receipts stay header-bound `legacy`; retire the limit by adding a
+   `# replay:`-capable successor receipt set for the two sweeps (their commands are deterministic
+   over repo bytes at a revision), so `legacy=3` drops without weakening the existing receipts.
+3. **depth** — the value channel's `differs`/`masked`/`absent` counts are live-state dependent;
+   freeze a dated snapshot of the full report and let the counter classify the snapshot as a second
+   frozen observation, so the whole split (not just `contradicting`) becomes re-derivable from
+   committed bytes.
 

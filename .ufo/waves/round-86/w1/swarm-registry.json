@@ -1,0 +1,131 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r86-w1",
+  "createdAt": "2026-11-04T12:20:18.813Z",
+  "updatedAt": "2026-11-04T12:20:18.813Z",
+  "reportDir": ".ufo/waves/round-86/w1",
+  "members": {
+    "Mo86E01C1Arms": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "round 86 w1: six failing arms for the surviving r85-C3-counter mutants"
+    },
+    "Mo86E02C2Replay": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "round 86 w1: the receipt replay pass and its generator"
+    },
+    "Mo86E03C3Value": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "depth"
+      ],
+      "milestone": "round 86 w1: prove the C3 value channel is load-bearing"
+    },
+    "Mo86E04Controls": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "round 86 w1: the standing battery and the freeze-time population controls"
+    },
+    "Mo86S01Lesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "round 86 w1: the round lesson with one mined mistake and the source Gate block"
+    },
+    "Mo86S02Sources": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "coverage",
+        "depth"
+      ],
+      "milestone": "round 86 w1: one opened source row and one knowledge entry that cites it"
+    },
+    "Mo86Sc01Scout": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "round 86 w1: every consumer of the changed surfaces"
+    },
+    "Mo86R01ReviewC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "round 86 w1: falsify the C1 arms claim"
+    },
+    "Mo86R02ReviewC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "round 86 w1: falsify the C2 replay claim"
+    },
+    "Mo86C01Critic": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "round 86 w1: falsify all three claims and their counters"
+    },
+    "Mo86M01Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "round 86 w1: mutation probe of the three r86 counters"
+    },
+    "Mo86K01Conn": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "adjacency"
+      ],
+      "milestone": "round 86 w1: sibling-lane overlap scan"
+    }
+  }
+}
