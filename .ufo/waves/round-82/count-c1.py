@@ -166,7 +166,6 @@ def grade(loader, scratch, mutants=MUTANTS):
             lines.append(f"MUTANT {os.path.basename(path_)} {label} "
                          f"{'killed' if k else 'survived'} rc={rc}")
     total = sum(counts.values())
-    survivors = sum(1 for line in lines if line.endswith("survived") or " survived " in line)
     survivors = len([line for line in lines if " survived " in line])
     killed_n = total - survivors
     met = pristine_ok and total > 0 and survivors == 0 and not any(

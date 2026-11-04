@@ -5059,3 +5059,67 @@ S595) and adoption needs document-keyed renumbering; the r61 L0 stands and no pa
 adopted. considerthese: nothing new mined this round (the newest file's suggestion 1 landed as
 QUALITY 167 in r80; the rest stay behind the r62/r65/round-73 L0s, re-verified present and
 unanswered).
+
+## Round 82 (2026-11-04, L1 MoriR82) — three claims across three axes: C1 operability the r81 five-survivor mutation set becomes a committed revision-agnostic harness (capability acquisition; entering `harness=absent`), C2 freshness the red round-10 drift pin is retired as an acceptance predicate with a baseline-derived classification of all 64 live tokens (`corpus/evidence/drift-classification-r82.txt`), C3 depth `tools/mori-record-sweep.py` gains the `revision` arm (a stated value must exist in the bytes of the revision it names) plus three frozen historical bindings
+
+entering: `ebcf2c72df203c855cfafb5223c6e22b1e12c481` (branch master, pushed, clean). Frozen
+contract + the three counters + do-nothing controls commit `20551e56`; wave w1 dispatch
+`w1.ready` taken 04:42; integration `f02ad83b` (measured revision).
+
+C1 (operability 7, capability acquisition). r81 killed the mutation seat's five survivors with
+scratch-only arms whose harness (`/fast/scratch/hyaku/mori-r81/l1/mut5.py`) was deleted at
+landing (D81-3), so no committed instrument could re-derive the kill. `.ufo/waves/round-82/count-c1.py`
+re-derives the anchored population at any revision from that revision's own bytes (anchors
+occurring exactly once; the r81 `accept_sibling` anchor no longer exists, so the frozen set is
+11), runs each mutated copy's own `--selftest` in scratch, and prints one verdict per mutant.
+Entering `C1=unmet harness=absent`; measured `C1=met harness=present killed=11 survivors=0
+total=11 pristine=green detector=green` at `f02ad83b`. The eleven kills CONFIRM r81's closure at
+the current bytes; they are not eleven new kills — the delta is the durable harness plus its
+4-arm detector selftest. Wave evidence: `.ufo/waves/round-82/evidence/regression-sim-r82.txt`
+(the harness reports `survivors=1` when a committed arm is deleted from a scratch copy).
+
+C2 (freshness 5, tied lowest). The r10 behavioural baseline predates 16 lane surfaces and nine
+finding ids, so its red verdict is permanent by construction; the r20 re-pin was rejected
+(round-21 correction), so the pin cannot go green honestly. It is retired as an ACCEPTANCE
+predicate, not as evidence: the baseline stays byte-unchanged and
+`bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json` still exits
+1. Replacement: `corpus/evidence/drift-classification-r82.txt` classifies every live token
+(64: 45 `added-since-r10`, 19 `value-changed`) with the frozen derivation table, and the counter
+re-derives each class from the baseline's canonical block. Entering `C2=unmet tokens=64
+classified=0 retired=0 cell=0`; measured `C2=met tokens=64 classified=64 agreed=64 residual=0
+stale=0 retired=1 cell=1` at `f02ad83b`. Round-21's retained-evidence-loss blocker remains
+visible and unresolved.
+
+C3 (depth 5, tied lowest). `tools/mori-record-sweep.py` gains the `revisions` arm (registry row
+16, `SKILL.md`; QUALITY 168): per binding, the carrier's first matching table row must state
+`key=value`, `rev` must resolve, `path` must exist at `rev`, and `key=value` must occur in
+`git show <rev>:<path>` bytes — the D80-4/D81-1 class in lane bytes. 36 selftest arms. The r82
+population is three frozen historical rows (`.ufo/waves/round-82/record-pins.json`); identity and
+uniqueness are graded. Entering `C3=unmet tool=present arm=absent`; measured `C3=met tool=present
+arms=36 defeated=1 fixtures=3/3 bindings=3 revisions=0` at `f02ad83b`.
+
+Routed defects D81-1..D81-6: D81-1 the r80 capability row now states the r82 landed `pointers=249`
+with a named correction recording that 240 holds at `482dc48d` and 075574c8 grades 237; D81-2 the
+C2 after-run is committed at `f02ad83b` (`.ufo/waves/round-82/evidence/after-r82.txt`); D81-3 the
+harness is committed and re-runnable; D81-4 the route map is recorded in the report; D81-5 the
+sourced claim is labelled (C3, S597) and the rejection is recorded in the lesson Gate; D81-6 the
+entering revision is named as the pre-round HEAD `ebcf2c72`.
+
+Frontier step. S597 opens the git project's own `Documentation/revisions.adoc` at tag `v2.56.0`
+(pinned `corpus/evidence/sources-r82/gitrevisions.7.git-2.56.0.body.adoc`, sha256
+`b23a9eb1…`, 424 lines / 17266 bytes; shell `gitrevisions.adoc` sha256 `afe4cab8…`, 36 lines /
+824 bytes; the server ETag equals `git hash-object` of the bytes). Located quote at body
+`220-223` (24 words) states the `<rev>:<path>` suffix. Rows 369 -> 370, census rc 0, 35 tolerated
+W04 warnings. `git-show(1)` refused (it uses revision parameters but never states the grammar);
+`git-cat-file(1)` noted as uses-without-defining. The r61 L0 on the staged `merge/mori` package
+still stands: no package adopted.
+
+L2: ONE v1 wave, 15 seats (validated under `ufo-wave-policy.json` band 8-16; dispatch
+`w1-dispatch.json`), roles 5 executor / 2 scribe / 2 scout / 2 reviewer / 1 critic / 1
+mutation-tester / 1 connector / 1 revenger = attack 4/15 (26.7 %), connectors 1; residual none;
+the planner seat is the L1. Seat reports in `.ufo/waves/round-82/w1/`.
+
+No-harm: the standing battery re-run at the dispatch tip is `BATTERY pass=60 setup=4 fail=0`
+(`.ufo/waves/round-82/evidence/battery-r82.txt`), the four being the inherited lane-scoped
+scratch setup refusals. Population census rc 0; the claim sweep's pinned arm is green at the
+landed value (`pointers=249`); the r81 record-pins arm re-reads `pending=0 pinned=0`.

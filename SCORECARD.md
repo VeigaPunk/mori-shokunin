@@ -4150,3 +4150,43 @@ after the r81 capability and registry rows added graded pointers (233 at `44bc94
 |---|---|---|---|
 | Revision-agnostic mutation harness (`.ufo/waves/round-82/count-c1.py`) | re-derives the r81 mutation population at ANY revision from that revision's own bytes (anchors occurring exactly once), runs each mutated copy's own `--selftest` in scratch, and prints one verdict per mutant plus `C1=met\|unmet harness=present killed=K survivors=S total=T pristine=green\|red detector=green\|red`; an unanchored mutant, an empty mutation or a red pristine keeps it unmet, and its own 4-arm detector selftest runs in the same invocation; rc 0 met, 1 unmet, 2 setup; read-only `git show`, writes only under `--scratch` | `python3 -I .ufo/waves/round-82/count-c1.py --selftest` -> `C1_COUNTER_SELFTEST pass=4 fail=0`; `python3 -I .ufo/waves/round-82/count-c1.py 20551e56` -> `C1=met harness=present killed=11 survivors=0 total=11 pristine=green detector=green`, rc 0; at `ebcf2c72` -> `C1=unmet harness=absent`, rc 1 (receipt `.ufo/waves/round-82/evidence/controls-r82.txt`) | 82 |
 | Revision-precision record arm (`tools/mori-record-sweep.py`, `revisions`) | grades each registered `(carrier, row_contains, key, value, rev, path)` binding against the named revision's bytes — row states the value, `rev` resolves, `path` exists at `rev`, and `key=value` occurs in `git show <rev>:<path>` — reports `REVISION_MISMATCH <carrier>:<line> row-value\|rev-bytes\|rev-unresolvable\|path-absent`, grades every binding (never the first only), counts command plus revision bindings in `bindings=` and mismatches in `revisions=`, and accepts revisions-only pins; 36 selftest arms | `python3 -I tools/mori-record-sweep.py --selftest` -> `RECORD_SWEEP_SELFTEST pass=36 fail=0`; `python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json --git .` -> `RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0`, rc 0; registry row 16 in `SKILL.md`; QUALITY 168 | 82 |
+
+## Round 82
+
+Entering revision `ebcf2c72df203c855cfafb5223c6e22b1e12c481`; frozen contract
+`.ufo/waves/round-82/contract.md` (freeze commit `20551e56`) plus pre-data amendment A1
+(binding population); do-nothing controls `.ufo/waves/round-82/evidence/controls-r82.txt`.
+Axes: operability (C1, capability acquisition), freshness (C2, tied lowest) and depth (C3, tied
+lowest). The after cells were measured at `f02ad83bf9c66722afa1de8ff974d57d2b57d3a2` by the
+round's frozen counters (receipt `.ufo/waves/round-82/evidence/after-r82.txt`). No score moves.
+
+| Claim | Axis | Counting command | At entering `ebcf2c72` | After (measured at `f02ad83b`) |
+|---|---|---|---|---|
+| C1 the r81 five-survivor mutation set becomes a committed, revision-agnostic harness (capability acquisition) | operability | `python3 -I .ufo/waves/round-82/count-c1.py <rev>` | `C1=unmet harness=absent`, rc 1 | `C1=met harness=present killed=11 survivors=0 total=11 pristine=green detector=green`, rc 0 — 11 mutants re-derived from the graded revision's own bytes, every one killed; the delta is the harness, not new kills |
+| C2 the red round-10 drift pin is retired with a baseline-derived classification of every live token | freshness | `python3 -I .ufo/waves/round-82/count-c2.py <rev>` | `C2=unmet tokens=64 classified=0 agreed=0 residual=0 stale=0 retired=0 cell=0`, rc 1 | `C2=met tokens=64 classified=64 agreed=64 residual=0 stale=0 retired=1 cell=1`, rc 0 — the same `--drift` run still exits 1 (45 added-since-r10, 19 value-changed) |
+| C3 the record sweep gains a revision-precision arm and the lane's revision-labelled values are graded against the bytes they name | depth | `python3 -I .ufo/waves/round-82/count-c3.py <rev>` | `C3=unmet tool=present arm=absent`, rc 1 | `C3=met tool=present arms=36 defeated=1 fixtures=3/3 bindings=3 revisions=0`, rc 0 — three frozen historical bindings green; two defeated shapes and one conformant shape graded by independent fixtures |
+
+Two implementation repairs were made to the counters before any after-value existed, both filed
+by wave seats against the frozen sentence and disclosed in the lesson: C1 now also requires the
+revision's harness bytes to carry every frozen mutant label and the detector-selftest marker
+(C01: an existence-only check accepted a stub) and its `met` treats an unanchored mutant as
+unmet (R01/C01); C2 now sends "anything else" tokens to `value-changed` per the frozen table and
+counts duplicate `DRIFT_CLASS` lines as residual (R02). C3 now grades the pins committed at the
+revision, never a worktree copy, and requires exactly the frozen binding population with
+uniqueness (C01). Predicates, kill rules and targets are byte-unchanged.
+
+
+## Planned (round 83)
+
+1. **operability** — the r82 mutation probe's surviving counter mutants: `MUTANTS killed=18
+   total=38 survivors=20` (`.ufo/waves/round-82/w1/Mo82M01Mutants.md`; 16 of them survive on the
+   entering bytes and the rest are new-code survivors such as `duplicates_accepted` and
+   `keyshape_guard_inverted`). The counters grade their helpers but not themselves; add the failing
+   arm named per survivor.
+2. **calibration** — C2's live-reading provenance: the classification is a function of a live
+   census run, so a historical reading is not immutable. Bind the classification to a committed raw
+   snapshot (`.ufo/waves/round-82/evidence/drift-r82-live.txt`) and grade snapshot bytes plus one
+   live re-derivation, naming the as-of moment.
+3. **depth** — C3's occurrence test cannot tell a coincidental `key=value` in an unrelated line
+   from the graded one: scope the occurrence to a line that also carries the binding's row anchor,
+   and add the defeated shape for a value that occurs elsewhere in the same file.

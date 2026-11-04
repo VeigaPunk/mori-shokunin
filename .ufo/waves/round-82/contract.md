@@ -202,3 +202,13 @@ freeze (measured: 1, 1, 1), and each `key=value` occurs in `SCORECARD.md` at the
 (measured: 1, 1, 1). The D81-1 defeated shape — the row stating `pointers=240` bound to
 `075574c8`, whose `SCORECARD.md` holds no `pointers=240` — stays the counter's independent
 fixture and is not a lane binding.
+
+### A1 wording note (clarification, no predicate change)
+
+A1's first sentence reads "The 'Real bindings' table's first row is replaced"; the table below it
+is the **whole** replacement population, so all three original rows are superseded, not only the
+first. The third original row was independently defective on row-value by inspection
+(`Control-receipt binding guard` states `19/19`, not `pass=19`), and the first conflicted with the
+r81 pinned arm's landed-value rule; the second (record-sweep `pass=26`) would have survived, and
+is kept out because the population is graded as an exact set, not as a lower bound. A1's
+predicate, target and kill rule are unchanged.

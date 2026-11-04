@@ -147,3 +147,71 @@ measured row count, not attributed to its stdout. S597 admission and any
 subsequent census belong to the L1's later, named-revision evidence. No
 C1/C2/C3 after-run, final-tip verdict, publication or source admission was
 performed by this lesson seat.
+
+## L1 addendum — measured after-block, counter repairs and Gate verdicts (2026-11-04)
+
+Measured at `f02ad83bf9c66722afa1de8ff974d57d2b57d3a2` (integration commit) with the round's
+frozen counters; receipt `.ufo/waves/round-82/evidence/after-r82.txt`. The three earlier entries
+in this file state targets; these are the observed values.
+
+```text
+$ python3 -I .ufo/waves/round-82/count-c1.py f02ad83b
+... eleven MUTANT lines, all killed ...
+C1=met harness=present killed=11 survivors=0 total=11 pristine=green detector=green
+rc=0
+$ python3 -I .ufo/waves/round-82/count-c2.py f02ad83b
+C2=met tokens=64 classified=64 agreed=64 residual=0 stale=0 retired=1 cell=1
+rc=0
+$ python3 -I .ufo/waves/round-82/count-c3.py f02ad83b
+C3=met tool=present arms=36 defeated=1 fixtures=3/3 bindings=3 revisions=0
+rc=0
+```
+
+**Counter repairs made before any after-value existed** (predicate, kill rule and target
+byte-unchanged; each was filed by a wave seat against the frozen sentence):
+
+- **C1 — existence-only harness check (C01) and unanchored-permissive `met` (R01, C01).**
+  `harness=present` now also requires the revision's bytes to carry all eleven frozen mutant
+  labels and `C1_COUNTER_SELFTEST`; `met` now treats an `unanchored` mutant as unmet; the
+  detector selftest runs inside the `<rev>` mode and prints `detector=green|red`. The
+  selftest's kill/survivor arms compare integer tokens (`\bkilled=1\b`), not substrings, so a
+  hardcoded `killed_n = 11` fails the arm (C01's second finding).
+- **C2 — "anything else" token class (R02).** The frozen table's last row is now implemented:
+  a body that is not `[A-Za-z0-9_]+`-shaped is `value-changed`, and duplicate `DRIFT_CLASS`
+  lines count as residual. The `+note` reading is settled by the census's own tokenizer
+  (`volatile_note=` is key `volatile_note`, so `+note` is `added-since-r10`).
+- **C3 — uncommitted pins and population identity (C01).** The real run now grades the pins
+  committed at the revision (exported to scratch), never a worktree copy, and requires exactly
+  the three frozen bindings with uniqueness, so one revision plus two legacy bindings cannot
+  satisfy it. The independent fixture set is three shapes — 1-binding stale (caught),
+  2-binding second-stale (caught) and 1-binding conformant (green) — so a counterfeit keyed on
+  the binding count fails at least one; the tool bytes must also carry `rev-parse` and `--git`.
+
+Known limits, stated rather than papered over: C1's marker check is a shape test on the
+revision's harness bytes, not a proof that those bytes are this program; C3's occurrence test
+cannot tell a coincidental `key=value` in an unrelated line from the graded one, and it grades
+only registered bindings; C2 classifies token provenance, not fleet health.
+
+**Gate verdicts** (L1, on the scout's material). ADMIT S597: the git project's own
+`Documentation/revisions.adoc` at tag `v2.56.0`, pinned at
+`corpus/evidence/sources-r82/gitrevisions.7.git-2.56.0.body.adoc` (sha256
+`b23a9eb17d9b193adccee6b79cb1c1fef450703dae925a33b8a1c6f6639d82ff`; 424 lines, 17266 bytes) with
+the page shell `…/gitrevisions.7.git-2.56.0.adoc` (sha256 `afe4cab8…`; 36 lines, 824 bytes).
+Access 2026-11-04, two fetches byte-identical, server ETag equals `git hash-object` of the
+bytes, no redirect. Located quote, body lines 220-223 (entry header `'<rev>:<path>'` at 220;
+24-word span "followed by a path names the blob or tree at the given path in the tree-ish object
+named by the part before the colon"). It grounds C3's read only: it says nothing about the
+lane's bindings, the arm's verdicts or the record's arithmetic. **Refused:** `git-show(1)` (the
+command is run by the arm but its page never states the `<rev>:<path>` grammar or an exit
+status; flip: a page stating both); `git-cat-file(1)` uses the form once in SYNOPSIS without
+defining it — uses-without-defining, no row.
+
+**Census.** Entering 369 rows, exit 0 (r81 lesson, inherited not rerun). After, at the record
+commit: `grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|' corpus/SOURCES.md` → 370;
+`/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori`
+→ rc 0, `mori ok`, 35 W04 duplicate-URL warnings (the same tolerated class as entering),
+malformed rows 0.
+
+**Assimilation.** none — `/home/vgpnk/Projects/shokuknow/merge/mori/` staging is still behind the
+r61 L0 (id collisions with the lane registry); `considerthese/` mined: the newest file's
+suggestions remain behind the r62/r65/round-73 L0s, re-verified present and unanswered.
