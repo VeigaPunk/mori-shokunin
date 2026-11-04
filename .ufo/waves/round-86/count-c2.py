@@ -322,9 +322,9 @@ def main(argv):
             print("C2=unmet receipts=0 subject=absent rev=%s" % rev[:12])
             return 1
         missing = [label for label in ARM_LABELS if label not in subject]
-        if missing or "def replay_receipt(" not in subject:
+        if missing:
             print("C2=unmet subject=stub missing=%s rev=%s"
-                  % (",".join(missing) or "replay_receipt", rev[:12]))
+                  % (",".join(missing), rev[:12]))
             return 1
 
         # The subject's own selftest, arm count and labels.

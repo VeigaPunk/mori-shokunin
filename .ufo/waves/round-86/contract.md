@@ -166,3 +166,16 @@ absence), the C1 label-only stub (unmet: all six mutants survive), the C2 header
 the defeat receipt (met — which is why the replay rule, not the digest, is the claim), and the C3
 retroactive reading (met, disclosed). `evidence/controls-r86-defeated.txt` records each control
 being defeated by the landed work (the same input reading met/unmet as the claim requires).
+
+## Amendments (pre-data; no after-value existed when each landed)
+
+**A1 (2026-11-04, before any seat returned a claim reading; scout `w1/Mo86Sc01Scout.md` R1/R2).**
+Two clarifications of P-C2, neither moving a target, population or count:
+(i) the subject `.ufo/waves/round-85/count-c2.py` accepts `--scratch DIR` (defaulting to
+`$HYAKU_SCRATCH`, else a temp dir) and runs green under it — the replay pass needs a scratch root
+it owns, and the r86 counter invokes the subject with `--scratch`;
+(ii) the r86 counter's stub guard is the three arm labels plus the subject's own 21-arm green
+selftest; it no longer requires a particular helper name (`def replay_receipt(`), because the
+contract never froze a function name and the name is not behaviour. The frozen counts, the receipt
+population and the target line are unchanged.
+
