@@ -5,7 +5,7 @@ Frozen predicate P-C3 (`.ufo/waves/round-86/contract.md` — this counter, the c
 receipt label are the same sentence):
 
   At revision R `python3 -I .ufo/waves/round-86/count-c3.py R` prints
-  `C3=met observations=2 aa=stable tokens=64 derived=64 name_agree=64 value_rows=19
+  `C3=met observations=2 aa=stable tokens=64 derived=64 name_agree=64 value_rows=14
   contradicting=2` and exits 0, where the counter runs `tools/mori-census.sh` from R's own bytes
   twice in separate scratch trees with R's baseline and `MORI_SHOKUNIN_ROOT=<fleet root>` (each
   run exits 1 with a non-empty `MORI_DRIFT:` token line; the two token lines are identical and
@@ -342,13 +342,16 @@ def main(argv):
         met = (aa and len(rows) == 64 and derived == 64 and name_agree == 64
                and value_rows == 14 and contradicting == 2
                and malformed == 0 and duplicates == 0)
+        # The printed target must be the computed one: a counter that prints a line it never
+        # compares to TARGET is decoration (found by the r86 mutation probe).
+        met = met and ("observations=%d aa=%s tokens=%d derived=%d name_agree=%d value_rows=%d "
+                       "contradicting=%d"
+                       % (OBSERVATIONS, "stable" if aa else "unstable", len(rows), derived,
+                          name_agree, value_rows, contradicting)) == TARGET
         if not met:
             print("C3=unmet %s detector=green rev=%s" % (tail, rev[:12]))
             return 1
-        print("C3=met observations=%d aa=stable tokens=%d derived=%d name_agree=%d "
-              "value_rows=%d contradicting=%d rev=%s"
-              % (OBSERVATIONS, len(rows), derived, name_agree, value_rows, contradicting,
-                 rev[:12]))
+        print("C3=met %s rev=%s" % (TARGET, rev[:12]))
         return 0
     finally:
         shutil.rmtree(scratch, ignore_errors=True)
