@@ -266,6 +266,55 @@ def selfcheck(scratch):
                   ARMS_BY_FILE == {"count-c1.py": 18, "count-c2.py": 13, "count-c3.py": 23}
                   and sum(ARMS_BY_FILE.values()) == TARGET_ARMS, "54"))
     cases.append(("labels_unique", len(set(m[1] for m in MUTANTS)) == 6, "six labels"))
+    # --- round-88 arms: one per surviving r87-counter clause (Mo87M01Mut ranks 1, 3, 17, 18,
+    # 19, 20). Each fails under its declared mutant; none fails on the pristine counter. ---
+    write(d, "s18.py", "import sys\nGUARD = 1\n"
+          "ok = GUARD == 1\n"
+          "print('FAKE pass=%d fail=%d' % (18 if ok else 17, 0 if ok else 1))\n"
+          "print('COUNTER_SELFTEST pass=18 fail=0')\n"
+          "sys.exit(0 if ok else 1)\n")
+    met, tail, _lines, extras = grade(
+        disk, scratch,
+        [("tools/sensitive.py", "r88-kill", "GUARD = 1", "GUARD = 0"),
+         ("tools/dup.py", "r88-double", "GUARD = 1", "GUARD = 0")],
+        {"sensitive.py": 1, "dup.py": 1})
+    fields = dict((k, int(v)) for k, v in COUNT.findall(tail))
+    cases.append(("met_guard_unanchored",
+                  (not met) and fields.get("total") == 1 and fields.get("killed") == 1
+                  and any(e.startswith("unanchored") for e in extras), tail))
+    met, tail, _lines, extras = grade(
+        disk, scratch,
+        [("tools/sensitive.py", "r88-kill", "GUARD = 1", "GUARD = 0"),
+         ("tools/empty.py", "r88-empty", "GUARD = 1", "GUARD = 1")],
+        {"sensitive.py": 1, "empty.py": 1})
+    fields = dict((k, int(v)) for k, v in COUNT.findall(tail))
+    cases.append(("met_guard_empty",
+                  (not met) and fields.get("total") == 1
+                  and any(e.startswith("empty-mutation") for e in extras), tail))
+    met, tail, _lines, _ = grade(
+        disk, scratch,
+        [("tools/sensitive.py", "r88-kill", "GUARD = 1", "GUARD = 0"),
+         ("tools/blind.py", "r88-survive", "print('FAKE pass=1 fail=0')",
+          "print('FAKE pass=1 fail=0') # noop")],
+        {"sensitive.py": 1, "blind.py": 1})
+    fields = dict((k, int(v)) for k, v in COUNT.findall(tail))
+    cases.append(("killed_tally_mixed",
+                  fields.get("killed") == 1 and fields.get("survivors") == 1
+                  and fields.get("total") == 2, tail))
+    met, tail, _lines, _ = grade(
+        disk, scratch, [("tools/s18.py", "r88-arms", "GUARD = 1", "GUARD = 0")],
+        {"s18.py": 18})
+    cases.append(("arms_tally_passed", met and tail.endswith("arms=18"), tail))
+    cases.append(("target_split_killed_not_mutants",
+                  not target_split("mutants=6 killed=5 survivors=0 total=6 arms=54"),
+                  "5 != 6"))
+    met, tail, _lines, _ = grade(
+        disk, scratch, [("tools/dup.py", "r88-double", "GUARD = 1", "GUARD = 0")],
+        {"dup.py": 1})
+    fields = dict((k, int(v)) for k, v in COUNT.findall(tail))
+    cases.append(("doubled_anchor_counted_type",
+                  fields.get("mutants") == 0 and fields.get("total") == 0 and met is False,
+                  tail))
     cases.append(("marker_literal",
                   "M1-unanchored-conjunct" in open(os.path.abspath(__file__)).read(), "label"))
     ok = sum(1 for _, good, _ in cases if good)

@@ -130,6 +130,26 @@ def header_fields(lines):
     return fields, problems
 
 
+def declared_replay_problem(declared_mode, fields):
+    """A population row declared required/clone must carry its own `# replay:` line."""
+    if declared_mode in ("required", "clone") and fields["replay"] is None:
+        return "missing-replay"
+    return None
+
+
+def binding_problems(cmd, bindings, replayed):
+    """Every `# counter-sha256:` path must appear in the replayed command's argv."""
+    if not replayed:
+        return []
+    tokens = set(token.strip(";'\"") for token in re.split(r"\s+", cmd or ""))
+    return ["cmd-binding"] if any(path not in tokens for _sha, path in bindings) else []
+
+
+def absent_supersede_targets(superseders, known):
+    """(name, target) pairs whose `# supersedes:` names a receipt outside the population."""
+    return [(name, target) for name, target in superseders if target not in known]
+
+
 def supersede_verdict(legacy_name, clean_names, superseders):
     """True when a present, problem-free successor names `legacy_name`."""
     return any(name in clean_names and target == legacy_name
@@ -238,6 +258,12 @@ def grade_population(loader, repo, rev, scratch, population=POPULATION):
         counts["receipts"] += 1
         header, body = header_and_body(text)
         fields, problems = header_fields(header)
+        missing_replay = declared_replay_problem(replay_mode, fields)
+        if missing_replay:
+            problems.append(missing_replay)
+        problems.extend(binding_problems(fields["cmd"], fields["bindings"],
+                                         replay_mode in ("required", "clone")
+                                         or fields["replay"] is not None))
         if fields["supersedes"]:
             superseders.append((name, fields["supersedes"]))
         if replay_mode != "legacy" or fields["replay"] is not None:
@@ -294,12 +320,10 @@ def grade_population(loader, repo, rev, scratch, population=POPULATION):
                      % (name, expect, "met" if clean else "failed", ",".join(problems) or "-"))
     counts["superseded"], counts["legacy"] = supersede_counts(
         legacy_rows, clean_names, superseders)
-    known = set(present)
-    for name, target in superseders:
-        if target not in known:
-            counts["unexpected"] += 1
-            lines.append("SUPERSEDE %s target=%s absent=1" % (name, target))
-            ok = False
+    for name, target in absent_supersede_targets(superseders, set(present)):
+        counts["unexpected"] += 1
+        lines.append("SUPERSEDE %s target=%s absent=1" % (name, target))
+        ok = False
     return ok, lines, counts
 
 
@@ -368,6 +392,26 @@ def selfcheck(scratch):
                   and "replay=4" in TARGET, "line"))
     cases.append(("subject_arms", SUBJECT_ARMS == 13
                   and len(SUBJECT_LABELS) == 13, "13/13"))
+    # --- round-88 arms: the declared-mode and cmd-binding rules and the absent-target branch ---
+    missing = good.replace("# replay: required\n", "")
+    fields, problems = header_fields(header_and_body(missing)[0])
+    cases.append(("missing_replay_required",
+                  not problems and declared_replay_problem("required", fields) == "missing-replay",
+                  str(problems)))
+    cases.append(("missing_replay_clone",
+                  declared_replay_problem("clone", fields) == "missing-replay"
+                  and declared_replay_problem("legacy", fields) is None, "clone/legacy"))
+    bindings = [("a" * 64, "tools/x.py")]
+    cases.append(("binding_not_in_cmd",
+                  binding_problems("# cmd: printf 'x'", bindings, True) == ["cmd-binding"],
+                  "vacuous cmd"))
+    cases.append(("binding_in_cmd_ok",
+                  binding_problems("python3 -I tools/x.py", bindings, True) == [], "named"))
+    cases.append(("binding_skipped_for_legacy",
+                  binding_problems("# cmd: printf 'x'", bindings, False) == [], "legacy"))
+    cases.append(("absent_target_helper",
+                  absent_supersede_targets([("n.txt", "gone.txt"), ("m.txt", "n.txt")],
+                                           {"m.txt", "n.txt"}) == [("n.txt", "gone.txt")], "gone"))
     cases.append(("marker_literal", "supersede_verdict" in
                   open(os.path.abspath(__file__)).read(), "label"))
     ok = sum(1 for _, good_case, _ in cases if good_case)
