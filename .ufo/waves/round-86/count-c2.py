@@ -166,14 +166,15 @@ def ancestor(repo, rev, tip):
     return run(["git", "-C", repo, "merge-base", "--is-ancestor", rev, tip]).returncode == 0
 
 
-def grade_population(loader, repo, rev, scratch):
+def grade_population(loader, repo, rev, scratch, population=None):
     """(ok, lines, counts) for the frozen population at one revision."""
+    population = POPULATION if population is None else population
     lines = []
     counts = {"bindings": 0, "bound": 0, "revs": 0, "limits": 0, "cmd": 0,
               "summary": 0, "replay": 0, "matched": 0, "defeated": 0,
               "legacy": 0, "unexpected": 0}
     ok = True
-    for path, expect, replay_mode, token in POPULATION:
+    for path, expect, replay_mode, token in population:
         text = loader(path)
         name = os.path.basename(path)
         if text is None:
@@ -273,6 +274,36 @@ def selfcheck(scratch):
                   and sum(1 for row in POPULATION if row[1] == "reject") == 1, "3/1"))
     cases.append(("target_line", TARGET_LINE == "C2=met " + TARGET
                   and "matched=4" in TARGET and "defeated=1" in TARGET, "line"))
+    fx = os.path.join(scratch, "fixture-repo")
+    os.makedirs(fx, exist_ok=True)
+    genv = dict(os.environ, GIT_CONFIG_GLOBAL=os.devnull, GIT_CONFIG_SYSTEM=os.devnull)
+    run(["git", "-C", fx, "init", "-q"], env=genv)
+    open(os.path.join(fx, "payload.txt"), "w", encoding="utf-8").write("payload\n")
+    run(["git", "-C", fx, "-c", "user.name=t", "-c", "user.email=t@t", "add", "-A"], env=genv)
+    run(["git", "-C", fx, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "fx"],
+        env=genv)
+    frev = run(["git", "-C", fx, "rev-parse", "HEAD"]).stdout.strip()
+    payload_sha = hashlib.sha256(b"payload\n").hexdigest()
+    header = ("# cmd: printf x\n# rev: %s\n# counter-sha256: %s payload.txt\n"
+              "# limits: named limit - fixture receipt for detector arms\n# ---\n" % (frev, payload_sha))
+    stat_a = ("# cmd: printf x\n# rev: %s\n# counter-sha256: %s payload.txt\n"
+              "# limits: named limit - fixture receipt for detector arms\n# ---\nNOTHING-HERE\n"
+              % (frev, payload_sha))
+    stat_b = ("# cmd: printf x\n# rev: %s\n# counter-sha256: %s payload.txt\n"
+              "# limits: named limit - fixture receipt for detector arms\n# ---\nTOKEN\n"
+              % (frev, "0" * 64))
+    tok_loader = lambda _p: stat_a                                   # noqa: E731 - fixture
+    ok_a, lines_a, _c = grade_population(tok_loader, fx, frev, scratch,
+                                         population=[("fixture-a.txt", "met", "legacy", "TOKEN")])
+    cases.append(("summary_required",
+                  (not ok_a) and any("summary" in line for line in lines_a),
+                  " ".join(lines_a)[:80]))
+    bind_loader = lambda _p: stat_b                                  # noqa: E731 - fixture
+    ok_b, lines_b, _c = grade_population(bind_loader, fx, frev, scratch,
+                                         population=[("fixture-b.txt", "met", "legacy", "TOKEN")])
+    cases.append(("binding_required",
+                  (not ok_b) and any("sha:payload.txt" in line for line in lines_b),
+                  " ".join(lines_b)[:80]))
     cases.append(("marker_literal", "replay_stale_mismatch" in
                   open(os.path.abspath(__file__)).read(), "label"))
     ok = sum(1 for _, good_case, _ in cases if good_case)

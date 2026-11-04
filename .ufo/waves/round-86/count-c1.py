@@ -243,6 +243,19 @@ def selfcheck(scratch):
                   and int(TAIL_ARMS.search("arms=26").group(1)) == TARGET_ARMS, "6/0/6"))
     cases.append(("target_split_free",
                   not target_split("mutants=6 killed=5 survivors=1 total=6 arms=26"), "5/1/6"))
+    write(d, "sensitive2.py", sensitive)
+    met, tail, _lines, extras = grade(
+        disk, scratch, [("tools/dup.py", "M1-unanchored-conjunct-old", "GUARD = 1", "GUARD = 0"),
+                        ("tools/sensitive2.py", "M2-total-floor-old", "GUARD = 1", "GUARD = 0")])
+    cases.append(("unanchored_plus_killed_unmet",
+                  (not met) and "unanchored" in " ".join(extras), tail))
+    met, tail, _lines, _ = grade(disk, scratch, [])
+    cases.append(("zero_mutants_unmet", (not met) and "total=0" in tail, tail))
+    write(d, "twenty.py", "print('FAKE pass=20 fail=0')\n"
+                          "print('C3_COUNTER_SELFTEST pass=20 fail=0')\n")
+    met, tail, _lines, _ = grade(
+        disk, scratch, [("tools/twenty.py", "M3-arms-tally-old", "FAKE", "FAKE")])
+    cases.append(("arms_tally_from_subject", tail.endswith("arms=20"), tail))
     cases.append(("labels_unique", len(set(ARM_LABELS)) == 6, "six labels"))
     cases.append(("marker_literal",
                   "H-C3-metverdict" in open(os.path.abspath(__file__)).read(), "label"))

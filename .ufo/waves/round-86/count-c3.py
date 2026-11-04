@@ -259,6 +259,8 @@ def selfcheck():
                   and verdicts == [("+attribution", "differs"), ("-window", "equal")],
                   "%d %d %d %d" % (derived, agree, value_rows, contradicting)))
     cases.append(("observations", OBSERVATIONS == 2, "2"))
+    cases.append(("derive_keyshape",
+                  derive("foo*bar", (set(), set(), set())) == "value-changed", "keyshape"))
     cases.append(("marker_literal", "value_rows" in open(os.path.abspath(__file__)).read(),
                   "marker"))
     ok = sum(1 for _, good_case, _ in cases if good_case)
