@@ -85,3 +85,22 @@ at any revision carrying C1's work. Amendment: `SUBJECT_ARMS = 13` and the label
 the C2 target string is byte-identical to the frozen one, and no C2 after-value existed when this
 amendment was written (the entering control and the header-only control are unchanged and remain
 the before evidence).
+
+### Erratum E1 — the C2 grading revision, and A1's timing sentence (appended post-data, 2026-11-04)
+
+The wave's C2 reviewer measured (F1) that P-C2's sentence cannot be read literally at R =
+`98f48dba`: the counter committed *at* that revision still carries `SUBJECT_ARMS = 11` and reads
+`C2=unmet … subject=selftest arms=(13, 0)`. The `met` line exists only with the A1 counter committed
+at `b9e6f68d`, a child of `98f48dba`. No target, population, supersede rule or kill rule moves; what
+is corrected is the sentence's reading:
+
+- **Canonical grading form:** counter bytes at **`b9e6f68d`** over C2 subject **`98f48dba`**, which
+  is exactly what `evidence/after-r87.txt` records (`# rev: b9e6f68d`, `# cmd:` grading `98f48dba`).
+  At R = `98f48dba` with the `b9e6f68d` counter on PATH the same line prints, rc 0.
+- **A1's timing sentence corrected:** against the data, the successors landed at `98f48dba`, one
+  commit before A1; what did not exist before A1 was the *measured* `C2=met` line. A1's scope claim
+  (no target, population, supersede rule or kill rule moved) is verified by the reviewer and stands.
+- The two counterfeit paths the reviewers measured — a stripped `# replay:` header
+  (`w1/Mo87E02C2Supersede.md` fixture `85e8bd76`) and a vacuous `# cmd:` that prints a
+  genuine-looking body (`w1/Mo87R02ReviewC2.md` F2) — are named defects of the frozen rule, not
+  amendments to it, and are routed to round 88.
