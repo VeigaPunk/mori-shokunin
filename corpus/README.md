@@ -932,3 +932,15 @@ table itself is unchanged. Ground: `knowledge/receipt-counterfeit-r88.md`,
 | Ground | Entry | Bounded advance |
 |---|---|---|
 | Receipt `# cmd:` execution binding (S611 POSIX token recognition, S610 CPython argv, S609 normpath, S607 shlex tokenizer scope; S608 rejected) | `knowledge/execution-binding-r89.md` | The r87 gate binds a bound path only as a file the command executes: POSIX word-start comments, quote-aware invocation split, wrapper unwrapping, interpreter options (`-W`/`-X` values, `-c`/`-m` run no file, `sh -c` parsed), path identity. Measured on the Mo89R01C1 34-case battery: `harm=0 open=0` at `9f4d20b9` versus `harm=13 open=6` at the first landing `760428ab`. Limits: a fixed battery is overfittable; substitutions, here-documents and functions are outside the modelled grammar. |
+
+## Round-89 correction of record — the frontier row describes repair 1, not the landed rule
+
+Supersedes the “Bounded advance” cell of the Round-89 frontier row above (bytes kept): the rule
+landed at `7715bb56` is **subtract-only** — the entering token rule minus the positions that
+provably do not execute the bound path — not the execution model the row describes. Measured on
+78 held-out cases the rule's author did not write (`heldout-c1.py`): `harm=0 newopen=0 open=30
+gained=2` at `7715bb56`, versus `harm=24 newopen=1 open=9` at the first landing `760428ab` and
+`harm=12 newopen=1 open=25` at repair 1 `9f4d20b9`; entering baseline `open=36`. Limits: control
+flow, function shadowing, a substituted interpreter, `sitecustomize`, blob overwrite, heredoc
+data, `uv run -m` and `bash -n` still bind. Ground: `knowledge/execution-binding-r89.md`
+“Round-89 repair 2”; `lessons/round-89.md` `## Mistakes (repair 2)`.

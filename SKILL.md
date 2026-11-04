@@ -1396,3 +1396,16 @@ refused: bindings through command substitution, here-documents, functions, brace
 Makefile targets, `env -C`/`-S`, anything after `cd`. No-harm check:
 `python3 -I .ufo/waves/round-89/noharm-c1.py <rev>` (Mo89R01C1 battery, entering vs graded gate;
 exit 0 iff `harm=0 open=0`) — a regression floor, not a grammar census.
+
+Round-89 registry limits, repair 2 (`7715bb56`, supersedes the two round-89 paragraphs above):
+the r87 gate's binding is **the entering token rule minus the positions that provably do not
+execute the bound path** — POSIX comments (word-start rule, escaped blanks included), redirection
+targets, `echo`/`printf`/`:`/`true`/`false` operands, CPython `-W`/`-X` values, everything after
+`-c`/`-m` or after the script operand; absolute tokens never bind; quoted command strings
+(`sh -c`, `env -S`, `eval`) are searched recursively. It is **not** execution proof: control flow
+(`||`, `false &&`, `exit`/`if false` before), function shadowing, a fake `python3` on `PATH`,
+`sitecustomize`, overwriting the bound blob, heredoc data, `uv run -m` and `bash -n` bind as they
+did on entry. Checks: `python3 -I .ufo/waves/round-89/noharm-c1.py <rev>` (34 cases, exit 0 iff
+`harm=0 open=0`) and `python3 -I .ufo/waves/round-89/heldout-c1.py <rev>` (78 counted cases from
+two seats that did not author the rule; exit 0 iff `harm=0 newopen=0` against entering
+`30a29797`) — floors, not a grammar census.

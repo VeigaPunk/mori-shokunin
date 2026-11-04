@@ -78,3 +78,22 @@ landed as the carry-over ledger below, from `w1/Mo89K01Conn.md` §4, updated at 
 |---|---|---|---|
 | `repair-tuned-on-its-own-battery` — repair 1 (`9f4d20b9`) reached `NOHARM harm=0 open=0` on the 34-case battery it was written against, while the residual reviewer's 59-case held-out battery measured `harm=11` valid equivalents refused and the critic measured three non-executing-branch counterfeits graded `met` end-to-end. | `.ufo/waves/round-89/r/Mo89R03Repair.md` §2; `r/Mo89C02Critic.md` (b) and §(b) e2e; `evidence/heldout-revs.txt` (`9f4d20b9`: `HELDOUT harm=12 newopen=1 open=25`) | QUALITY 185/186 named no-harm but no *held-out* instrument existed before data | repair 2 (`7715bb56`) and `heldout-c1.py` (78 cases from the two residual seats, `--selftest`-less by design, four revisions receipted). Able to fail: `heldout-c1.py` exits 1 with `harm=24` at `760428ab` and `harm=12` at `9f4d20b9`, and 0 at the landed revision. |
 | `execution-model-overclaimed` — repair 1's docstring and the knowledge entry claimed the rule binds "a file the command executes"; the held-out battery showed valid equivalents refused and non-executing branches bound, so the model was neither sound nor harm-free. | `corpus/knowledge/execution-binding-r89.md` “Round-89 repair 2” (supersedes the framing); `r/Mo89C02Critic.md` §(a) | none — no criterion required the claimed semantics to be measured against a battery the author did not write | the landed rule is subtract-only and the entry says so, with the 30 open classes named. Able to fail: `heldout-c1.py` prints the per-case `entering`/`after` cells that contradict the old wording. |
+
+## Round-89 correction of record — repair 2 staleness and the S608 flip text
+
+Supersedes the considerthese ledger's `D2` cell (`| D2 ./path refusal, comment and selfprint
+evasions | fixed — C1, repaired 9f4d20b9 |`, bytes kept) and the S608 row's flip wording in
+`corpus/SOURCES.md` (an immutable cell; the correction lives here, per CORPUS.md rule 2).
+
+- **D2**: the evasions and the `./path` refusal are fixed for the frozen fixtures and for both
+  batteries at **repair 2 `7715bb56`**; they are not execution proof, and the control-flow
+  counterfeits bind as they did on entry (30 of 78 held-out cases). The row's `9f4d20b9` named
+  the repair that a non-author battery then falsified.
+- **S608 flip** (`Mo89R04Corpus` F2): the rejected row's flip text says the verdict changes when
+  `shlex` "documents shell execution". `shlex`'s own warning says it is "only designed for Unix
+  shells" — the flip overclaims what the page could ever license. Correct flip: the row would be
+  reconsidered if a page documented a *shell execution model* (grammar plus execution order), not
+  a tokenizer. `shlex` stays rejected at its tokenizer scope.
+- **Source digest drift** (`Mo89R04Corpus` D-src-1): the three docs.python.org page digests moved
+  on the same date (the "Last updated" footer only: 16:58 → 21:57 UTC); a recheck must match on
+  the quote and section, not the page sha256. S611's pinned copy matched byte-for-byte.
