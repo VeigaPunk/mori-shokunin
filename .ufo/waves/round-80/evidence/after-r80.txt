@@ -1,12 +1,11 @@
 ## C1 the self-assessment sweep resolves at the landed revision
-$ python3 -I .ufo/waves/round-80/count-c1.py 8108dfcc00d8b680cd4fb03cd9a6cc6dd5a74a77
-C1=met tool=present sweep=0 mismatches=0 unresolved=0 tallies=0 stale=0 row_tally=19 live_tally=19 rev=8108dfcc00d8
+$ python3 -I .ufo/waves/round-80/count-c1.py 108ec314258b2fa02aa154b70528ae057ae4695c
+C1=met tool=present sweep=0 mismatches=0 unresolved=0 tallies=0 stale=0 row_tally=19 live_tally=19 rev=108ec314258b
 rc=0
 
 $ python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-80/claim-pins.json
-CLAIM_SWEEP_MISMATCH stale LOG.md:4919 'selftest 18 in-memory cases'
-CLAIM_SWEEP mismatches=1 unresolved=0 tallies=0 stale=1 carriers=4 pointers=233
-rc=1
+CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4 pointers=233
+rc=0
 
 $ python3 -I tools/mori-claim-sweep.py --selftest
 case clean fixture tree pass
@@ -47,7 +46,7 @@ $ grep -c 'selftest 18 in-memory cases' SCORECARD.md
 rc=1
 
 ## C2 the frozen six-mutant harness kills them all
-$ python3 -I .ufo/waves/round-80/mutate-c2.py --rev 8108dfcc00d8b680cd4fb03cd9a6cc6dd5a74a77
+$ python3 -I .ufo/waves/round-80/mutate-c2.py --rev 108ec314258b2fa02aa154b70528ae057ae4695c
 unmutated survived rc=0 C2_COUNTER_SELFTEST pass=7 fail=0
 mutant drop_admitted killed rc=1 C2_COUNTER_SELFTEST pass=6 fail=1
 mutant raise_ceiling killed rc=1 C2_COUNTER_SELFTEST pass=5 fail=2
@@ -55,18 +54,19 @@ mutant count_other_verdicts killed rc=1 C2_COUNTER_SELFTEST pass=5 fail=2
 mutant cut_clause_boundary killed rc=1 C2_COUNTER_SELFTEST pass=6 fail=1
 mutant any_round_in_cell killed rc=1 C2_COUNTER_SELFTEST pass=4 fail=3
 mutant met_ignores_mismatch killed rc=1 C2_COUNTER_SELFTEST pass=2 fail=5
-MUTATION_C2 survivors=0 killed=6 total=6 unmutated=green rev=8108dfcc00d8
+MUTATION_C2 survivors=0 killed=6 total=6 unmutated=green rev=108ec314258b
 rc=0
 
 ## C3 PROVINCE names every committed instrument
-$ python3 -I .ufo/waves/round-80/count-c3.py 8108dfcc00d8b680cd4fb03cd9a6cc6dd5a74a77
-C3=met named=56 present=56 missing=0 extra=0 rev=8108dfcc00d8
+$ python3 -I .ufo/waves/round-80/count-c3.py 108ec314258b2fa02aa154b70528ae057ae4695c
+C3=met named=56 present=56 missing=0 extra=0 rev=108ec314258b
 rc=0
 
 ## Receipts conform to the r79 guard
 $ python3 -I tools/mori-control-receipt.py --dir .ufo/waves/round-80/evidence
+CONTROL_RECEIPT .ufo/waves/round-80/evidence/after-r80.txt sections=5 claims=7 bound=4 unbound=0
 CONTROL_RECEIPT .ufo/waves/round-80/evidence/battery-r80.txt sections=1 claims=13 bound=1 unbound=0
 CONTROL_RECEIPT .ufo/waves/round-80/evidence/controls-r80.txt sections=5 claims=9 bound=4 unbound=0
-CONTROL_RECEIPT_SUMMARY files=2 sections=6 claims=22 unbound=0
+CONTROL_RECEIPT_SUMMARY files=3 sections=11 claims=29 unbound=0
 rc=0
 

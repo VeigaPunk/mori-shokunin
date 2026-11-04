@@ -143,7 +143,10 @@ The sweep's own invocation is `python3 -I tools/mori-claim-sweep.py --root
   is not dead, not that the matched files are the intended ones. Fixed and re-measured at
   `8108dfcc` (`mismatches=0`, `pointers=233`). Two further arms were added the same way after
   the mutation seat killed nothing on the total-summary shape (`mismatches` counting only
-  `unresolved` had survived).
+  `unresolved` had survived). The arm then bit the L1's own prose: the LOG Round 80 section
+  reproduced the retired 18-arm literal and `count-c1` read `stale=1` at `2a826f17`; the
+  sentence was reworded at `108ec314` and the four carriers read `stale=0` again. A stale
+  literal in a carrier is precisely the class, whoever wrote it.
 
 ## Census
 
