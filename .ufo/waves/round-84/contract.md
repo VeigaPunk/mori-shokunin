@@ -139,3 +139,23 @@ equivalence proofs ride them), and no new selftest arm may construct a case wher
    (SCORECARD, LOG) cites that revision.
 3. A counter that prints `C1=unmet`/`C2=unmet`/`C3=unmet` at the integration revision is an honest
    stop for that claim; the report states it and no target is narrowed.
+
+## Pre-data amendment A1 — fixture finding line numbers (no predicate, rule or target change)
+
+Filed 2026-11-04 after the L1 prototyped the all-rows rule in scratch against the entering tool and
+the 40 existing selftest arms; no after-value existed and no seat had scored anything.
+
+The P-C2 fixture table above said `rev-ambiguous` reads red "at row 2". That line number is wrong
+for the tool's existing convention: a revision finding reports the **carrier-side** row the binding
+anchors (`revision_sweep`'s `number`), which for `rev-ambiguous` is row 1 (the carrier holds one
+`Row A` row), while `carrier-ambiguous` reports row 2 (the first carrier row failing the token). The
+graded words are the detail (`row-value` / `rev-bytes`) and `revisions>=1`, not the number, so no
+predicate or target changes. The existing arm `revision-second-stale` pins the convention: a
+binding whose carrier row is line 2 and whose blob has no anchor row must report
+`('revision', 'SCORECARD.md', 2, 'rev-bytes')` — the carrier row's line, never 1. E02's spec is
+unchanged; the seat meets this through that arm.
+
+The L1's scratch prototype (not landed, not evidence) also confirmed two facts the contract relies
+on: with the rule applied the tool's own 40 arms stay `RECORD_SWEEP_SELFTEST pass=40 fail=0`, and
+the real lane run with the r82 pins reads `RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3
+revisions=0`, rc 0.
