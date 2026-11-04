@@ -1,0 +1,30 @@
+# mori round-85 do-nothing / population controls
+# date: 2026-11-04T07:59:39-03:00
+# entering revision: 2cc4b1ae35a83e4fd3fc48bae842bdf38df2e80e
+# commands run from /home/vgpnk/Projects/shokunin/mori-shokunin ; counter bytes are the round-85 worktree counters.
+# ---
+## C1 entering population control (r84 counter at the entering revision, arms not landed)
+MUTANT count-c1.py X1_killed_rescued_as_equivalent survived rc=0
+MUTANT count-c1.py X2_coupling_duplicate_passes survived rc=0
+EXTRA survivor .ufo/waves/round-84/count-c1.py X1_killed_rescued_as_equivalent
+EXTRA survivor .ufo/waves/round-84/count-c1.py X2_coupling_duplicate_passes
+C1=unmet mutants=2 killed=0 survivors=2 total=2 arms=15 harness=stub missing=killed_mutant_with_coupling_not_equivalent,duplicate_coupling_not_equivalent rev=2cc4b1ae35a8
+rc=1
+## C2 entering control (no receipts at the entering revision)
+C2=unmet receipts=0 harness=absent rev=2cc4b1ae35a8
+rc=1
+## C3 entering control (counter file absent at the entering revision)
+C3=unmet observed=absent harness=absent rev=2cc4b1ae35a8
+rc=1
+## C3 defeat control (fixture repo: census stub prints no MORI_DRIFT token line)
+C3=unmet observed=3 aa=unstable own_tokens=0 rcs=1,1,1 rev=59fa49873471
+rc=1
+## C3 real observation at the entering revision (counter applied retroactively: subject + host bytes)
+C3=met observed=3 aa=stable own_tokens=64 subject_tokens=64 subject_deltas=0 unmatched=0 unnamed=0 detector=green rev=2cc4b1ae35a8
+rc=0
+## record sweep
+RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0
+rc=0
+## claim sweep
+CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4 pointers=266
+rc=0
