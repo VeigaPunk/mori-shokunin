@@ -1,0 +1,168 @@
+#!/usr/bin/env python3
+"""mori round-80 C1 counter (calibration): does the self-assessment sweep resolve?
+
+Frozen predicate P-C1 (contract `.ufo/waves/round-80/contract.md`, this counter and the
+receipt label are the same sentence):
+
+  At revision R, `tools/mori-claim-sweep.py` exists at R and, run with
+  `--root <export of R> --pins .ufo/waves/round-80/claim-pins.json`, prints
+  `CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0` and exits 0; the same sweep at
+  the entering revision `d5888922` finds at least one mismatch, the named one being
+  SCORECARD.md's control-receipt capability row stating 18 while the committed
+  `tools/mori-control-receipt.py --selftest` prints `pass=19 fail=0`.
+
+Second arm (independent of the sweep's pins): the capabilities row that names
+`tools/mori-control-receipt.py` states a selftest tally equal to the live `--selftest` count
+of that tool at R. An unparseable or failing tool selftest is a setup error, never a pass.
+
+Named limit (before data): the counter grades the sweep's own verdict plus that one row; it
+does not independently re-derive every pinned tally the sweep checks.
+
+Usage: count-c1.py <rev> [--repo DIR] [--scratch DIR] | count-c1.py --selftest
+Output: `C1=met|unmet tool=present|absent sweep=<rc> mismatches=N row_tally=N live_tally=N rev=<sha12>`
+Exit 0 met, 1 unmet, 2 setup. Read-only: `git archive`/`git show` on the lane repo into
+--scratch; nothing outside --scratch is written.
+"""
+import argparse
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+
+TOOL = "tools/mori-claim-sweep.py"
+PINS = ".ufo/waves/round-80/claim-pins.json"
+CAPTOOL = "tools/mori-control-receipt.py"
+
+
+def run(cmd, cwd=None):
+    return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+
+
+def export(repo, rev, dest):
+    os.makedirs(dest, exist_ok=True)
+    p = subprocess.run(f"git -C {repo} archive {rev} | tar -x -C {dest}",
+                       shell=True, capture_output=True, text=True)
+    return p.returncode == 0
+
+
+def row_tally(text):
+    """The selftest tally stated in the capabilities row naming CAPTOOL, or None."""
+    for line in text.splitlines():
+        if not line.startswith("| "):
+            continue
+        if CAPTOOL not in line or "Capability" in line:
+            continue
+        m = re.search(r"selftest\s+(\d+)\s+in-memory", line)
+        if m:
+            return int(m.group(1))
+    return None
+
+
+def live_tally(tree):
+    p = run(["python3", "-I", os.path.join(tree, CAPTOOL), "--selftest"])
+    out = p.stdout + p.stderr
+    m = re.search(r"pass=(\d+)\s+fail=(\d+)", out)
+    if not m:
+        return None, f"unparseable rc={p.returncode}"
+    if int(m.group(2)) != 0 or p.returncode != 0:
+        return None, f"red rc={p.returncode} {m.group(0)}"
+    return int(m.group(1)), ""
+
+
+def grade(repo, rev, scratch):
+    tree = os.path.join(scratch, "tree")
+    if not export(repo, rev, tree):
+        return 2, "C1_SETUP archive failed"
+    tool = os.path.join(tree, TOOL)
+    if not os.path.isfile(tool):
+        return 1, "C1=unmet tool=absent sweep=- mismatches=- row_tally=- live_tally=-"
+    pins = os.path.join(tree, PINS)
+    p = run(["python3", "-I", tool, "--root", tree, "--pins", pins])
+    m = re.search(r"CLAIM_SWEEP mismatches=(\d+) unresolved=(\d+) tallies=(\d+) stale=(\d+)",
+                  p.stdout)
+    if not m:
+        return 2, f"C1_SETUP sweep produced no summary rc={p.returncode}"
+    mismatches = int(m.group(1))
+    card = open(os.path.join(tree, "SCORECARD.md"), encoding="utf-8").read()
+    stated = row_tally(card)
+    live, why = live_tally(tree)
+    if live is None:
+        return 2, f"C1_SETUP control-receipt selftest {why}"
+    met = p.returncode == 0 and mismatches == 0 and stated == live
+    tail = (f"tool=present sweep={p.returncode} mismatches={mismatches} "
+            f"row_tally={stated} live_tally={live}")
+    return (0 if met else 1), f"C1={'met' if met else 'unmet'} {tail}"
+
+
+def selfcheck(scratch):
+    """Fixture repos: a corrected row passes, the entering shape fails both arms."""
+    cases = []
+    for label, sweep, stated, live, expect_met in (
+            ("conformant", 0, 19, 19, True),
+            ("stale_row", 0, 18, 19, False),
+            ("sweep_mismatch", 1, 19, 19, False)):
+        d = tempfile.mkdtemp(dir=scratch)
+        repo = os.path.join(d, "r")
+        os.makedirs(repo)
+        os.makedirs(os.path.join(repo, "tools"))
+        os.makedirs(os.path.join(repo, ".ufo/waves/round-80"))
+        open(os.path.join(repo, "tools/mori-claim-sweep.py"), "w").write(
+            "import sys\n"
+            f"print('CLAIM_SWEEP mismatches={0 if sweep == 0 else 1} unresolved=0 tallies=0 stale=0')\n"
+            f"sys.exit({sweep})\n")
+        open(os.path.join(repo, CAPTOOL), "w").write(
+            "print('CONTROL_RECEIPT_SELFTEST pass=%d fail=0')\n" % live)
+        open(os.path.join(repo, ".ufo/waves/round-80/claim-pins.json"), "w").write("{}")
+        open(os.path.join(repo, "SCORECARD.md"), "w").write(
+            "# t\n\n| Capability | What | Evidence | First |\n|---|---|---|---|\n"
+            f"| guard (`{CAPTOOL}`) | x | selftest {stated} in-memory cases | 79 |\n")
+        env = ["-c", "user.name=t", "-c", "user.email=t@t"]
+        run(["git"] + env + ["-C", repo, "init", "-q"])
+        run(["git"] + env + ["-C", repo, "add", "-A"])
+        run(["git"] + env + ["-C", repo, "commit", "-qm", "f"])
+        rev = run(["git", "-C", repo, "rev-parse", "HEAD"]).stdout.strip()
+        rc, line = grade(repo, rev, tempfile.mkdtemp(dir=scratch))
+        got = rc == 0
+        cases.append((label, got == expect_met, line))
+    ok = sum(1 for _, good, _ in cases if good)
+    for label, good, line in cases:
+        print(f"{'PASS' if good else 'FAIL'} {label} {line}")
+    print(f"C1_COUNTER_SELFTEST pass={ok} fail={len(cases) - ok}")
+    return 0 if ok == len(cases) else 1
+
+
+def main(argv):
+    ap = argparse.ArgumentParser()
+    ap.add_argument("rev", nargs="?")
+    ap.add_argument("--repo", default=os.path.abspath(
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..")))
+    ap.add_argument("--scratch")
+    ap.add_argument("--selftest", action="store_true")
+    a = ap.parse_args(argv)
+    base = a.scratch or os.environ.get("HYAKU_SCRATCH") or tempfile.gettempdir()
+    os.makedirs(base, exist_ok=True)
+    scratch = tempfile.mkdtemp(prefix="count-c1-r80-", dir=base)
+    try:
+        if a.selftest:
+            return selfcheck(scratch)
+        if not a.rev:
+            print("C1_SETUP usage: count-c1.py <rev> | --selftest", file=sys.stderr)
+            return 2
+        top = run(["git", "-C", a.repo, "rev-parse", "--show-toplevel"])
+        repo = top.stdout.strip() if top.returncode == 0 else a.repo
+        p = run(["git", "-C", repo, "rev-parse", "--verify", a.rev + "^{commit}"])
+        if p.returncode != 0:
+            print(f"C1_SETUP unresolvable revision {a.rev}", file=sys.stderr)
+            return 2
+        rev = p.stdout.strip()
+        rc, line = grade(repo, rev, scratch)
+        print(line + f" rev={rev[:12]}")
+        return rc
+    finally:
+        shutil.rmtree(scratch, ignore_errors=True)
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

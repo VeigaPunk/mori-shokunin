@@ -1,0 +1,87 @@
+## C1 the sweep tool is absent at entering
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin cat-file -e d5888922:tools/mori-claim-sweep.py
+fatal: path 'tools/mori-claim-sweep.py' does not exist in 'd5888922'
+rc=128
+
+$ grep -c 'selftest 18 in-memory cases' SCORECARD.md
+1
+rc=0
+
+$ python3 -I tools/mori-control-receipt.py --selftest
+case 01 bound section ($ cmd above count)      pass
+case 02 unbound section (count, no command)    pass
+case 03 comment line neither command nor claim pass
+case 04 inline cmd= line binds the section     pass
+case 05 split across two ## headings           pass
+case 06 non-integer key=value not a claim      pass
+case 07 negative integer claim                 pass
+case 08 empty file                             pass
+case 09 missing path rc 2, diagnostic on stdout pass
+case 10 receipt with no claims rc 0            pass
+case 11 verb-led first token binds             pass
+case 12 indented comment/claim handled         pass
+case 13 claim key character class              pass
+case 14 bare cmd= without space does not bind  pass
+case 15 summary aggregates across files        pass
+case 16 dir collection filters and sorts       pass
+case 17 unreadable file rc 2, diagnostic on stdout pass
+case 18 unbound line carries heading text      pass
+case 19 rc 2 diagnostics on stdout only        pass
+CONTROL_RECEIPT_SELFTEST pass=19 fail=0
+rc=0
+
+$ python3 -I .ufo/waves/round-80/count-c1.py d5888922
+C1=unmet tool=absent sweep=- mismatches=- row_tally=- live_tally=- rev=d58889220d3c
+rc=1
+
+## C2 the entering counter's selftest survivors
+$ python3 -I .ufo/waves/round-80/mutate-c2.py --rev d5888922
+mutant drop_admitted survived rc=0 C2_COUNTER_SELFTEST pass=4 fail=0
+mutant raise_ceiling killed rc=1 C2_COUNTER_SELFTEST pass=3 fail=1
+mutant count_other_verdicts killed rc=1 C2_COUNTER_SELFTEST pass=3 fail=1
+mutant cut_clause_boundary survived rc=0 C2_COUNTER_SELFTEST pass=4 fail=0
+mutant any_round_in_cell killed rc=1 C2_COUNTER_SELFTEST pass=3 fail=1
+mutant met_ignores_mismatch killed rc=1 C2_COUNTER_SELFTEST pass=1 fail=3
+MUTATION_C2 survivors=2 killed=4 total=6 rev=d58889220d3c
+rc=1
+
+## C3 PROVINCE names 14 of 55 instruments at entering
+$ python3 -I .ufo/waves/round-80/count-c3.py d5888922
+C3=unmet named=14 present=55 missing=41 extra=0 rev=d58889220d3c
+missing_first=mori-anchor-check.py,mori-blind-check.sh,mori-cgroup-pressure.py,mori-content-review.py,mori-control-receipt.py,mori-counter-win.py,mori-disk-rate.py,mori-drift-adjudicate.py
+rc=1
+
+## Counter selftests at the frozen bytes
+$ python3 -I .ufo/waves/round-80/count-c1.py --selftest
+PASS conformant C1=met tool=present sweep=0 mismatches=0 row_tally=19 live_tally=19
+PASS stale_row C1=unmet tool=present sweep=0 mismatches=0 row_tally=18 live_tally=19
+PASS sweep_mismatch C1=unmet tool=present sweep=1 mismatches=1 row_tally=19 live_tally=19
+C1_COUNTER_SELFTEST pass=3 fail=0
+rc=0
+
+$ python3 -I .ufo/waves/round-80/count-c3.py --selftest
+PASS complete named=3 present=3 missing=0 extra=0
+PASS missing_one named=2 present=3 missing=1 extra=0
+PASS extra_stale named=4 present=3 missing=0 extra=1
+C3_COUNTER_SELFTEST pass=3 fail=0
+rc=0
+
+$ python3 -I .ufo/waves/round-80/mutate-c2.py --selftest
+mutant drop_admitted survived rc=0 C2_COUNTER_SELFTEST pass=6 fail=0
+mutant raise_ceiling survived rc=0 C2_COUNTER_SELFTEST pass=6 fail=0
+mutant count_other_verdicts survived rc=0 C2_COUNTER_SELFTEST pass=6 fail=0
+mutant cut_clause_boundary survived rc=0 C2_COUNTER_SELFTEST pass=6 fail=0
+mutant any_round_in_cell survived rc=0 C2_COUNTER_SELFTEST pass=6 fail=0
+mutant met_ignores_mismatch survived rc=0 C2_COUNTER_SELFTEST pass=6 fail=0
+mutant drop_admitted killed rc=1 C2_COUNTER_SELFTEST pass=6 fail=0
+mutant raise_ceiling killed rc=1 C2_COUNTER_SELFTEST pass=6 fail=0
+mutant count_other_verdicts killed rc=1 C2_COUNTER_SELFTEST pass=6 fail=0
+mutant cut_clause_boundary killed rc=1 C2_COUNTER_SELFTEST pass=6 fail=0
+mutant any_round_in_cell killed rc=1 C2_COUNTER_SELFTEST pass=6 fail=0
+mutant met_ignores_mismatch killed rc=1 C2_COUNTER_SELFTEST pass=6 fail=0
+PASS green_stub_all_survive survivors=6
+PASS red_stub_all_killed survivors=0
+PASS real_counter_anchors absent=[]
+MUTATE_C2_SELFTEST pass=3 fail=0
+rc=0
+
