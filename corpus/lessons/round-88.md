@@ -185,10 +185,13 @@ All twelve seats settled; every report is merged below. None of them authored th
     **Erratum E3** records all five scope statements; the pinned predicates and the real-population
     readings are unchanged.
 11. **Mo88Si01Simplify (simplifier, YAGNI).** 33 deletion candidates, 12 target-preserving, one
-    recommended: the dead assignment `want_met = …` at `.ufo/waves/round-87/count-c2.py:121`
-    (ruff F841). It correctly declines to delete it now — the after receipt binds the counter's
-    sha256 `8904a3d0…`, and the deletion changes the bytes to `27121850…`, so the edit belongs to
-    round 89 with a superseding receipt. Every new arm and helper was shown load-bearing by
+    recommended: the redundant re-assignment `missing = good.replace("# replay: required\n", "")`
+    at `.ufo/waves/round-87/count-c2.py:396` (the same value is already bound earlier in
+    `selfcheck`), measured target-preserving; and the deferred dead assignment `want_met = …` at
+    `.ufo/waves/round-88/count-c2.py:121` (ruff F841). It correctly declines to delete either now —
+    the after receipt binds the counter sha256s (`8904a3d0…`; the deferred deletion changes it to
+    `27121850…`) and the claim's diff is frozen, so both belong to round 89 with a superseding
+    receipt. Every new arm and helper was shown load-bearing by
     deletion (each deletion flips the target or the subject arm gate); the fixture tally lines are
     the only post-freeze edit and are disclosed as Erratum E1.
 
