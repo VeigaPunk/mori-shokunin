@@ -318,3 +318,16 @@ Filed 2026-11-04 from seat `Mo84R03Record` §1 (F1–F5), before any after-value
   an implementation detail); the graded words are the detail and `revisions>=1`. `arms` stays a
   floor (`>= 44`), not an exact equality: the target names 44 and the tool lands exactly 44, but a
   later arm addition must not make the claim unverifiable.
+
+## Pre-data amendment A9 — P-C3's preservation list superseded by A7 (prose only)
+
+Filed 2026-11-04 from seat `Mo84R01C1` §3 residual (a), before any after-value. P-C3's seat
+paragraph still lists the pre-A2 string `and not unclassified and residual == 0` as the
+must-occur-once item; that single-line substring occurs zero times in the graded bytes. **The
+operative list is A7's**: `and not unclassified`, `and residual == 0`,
+`agreed == len(snapshot_tokens)`, `residual += duplicates`, `duplicates == 0`, each exactly once.
+No counter enforces the stale sentence and no predicate, target or class changes. Residual (b):
+`SCORECARD.md` `## Planned (round 84)` item 1 repeats the r83 reviewer's shorthand for M24a
+(`killed_n = total - survivors` → `total`); the operative anchor is A2's
+(`killed_n = total - survivors - equivalent` → `killed_n = total - equivalent`). The plan row is
+a historical plan, not a claim, and is not rewritten.
