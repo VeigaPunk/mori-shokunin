@@ -1,0 +1,100 @@
+# Mo89E03Replay receipts — exact outputs, rc, revisions, digests
+# lane repo (read-only): /home/vgpnk/Projects/shokunin/mori-shokunin
+# scratch clone used for --repo: /fast/scratch/hyaku/mori-r89/Mo89E03Replay/lane-clone (git clone --shared, HEAD=760428abf925d98025b34bf23f2cbf54cbeb3bca; removed after runs per scratch rule)
+# env for all runs: TMPDIR=<scratch>, GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_SYSTEM=/dev/null, PYTHONDONTWRITEBYTECODE=1
+
+## revisions verified before use
+git -C lane-clone rev-parse --verify 30a29797012281b9fd0c748b38b929ac67f8c754^{commit} -> 30a29797012281b9fd0c748b38b929ac67f8c754 (rc 0)
+git -C lane-clone rev-parse --verify 760428abf925d98025b34bf23f2cbf54cbeb3bca^{commit} -> 760428abf925d98025b34bf23f2cbf54cbeb3bca (rc 0)
+
+## blob digests (git show <rev>:<path> | sha256sum)
+7e577f533e1dac676d3f5b3d601f2c4c622c57c325e6091e6018b5781ae73fc0  30a29797:.ufo/waves/round-87/count-c2.py  (gate BEFORE)
+d7ea961a9ede1cefc615e0308c51ac99bc2a187cdf225aade0abd97bb03f6a13  760428ab:.ufo/waves/round-87/count-c2.py  (gate AFTER / exported gate-after.py)
+f8e6c39ed30acffd0e6f5272575df3ce7333c7a403b611a4bd1118aac16d9376  760428ab:.ufo/waves/round-89/count-c1.py  (frozen counter)
+213a7558e155ea4eaeec8472767fa8371b44948e40b59cf9ac8437954641f4ac  base receipt .ufo/waves/round-87/evidence/record-sweep-r87.txt (same bytes at both revs)
+
+## fixture receipt digests (hand-built by this seat, contract frozen # cmd: replacements applied to base bytes)
+0e7f85dad87b3ec7e185fac5068eec2a161b292940402c9be8bb18434d2d1cfd  fx-equiv-receipt.txt
+2a82e8a9f2eab872c4d1075eca9b72ded5dc02f235df935c031cb19c71b61186  fx-comment-receipt.txt
+22a648cc01fe9d126ed1e36e09daf32a0564dd3849a9e6a358b2531deaca20fc  fx-selfprint-receipt.txt
+
+## fixture commits (each in own git clone --shared, parent 760428abf925d98025b34bf23f2cbf54cbeb3bca, path .ufo/waves/round-87/evidence/record-sweep-r87.txt; toplevel asserted before commit)
+equiv     ace556d6fe5f5fa43a21e2ec738fe3f197a75aeb
+comment   e807af182a51e9f83c927cb7c380f4db5d46078f
+selfprint cdab7468d8daea7cc8914e2621c42caf2893a7da
+alt-probe c4fd3026f469c02456ba372c7ce3a4891af7cae2  (extra, own construction: cmd 'python3 -I /abs/does/not/exist.py tools/mori-record-sweep.py')
+
+=== RUN 1: frozen counter at entering rev (rc=1) ===
+cmd: python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/count-c1.py 30a29797012281b9fd0c748b38b929ac67f8c754 --repo <lane-clone> --scratch <scratch-enter>
+REAL rc=0 C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=30a297970122
+FX equiv refused problems=cmd-binding
+FX comment refused problems=-
+FX selfprint refused problems=-
+C1=unmet equiv=refused comment=accepted selfprint=accepted real=met arms=23 subject=arms:(23, 0) rev=30a297970122
+C2_COUNTER_SELFTEST pass=23 fail=0
+EXIT=1
+
+=== RUN 2: frozen counter at landing rev (rc=0) ===
+cmd: python3 -I .../round-89/count-c1.py 760428abf925d98025b34bf23f2cbf54cbeb3bca --repo <lane-clone> --scratch <scratch-after>
+REAL rc=0 C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=760428abf925
+FX equiv accepted problems=-
+FX comment accepted problems=cmd-binding
+FX selfprint accepted problems=cmd-binding
+C1=met equiv=accepted comment=refused selfprint=refused real=met arms=26 rev=760428abf925
+EXIT=0
+
+=== RUN 3: exported AFTER gate selftest (rc=0) ===
+cmd: python3 -I <scratch>/gate-after.py --selftest --scratch <selftest-after>
+tail: C2_COUNTER_SELFTEST pass=26 fail=0  (26 PASS lines incl. binding_path_identity, binding_comment_dropped, binding_selfprint_refused)
+EXIT=0
+
+=== RUNS 4-6: exported AFTER gate public CLI vs hand-built fixture clones ===
+cmd form: python3 -I <scratch>/gate-after.py <fixture-rev> --repo <fixture-clone> --scratch <runfx-*>  (gate-after.py sha256=d7ea961a9ede1cefc615e0308c51ac99bc2a187cdf225aade0abd97bb03f6a13)
+
+--- FX equiv rev=ace556d6fe5f5fa43a21e2ec738fe3f197a75aeb  EXIT=0 ---
+RECEIPT after-r85.txt expect=met met problems=-
+RECEIPT record-sweep-r85.txt expect=met met problems=-
+RECEIPT claim-sweep-r85.txt expect=met met problems=-
+REPLAY after-c1-r86.txt mode=required rc=0 exported=1
+RECEIPT after-c1-r86.txt expect=met met problems=-
+REPLAY replay-defeat-r86.txt mode=required rc=0 exported=1
+RECEIPT replay-defeat-r86.txt expect=reject failed problems=replay-mismatch
+REPLAY record-sweep-r87.txt mode=clone rc=0 exported=1
+RECEIPT record-sweep-r87.txt expect=met met problems=-
+REPLAY claim-sweep-r87.txt mode=clone rc=0 exported=1
+RECEIPT claim-sweep-r87.txt expect=met met problems=-
+C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=ace556d6fe5f
+
+--- FX comment rev=e807af182a51e9f83c927cb7c380f4db5d46078f  EXIT=1 ---
+RECEIPT after-r85.txt expect=met met problems=-
+RECEIPT record-sweep-r85.txt expect=met met problems=-
+RECEIPT claim-sweep-r85.txt expect=met met problems=-
+REPLAY after-c1-r86.txt mode=required rc=0 exported=1
+RECEIPT after-c1-r86.txt expect=met met problems=-
+REPLAY replay-defeat-r86.txt mode=required rc=0 exported=1
+RECEIPT replay-defeat-r86.txt expect=reject failed problems=replay-mismatch
+REPLAY record-sweep-r87.txt mode=clone rc=0 exported=1
+RECEIPT record-sweep-r87.txt expect=met failed problems=cmd-binding
+REPLAY claim-sweep-r87.txt mode=clone rc=0 exported=1
+RECEIPT claim-sweep-r87.txt expect=met met problems=-
+C2=unmet receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=5 defeated=1 superseded=1 legacy=2 unexpected=1 detector=green rev=e807af182a51
+
+--- FX selfprint rev=cdab7468d8daea7cc8914e2621c42caf2893a7da  EXIT=1 ---
+RECEIPT after-r85.txt expect=met met problems=-
+RECEIPT record-sweep-r85.txt expect=met met problems=-
+RECEIPT claim-sweep-r85.txt expect=met met problems=-
+REPLAY after-c1-r86.txt mode=required rc=0 exported=1
+RECEIPT after-c1-r86.txt expect=met met problems=-
+REPLAY replay-defeat-r86.txt mode=required rc=0 exported=1
+RECEIPT replay-defeat-r86.txt expect=reject failed problems=replay-mismatch
+REPLAY record-sweep-r87.txt mode=clone rc=0 exported=1
+RECEIPT record-sweep-r87.txt expect=met failed problems=cmd-binding
+REPLAY claim-sweep-r87.txt mode=clone rc=0 exported=1
+RECEIPT claim-sweep-r87.txt expect=met met problems=-
+C2=unmet receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=5 defeated=1 superseded=1 legacy=2 unexpected=1 detector=green rev=cdab7468d8da
+
+=== RUN 7 (own supplementary probe, outside frozen three): alt-binding rev=c4fd3026f469c02456ba372c7ce3a4891af7cae2 EXIT=1 ---
+cmd: python3 -I /abs/does/not/exist.py tools/mori-record-sweep.py  (bound path present only as data arg)
+REPLAY record-sweep-r87.txt mode=clone rc=2 exported=1
+RECEIPT record-sweep-r87.txt expect=met failed problems=cmd-binding,replay-rc:2,replay-mismatch
+C2=unmet ... matched=5 defeated=1 superseded=1 legacy=2 unexpected=1 detector=green rev=c4fd3026f469

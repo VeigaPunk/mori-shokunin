@@ -1,0 +1,8 @@
+# Mo89E01ArmsC1 receipts
+entering_subject=.ufo/waves/round-88/count-c1.py@760428abf925d98025b34bf23f2cbf54cbeb3bca sha256=3ba0f97baaae389e602fa3ac929d6b007cdd1f65062db15f34ef7f184f3a32e2
+d5b83c775d199c66ae7c1a1310c054d2d39b5e5a4ba102ccc4b69f0859fd6037  work.py
+d5b83c775d199c66ae7c1a1310c054d2d39b5e5a4ba102ccc4b69f0859fd6037  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/candidates/r88-count-c1.py
+frozen_counter=.ufo/waves/round-89/count-c2.py sha256=40eacccc89bd3b394a6ffb0d6a5fd604143c41ec4375d8a4399e749b65420a3c
+8f0e6f138aadef18fc22e4da8c5e876575bb982d0d39be634b80a236d236f688  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/Mo89E01ArmsC1-candidate.diff
+--- selftest pristine (python3 -I work.py --selftest --scratch <seat>/scratch-run) rc=0
+C1_COUNTER_SELFTEST pass=28 fail=0

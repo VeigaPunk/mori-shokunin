@@ -1,0 +1,29 @@
+PASS killed_counted mutants=1 killed=1 survivors=0 total=1 arms=1
+PASS survivor_counted mutants=1 killed=0 survivors=1 total=1 arms=1
+PASS arms_parse 24/0
+PASS arms_tally_read arms from subject
+PASS pristine_arms_floor 24 wanted
+PASS green_boundary green()
+PASS killed_boundary killed()
+PASS unanchored_excluded mutants=0 killed=0 survivors=0 total=0 arms=1
+PASS missing_tally_refused mutants=1 killed=0 survivors=1 total=1 arms=0
+PASS zero_mutants_unmet no mutants
+PASS empty_mutation_unmet mutants=0 killed=0 survivors=0 total=0 arms=1
+PASS red_pristine_reported mutants=1 killed=1 survivors=0 total=1 arms=0
+PASS target_split_ok 6/0/6/24
+PASS target_split_free 5/1/6
+PASS target_arms_free 18
+PASS per_file_arms_frozen 24
+PASS labels_unique six labels
+PASS met_guard_unanchored mutants=1 killed=1 survivors=0 total=1 arms=2
+PASS met_guard_empty mutants=1 killed=1 survivors=0 total=1 arms=2
+PASS killed_tally_mixed mutants=2 killed=1 survivors=1 total=2 arms=2
+PASS arms_tally_passed mutants=1 killed=1 survivors=0 total=1 arms=18
+PASS target_split_killed_not_mutants 5 != 6
+PASS doubled_anchor_counted_type mutants=0 killed=0 survivors=0 total=0 arms=1
+PASS arms_last_tally last of two tallies
+PASS green_mixed_fail mixed tallies refused
+PASS own_ok_red own_ok_of()
+PASS marker_literal label
+PASS own_arms_pinned 28/28
+C1_COUNTER_SELFTEST pass=28 fail=0

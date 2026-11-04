@@ -1,0 +1,67 @@
+--- /fast/scratch/hyaku/mori-r89/Mo89E01ArmsC1-count-c1.py	2026-11-04 18:02:15.325490503 -0300
++++ work.py	2026-11-04 18:04:02.175858174 -0300
+@@ -20,6 +20,11 @@
+   M5-split-field      `target_split` reading `mutants` where it means `killed`
+   M6-anchor-guard     the exactly-once anchor guard (`!= 1` vs `== 0`)
+ 
++Round-89 arms (this file's own `--selftest`, one arm per declared round-88 survivor, each
++attributed by its own `FAIL <arm>` line): `arms_last_tally` (`arms_of` keeps the last of two
++tallies), `green_mixed_fail` (`green` refuses a zero tally beside a nonzero one) and `own_ok_red`
++(`own_ok_of` refuses a red selftest). The selftest is pinned at 28 arms.
++
+ Kill rule (frozen): a mutant is killed iff the mutated copy's own `--selftest` exits non-zero
+ **or** prints `fail=<n>` with n > 0, conditional on the pristine copy being green with exactly 24
+ arms. An anchor that does not occur exactly once is `unanchored` and never counted killed; an
+@@ -68,7 +73,7 @@
+ ARMS = re.compile(r"COUNTER_SELFTEST pass=(\d+) fail=(\d+)")
+ TARGET = (6, 0, 6)
+ TARGET_ARMS = 24
+-EXPECTED_ARMS = 25
++EXPECTED_ARMS = 28
+ 
+ 
+ def run(cmd, cwd=None, env=None, timeout=300):
+@@ -98,6 +103,12 @@
+     return rc != 0 or bool(FAIL.search(out))
+ 
+ 
++def own_ok_of(rc, out):
++    """True when a subject's own --selftest exits 0 and prints its green tally at EXPECTED_ARMS."""
++    return (rc == 0 and "C1_COUNTER_SELFTEST" in out
++            and re.search(r"C1_COUNTER_SELFTEST pass=%d fail=0" % EXPECTED_ARMS, out) is not None)
++
++
+ def arms_of(out):
+     """The subject selftest's own pass/fail tally as (pass, fail), or (-1, -1)."""
+     m = None
+@@ -315,6 +326,19 @@
+                   fields.get("mutants") == 0 and fields.get("total") == 0
+                   and met is False, tail))
+ 
++    # --- round-89 arms: one per declared round-88 survivor, each red under its mutant ---
++    cases.append(("arms_last_tally",
++                  arms_of("C1_COUNTER_SELFTEST pass=1 fail=0\nC1_COUNTER_SELFTEST pass=2 fail=0\n")
++                  == (2, 0), "last of two tallies"))
++    cases.append(("green_mixed_fail",
++                  green(0, "FAKE pass=1 fail=0") and not green(0, "FAKE pass=1 fail=0\nFAKE pass=1 fail=2"),
++                  "mixed tallies refused"))
++    cases.append(("own_ok_red",
++                  own_ok_of(0, "C1_COUNTER_SELFTEST pass=%d fail=0" % EXPECTED_ARMS)
++                  and not own_ok_of(1, "C1_COUNTER_SELFTEST pass=%d fail=0" % EXPECTED_ARMS)
++                  and not own_ok_of(0, "C1_COUNTER_SELFTEST pass=%d fail=1" % EXPECTED_ARMS),
++                  "own_ok_of()"))
++
+     cases.append(("marker_literal",
+                   "M1-met-no-guard" in open(os.path.abspath(__file__)).read(), "label"))
+     cases.append(("own_arms_pinned", len(cases) + 1 == EXPECTED_ARMS,
+@@ -358,9 +382,7 @@
+         own = run(["python3", "-I", os.path.abspath(__file__), "--selftest",
+                    "--scratch", scratch])
+         own_out = (own.stdout or "") + (own.stderr or "")
+-        own_ok = (own.returncode == 0 and "C1_COUNTER_SELFTEST" in own_out
+-                  and re.search(r"C1_COUNTER_SELFTEST pass=%d fail=0" % EXPECTED_ARMS,
+-                                own_out) is not None)
++        own_ok = own_ok_of(own.returncode, own_out)
+         met, tail, lines, extras = grade(loader, scratch)
+         for line in lines:
+             print(line)

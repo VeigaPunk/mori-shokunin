@@ -1,0 +1,228 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r89-w1",
+  "policy": {
+    "source": "config",
+    "maxLanes": 12,
+    "minLanes": 8,
+    "waveMinLanes": 8,
+    "waveMaxLanes": 16,
+    "declaredMaxLanes": 12,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 12,
+    "resume": 0,
+    "total": 12
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-89/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-89/w1",
+    "members": {
+      "Mo89E01ArmsC1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration"
+        ],
+        "milestone": "Implement three attributed arms in r88 c1 scratch candidate"
+      },
+      "Mo89E02ArmsC2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration"
+        ],
+        "milestone": "Implement nine attributed arms in r88 c2 scratch candidate"
+      },
+      "Mo89E03Replay": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability"
+        ],
+        "milestone": "Independently replay C1 public fixtures"
+      },
+      "Mo89S01Sources": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "depth",
+          "operability"
+        ],
+        "milestone": "Open source and draft grounded knowledge entry"
+      },
+      "Mo89Sc01Scope": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "coverage",
+          "calibration"
+        ],
+        "milestone": "Data walk and existing scope reconnaissance"
+      },
+      "Mo89R01C1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "operability"
+        ],
+        "milestone": "Attack C1 equivalence and no-harm surface"
+      },
+      "Mo89R02C2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration"
+        ],
+        "milestone": "Review declared-arm attribution and population identity"
+      },
+      "Mo89C01Critic": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability"
+        ],
+        "milestone": "Falsify printed targets and minimal-work controls"
+      },
+      "Mo89M01Mut": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "calibration"
+        ],
+        "milestone": "Mutation-test frozen r89 instruments"
+      },
+      "Mo89K01Conn": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null,
+        "axes": [
+          "adjacency",
+          "calibration"
+        ],
+        "milestone": "Sibling overlap and claim connection scan"
+      },
+      "Mo89S02Record": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "calibration"
+        ],
+        "milestone": "Draft mistake lesson and correction of record"
+      },
+      "Mo89Se01Boundary": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "sentinel",
+        "item": null,
+        "axes": [
+          "adjacency",
+          "operability"
+        ],
+        "milestone": "Bound gate safety and observable subject identity"
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Goal\nmori round 89 attempt 1; L1 MoriR89 is planner and integration owner. TWO frozen claims:\nC1 operability: equivalent ./path accepted, comment-only and selfprint execution bindings refused; real seven receipts held. C2 calibration: 12 r88 mutation survivors killed with FAIL-label attribution.\nAuthority /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/contract.md, counters count-c1.py/count-c2.py, controls evidence/controls-r89.txt, frozen d4438695998894aad7ff9b20f46d9f1852ea3c7d BEFORE candidate measurements. C1 landing 760428abf925d98025b34bf23f2cbf54cbeb3bca already measured met. C2 arms still being implemented by E01/E02 in isolated copies; no C2 after revision yet. Never change the predicates/instruments. Name defects honestly.\n\n# Bounds\nEvery Report: trailer is relative to /home/vgpnk/Projects/shokunin/mori-shokunin; write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. All paths are absolute. Production checkout, fleet root, sibling repos, operator settings and git/jj index read-only; seats never commit/push/run mutating git/jj there. No seat calls task or spawns. No background jobs. Only E01/E02 write candidate copies under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/candidates/ (disjoint filenames); other seats write only their uniquely named report/evidence under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/. L1 integrates. No production or corpus edits by seats.\nEvery clone/counter fixture under /fast/scratch/hyaku/mori-r89/<seat-name>/; set TMPDIR and --scratch explicitly; remove own scratch before yield after saving durable receipts. One live clone per seat; git clone --shared. Fixture commits ONLY with explicit git -C <scratch clone>, verify toplevel first. Tests/gates only those explicitly assigned below, run no unrelated builds/linters/tests/formatters.\nTooling authorization: you and every seat may install/upgrade tools that help the task; first read /home/vgpnk/.omp/agent/RULES.md (official channels, update-safety gate; record tool/version/channel/reason). All pacman transactions PAUSED host-wide. Use uv tool/npx/official binary only. No host/service remediation. Detection/report only. Never capture settings/session/credential content.\nReport concrete commands, rc, input revisions, digests; unrun is not passed. Mark partial/failure, don't fabricate. Finish by yield. No source URLs in a registry unless opened this round. Return candidate artifacts first, then report and yield; Main is MoriR89, coordinate only exact own seat ids.\n",
+    "tasks": [
+      {
+        "name": "Mo89E01ArmsC1",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/contract.md C2 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/count-c2.py MUTANTS. Export `.ufo/waves/round-88/count-c1.py` from 760428abf925d98025b34bf23f2cbf54cbeb3bca to your scratch. Implement ONLY this subject there, save complete candidate at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/candidates/r88-count-c1.py. Do not edit production.\nAdd arms exactly arms_last_tally (two tallies last wins), green_mixed_fail (both fail=0 and fail=2 in rc0 output refused), own_ok_red. Extract pure own_ok_of(rc,out), main uses helper with same previous predicate; anchor in frozen r89 MUTANTS must occur once. Keep ARMS_BY_FILE/TARGET_ARMS referring to r87 subject at24 unchanged. EXPECTED_ARMS 25->28; insert new arms BEFORE own_arms_pinned evaluated. Run candidate --selftest with explicit scratch (28/0), apply each of three frozen mutant pairs to isolated copies and run selftests; rc nonzero plus exact corresponding FAIL label required. Save transcript/digests. No commit. Return candidate path immediately via agent://MoriR89 only if question/blocker, then yield.\nScratch: /fast/scratch/hyaku/mori-r89/Mo89E01ArmsC1/. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/Mo89E01ArmsC1.md.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration\nMilestone: Implement three attributed arms in r88 c1 scratch candidate\n\nReport: write your scoped findings to .ufo/waves/round-89/w1/Mo89E01ArmsC1.md"
+      },
+      {
+        "name": "Mo89E02ArmsC2",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/contract.md C2 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/count-c2.py MUTANTS. Export `.ufo/waves/round-88/count-c2.py` from 760428abf925d98025b34bf23f2cbf54cbeb3bca to scratch (already SUBJECT_ARMS=26, TARGET arms26; keep these). Implement ONLY this subject there; complete candidate /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/candidates/r88-count-c2.py. No production edit.\nNine exact arms and mutant anchors in frozen counter: target_full; met_line_derived (extract met_line(rev), main prints helper); clean_wrong_split; receipt_name_bound; clone_top_bound (extract clone_root_ok(top_out,d), clone fixture uses not helper); own_ok_red (extract own_ok_of(rc,out), main uses it); verdict_last_wins; absent_without_supersedes; vacuous_body_fabricated. Keep old arms; total26. Extracted helpers preserve previous behavior. Remove unused want_met assignment; FX good fixture label ok instead of refused. Run candidate --selftest, then nine isolated frozen mutant copies: each must rc!=0/fail>0 AND FAIL its declared arm. Preserve exact anchor uniqueness; report each result/digests. No commits.\nScratch: /fast/scratch/hyaku/mori-r89/Mo89E02ArmsC2/. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/Mo89E02ArmsC2.md.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration\nMilestone: Implement nine attributed arms in r88 c2 scratch candidate\n\nReport: write your scoped findings to .ufo/waves/round-89/w1/Mo89E02ArmsC2.md"
+      },
+      {
+        "name": "Mo89E03Replay",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nExplicitly run C1 frozen counter at entering 30a29797012281b9fd0c748b38b929ac67f8c754 and after 760428abf925d98025b34bf23f2cbf54cbeb3bca. Then independently hand-construct equiv/comment/selfprint fixture commits in a scratch shared clone, run exported r87 gate public CLI without calling r89 fixture helper, check receipt name/problemlist and real population. Save exact output/rc and revision/digests. Enumerate seven receipt headers and modes, limits including host-local r86 --repo paths; do not assert hermeticity.\nScratch: /fast/scratch/hyaku/mori-r89/Mo89E03Replay/. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/Mo89E03Replay.md.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability\nMilestone: Independently replay C1 public fixtures\n\nReport: write your scoped findings to .ufo/waves/round-89/w1/Mo89E03Replay.md"
+      },
+      {
+        "name": "Mo89S01Sources",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nOpen https://docs.python.org/3.14/library/shlex.html and https://docs.python.org/3.14/library/os.path.html (authoritative only for tokenization/path syntax, not execution assurance). Read corpus/SOURCES.md end and existing URL scopes to avoid within-scope duplicates. Propose S607 onward only unused ids, not production writes. Need one admit and one reject with reason/flip; can reject shlex-alone-as-shell-execution-proof, explicitly different scoped row. For each proposed row include 11-cell schema, URL/access2026-11-04, <=25-word EXACT quote with section locator, actual word count; store minimal durable source evidence under your unique report dir. Draft concise knowledge entry provenance trio and table explaining C1 behavior and limitations; C1 claim evidence must cite admitted S-id. You are author-lane, not independent closure verifier. No fake source quote; if unreachable mark unavailable.\nScratch: /fast/scratch/hyaku/mori-r89/Mo89S01Sources/. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/Mo89S01Sources.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: depth, operability\nMilestone: Open source and draft grounded knowledge entry\n\nReport: write your scoped findings to .ufo/waves/round-89/w1/Mo89S01Sources.md"
+      },
+      {
+        "name": "Mo89Sc01Scope",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nRead-only data walk current gate, PROVINCE.md, latest considerthese/2026-10-26.md and SCORECARD Planned r89. Map exact routed defects 1-5 from round88 spotcheck to this round targets vs still-open; identify no-work counter confounds and C2 five absent entering anchors. Find existing learner patterns for shell/path binding. No gate execution unless needed to inspect a bounded hypothesis; don't rerun reported errors. Report source paths, ownership and true dependencies, particularly C1 migration of r88 arms26 vs C2 mutations target26 (causal-separability risk).\nScratch: /fast/scratch/hyaku/mori-r89/Mo89Sc01Scope/. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/Mo89Sc01Scope.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: coverage, calibration\nMilestone: Data walk and existing scope reconnaissance\n\nReport: write your scoped findings to .ufo/waves/round-89/w1/Mo89Sc01Scope.md"
+      },
+      {
+        "name": "Mo89R01C1",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nReview C1 at 760428abf925d98025b34bf23f2cbf54cbeb3bca vs entering30a2979. Explicitly authorized bounded public-path fixtures in scratch clones plus selftest. Test valid equivalents beyond ./path: python3 -I -B script; /usr/bin/python3; direct script invocation; quoted script; python3.14 and environment prefixes. Keep valid stdout body matched; classify entering-vs-after false refusal as harm, don't infer all equivalents from original3. Attack -c/-m script-position lookalikes and semicolon-in-quotes. Report exact commands/revisions/expected rc, actual ids; don't modify production. Frozen predicate target holds does not waive harm.\nScratch: /fast/scratch/hyaku/mori-r89/Mo89R01C1/. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/Mo89R01C1.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability\nMilestone: Attack C1 equivalence and no-harm surface\n\nReport: write your scoped findings to .ufo/waves/round-89/w1/Mo89R01C1.md"
+      },
+      {
+        "name": "Mo89R02C2",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nRead C2 frozen counter, contract, entering and skip-work controls. Static review NOW of anchor/FAIL attribution and canary. When L1 integrates C2 candidate it will send after revision; if you can complete review from candidate files once present do so without polling. Explicit permission to run ONLY C2 counter/selftests/mutant probes necessary to falsify C2 at supplied revision. Check subject identity (file/digest), each exact label, wrong-reason FAIL and injected FAIL text, abnormal exit/timeouts, skip-work controls, selftest executable public path. If candidates not landed yet return static findings; L1 measures after later. Never amend predicate.\nScratch: /fast/scratch/hyaku/mori-r89/Mo89R02C2/. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/Mo89R02C2.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration\nMilestone: Review declared-arm attribution and population identity\n\nReport: write your scoped findings to .ufo/waves/round-89/w1/Mo89R02C2.md"
+      },
+      {
+        "name": "Mo89C01Critic",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nTry to reach C1/C2 target without claimed work using frozen r89 instruments. Explicit permission bounded code fixtures/selftests/counters in scratch clones. Attack C1 fabricated RECEIPT output / return-code mismatch; C2 checksum-canary, subject identity, FAIL label spoofing and syntax-error kills. Read round88 critic for prior canary; reproduce appropriately against r89 using scratch bytes, not production edits. Need positive control as well as forgery; classify narrow finite success vs assurance. Record surviving controls honestly, not just target lines.\nScratch: /fast/scratch/hyaku/mori-r89/Mo89C01Critic/. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/Mo89C01Critic.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability\nMilestone: Falsify printed targets and minimal-work controls\n\nReport: write your scoped findings to .ufo/waves/round-89/w1/Mo89C01Critic.md"
+      },
+      {
+        "name": "Mo89M01Mut",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nExplicitly mutation-test r89 count-c1.py/count-c2.py own --selftest, copied from freeze d4438695. Pristine->mutant->restored exact bytes, bounded max16 meaningful mutants over parse rc, expected match, fixture-name, arm attribution, last tally, target print, own-ok. Never mutate production. Save exact anchors/hashes/rc/FAIL lines and survivors, no skipped inconclusive passed. Also inspect C1 FX accepted/refused label inversion (current good boolean means expectation met, not accepted receipt). No production edits or changing frozen counters after data.\nScratch: /fast/scratch/hyaku/mori-r89/Mo89M01Mut/. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/Mo89M01Mut.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration\nMilestone: Mutation-test frozen r89 instruments\n\nReport: write your scoped findings to .ufo/waves/round-89/w1/Mo89M01Mut.md"
+      },
+      {
+        "name": "Mo89K01Conn",
+        "agent": "connector",
+        "task": "/skill:godspeed\n\nRead PROVINCE and neighboring kumitate/tsukuroi boundary files discovered by glob/read. Is receipt script-position validation mori own-evidence accounting rather than kumitate lifecycle authority? Map cross-claim coupling: C1 changes r87 gate armcount/r88 caller pins, C2 arms r88 counters with after-specific anchors. Recommend honest claim axis verdict, no scope absorption. Read considerthese proposal2 follow unfixed flags forward; propose bounded disposition table/criterion, no invented source facts. No tools/gates run required.\nScratch: /fast/scratch/hyaku/mori-r89/Mo89K01Conn/. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/Mo89K01Conn.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: adjacency, calibration\nMilestone: Sibling overlap and claim connection scan\n\nReport: write your scoped findings to .ufo/waves/round-89/w1/Mo89K01Conn.md"
+      },
+      {
+        "name": "Mo89S02Record",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nDraft lesson/QUALITY additions in your report ONLY, not corpus writes. Read round88 spotcheck, current contract/controls. Correct newness attribution: receipt-counterfeit-r88.md:11 and corpus/README.md:919 claim3 new conditions; actual2 new conditions + extracted helper/coverage for existing absent-target refusal. Preserve old bytes; propose named append-only errata plus every-mention sweep. Mine prior genuine ./path regression and missing kill attribution with before failure/criterion185/fix pointers. Record skip-work C2 control wrong arms=26,26 vs intended28,26 as confound rather than falsely strong proof. Draft Gate placeholders only if factual data missing clearly state missing; L1 fills actual sources/evidence before landing. No new code tests.\nScratch: /fast/scratch/hyaku/mori-r89/Mo89S02Record/. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/Mo89S02Record.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration\nMilestone: Draft mistake lesson and correction of record\n\nReport: write your scoped findings to .ufo/waves/round-89/w1/Mo89S02Record.md"
+      },
+      {
+        "name": "Mo89Se01Boundary",
+        "agent": "sentinel",
+        "task": "/skill:godspeed\n\nRead-only security/observability review of r89 counters and changed gate at760428ab. Do not capture credentials/config/session values. Explicit permission bounded probes of cloned/synthetic fixtures only. Check path confinement realpath/symlink/.., wrong repo, return-code attribution and any executed bound script assumptions; new script-position rule could still run arbitrary code deliberately (not a sandbox). Identify genuine-input harms separately from preexisting hazards. Report exact snippets/repro not blanket security claims. No remediation/host state changes.\nScratch: /fast/scratch/hyaku/mori-r89/Mo89Se01Boundary/. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/w1/Mo89Se01Boundary.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: adjacency, operability\nMilestone: Bound gate safety and observable subject identity\n\nReport: write your scoped findings to .ufo/waves/round-89/w1/Mo89Se01Boundary.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

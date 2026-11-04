@@ -1,0 +1,18 @@
+frozen_sha256 40eacccc89bd3b394a6ffb0d6a5fd604143c41ec4375d8a4399e749b65420a3c
+candidate_sha256 d5b83c775d199c66ae7c1a1310c054d2d39b5e5a4ba102ccc4b69f0859fd6037
+pairs 3 ['C1-arms-first', 'C1-green-drop-fail', 'C1-own-ok']
+ANCHOR C1-arms-first arm=arms_last_tally occurrences=1
+RUN C1-arms-first rc=1 attributed_to_arms_last_tally=True
+  FAIL lines: ['FAIL arms_last_tally last of two tallies']
+  tally: ['C1_COUNTER_SELFTEST pass=27 fail=1']
+  digest_mutated 086043a4d1ce98fe1ad80511aaca565d2d36d15b1df571bf81f96a4fe1cef1f6
+ANCHOR C1-green-drop-fail arm=green_mixed_fail occurrences=1
+RUN C1-green-drop-fail rc=1 attributed_to_green_mixed_fail=True
+  FAIL lines: ['FAIL green_mixed_fail mixed tallies refused']
+  tally: ['C1_COUNTER_SELFTEST pass=27 fail=1']
+  digest_mutated 0eb576dd7ce47c096ad8d552eff25574b2138caf189ed1e08fd95a378d0e7416
+ANCHOR C1-own-ok arm=own_ok_red occurrences=1
+RUN C1-own-ok rc=1 attributed_to_own_ok_red=True
+  FAIL lines: ['FAIL own_ok_red own_ok_of()']
+  tally: ['C1_COUNTER_SELFTEST pass=27 fail=1']
+  digest_mutated a9e04c6eee518a015aa2e60fda9090b78c3b2ea2db6ef463f9ad5a33e8e65093

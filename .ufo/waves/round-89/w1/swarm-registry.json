@@ -1,0 +1,134 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r89-w1",
+  "createdAt": "2026-11-04T21:01:35.178Z",
+  "updatedAt": "2026-11-04T21:01:35.178Z",
+  "reportDir": ".ufo/waves/round-89/w1",
+  "members": {
+    "Mo89E01ArmsC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Implement three attributed arms in r88 c1 scratch candidate"
+    },
+    "Mo89E02ArmsC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Implement nine attributed arms in r88 c2 scratch candidate"
+    },
+    "Mo89E03Replay": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "Independently replay C1 public fixtures"
+    },
+    "Mo89S01Sources": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "depth",
+        "operability"
+      ],
+      "milestone": "Open source and draft grounded knowledge entry"
+    },
+    "Mo89Sc01Scope": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Data walk and existing scope reconnaissance"
+    },
+    "Mo89R01C1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "Attack C1 equivalence and no-harm surface"
+    },
+    "Mo89R02C2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Review declared-arm attribution and population identity"
+    },
+    "Mo89C01Critic": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability"
+      ],
+      "milestone": "Falsify printed targets and minimal-work controls"
+    },
+    "Mo89M01Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Mutation-test frozen r89 instruments"
+    },
+    "Mo89K01Conn": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "adjacency",
+        "calibration"
+      ],
+      "milestone": "Sibling overlap and claim connection scan"
+    },
+    "Mo89S02Record": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Draft mistake lesson and correction of record"
+    },
+    "Mo89Se01Boundary": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "sentinel",
+      "item": null,
+      "axes": [
+        "adjacency",
+        "operability"
+      ],
+      "milestone": "Bound gate safety and observable subject identity"
+    }
+  }
+}
