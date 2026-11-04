@@ -869,3 +869,9 @@ three rejected-closure entries (r59/r60/r61) rather than silently adopting them.
 | Ground | Entry | Bounded advance |
 |---|---|---|
 | Mutation analysis as a test-adequacy criterion (r80, S595) | `knowledge/mutation-adequacy-r80.md` (S595; `corpus/knowledge/mutation-adequacy-r80.md`) | The paper's abstract defines adequacy through detection of systematically seeded artificial faults, grounding C2's frozen mutant-killing criterion; the source does not establish that a green selftest or killing six selected mutants proves general adequacy. |
+
+## Round-81 knowledge addition — record claim integrity (new growth, indexed the round it lands)
+
+|Ground|Entry|Bounded advance|
+|---|---|---|
+| Record claim integrity as a cell-value discipline (r81, S596) | `knowledge/record-claim-integrity-r81.md` (S596; `corpus/knowledge/record-claim-integrity-r81.md`) | stat(2)'s `st_mode` type bits ground the file-type check behind the directory-as-tool trap; the entry's decision table grades six entering record shapes — `PENDING` after-cells, the 232-vs-233 self-cited command, a summary-trusting gate, the two path-shape traps, and a correction left standing in a sibling carrier. |

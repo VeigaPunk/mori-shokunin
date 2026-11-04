@@ -11,11 +11,11 @@ receipt label are the same sentence):
   SCORECARD.md's control-receipt capability row stating 18 while the committed
   `tools/mori-control-receipt.py --selftest` prints `pass=19 fail=0`.
 
-Second arm (independent of the sweep's pins): the capabilities row that names
+Second arm (independent of the sweep's pins): every capabilities row that names
 `tools/mori-control-receipt.py` states a selftest tally equal to the live `--selftest` count
 of that tool at R. An unparseable or failing tool selftest is a setup error, never a pass.
 
-Named limit (before data): the counter grades the sweep's own verdict plus that one row; it
+Named limit: the counter grades all sweep summaries and mismatch lines plus those rows; it
 does not independently re-derive every pinned tally the sweep checks.
 
 Usage: count-c1.py <rev> [--repo DIR] [--scratch DIR] | count-c1.py --selftest
@@ -42,21 +42,28 @@ def run(cmd, cwd=None):
 
 def export(repo, rev, dest):
     os.makedirs(dest, exist_ok=True)
-    p = subprocess.run(f"git -C {repo} archive {rev} | tar -x -C {dest}",
-                       shell=True, capture_output=True, text=True)
+    archive = subprocess.run(["git", "-C", repo, "archive", rev], capture_output=True)
+    if archive.returncode != 0:
+        return False
+    p = subprocess.run(["tar", "-x", "-C", dest], input=archive.stdout,
+                       capture_output=True)
     return p.returncode == 0
 
 
 def row_tally(text):
-    """The selftest tally stated in the capabilities row naming CAPTOOL, or None."""
+    """Return the common tally across every matching row, or None on disagreement."""
+    readings = []
     for line in text.splitlines():
         if not line.startswith("| "):
             continue
-        if CAPTOOL not in line or "Capability" in line:
+        if CAPTOOL not in line:
             continue
-        m = re.search(r"selftest\s+(\d+)\s+in-memory", line)
-        if m:
-            return int(m.group(1))
+        matches = re.findall(r"selftest\s+(\d+)\s+in-memory", line)
+        if not matches:
+            return None
+        readings.extend(int(value) for value in matches)
+    if readings and len(set(readings)) == 1:
+        return readings[0]
     return None
 
 
@@ -80,17 +87,28 @@ def grade(repo, rev, scratch):
         return 1, "C1=unmet tool=absent sweep=- mismatches=- row_tally=- live_tally=-"
     pins = os.path.join(tree, PINS)
     p = run(["python3", "-I", tool, "--root", tree, "--pins", pins])
-    m = re.search(r"CLAIM_SWEEP mismatches=(\d+) unresolved=(\d+) tallies=(\d+) stale=(\d+)",
-                  p.stdout)
-    if not m:
+    summary_lines = [line.strip() for line in p.stdout.splitlines()
+                     if line.startswith("CLAIM_SWEEP ")]
+    summaries = []
+    for line in summary_lines:
+        m = re.match(r"CLAIM_SWEEP mismatches=(\d+) unresolved=(\d+) "
+                     r"tallies=(\d+) stale=(\d+)(?:\s|$)", line)
+        if m:
+            summaries.append(tuple(int(value) for value in m.groups()))
+    if not summaries:
         return 2, f"C1_SETUP sweep produced no summary rc={p.returncode}"
-    mismatches, unresolved, tallies, stale = (int(m.group(i)) for i in (1, 2, 3, 4))
+    mismatches, unresolved, tallies, stale = map(max, zip(*summaries))
+    sweep_consistent = (len(set(summary_lines)) == 1
+                        and len(summaries) == len(summary_lines)
+                        and not any(line.startswith("CLAIM_SWEEP_MISMATCH")
+                                    for line in p.stdout.splitlines()))
     card = open(os.path.join(tree, "SCORECARD.md"), encoding="utf-8").read()
     stated = row_tally(card)
     live, why = live_tally(tree)
     if live is None:
         return 2, f"C1_SETUP control-receipt selftest {why}"
-    met = (p.returncode == 0 and mismatches == 0 and unresolved == 0
+    met = (p.returncode == 0 and sweep_consistent
+           and mismatches == 0 and unresolved == 0
            and tallies == 0 and stale == 0 and stated == live)
     tail = (f"tool=present sweep={p.returncode} mismatches={mismatches} "
             f"unresolved={unresolved} tallies={tallies} stale={stale} "
@@ -105,15 +123,25 @@ def selfcheck(scratch):
             ("conformant", 0, 19, 19, True),
             ("stale_row", 0, 18, 19, False),
             ("sweep_mismatch", 1, 19, 19, False),
-            ("inconsistent_summary", "0s", 19, 19, False)):
+            ("inconsistent_summary", "0s", 19, 19, False),
+            ("contradicting_summaries", "double", 19, 19, False),
+            ("mismatch_line", "line", 19, 19, False),
+            ("second_stale_row", 0, (19, 18), 19, False),
+            ("repo_path_with_space", 0, 19, 19, True)):
         d = tempfile.mkdtemp(dir=scratch)
-        repo = os.path.join(d, "r")
+        repo = os.path.join(d, "repo with space" if label == "repo_path_with_space" else "r")
         os.makedirs(repo)
         os.makedirs(os.path.join(repo, "tools"))
         os.makedirs(os.path.join(repo, ".ufo/waves/round-80"))
         if sweep == "0s":
             body = ("import sys\nprint('CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 "
                     "stale=1')\nsys.exit(0)\n")
+        elif sweep in ("double", "line"):
+            body = "print('CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0')\n"
+            if sweep == "double":
+                body += "print('CLAIM_SWEEP mismatches=1 unresolved=0 tallies=0 stale=0')\n"
+            else:
+                body = "print('CLAIM_SWEEP_MISMATCH tally SCORECARD.md:1 stale')\n" + body
         else:
             body = ("import sys\n"
                     f"print('CLAIM_SWEEP mismatches={0 if sweep == 0 else 1} "
@@ -123,11 +151,15 @@ def selfcheck(scratch):
         open(os.path.join(repo, CAPTOOL), "w").write(
             "print('CONTROL_RECEIPT_SELFTEST pass=%d fail=0')\n" % live)
         open(os.path.join(repo, ".ufo/waves/round-80/claim-pins.json"), "w").write("{}")
+        rows = stated if isinstance(stated, tuple) else (stated,)
         open(os.path.join(repo, "SCORECARD.md"), "w").write(
             "# t\n\n| Capability | What | Evidence | First |\n|---|---|---|---|\n"
-            f"| guard (`{CAPTOOL}`) | x | selftest {stated} in-memory cases | 79 |\n")
+            + "".join(f"| guard (`{CAPTOOL}`) | x | selftest {value} in-memory cases | 79 |\n"
+                      for value in rows))
         env = ["-c", "user.name=t", "-c", "user.email=t@t"]
         run(["git"] + env + ["-C", repo, "init", "-q"])
+        top = run(["git", "-C", repo, "rev-parse", "--show-toplevel"])
+        assert top.returncode == 0 and top.stdout.strip() == repo, top.stdout
         run(["git"] + env + ["-C", repo, "add", "-A"])
         run(["git"] + env + ["-C", repo, "commit", "-qm", "f"])
         rev = run(["git", "-C", repo, "rev-parse", "HEAD"]).stdout.strip()

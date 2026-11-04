@@ -147,7 +147,7 @@ def build_fixtures(scratch):
     repo = os.path.join(scratch, "b1")
     out.append(("B1_subdir_path_counts_as_naming", "count-c3", "unmet", repo,
                 province_repo(repo, ["corpus/tools/mori-census.sh"], ["tools/mori-census.sh"])))
-    repo = os.path.join(scratch, "b2")
+    repo = os.path.join(scratch, "b2", "mori-shokunin")
     out.append(("B2_own_lane_prefix_excluded", "count-c3", "met", repo,
                 province_repo(repo, ["mori-shokunin/tools/mori-census.sh"],
                               ["tools/mori-census.sh"])))
@@ -167,6 +167,8 @@ def grade_fixtures(counters, fixtures, scratch):
         work = tempfile.mkdtemp(dir=scratch)
         result = run(["python3", "-I", script, head, "--repo", repo, "--scratch", work])
         got = verdict(result.stdout + result.stderr, "C1" if counter == "count-c1" else "C3")
+        if result.returncode == 2:
+            got = "setup"      # a setup exit never satisfies a verdict expectation
         results.append((label, expected, got, result.returncode))
     return results
 
@@ -177,7 +179,8 @@ def grade_real(counters, repo, rev, scratch):
         work = tempfile.mkdtemp(dir=scratch)
         result = run(["python3", "-I", os.path.join(counters, counter + ".py"),
                       rev, "--repo", repo, "--scratch", work])
-        out[word] = verdict(result.stdout + result.stderr, word)
+        out[word] = ("setup" if result.returncode == 2
+                     else verdict(result.stdout + result.stderr, word))
     return out
 
 
@@ -226,6 +229,14 @@ def selftest(scratch):
     results = grade_fixtures(always_unmet, fixtures, scratch)
     wrong = sum(1 for _, expected, got, _ in results if expected != got)
     check("always-unmet stub is wrong", wrong == 3, "wrong=%d" % wrong)
+
+    met_rc2 = tempfile.mkdtemp(dir=scratch)
+    for counter, word in (("count-c1", "C1"), ("count-c3", "C3")):
+        open(os.path.join(met_rc2, counter + ".py"), "w", encoding="utf-8").write(
+            "import sys\nprint('%s=met setup-shaped')\nsys.exit(2)\n" % word)
+    results = grade_fixtures(met_rc2, fixtures, scratch)
+    wrong = sum(1 for _, expected, got, _ in results if expected != got)
+    check("met-with-rc2 stub is wrong everywhere", wrong == 7, "wrong=%d" % wrong)
 
     print("C1_COUNTER_SELFTEST pass=%d fail=%d" % (passed, failed))
     return 0 if not failed else 1

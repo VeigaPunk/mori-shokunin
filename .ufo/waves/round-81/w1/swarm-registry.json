@@ -1,0 +1,219 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r81-w1",
+  "createdAt": "2026-11-04T06:43:31.852Z",
+  "updatedAt": "2026-11-04T06:43:31.852Z",
+  "reportDir": ".ufo/waves/round-81/w1",
+  "members": {
+    "Mo81E01SweepFix": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "coverage",
+        "depth",
+        "freshness",
+        "adjacency"
+      ],
+      "milestone": "round 81 w1: C1 r80-counter defects closed; C2 record gate + corrections"
+    },
+    "Mo81E02C3Fix": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "coverage",
+        "depth",
+        "freshness",
+        "adjacency"
+      ],
+      "milestone": "round 81 w1: C1 r80-counter defects closed; C2 record gate + corrections"
+    },
+    "Mo81E03RecordTool": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "coverage",
+        "depth",
+        "freshness",
+        "adjacency"
+      ],
+      "milestone": "round 81 w1: C1 r80-counter defects closed; C2 record gate + corrections"
+    },
+    "Mo81E04Battery": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "coverage",
+        "depth",
+        "freshness",
+        "adjacency"
+      ],
+      "milestone": "round 81 w1: C1 r80-counter defects closed; C2 record gate + corrections"
+    },
+    "Mo81Sc01RecordCensus": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "coverage",
+        "depth",
+        "freshness",
+        "adjacency"
+      ],
+      "milestone": "round 81 w1: C1 r80-counter defects closed; C2 record gate + corrections"
+    },
+    "Mo81Sc02Source": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "coverage",
+        "depth",
+        "freshness",
+        "adjacency"
+      ],
+      "milestone": "round 81 w1: C1 r80-counter defects closed; C2 record gate + corrections"
+    },
+    "Mo81S01Corrections": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "coverage",
+        "depth",
+        "freshness",
+        "adjacency"
+      ],
+      "milestone": "round 81 w1: C1 r80-counter defects closed; C2 record gate + corrections"
+    },
+    "Mo81S02Knowledge": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "coverage",
+        "depth",
+        "freshness",
+        "adjacency"
+      ],
+      "milestone": "round 81 w1: C1 r80-counter defects closed; C2 record gate + corrections"
+    },
+    "Mo81S03Lesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "coverage",
+        "depth",
+        "freshness",
+        "adjacency"
+      ],
+      "milestone": "round 81 w1: C1 r80-counter defects closed; C2 record gate + corrections"
+    },
+    "Mo81Cn01Siblings": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "coverage",
+        "depth",
+        "freshness",
+        "adjacency"
+      ],
+      "milestone": "round 81 w1: C1 r80-counter defects closed; C2 record gate + corrections"
+    },
+    "Mo81R01C1Attack": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "coverage",
+        "depth",
+        "freshness",
+        "adjacency"
+      ],
+      "milestone": "round 81 w1: C1 r80-counter defects closed; C2 record gate + corrections"
+    },
+    "Mo81R02C2Attack": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "coverage",
+        "depth",
+        "freshness",
+        "adjacency"
+      ],
+      "milestone": "round 81 w1: C1 r80-counter defects closed; C2 record gate + corrections"
+    },
+    "Mo81C01Contract": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "coverage",
+        "depth",
+        "freshness",
+        "adjacency"
+      ],
+      "milestone": "round 81 w1: C1 r80-counter defects closed; C2 record gate + corrections"
+    },
+    "Mo81M01Mutants": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration",
+        "coverage",
+        "depth",
+        "freshness",
+        "adjacency"
+      ],
+      "milestone": "round 81 w1: C1 r80-counter defects closed; C2 record gate + corrections"
+    }
+  }
+}

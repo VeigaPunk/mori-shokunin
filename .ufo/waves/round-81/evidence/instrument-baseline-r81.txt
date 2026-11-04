@@ -1,0 +1,13 @@
+# r80 counters' own selftest tallies at the entering revision 44bc941a (exported, not the worktree)
+$ python3 -I <export>/.ufo/waves/round-80/count-c1.py --selftest | tail -1
+C1_COUNTER_SELFTEST pass=4 fail=0
+rc=0
+$ python3 -I <export>/.ufo/waves/round-80/count-c3.py --selftest | tail -1
+C3_COUNTER_SELFTEST pass=4 fail=0
+rc=0
+$ python3 -I <export>/tools/mori-claim-sweep.py --selftest | tail -1
+CLAIM_SWEEP_SELFTEST pass=30 fail=0
+rc=0
+$ python3 -I <export>/tools/mori-control-receipt.py --selftest | tail -1
+CONTROL_RECEIPT_SELFTEST pass=19 fail=0
+rc=0

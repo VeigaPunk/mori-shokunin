@@ -572,6 +572,7 @@ It is not a scope expansion and does not claim that every instrument is a census
 | `tools/mori-pin-check.py` | gate | registry pin reconciler (r47, C1) | Remeasure the self-test tally pins bound in SKILL's gate registry. |
 | `tools/mori-pressure.py` | gate | system pressure (r24, C2) | Read system CPU, memory, IO and IRQ pressure with local threshold verdicts. |
 | `tools/mori-receipt-complete.py` | gate | receipt-complete guard (r63 tool) | Check counter-receipt failed-anchor lists for truncation and count disagreement. |
+| `tools/mori-record-sweep.py` | gate | record claim sweep (r81 tool, registry row 15) | Detect exact PENDING result cells in round claim tables and numeric claim tokens that disagree with the read-only command the row itself cites. |
 | `tools/mori-register-check.py` | gate | register checker (r59 tool) | Check active capabilities-register identity, required keys and evidence bindings. |
 | `tools/mori-retention-gate.py` | gate | r18 retention (C1) | Scan committed revision blobs under the lane's retained-context policy. |
 | `tools/mori-retention-reconcile.py` | gate | retention reconciliation schema-v2 (r23) | Independently reconcile committed retention accounting against a retained receipt. |

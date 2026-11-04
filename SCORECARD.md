@@ -4033,18 +4033,71 @@ current tally. No r79 artifact or axis score is changed: coverage 6, operability
 
 | Capability | What it can now do | Evidence pointer | First-working round |
 |---|---|---|---|
-| Self-assessment claim sweep (`tools/mori-claim-sweep.py`) | read-only gate over Axes and capabilities rows in SCORECARD and checklist rows in SHONEN, checking lane-pointer existence, pinned live selftest tallies and stale literals; prints per-mismatch findings and `CLAIM_SWEEP mismatches=M unresolved=U tallies=T stale=S carriers=C pointers=P`; rc 0 clean, 1 mismatches, 2 setup; selftest 30 in-memory cases; stdout only, spawning only pinned read-only selftests | `python3 -I tools/mori-claim-sweep.py --selftest` -> `CLAIM_SWEEP_SELFTEST pass=30 fail=0`, rc 0; `python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-80/claim-pins.json` -> `CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4 pointers=232`, rc 0 (both L1 retained receipts over worktree bytes, 2026-11-04; integration re-run pending); registry row 14 in `SKILL.md` | 80 |
+| Self-assessment claim sweep (`tools/mori-claim-sweep.py`) | read-only gate over Axes and capabilities rows in SCORECARD and checklist rows in SHONEN, checking lane-pointer existence, pinned live selftest tallies and stale literals; prints per-mismatch findings and `CLAIM_SWEEP mismatches=M unresolved=U tallies=T stale=S carriers=C pointers=P`; rc 0 clean, 1 mismatches, 2 setup; selftest 30 in-memory cases; stdout only, spawning only pinned read-only selftests | `python3 -I tools/mori-claim-sweep.py --selftest` -> `CLAIM_SWEEP_SELFTEST pass=30 fail=0`, rc 0; `python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-80/claim-pins.json` -> `CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4 pointers=233`, rc 0 (both re-run 2026-11-04 at revision `44bc941a`; named correction D80-2 supersedes the stale `pointers=232` and the pending-integration wording; the landed count is re-measured at this round's record commit and stated below); registry row 14 in `SKILL.md` | 80 |
 
 ## Round 80
 
 Entering revision `d58889220d3c6a18d461f2d31b5ab162ffef1e4e`; frozen contract
 `.ufo/waves/round-80/contract.md`, do-nothing receipts
 `.ufo/waves/round-80/evidence/controls-r80.txt`. Axes: calibration, operability,
-coverage. These are declarations, not after-results: all three after cells are
-PENDING for the L1's post-integration measurements. No score moves.
+coverage. The three after cells below were measured at `97ce0c96c779278baa8e8bb45ade642f9fabf1e2` (short `97ce0c96`) by the round's frozen
+counters; receipt `.ufo/waves/round-80/evidence/after-r80.txt`, committed at `44bc941a`
+(named correction D80-1, applied in round 81). No score moves.
 
 | Claim | Axis | Counting commands | At entering | After (measured this round) |
 |---|---|---|---|---|
-| C1 self-assessment sweep lands and the D79-1 current row tally is corrected | calibration | `python3 -I .ufo/waves/round-80/count-c1.py <rev>` | `C1=unmet tool=absent`, rc 1 at `d5888922`; the row's 18-case count disagrees with live 19/0 | PENDING |
-| C2 round-79 counter selftests kill all six frozen mutants, sourced S595 | operability | `python3 -I .ufo/waves/round-80/mutate-c2.py --rev <rev>` | `MUTATION_C2 survivors=2 killed=4 total=6`, rc 1 at `d5888922`; the frozen harness, not the historical survivor description, defines the denominator | PENDING |
-| C3 PROVINCE names every committed Python and shell instrument with class, registry row and purpose | coverage | `python3 -I .ufo/waves/round-80/count-c3.py <rev>` | `C3=unmet named=14 present=55 missing=41 extra=0`, rc 1 at `d5888922` | PENDING |
+| C1 self-assessment sweep lands and the D79-1 current row tally is corrected | calibration | `python3 -I .ufo/waves/round-80/count-c1.py <rev>` | `C1=unmet tool=absent`, rc 1 at `d5888922`; the row's 18-case count disagrees with live 19/0 | `C1=met tool=present sweep=0 mismatches=0 unresolved=0 tallies=0 stale=0 row_tally=19 live_tally=19 rev=97ce0c96c779`, rc 0 — `python3 -I .ufo/waves/round-80/count-c1.py 97ce0c96c779278baa8e8bb45ade642f9fabf1e2`, measured at `97ce0c96` (receipt `.ufo/waves/round-80/evidence/after-r80.txt`) |
+| C2 round-79 counter selftests kill all six frozen mutants, sourced S595 | operability | `python3 -I .ufo/waves/round-80/mutate-c2.py --rev <rev>` | `MUTATION_C2 survivors=2 killed=4 total=6`, rc 1 at `d5888922`; the frozen harness, not the historical survivor description, defines the denominator | `MUTATION_C2 survivors=0 killed=6 total=6 unmutated=green rev=97ce0c96c779`, rc 0 — `python3 -I .ufo/waves/round-80/mutate-c2.py --rev 97ce0c96c779278baa8e8bb45ade642f9fabf1e2`, measured at `97ce0c96` (receipt `.ufo/waves/round-80/evidence/after-r80.txt`) |
+| C3 PROVINCE names every committed Python and shell instrument with class, registry row and purpose | coverage | `python3 -I .ufo/waves/round-80/count-c3.py <rev>` | `C3=unmet named=14 present=55 missing=41 extra=0`, rc 1 at `d5888922` | `C3=met named=56 present=56 missing=0 extra=0 rev=97ce0c96c779`, rc 0 — `python3 -I .ufo/waves/round-80/count-c3.py 97ce0c96c779278baa8e8bb45ade642f9fabf1e2`, measured at `97ce0c96` (receipt `.ufo/waves/round-80/evidence/after-r80.txt`) |
+
+## Round-81 corrections of record (D80-1, D80-2, D80-3, D80-4 — calibration)
+
+Applied 2026-11-04 by L1 MoriR81 from the r80 non-author closure's routed defects
+(`corpus/lessons/round-80-verifier-spotcheck.md` § "Routed defects the lane must fix next round").
+The superseded text is quoted verbatim; the corrected cells above carry the replacement. No axis
+score moves and no r80 predicate byte is rewritten.
+
+**D80-1 — three Round-80 after-cells.** Superseded: the sentence at the old `SCORECARD.md:4043-4044`
+("These are declarations, not after-results: all three after cells are PENDING for the L1's
+post-integration measurements") and the three cells whose value was exactly `PENDING`
+(`:4048`, `:4049`, `:4050`). Replacement: the measured values now in those cells, each carrying its
+command and measured revision `97ce0c96c779278baa8e8bb45ade642f9fabf1e2`, re-read by this round
+from `.ufo/waves/round-80/evidence/after-r80.txt:1-63` (committed at `44bc941a`). The three
+counters' `rev=` fields print `97ce0c96c779`, which is the measured revision; `44bc941a` is the
+r80 final tip.
+
+**D80-2 — stale self-cited count and pending wording.** Superseded in the r80 capabilities row:
+the evidence cell's `pointers=232` and its trailing "(both L1 retained receipts over worktree
+bytes, 2026-11-04; integration re-run pending)"; and in `SKILL.md` gate-registry row 14 the
+trailing "(30 arms; L1 retained receipt over worktree bytes, 2026-11-04; integration re-run owned
+by L1)". Replacement: `pointers=233`, the value the row's own pinned command printed at
+`44bc941a` (`python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-80/claim-pins.json`
+→ `CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4 pointers=233`, rc 0;
+re-run 2026-11-04), with the re-run revision named in the cell. The landed value is re-measured
+after the last carrier edit and stated in the Round 81 section below: the r81 capabilities row
+adds graded pointers, so a count true at `44bc941a` is not automatically true here.
+
+**D80-3 — the r80 contract's entering shorthand and P-C1's second conjunct.** Superseded, with the
+r80 contract bytes untouched: the C1 claim's "taking the mismatch count from 1 to 0", the C2 claim's
+"(from 3 of 6)" and the C3 claim's "from 15 of 55 to 55 of 55"; and P-C1's second conjunct wording
+"the same sweep at the entering revision `d5888922` finds at least one mismatch". The measured
+entering controls are `C1=unmet tool=absent` rc 1 (`git cat-file -e d5888922:tools/mori-claim-sweep.py`
+rc 128), `MUTATION_C2 survivors=2 killed=4 total=6` rc 1 and `C3=unmet named=14 present=55 missing=41
+extra=0` rc 1 (`.ufo/waves/round-80/evidence/controls-r80.txt`). The entering arm's graded form is
+"the same counter at the entering revision prints red and exits 1"; the sweep-output form is
+unimplementable there because the sweep blob does not exist at `d5888922`. This is the narrowed
+reading, named rather than silent.
+
+**D80-4 — measured revision vs final tip.** Superseded: the fleet report's "every after-value was
+re-measured at the final tip `97ce0c96…`" (`/home/vgpnk/Projects/shokunin/.ufo/reports/round-80/mori.md:112-113`).
+Corrected: `97ce0c96` is the measured revision; `44bc941a` is the r80 final tip, evidence-only after
+the measurement — `git diff --stat 97ce0c96 44bc941a` is three evidence paths
+(`.ufo/waves/round-80/evidence/after-r80.txt`, `w1-results.json`, `w1/Mo80R01Counter.md`), verified
+by the r81 corrections seat (`Mo81S01Corrections`) and re-read by the L1. The r80 report is a filed
+record and is not rewritten; this paragraph is the correction of record.
+
+### Capabilities (round 81)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Record claim sweep (`tools/mori-record-sweep.py`) | read-only gate over the lane's record carriers: exact `PENDING` result cells in `## Round …` claim tables and `<key>=<int>` claim tokens that disagree with the read-only command the row itself cites; prints per-mismatch findings and `RECORD_SWEEP pending=N pinned=M carriers=C bindings=B`; rc 0 clean, 1 mismatches, 2 setup; binder schema `mori-record-pins-v1`, frozen bindings at `.ufo/waves/round-81/record-pins.json`; 26 in-memory selftest arms; stdout only, children limited to the pinned read-only commands | `python3 -I tools/mori-record-sweep.py --selftest` -> `RECORD_SWEEP_SELFTEST pass=26 fail=0`, rc 0; at the r81 record commit it prints `RECORD_SWEEP pending=0 pinned=0` rc 0 (control at `44bc941a`: `RECORD_SWEEP pending=3 pinned=1`, rc 1, `.ufo/waves/round-81/evidence/controls-r81.txt`) | 81 |

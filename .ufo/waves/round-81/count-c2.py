@@ -28,6 +28,7 @@ Exit 0 met, 1 unmet, 2 setup. Read-only: `git archive` into --scratch; no file o
 --scratch is written.
 """
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -39,6 +40,11 @@ import tempfile
 TOOL = "tools/mori-record-sweep.py"
 DEFAULT_PINS = ".ufo/waves/round-81/record-pins.json"
 ROUND_SECTION = re.compile(r"^##\s+Round\b")
+# Frozen record population: a round section's claim rows may be corrected, never deleted
+# (a missing required row counts as one more unresolved cell).
+REQUIRED_ROWS = {"## Round 80": 3}
+# Frozen digest of the freeze-commit pins file: a tampered binding set is a pinned mismatch.
+PINS_SHA256 = "b991e0bd25a12614846a79f3df3a5b620f61a0792e3d88a9a62d6d8598dea44e"
 ROW = re.compile(r"^\s{0,3}\|")
 
 
@@ -73,6 +79,21 @@ def pending_cells(text):
             if cell == "PENDING":
                 out.append((number, section.strip(), index))
     return out
+
+
+def section_rows(text, heading):
+    """Claim-table data rows in the section whose heading line equals `heading`."""
+    rows = 0
+    section = None
+    for line in text.splitlines():
+        if line.startswith("## "):
+            section = line.strip()
+            continue
+        if section == heading and ROW.match(line):
+            if all(re.fullmatch(r":?-+:?", cell) for cell in cells(line)):
+                continue
+            rows += 1
+    return rows
 
 
 def stated_value(carrier_text, row_contains, key):
@@ -116,12 +137,19 @@ def grade(tree, pins_path):
     card = os.path.join(tree, "SCORECARD.md")
     if not os.path.isfile(card):
         raise ValueError("SCORECARD.md missing from export")
-    pending = pending_cells(open(card, encoding="utf-8").read())
+    card_text = open(card, encoding="utf-8").read()
+    pending = pending_cells(card_text)
+    missing_rows = sum(max(0, need - section_rows(card_text, heading))
+                       for heading, need in REQUIRED_ROWS.items())
+    pending_total = len(pending) + missing_rows
     try:
         bindings = load_pins(pins_path)
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         return None, ("C2_SETUP pins " + str(exc).replace("\n", " "))
     pinned = 0
+    digest = hashlib.sha256(open(pins_path, 'rb').read()).hexdigest()
+    if digest != PINS_SHA256:
+        pinned += 1          # the frozen binding set was altered
     for binding in bindings:
         carrier = os.path.join(tree, binding["carrier"])
         if not os.path.isfile(carrier):
@@ -139,11 +167,11 @@ def grade(tree, pins_path):
                       "--root", tree, "--pins", os.path.join(tree, DEFAULT_PINS)])
         match = re.search(r"RECORD_SWEEP pending=(\d+) pinned=(\d+)", result.stdout)
         agree = int(result.returncode == 0 and match is not None
-                    and int(match.group(1)) == len(pending)
+                    and int(match.group(1)) == pending_total
                     and int(match.group(2)) == pinned)
-    verdict = {"pending": len(pending), "pinned": pinned,
+    verdict = {"pending": pending_total, "pinned": pinned,
                "tool": "present" if tool else "absent", "agree": agree}
-    met = not pending and not pinned and tool and agree
+    met = not pending_total and not pinned and tool and agree
     verdict["met"] = bool(met)
     if verdict["met"]:
         return verdict, None
@@ -172,11 +200,16 @@ def selftest(scratch):
         run(["git"] + env + ["-C", base, "commit", "-qm", "f"])
         return base, run(["git", "-C", base, "rev-parse", "HEAD"]).stdout.strip()
 
-    table = ("# card\n\n## Round 7\n\n| Claim | Axis | After |\n|---|---|---|\n"
-             "| a | depth | `C=met` |\n")
-    pins = json.dumps({"schema": "mori-record-pins-v1", "bindings": []})
+    table = ("# card\n\n## Round 80\n\n| Claim | Axis | After |\n|---|---|---|\n"
+             "| a | depth | `C=met` |\n| b | depth | `C=met` |\n| c | depth | `C=met` |\n")
+    pins = open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                             "record-pins.json"), encoding="utf-8").read()
     tool_ok = ("import sys, re\n"
                "print('RECORD_SWEEP pending=0 pinned=0 tool=ok')\nsys.exit(0)\n")
+    sweep_ok = ("print('CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 "
+                "carriers=1 pointers=233')\n")
+    clean_row = ("| sweep (`tools/mori-claim-sweep.py`) | x | "
+                 "`python3 -I tools/mori-claim-sweep.py` -> pointers=233 | 80 |\n")
 
     # grammar arms
     check("pending in round table", len(pending_cells(
@@ -191,15 +224,24 @@ def selftest(scratch):
     check("live conflicting", live_value("pointers=1\npointers=2\n", "pointers") is None)
     check("pins schema", _bad_schema())
 
+    check("required row population", section_rows("## Round 7\n\n| a | x |\n| b | y |\n", "## Round 7") == 2)
+    check("required row missing", section_rows("## Round 7\n\n| a | x |\n", "## Round 7") == 1)
+
     # end-to-end arms
-    base, _ = repo({"SCORECARD.md": table, ".ufo/waves/round-81/record-pins.json": pins,
-                    "tools/mori-record-sweep.py": tool_ok})
+    clean_table = ("# card\n\n## Round 80\n\n| Claim | Axis | After |\n|---|---|---|\n"
+                   "| a | depth | `C=met` |\n| b | depth | `C=met` |\n| c | depth | `C=met` |\n"
+                   "\n### Capabilities (round 80)\n\n| Capability | What it can now do | Evidence pointer | First-working round |\n|---|---|---|---|\n"
+                   + clean_row)
+    base, _ = repo({"SCORECARD.md": clean_table, ".ufo/waves/round-81/record-pins.json": pins,
+                    "tools/mori-record-sweep.py": tool_ok,
+                    "tools/mori-claim-sweep.py": sweep_ok})
     tree = tempfile.mkdtemp(dir=scratch)
     check("export roundtrip", export(base, "HEAD", tree))
     verdict, _ = grade(tree, os.path.join(tree, ".ufo/waves/round-81/record-pins.json"))
     check("clean record met", verdict is not None and verdict["met"], str(verdict))
 
-    base2, _ = repo({"SCORECARD.md": "## Round 7\n\n| Claim | After |\n|---|---|\n| a | PENDING |\n",
+    base2, _ = repo({"SCORECARD.md": "## Round 80\n\n| Claim | After |\n|---|---|\n"
+                                     "| a | PENDING |\n| b | 1 |\n| c | 2 |\n",
                      ".ufo/waves/round-81/record-pins.json": pins,
                      "tools/mori-record-sweep.py": tool_ok})
     tree2 = tempfile.mkdtemp(dir=scratch)
@@ -211,8 +253,8 @@ def selftest(scratch):
         {"carrier": "SCORECARD.md", "row_contains": "tools/echo.py", "key": "pointers",
          "command": ["python3", "-I", "tools/echo.py"]}]})
     base3, _ = repo({
-        "SCORECARD.md": "## Round 7\n\n| Claim | After |\n|---|---|\n"
-                        "| a | `tools/echo.py` pointers=232 |\n",
+        "SCORECARD.md": "## Round 80\n\n| Claim | After |\n|---|---|\n"
+                        "| a | `tools/echo.py` pointers=232 |\n| b | 1 |\n| c | 2 |\n",
         ".ufo/waves/round-81/record-pins.json": pins_bad,
         "tools/mori-record-sweep.py": tool_ok,
         "tools/echo.py": "print('SWEEP pointers=233')\n"})
@@ -228,6 +270,16 @@ def selftest(scratch):
     verdict, line = grade(tree4, os.path.join(tree4, ".ufo/waves/round-81/record-pins.json"))
     check("tool absent unmet", verdict is not None and not verdict["met"], str(line))
 
+    base7, _ = repo({
+        "SCORECARD.md": table,
+        ".ufo/waves/round-81/record-pins.json":
+            json.dumps({"schema": "mori-record-pins-v1", "bindings": []}),
+        "tools/mori-record-sweep.py": tool_ok})
+    tree7 = tempfile.mkdtemp(dir=scratch)
+    export(base7, "HEAD", tree7)
+    verdict, line = grade(tree7, os.path.join(tree7, ".ufo/waves/round-81/record-pins.json"))
+    check("tampered pins unmet", verdict is not None and not verdict["met"], str(line))
+
     base5, _ = repo({"SCORECARD.md": table,
                      ".ufo/waves/round-81/record-pins.json": pins,
                      "tools/mori-record-sweep.py":
@@ -241,8 +293,10 @@ def selftest(scratch):
     spaced = tempfile.mkdtemp(dir=scratch)
     inner = os.path.join(spaced, "dir with space", "r")
     os.makedirs(inner)
-    for name, body in {"SCORECARD.md": table, ".ufo/waves/round-81/record-pins.json": pins,
-                       "tools/mori-record-sweep.py": tool_ok}.items():
+    for name, body in {"SCORECARD.md": clean_table,
+                       ".ufo/waves/round-81/record-pins.json": pins,
+                       "tools/mori-record-sweep.py": tool_ok,
+                       "tools/mori-claim-sweep.py": sweep_ok}.items():
         path = os.path.join(inner, name)
         os.makedirs(os.path.dirname(path), exist_ok=True)
         open(path, "w", encoding="utf-8").write(body)
