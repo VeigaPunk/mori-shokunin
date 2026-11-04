@@ -1,0 +1,21 @@
+# receipt: after-r88.txt
+# cmd: python3 -I .ufo/waves/round-88/count-c1.py d5e2eda494877a85edaa4e287d6ad81843d9a8a1; python3 -I .ufo/waves/round-88/count-c2.py d5e2eda494877a85edaa4e287d6ad81843d9a8a1
+# rev: d5e2eda494877a85edaa4e287d6ad81843d9a8a1
+# counter-sha256: 3ba0f97baaae389e602fa3ac929d6b007cdd1f65062db15f34ef7f184f3a32e2 .ufo/waves/round-88/count-c1.py
+# counter-sha256: 8904a3d0b5d973b58836e827a70f28cf65e1089e3eec8446cc369665664beda7 .ufo/waves/round-88/count-c2.py
+# replay: clone
+# limits: named limit — the body is the two counters stdout in a --shared clone checked out at # rev:, reproducing from committed bytes; the C2 counter builds its counterfeit fixtures as scratch clone commits and prints no fixture revision, so the body carries no time-varying hash
+# ---
+MUTANT count-c1.py M1-met-no-guard killed rc=1
+MUTANT count-c1.py M2-met-drop-empty killed rc=1
+MUTANT count-c1.py M3-killed-n killed rc=1
+MUTANT count-c1.py M4-arms-total killed rc=1
+MUTANT count-c1.py M5-split-field killed rc=1
+MUTANT count-c1.py M6-anchor-guard killed rc=1
+C1=met mutants=6 killed=6 survivors=0 total=6 arms=24 rev=d5e2eda49487
+REAL rc=0 C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=d5e2eda49487
+FX clean rc=0 refused C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=d5e2eda49487
+FX stripped rc=1 refused problems=missing-replay
+FX vacuous rc=1 refused problems=cmd-binding
+FX absent-target rc=1 refused supersede-absent=1
+C2=met real=met fx=4 clean=1 refused=2 absent=1 arms=23 rev=d5e2eda49487
