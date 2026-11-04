@@ -12,3 +12,32 @@ rc=1
 $ python3 -I .ufo/waves/round-83/count-c3.py 68185d6e
 C3=unmet arm=absent rev=68185d6e7190
 rc=1
+
+# population control at the freeze commit 9075c72995095de97babb3d06e3f2d3b2f168062
+# (only the round-83 counter is new there; the three graded counters are the r82 bytes)
+$ python3 -I .ufo/waves/round-83/count-c1.py 9075c729
+MUTANT count-c1.py green_ignores_fail_token survived rc=0
+MUTANT count-c1.py killed_ignores_rc survived rc=0
+MUTANT count-c1.py ignore_pristine_red survived rc=0
+MUTANT count-c1.py accept_empty_population survived rc=0
+MUTANT count-c1.py unanchored_excused survived rc=0
+MUTANT count-c1.py detector_gate_dropped survived rc=0
+MUTANT count-c1.py unanchored_still_graded killed rc=1
+MUTANT count-c2.py stale_accepted killed rc=1
+MUTANT count-c2.py duplicates_accepted survived rc=0
+MUTANT count-c2.py retired_paths_unchecked survived rc=0
+MUTANT count-c2.py red_literal_unchecked survived rc=0
+MUTANT count-c2.py green_census_tokens_accepted survived rc=0
+MUTANT count-c2.py finding_branch_inverted survived rc=0
+MUTANT count-c2.py malformed_not_residual survived rc=0
+MUTANT count-c2.py keyshape_guard_inverted survived rc=0
+MUTANT count-c2.py derive_key_eol_only killed rc=1
+MUTANT count-c3.py population_gate_dropped survived rc=0
+MUTANT count-c3.py defeated_accepted survived rc=0
+MUTANT count-c3.py carrier_drift_allowed survived rc=0
+MUTANT count-c3.py bindings_floor_dropped survived rc=0
+MUTANT count-c3.py selftest_red_accepted survived rc=0
+MUTANT count-c3.py revisions_default_zero survived rc=0
+MUTANT count-c3.py summary_first_line survived rc=0
+C1=unmet mutants=23 killed=3 survivors=20 total=23 pristine=green detector=green rev=9075c7299509
+rc=1
