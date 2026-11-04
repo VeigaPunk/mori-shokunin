@@ -22,9 +22,9 @@ Arms measured by running each file's own `--selftest` on those bytes: `C1_COUNTE
 
 They do not all deserve an arm:
 
-- **Tier A — 25 acceptance gates**: `main()`'s entire accept/reject path plus three functions only `main()` calls. No `selfcheck` arm can reach them as written; the cheap fix is to extract the gate as a pure predicate and arm that. This is the highest-value next-round item and the largest single block: every `C*=met/unmet` decision the counters print lives here and is currently unfalsifiable by their own selftests.
-- **Tier B — 12 verdict clauses in reachable functions**: cheap, deterministic arms. I **demonstrated kills for 9 of them** (arm added to a scratch copy → pristine green at N+1 arms, mutant dies with a named `FAIL`).
-- **Tier C — 15 structural/detail clauses**: real but lower stakes; all cheap to arm.
+- **Tier A — 25 acceptance gates**: `main()`'s entire accept/reject path plus the two `main`-only baseline parsers (`baseline_names`, `volatile_fields`; the third, `observe()`, runs the census and cannot be armed deterministically). No `selfcheck` arm can reach them as written; the cheap fix is to extract the gate as a pure predicate and arm that. This is the highest-value next-round item and the largest single block: every `C*=met/unmet` decision the counters print lives here and is currently unfalsifiable by their own selftests.
+- **Tier B — 12 verdict clauses in reachable functions**: cheap, deterministic arms. I **demonstrated kills for 8 of them** (arm added to a scratch copy → pristine green at N+1 arms, mutant dies with a named `FAIL`).
+- **Tier C — 15 structural/detail clauses**: real but lower stakes; all cheap to arm (4 demonstrated).
 - **Tier D — 3 not worth an arm**: one conjunct is implied by another, one alternative is never read, one skip is unobservable for real commands. The right action is deletion, not an arm.
 
 **The two C2 replay commands read nothing outside committed bytes.** Every read in `tools/mori-record-sweep.py` and `tools/mori-claim-sweep.py` is a committed path, a filesystem stat over the checkout, or a child process (`git`, `python3`, `bash`) whose own config is neutralised by the frozen counter's replay environment. The residual non-committed inputs are the toolchain, the inherited environment, and — for `record-sweep` — the *older* commits its pins resolve, which a `--shared` clone supplies through `info/alternates` (see §5.4).
@@ -38,7 +38,7 @@ They do not all deserve an arm:
 3. **Line-arc coverage** — an in-process `sys.settrace` instrument (`lines.py` in scratch, stdlib only) recorded executed source lines and line→line arcs per code object while `--selftest` ran. This is what identifies the never-executed regions in §2. It is **not** used as proof that a clause is unarmed: a single-expression helper produces no arcs at all while still being fully armed (see §2.2).
 4. **Mutation evidence** — the operational definition of "no arm reaches it" is the frozen kill rule: a mutant the subject's own `--selftest` does not kill. 55 candidate mutants were applied to scratch copies and run; all 55 returned rc 0 with the pristine tally.
 5. **Anchor uniqueness** — `base.count(anchor) == 1` asserted for every candidate before mutation; zero unanchored, zero empty-mutation, zero killed.
-6. **Kill demonstrations** — for 9 tier-B candidates (and 3 tier-C) I added the proposed arm to the scratch copy and re-ran: pristine = green at N+1 arms, mutant = the named `FAIL` line / non-zero rc.
+6. **Kill demonstrations** — for 8 tier-B candidates (and 4 tier-C) I added the proposed arm to the scratch copy and re-ran: pristine = green at N+1 arms, mutant = the named `FAIL` line / non-zero rc.
 7. I did **not** run `.ufo/waves/round-87/count-c1.py` or `count-c2.py`. Verifying C1/C2 is other seats' work; my claims about them are limited to what the contract and the r86/r87 source say.
 
 Everything in the tables below is measured against the bytes above unless marked `[INFERENCE]`.
@@ -315,7 +315,7 @@ For these two receipts, in a clone checked out at `25a74d4c`, **every byte read 
 | arms = 18/13/23 | measured on the exact bytes | high |
 | `main()` bodies never execute under `--selftest` | coverage trace + line spans | high |
 | `baseline_names`/`volatile_fields`/`observe` never called by `selftest` | coverage trace + call-site grep | high |
-| 9 tier-B + 3 tier-C kills demonstrated | measured (pristine N+1 green, mutant FAIL) | high |
+| 8 tier-B + 4 tier-C kills demonstrated | measured (pristine N+1 green, mutant FAIL) | high |
 | tier-D equivalence judgments | static reading (`green` implies `failed == 0`; `mutants=` unread; `-`-token unreachable) | medium — `[INFERENCE]`; no arm can falsify an equivalent mutant |
 | both replay commands read only committed bytes | full source read of both tools + the counter's replay env | high, conditional on §5.3 items 1–4 |
 | `c3-main-target` is an equivalent mutant (`met = True and (…)`) | measured: survived, but semantically identical to pristine | high — deliberately excluded from the 55 |
@@ -330,4 +330,4 @@ Things I could not settle from source alone:
 
 - No tool installed or upgraded. `python3` 3.14.8 and `git` were already present; the coverage instrument is stdlib-only and lived in scratch.
 - No lane, OS, unit, service, credential, harness or orchestration state touched. No `agent://all`.
-- Scratch `/fast/scratch/hyaku/mori-r87/Mo87Sc01Scout/` removed before this report was written.
+- Scratch `/fast/scratch/hyaku/mori-r87/Mo87Sc01Scout/` removed at the end of the seat's run, after this report was composed.
