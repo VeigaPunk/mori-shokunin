@@ -2154,3 +2154,42 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
       self-printing commands and empty binding lists expose its limits. Seat reports are under
       `.ufo/waves/round-88/w1/`; `evidence/…` in criteria 183–184 means this round's wave evidence,
       not a top-level directory.
+
+186. A binding or refusal rule is judged against an equivalence battery as well as its frozen
+      fixtures: before a rule change is claimed harm-free, the same named set of valid equivalent
+      inputs and counterfeits is graded under the entering rule and the changed rule, and a valid
+      input the entering rule accepted and the changed rule refuses is harm, whatever the frozen
+      target line prints.
+      Ground: the round-89 first C1 landing (`760428ab`) printed `C1=met … arms=26` while refusing
+      13 valid equivalent commands and binding 6 counterfeits (`.ufo/waves/round-89/w1/Mo89R01C1.md`);
+      QUALITY 185 named the duty but no instrument enforced it.
+      Shown able to fail: `python3 -I .ufo/waves/round-89/noharm-c1.py 760428ab…` exits 1 with
+      `harm=13 open=6 gained=2`; the repair `9f4d20b9` reads `harm=0 open=0 gained=3` rc 0
+      (`.ufo/waves/round-89/evidence/noharm-760428ab.txt`, `evidence/after-r89.txt`).
+      Not covered: a fixed battery is overfittable (a rule that special-cases its strings passes);
+      inputs outside the modelled shell grammar (substitutions, here-documents, functions).
+
+187. A mutation is credited as killed only when the mutated copy's own selftest prints a FAIL line
+      naming that mutant's declared arm; a nonzero exit, a timeout, a crash or a checksum canary
+      establishes no kill, and a red pristine establishes nothing about the mutation.
+      Ground: QUALITY 174 and 185; the r88 kill rule (`.ufo/waves/round-88/count-c1.py`, `rc != 0
+      or FAIL`) credited any nonzero exit, and an arms-free checksum canary reached its target
+      (`.ufo/waves/round-88/w1/Mo88C01Critic.md`).
+      Shown able to fail: the round-89 C2 counter's `canary_unattributed` arm reads a synthetic
+      canary as `unattributed` (`.ufo/waves/round-89/evidence/controls-r89.txt` §3); at the entering
+      revision the counter reads `C2=unmet … survivors=7 … unanchored=5`, and at `9f4d20b9` every one
+      of the twelve declared mutants dies under its own arm (`evidence/after-r89.txt`).
+      Not covered: attribution is by label, not cause — a mutant that turns its declared arm red
+      for an unrelated reason still counts; the counter does not require exactly one failing arm.
+
+188. A control fixture's own edit must leave the subject green at the intended arm count before the
+      control's reading is used: a control whose patched subject is red, or pinned at another arm
+      count, measures its own breakage.
+      Ground: the round-89 skip-work control 2b appended labels after the r88 count-c1 subject's
+      `own_arms_pinned` arm (`.ufo/waves/round-89/controls-r89.sh`), so the pristine read red
+      (`evidence/controls-r89.txt`: `EXTRA pristine-red … rc=1 arms=26`) and its two `unattributed`
+      lines were inherited redness (`w1/Mo89R02C2.md` §4, `w1/Mo89S02Record.md` §3).
+      Shown able to fail: the counter prints `pristine-red` for any red patched subject, and the
+      attribution reading of control 2b is cited only from its count-c2 leg, whose pristine is green.
+      Not covered: subjects with no self-pin; a red pristine hides an arm-count mismatch behind
+      `pristine-red`.

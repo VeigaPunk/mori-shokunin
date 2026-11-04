@@ -1,0 +1,81 @@
+# Mo89S01Sources — durable source evidence (round 89, w1)
+# produced 2026-11-04 by seat Mo89S01Sources; fetch + locator receipt
+# fetch tool: curl 8.23.0 (official upstream binary, pre-installed; nothing installed this round)
+# method: curl -sSL -A 'mori-r89-source-seat/1.0' <url> -o <file>; two fetches per URL, compared with cmp
+
+## shlex.html
+  bytes=66501  lines=810  sha256=c65790957ade04d9054d174d807a439417ef907b63b3b3b01f3d2a88e2f50919
+  second fetch byte-identical: YES (cmp rc=0)
+  title=shlex — Simple lexical analysis &#8212; Python 3.14.10 documentation
+  doc-version string=3.14.10 documentation
+  doc date line: no 'Release' banner found
+
+## os.path.html
+  bytes=88234  lines=1011  sha256=71187c777e98baf54237c6bc82a2230c32b621c632beb4e23a6d01b622e4882d
+  second fetch byte-identical: YES (cmp rc=0)
+  title=os.path — Common pathname manipulations &#8212; Python 3.14.10 documentation
+  doc-version string=3.14.10 documentation
+  doc date line: no 'Release' banner found
+
+## cmdline.html
+  bytes=160951  lines=1816  sha256=62a888347e9469b7bbb608815d855ccb64ff347b4bf7eadffa324a381f1a5a87
+  second fetch byte-identical: YES (cmp rc=0)
+  title=1. Command line and environment &#8212; Python 3.14.10 documentation
+  doc-version string=3.14.10 documentation
+  doc date line: no 'Release' banner found
+
+## quote S607  [shlex.html]
+  section locator : shlex.commenters
+  raw html lines  : 429-431
+  word count      : 12
+  occurrences in rendered page text: 1
+  EXACT QUOTE     : All characters from the comment beginner to end of line are ignored
+
+## quote S607b  [shlex.html]
+  section locator : shlex.split(s, comments=False, posix=True)
+  raw html lines  : 228-230
+  word count      : 17
+  occurrences in rendered page text: 1
+  EXACT QUOTE     : If comments is False (the default), the parsing of comments in the given string will be disabled
+
+## quote S610  [shlex.html]
+  section locator : module intro (shlex — Simple lexical analysis)
+  raw html lines  : 220-222
+  word count      : 19
+  occurrences in rendered page text: 1
+  EXACT QUOTE     : The shlex class makes it easy to write lexical analyzers for simple syntaxes resembling that of the Unix shell
+
+## quote S608  [os.path.html]
+  section locator : os.path.normpath(path)
+  raw html lines  : 627-629
+  word count      : 20
+  occurrences in rendered page text: 1
+  EXACT QUOTE     : Normalize a pathname by collapsing redundant separators and up-level references so that A//B, A/B/, A/./B and A/foo/../B all become A/B.
+
+## quote S608b  [os.path.html]
+  section locator : os.path.normpath(path)
+  raw html lines  : 628-630
+  word count      : 14
+  occurrences in rendered page text: 1
+  EXACT QUOTE     : This string manipulation may change the meaning of a path that contains symbolic links.
+
+## quote S609  [cmdline.html]
+  section locator : 1.1.1 Interface options
+  raw html lines  : 250-252
+  word count      : 23
+  occurrences in rendered page text: 1
+  EXACT QUOTE     : When called with a file name argument or with a file as standard input, it reads and executes a script from that file.
+
+## quote S609b  [cmdline.html]
+  section locator : 1.1.1 Interface options
+  raw html lines  : 254-256
+  word count      : 13
+  occurrences in rendered page text: 1
+  EXACT QUOTE     : When called with -c command, it executes the Python statement(s) given as command.
+
+## quote S609c  [cmdline.html]
+  section locator : 1.1.1 Interface options
+  raw html lines  : 263-263
+  word count      : 8
+  occurrences in rendered page text: 1
+  EXACT QUOTE     : all consecutive arguments will end up in sys.argv

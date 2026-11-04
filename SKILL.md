@@ -1387,3 +1387,12 @@ refused as `cmd-binding`, and `;`-splitting is naive inside a quoted argument. T
 attributes a kill only to a declared `FAIL <arm>` line: an unrelated nonzero exit reads
 `unattributed`, never `killed`. Both counters are fixed-population instruments, not admission
 authorities; their fixtures live in `--shared` clones under `--scratch`.
+
+Round-89 registry limits, superseding the round-89 paragraph above for the r87 gate's binding
+(repair `9f4d20b9`): `;` splitting is quote-aware and also splits `&&`, `||`, `|`, `&`; `bash -c`
+strings are parsed (depth ≤ 3); env/nice/exec/nohup/time/command/timeout wrappers, assignments
+and `uv run` are unwrapped; `-W`/`-X` values are skipped and `-c`/`-m` execute no file. Still
+refused: bindings through command substitution, here-documents, functions, brace groups,
+Makefile targets, `env -C`/`-S`, anything after `cd`. No-harm check:
+`python3 -I .ufo/waves/round-89/noharm-c1.py <rev>` (Mo89R01C1 battery, entering vs graded gate;
+exit 0 iff `harm=0 open=0`) — a regression floor, not a grammar census.

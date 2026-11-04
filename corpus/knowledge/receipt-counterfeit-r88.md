@@ -81,3 +81,17 @@ The connector's comparison is `.ufo/waves/round-88/w1/Mo88K01Conn.md:48-64,118-1
   distinguish identity, content binding and provenance.
 
 `absorption: none`.
+
+## Round-89 correction of record — newness, not the number of conditions
+
+Supersedes the attribution at lines 11–14, not the three-condition decision table:
+round 88 added **two** conditions (`missing-replay` and token `cmd-binding`) and extracted
+`absent_supersede_targets` plus coverage for an **existing** absent-target refusal.
+The entering r87 gate already tested `target not in known`; the r88 entering control
+already refused the absent target. Evidence: `corpus/lessons/round-88-verifier-spotcheck.md`,
+“Newness attribution defect found by this closure”; entering and after gate bytes at
+`1bd5ec3fa260458f74eb32a2e5bb157209c5934d` and `d5e2eda494877a85edaa4e287d6ad81843d9a8a1`.
+The original lines remain historical, not a standing claim of three new behaviors.
+
+Round 89 replaces raw token spelling with a bounded script-position check; see
+`execution-binding-r89.md` for the measured positives, counterfeits and limitations.

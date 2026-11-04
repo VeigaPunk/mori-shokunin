@@ -917,3 +917,18 @@ three rejected-closure entries (r59/r60/r61) rather than silently adopting them.
 | Ground | Entry | Bounded advance |
 |---|---|---|
 | Receipt counterfeits (r88, S605 supersedes S604) | `knowledge/receipt-counterfeit-r88.md` | Three further necessary checks in the fixed seven-receipt instrument: parsed replay marker, whitespace-token binding and present supersede target. TUF §5.3 step 5.3.5 is a verification-before-admission analogy, not evidence of receipt semantics. The entry names counterfeits still accepted, genuine `./path` false refusals, zero-binding vacuity and the legacy escape. `Mo88S02Knowledge.md` D1–D18 drove the final correction. |
+
+## Round-89 correction of record — receipt-counterfeit newness
+
+Supersedes “Three further necessary checks” in the Round-88 row above as a newness claim:
+**two new conditions plus a helper/coverage extraction for an existing condition**.
+The absent-target refusal already existed at the entering revision. The three-condition
+table itself is unchanged. Ground: `knowledge/receipt-counterfeit-r88.md`,
+“Round-89 correction of record”; `lessons/round-88-verifier-spotcheck.md`,
+“Newness attribution defect found by this closure”. Historical row bytes are preserved.
+
+## Round-89 frontier — execution binding of a receipt command
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Receipt `# cmd:` execution binding (S611 POSIX token recognition, S610 CPython argv, S609 normpath, S607 shlex tokenizer scope; S608 rejected) | `knowledge/execution-binding-r89.md` | The r87 gate binds a bound path only as a file the command executes: POSIX word-start comments, quote-aware invocation split, wrapper unwrapping, interpreter options (`-W`/`-X` values, `-c`/`-m` run no file, `sh -c` parsed), path identity. Measured on the Mo89R01C1 34-case battery: `harm=0 open=0` at `9f4d20b9` versus `harm=13 open=6` at the first landing `760428ab`. Limits: a fixed battery is overfittable; substitutions, here-documents and functions are outside the modelled grammar. |

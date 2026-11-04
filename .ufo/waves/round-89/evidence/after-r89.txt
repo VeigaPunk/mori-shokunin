@@ -1,0 +1,63 @@
+# receipt: after-r89.txt
+# cmd: python3 -I .ufo/waves/round-89/count-c1.py 9f4d20b9290faff54354d6ab6b08982d98d5e72c; python3 -I .ufo/waves/round-89/count-c2.py 9f4d20b9290faff54354d6ab6b08982d98d5e72c; python3 -I .ufo/waves/round-89/noharm-c1.py 9f4d20b9290faff54354d6ab6b08982d98d5e72c
+# rev: 9f4d20b9290faff54354d6ab6b08982d98d5e72c
+# counter-sha256: f8e6c39ed30acffd0e6f5272575df3ce7333c7a403b611a4bd1118aac16d9376 .ufo/waves/round-89/count-c1.py
+# counter-sha256: 40eacccc89bd3b394a6ffb0d6a5fd604143c41ec4375d8a4399e749b65420a3c .ufo/waves/round-89/count-c2.py
+# counter-sha256: 3b8c7b14fe0d8099de0865235b6ae0c5f981e8189050c41cc1bc2922426d7c7d .ufo/waves/round-89/noharm-c1.py
+# replay: clone
+# limits: named limit — the body is the three counters' stdout in the lane at # rev: (TMPDIR=$HYAKU_SCRATCH/mori-r89/l1/tmp); fixture and mutant copies live in --shared scratch clones and print no fixture revision; noharm-c1 grades the binding rule alone on the Mo89R01C1 34-case battery
+# ---
+REAL rc=0 C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=9f4d20b9290f
+FX equiv accepted problems=-
+FX comment accepted problems=cmd-binding
+FX selfprint accepted problems=cmd-binding
+C1=met equiv=accepted comment=refused selfprint=refused real=met arms=26 rev=9f4d20b9290f
+MUTANT count-c1.py C1-arms-first killed rc=1 arm=arms_last_tally
+MUTANT count-c1.py C1-green-drop-fail killed rc=1 arm=green_mixed_fail
+MUTANT count-c1.py C1-own-ok killed rc=1 arm=own_ok_red
+MUTANT count-c2.py C2-target killed rc=1 arm=target_full
+MUTANT count-c2.py C2-printed-target killed rc=1 arm=met_line_derived
+MUTANT count-c2.py C2-fixture-clean killed rc=1 arm=clean_wrong_split
+MUTANT count-c2.py C2-receipt-name killed rc=1 arm=receipt_name_bound
+MUTANT count-c2.py C2-clone-top killed rc=1 arm=clone_top_bound
+MUTANT count-c2.py C2-own-ok killed rc=1 arm=own_ok_red
+MUTANT count-c2.py C2-verdict-first killed rc=1 arm=verdict_last_wins
+MUTANT count-c2.py C2-no-supersedes killed rc=1 arm=absent_without_supersedes
+MUTANT count-c2.py C2-vacuous-body killed rc=1 arm=vacuous_body_fabricated
+C2=met mutants=12 killed=12 survivors=0 unattributed=0 unanchored=0 arms=28,26 rev=9f4d20b9290f
+CASE E01-equiv-dotslash expect=met entering=refused after=bound gained
+CASE E02-plain-control expect=met entering=bound after=bound ok
+CASE E03-I-B-flags expect=met entering=bound after=bound ok
+CASE E04-usr-bin-python3 expect=met entering=bound after=bound ok
+CASE E05-direct-exec expect=met entering=refused after=bound gained
+CASE E06-quoted-script expect=met entering=bound after=bound ok
+CASE E07-python3.14 expect=met entering=bound after=bound ok
+CASE E08-env-assign-prefix expect=met entering=bound after=bound ok
+CASE E09-env-command expect=met entering=bound after=bound ok
+CASE E10-dashdash expect=met entering=bound after=bound ok
+CASE E11-W-flag expect=met entering=bound after=bound ok
+CASE E12-dotdot-normpath expect=met entering=refused after=bound gained
+CASE E13-usr-bin-python3-u expect=met entering=bound after=bound ok
+CASE E14-nice-prefix expect=met entering=bound after=bound ok
+CASE E16-and-chain expect=met entering=bound after=bound ok
+CASE E17-exec-prefix expect=met entering=bound after=bound ok
+CASE E18-uv-run expect=met entering=bound after=bound ok
+CASE E19-bash-c-wrapper expect=met entering=bound after=bound ok
+CASE E20-interp-trailing-comment expect=met entering=bound after=bound ok
+CASE A01-comment-named expect=reject entering=bound after=refused ok
+CASE A02-selfprint-data expect=reject entering=bound after=refused ok
+CASE A03-W-value-selfprint expect=reject entering=bound after=refused ok
+CASE A04-X-value-selfprint expect=reject entering=bound after=refused ok
+CASE A05-c-value-lookalike expect=reject entering=bound after=refused ok
+CASE A06-m-value-lookalike expect=reject entering=bound after=refused ok
+CASE A07-path-as-data-after-other-script expect=reject entering=bound after=refused ok
+CASE A08-semicolon-split-invocation expect=reject entering=bound after=refused ok
+CASE A09-hash-glued expect=reject entering=refused after=refused ok
+CASE A10-tab-comment expect=reject entering=bound after=refused ok
+CASE E15b-semicolon-in-quote-before-script expect=met entering=bound after=bound ok
+CASE E21-quoted-semicolon-harmless-arg-then-chain expect=met entering=bound after=bound ok
+CASE E22-hash-inside-quotes-not-comment expect=met entering=bound after=bound ok
+CASE A11-W-value-then-script-other expect=reject entering=bound after=refused ok
+CASE A12-X-value-then-c-selfprint-plus-script expect=reject entering=bound after=refused ok
+NOHARM harm=0 open=0 gained=3 cases=34 rev=9f4d20b9290f
+rc-last=0
