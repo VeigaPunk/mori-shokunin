@@ -1,0 +1,9 @@
+# receipt: claim-sweep-r87.txt
+# cmd: python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-80/claim-pins.json
+# rev: 25a74d4c34e8430e4fbb18d4038ef5db872fb0ee
+# counter-sha256: 4ac6b52615a427d1f7d8993ab636a5830bcde744c4a51f22d9157833d940ba1d tools/mori-claim-sweep.py
+# replay: clone
+# supersedes: claim-sweep-r85.txt
+# limits: named limit — the body is the command's stdout in a --shared clone checked out at # rev: and reads pointers=266 where the r85 worktree receipt read 274, so the older count is not reproducible from committed bytes and this receipt is the reproducible successor, not a re-derivation of it
+# ---
+CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4 pointers=266

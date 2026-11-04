@@ -1,0 +1,9 @@
+# receipt: record-sweep-r87.txt
+# cmd: python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json
+# rev: 25a74d4c34e8430e4fbb18d4038ef5db872fb0ee
+# counter-sha256: b8683be24e28ce4e79730b46615174d888af4c22ac7ee4fe16b97048516e8efa tools/mori-record-sweep.py
+# replay: clone
+# supersedes: record-sweep-r85.txt
+# limits: named limit — the body is the command's stdout in a --shared clone checked out at # rev:, so it reproduces from committed bytes; it supersedes the r85 worktree receipt and does not re-derive that receipt's bytes
+# ---
+RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0
