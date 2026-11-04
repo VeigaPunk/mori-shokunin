@@ -1,0 +1,943 @@
+Round-80 C3 inventory source receipt
+Axes: coverage (complete naming), calibration (source-bound classification), operability (one lookup row per instrument).
+Population snapshot: 57451ecbbc5a63cfefaab28b1a1b60c08b41bee7
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin ls-tree -r --name-only HEAD -- tools/
+Raw direct-child .py/.sh population (filter: ^tools/[^/]+\.(py|sh)$):
+tools/mori-anchor-check.py
+tools/mori-blind-check.sh
+tools/mori-census.sh
+tools/mori-cgroup-pressure.py
+tools/mori-commit-runway.py
+tools/mori-content-review.py
+tools/mori-control-receipt.py
+tools/mori-counter-win.py
+tools/mori-disk-rate.py
+tools/mori-dispatch-ledger.py
+tools/mori-drift-adjudicate.py
+tools/mori-drift-recheck.py
+tools/mori-driver-liveness.py
+tools/mori-entry-claims-check.py
+tools/mori-events-context-win.py
+tools/mori-evidence-loss.py
+tools/mori-freeze-order.py
+tools/mori-gate-registry.py
+tools/mori-host-events-win.py
+tools/mori-index-clean.sh
+tools/mori-job-runway.py
+tools/mori-journal-window.py
+tools/mori-misroot-sweep.py
+tools/mori-oom-killers.py
+tools/mori-pin-check.py
+tools/mori-pressure.py
+tools/mori-receipt-complete.py
+tools/mori-register-check.py
+tools/mori-retention-gate.py
+tools/mori-retention-reconcile.py
+tools/mori-rotation-schedule.py
+tools/mori-round13-regressions.py
+tools/mori-round14-regressions.py
+tools/mori-round15-regressions.py
+tools/mori-round16-context-check.py
+tools/mori-round16-regressions.py
+tools/mori-round17-context-check.py
+tools/mori-round17-jj-regressions.py
+tools/mori-round17-seat-regressions.py
+tools/mori-round19-regressions.py
+tools/mori-round41-calibration.py
+tools/mori-routed-check.py
+tools/mori-routed-r24.py
+tools/mori-runway-win.py
+tools/mori-seat-terminal.py
+tools/mori-settlement-scan.py
+tools/mori-silence-cases.sh
+tools/mori-source-drift.py
+tools/mori-sources-appendonly.py
+tools/mori-ua-variance.py
+tools/mori-unlanded-check.py
+tools/mori-uptime-win.py
+tools/mori-vote-bind.py
+tools/mori-wave-settlement.py
+tools/mori-workstate-win.py
+Population count: 55
+
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin ls-tree -r 57451ecbbc5a63cfefaab28b1a1b60c08b41bee7 -- tools/
+Relevant committed blob identities:
+100644 blob 0e874b149e448239ee030923046bb09a98145f34	tools/mori-anchor-check.py
+100755 blob 3c26ef69356c289866acf5d3d77e6f437ef73298	tools/mori-blind-check.sh
+100755 blob c7d952d6fabe3137a91b9afbea991317ceba1f3e	tools/mori-census.sh
+100755 blob ad6bdfb65b176e866801fc6663b5eff1b919294f	tools/mori-cgroup-pressure.py
+100755 blob cfd245c66c1def2af3ee69303e9c1dbcae4e4b85	tools/mori-commit-runway.py
+100755 blob b5c42df2b2bf2ce0476b39a03495206541669979	tools/mori-content-review.py
+100755 blob 4ae72950659ba5396fba59f32c4c6f3e8a480a19	tools/mori-control-receipt.py
+100644 blob f81044c14064d054b67b2fa7aa5ec7bb2d50c0a3	tools/mori-counter-win.py
+100755 blob 42081d16f300dcd02d4a105acbff138da8e895d2	tools/mori-disk-rate.py
+100755 blob b86525c6a9fe0d44e90127323ff291104dcfb5fd	tools/mori-dispatch-ledger.py
+100644 blob 856a9f1b0022a4c363689d7115653d730e359287	tools/mori-drift-adjudicate.py
+100644 blob 6e46ca38cfc4bc7debaf323e8fafb977c83a77f6	tools/mori-drift-recheck.py
+100755 blob be8dd1ed0dfc7857e556535cbc9684b3b4c0786c	tools/mori-driver-liveness.py
+100755 blob 19dc29608e2c1c33b4562f47a13dffb0d3adc498	tools/mori-entry-claims-check.py
+100644 blob 34b1d4c48753d892f7833549af4a6d94491a0f95	tools/mori-events-context-win.py
+100755 blob 98cc66e1f4cd0bcbc77104dbbe5f1f3be7431ea1	tools/mori-evidence-loss.py
+100755 blob fcd8a017378c600c5d9a47a9d40a171f3bf135c5	tools/mori-freeze-order.py
+100755 blob 8feffe32793c3366d4886b9705c9a6cf22acb771	tools/mori-gate-registry.py
+100644 blob 373e997ae127c7b3afdca7e51ce31f18ceda18a0	tools/mori-host-events-win.py
+100755 blob d171da39f667ed5d3af6f2b76f0481a7f0c3a8a4	tools/mori-index-clean.sh
+100755 blob 239dd8ebe630400a2739151260e482ad83dea459	tools/mori-job-runway.py
+100755 blob b5b71ef1111608ff21f8053e5acf9e2ad2a5b87a	tools/mori-journal-window.py
+100755 blob bb951a5ed430726b2b1c3695a1dc8d3d6f2206d4	tools/mori-misroot-sweep.py
+100755 blob 1a70bddc66e4510038a6e5e887e7fc872a235ed6	tools/mori-oom-killers.py
+100755 blob 25e8fed864ba0bad59bd853479564b7fffe253b4	tools/mori-pin-check.py
+100755 blob 5785c5b23233a5ed1d2116ab610f9aa0cf3b12ec	tools/mori-pressure.py
+100644 blob 0a6e0ee3b406fd0db32a94ceb1db786f92851205	tools/mori-receipt-complete.py
+100755 blob 1014c310e88d56792e3ebd8e8ced7875bbea4605	tools/mori-register-check.py
+100755 blob 988c5484428b47766335dbfa245b8a296de5d3d7	tools/mori-retention-gate.py
+100755 blob 78c676e665d23a68c571a9d13698a6aae13b1500	tools/mori-retention-reconcile.py
+100644 blob 29df1a3b84dec18f6e087c48e42b988e84ab7680	tools/mori-rotation-schedule.py
+100755 blob 31360de4f6fd57b12b4137957fba20f8f9442365	tools/mori-round13-regressions.py
+100755 blob 511278e7f9d40e19012ddd95f3052d7e8c449f54	tools/mori-round14-regressions.py
+100755 blob 4f06cbdef132aeb5b37b106c5e52849759d92ecc	tools/mori-round15-regressions.py
+100755 blob fa3595cb3e5c9dbd20f97586dc1c8e926850da1d	tools/mori-round16-context-check.py
+100755 blob 334149d2240fae18472f6a7bd66340c65ec11f4c	tools/mori-round16-regressions.py
+100755 blob 50fb4021cc8eb28c8e9f273894d84d1011722958	tools/mori-round17-context-check.py
+100755 blob 4324104f70b25e09ed041156f599aaa9b9f65ee9	tools/mori-round17-jj-regressions.py
+100755 blob 4bdbf7255dd1206e361d2f6e0a0e0bf5a04a4df8	tools/mori-round17-seat-regressions.py
+100755 blob 6abd22971d32e9f316eb4cb1896d5ccd48b38ac3	tools/mori-round19-regressions.py
+100755 blob fb9af80876ef8e50e1aa62aaa63ff8c7e8ec5a1b	tools/mori-round41-calibration.py
+100755 blob b6c45182022c3354fcfccc2f5d7ecf7b8a1b8133	tools/mori-routed-check.py
+100755 blob bfe59912f06936b6ad3d750339db91dd68c084a6	tools/mori-routed-r24.py
+100644 blob f8c41160b4cfa592ccdb0b824d24fabbf0bcfef7	tools/mori-runway-win.py
+100755 blob 0d0b1a1494b1ba199574c107b777ccbeb006f876	tools/mori-seat-terminal.py
+100755 blob 8e25f648e3774fb20acfadf1dce0490c4d820b84	tools/mori-settlement-scan.py
+100755 blob cc177860593e5dacbbc38f3539de86e05b9a9631	tools/mori-silence-cases.sh
+100755 blob 1c6b437fae185b325e746c40b3f0c556bcb8274d	tools/mori-source-drift.py
+100755 blob 887fd85d96fd97f99f1845090cda64cf5e084fa8	tools/mori-sources-appendonly.py
+100644 blob 4487b098e78ea8a1b21921cc3447c9abd244727d	tools/mori-ua-variance.py
+100755 blob 2ac89e7a8d73f932f24d67af6844fc53cc866443	tools/mori-unlanded-check.py
+100644 blob bd4393662ab6a20459bca2921ebd2c40f6646d8b	tools/mori-uptime-win.py
+100755 blob 5a7f20de6561821b4f2b9f093335b236b39026fc	tools/mori-vote-bind.py
+100755 blob cf2f5dcdb6d04f91d511a4d811f72e52cd1c1c28	tools/mori-wave-settlement.py
+100644 blob 9e1ac2569c6f9d872857545db52b1a05f589269b	tools/mori-workstate-win.py
+
+Method: numbered header search with functions.grep per file; registry evidence is the named eight-column SKILL row whose first entry command invokes the tool. Do not attribute a row merely because it mentions a tool elsewhere. Classes follow the registry kind, including its registered regression gates; the unregistered cgroup-pressure gate follows its threshold verdict/exit contract. Registry row names (not unstable ordinal numbers) are retained.
+One registry entry contains an unescaped pipe inside its backticked CLI; the final attribution parser reads the first three cells and the first complete backticked command, rather than assuming every row splits into exactly eight cells.
+LSP: no LSP tool is mounted in this leaf; no symbol refactor was performed.
+
+Per-instrument evidence:
+
+tools/mori-anchor-check.py
+class: gate
+registry row: anchor checker (r72 tool)
+purpose: Verify located-line source anchors and recorded quote word counts against a local pin.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-anchor-check.py:1-23')
+[mori-shokunin/tools/mori-anchor-check.py#A9AD]
+ 1:#!/usr/bin/env python3
+*2:"""mori-anchor-check — mechanical located-line and word-count verification of
+ 3:source-row quote anchors against a pinned copy (the QUALITY 162 check, made
+ 4:runnable; fleet and host observability lane, detection and report only).
+ 5:
+SKILL.md registry evidence:
+SKILL row excerpt: name=anchor checker (r72 tool); kind=gate; first entry command=`python tools/mori-anchor-check.py --pin PATH --check SPEC [--check SPEC ...]`
+
+tools/mori-blind-check.sh
+class: gate
+registry row: blind-writer gate (r31)
+purpose: Check blind-writer report paths against the committed allow-file rules.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-blind-check.sh:1-23')
+[mori-shokunin/tools/mori-blind-check.sh#3F47]
+ 6:usage() {
+*7:    printf 'usage: mori-blind-check.sh <lane-rev> <wave-report-dir> <writer-name-regex> <allow-file> | --selftest\n' >&2
+ 8:}
+ 9:
+ 10:fail() { printf 'blind check: %s\n' "$1" >&2; return 2; }
+SKILL.md registry evidence:
+SKILL row excerpt: name=blind-writer gate (r31); kind=gate; first entry command=`bash tools/mori-blind-check.sh <lane-rev> <wave-report-dir> <writer-name-regex> <allow-file>`
+
+tools/mori-census.sh
+class: gate
+registry row: census; drift pin
+purpose: Report fleet/host census surfaces and CLEAN/DRIFT findings; also check a retained drift baseline.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh:1-23')
+[mori-shokunin/tools/mori-census.sh#85F1]
+ 1:#!/usr/bin/env bash
+*2:# mori-census.sh — read-only fleet/host observability census (mori-shokunin r3).
+ 3:#
+ 4:# Domain: whether the fleet, its waves and its host are alive and progressing.
+ 5:# Product: verdict + surface lines + stable finding ids. Never remediates.
+SKILL.md registry evidence:
+SKILL row excerpt: name=census; kind=gate; first entry command=`bash tools/mori-census.sh`
+SKILL row excerpt: name=drift pin; kind=gate; first entry command=`bash tools/mori-census.sh --drift <baseline>`
+
+tools/mori-cgroup-pressure.py
+class: gate
+registry row: —
+purpose: Read a named cgroup's CPU, memory, IO and IRQ pressure plus its accounting switch.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-cgroup-pressure.py:1-23')
+[mori-shokunin/tools/mori-cgroup-pressure.py#46C2]
+ 1:#!/usr/bin/env python3
+*2:"""Read-only per-cgroup pressure (PSI) survey for cpu, memory, io and irq.
+ 3:
+ 4:Round 62 (FR12 remainder: cgroup-scoped CPU/IO/IRQ pressure). One-shot read
+ 5:of `<root>/<group>/<resource>.pressure` for a named cgroup, plus the group's
+...
+ 21:(as mori-pressure-v1), 1 high, 2 partial/unavailable.
+*22:"""
+ 23:
+Registry absence: no SKILL eight-column registry first-entry command invokes this path in the inspected source; no registration is claimed.
+Positive class evidence: tools/mori-cgroup-pressure.py:17 labels local thresholds; :19-21 specifies MORI_CGROUP_PRESSURE verdict and exit 0 ok/high-guarded, 1 high, 2 partial/unavailable.
+Positive purpose evidence: numbered docstring :2 and :4-6 (one-shot per-cgroup PSI plus accounting switch).
+
+tools/mori-commit-runway.py
+class: gate
+registry row: commit runway (r53, C2)
+purpose: Read CommitLimit and Committed_AS with the overcommit-mode enforcement context.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-commit-runway.py:1-23')
+[mori-shokunin/tools/mori-commit-runway.py#5386]
+ 1:#!/usr/bin/env python3
+*2:"""Read-only commit-ledger runway read: CommitLimit and Committed_AS, by overcommit mode.
+ 3:
+ 4:Round 53, claim C2 (coverage axis).  Round 52 admitted what the two /proc/meminfo lines mean
+ 5:(``corpus/knowledge/overcommit-commit-limit-r52.md``); this tool reads them, with the mode that decides whether
+SKILL.md registry evidence:
+SKILL row excerpt: name=commit runway (r53, C2); kind=gate (host-surface verdict; not a census or fleet-admission gate); first entry command=`python3 -I -B tools/mori-commit-runway.py [--meminfo PATH] [--vm-dir DIR] [--cpu-present PATH] [--page-kb N] [--selftest [--cases FILE]]`
+
+tools/mori-content-review.py
+class: gate
+registry row: r19 content review (C1)
+purpose: Check blob-bound content-review dispositions over the frozen Mori population.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-content-review.py:1-23')
+[mori-shokunin/tools/mori-content-review.py#46E5]
+ 1:#!/usr/bin/env python3
+*2:"""Bounded, content-based review gate for the frozen Mori population."""
+ 3:from __future__ import annotations
+ 4:
+ 5:import argparse
+SKILL.md registry evidence:
+SKILL row excerpt: name=r19 content review (C1); kind=gate; first entry command=`python3 tools/mori-content-review.py check --repo <repo> --rev <REV> --population .ufo/waves/round-19/frozen/content-population.json --reviews .ufo/waves/round-19/content-reviews.json --expected-sha256 4a50e77a1f436d349a62100cbac59f4dd337c3f48e63b5a31519d1d2231d581b`
+
+tools/mori-control-receipt.py
+class: gate
+registry row: control-receipt guard (r79 tool)
+purpose: Require a counting-command line in each receipt section carrying integer count claims.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-control-receipt.py:1-23')
+[mori-shokunin/tools/mori-control-receipt.py#C542]
+ 1:#!/usr/bin/env python3
+*2:"""mori-control-receipt.py — control-receipt binding guard (mori round 79, C1).
+ 3:
+ 4:A control receipt is a text file split into sections at lines matching `^## `
+ 5:(content before the first heading is section `(head)`). A section states count
+SKILL.md registry evidence:
+SKILL row excerpt: name=control-receipt guard (r79 tool); kind=gate; first entry command=`python tools/mori-control-receipt.py <receipt> [...]`
+
+tools/mori-counter-win.py
+class: probe
+registry row: counter probe (r77 tool)
+purpose: Read Windows memory commitment gauges and paging activity through bounded typeperf output.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-counter-win.py:1-23')
+[mori-shokunin/tools/mori-counter-win.py#B6AE]
+ 1:#!/usr/bin/env python3
+*2:"""mori-counter-win — one-shot read-only probe of the Windows performance-
+ 3:counter surface: the commit gauge pair plus the paging-activity rate, read
+ 4:through the documented `typeperf` command (fleet and host observability;
+ 5:resource runway and the kill/OOM-adjacent exhaustion class, detection and
+SKILL.md registry evidence:
+SKILL row excerpt: name=counter probe (r77 tool); kind=probe; first entry command=`python tools/mori-counter-win.py [--child PATH]`
+
+tools/mori-disk-rate.py
+class: probe
+registry row: disk write rate (r34)
+purpose: Report two-sample disk write rates and device classes from diskstats and sysfs.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-disk-rate.py:1-23')
+[mori-shokunin/tools/mori-disk-rate.py#3E84]
+ 1:#!/usr/bin/env python3
+*2:"""Two-sample disk write-rate arm for frontier FR6 (mori round 34, claim C1).
+ 3:
+ 4:Purpose
+ 5:  This tool is the frontier FR6 "two-sample census arm" as a lane operation:
+SKILL.md registry evidence:
+SKILL row excerpt: name=disk write rate (r34); kind=probe; first entry command=`python3 tools/mori-disk-rate.py --interval-ms N`
+
+tools/mori-dispatch-ledger.py
+class: gate
+registry row: r18 dispatch ledger (C3)
+purpose: Bind and verify per-attempt dispatch payload identities for Mori waves.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-dispatch-ledger.py:1-23')
+[mori-shokunin/tools/mori-dispatch-ledger.py#584C]
+ 1:#!/usr/bin/env python3
+*2:"""Bind and verify per-attempt dispatch payload identities for mori waves."""
+ 3:
+ 4:from __future__ import annotations
+ 5:
+SKILL.md registry evidence:
+SKILL row excerpt: name=r18 dispatch ledger (C3); kind=gate; first entry command=`python3 tools/mori-dispatch-ledger.py verify --repo <repo> --rev <REV> --ledger PATH`
+
+tools/mori-drift-adjudicate.py
+class: gate
+registry row: drift-finding adjudicator (r65 tool)
+purpose: Classify source-drift findings into the documented closed disposition set.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-drift-adjudicate.py:1-23')
+[mori-shokunin/tools/mori-drift-adjudicate.py#228F]
+ 1:#!/usr/bin/env python3
+*2:"""mori-drift-adjudicate.py — resolve the findings of the source-drift sweep into a closed set
+ 3:(round 65 capability).
+ 4:
+ 5:Usage:
+SKILL.md registry evidence:
+SKILL row excerpt: name=drift-finding adjudicator (r65 tool); kind=gate; first entry command=`python tools/mori-drift-adjudicate.py --root DIR [--only S###,S###] [--second-ua UA]`
+
+tools/mori-drift-recheck.py
+class: gate
+registry row: standing drift re-check (r66/r67 tool)
+purpose: Recheck source-drift dispositions with as-of stamps and vendor-scoped churn grammars.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-drift-recheck.py:1-23')
+[mori-shokunin/tools/mori-drift-recheck.py#8702]
+ 1:#!/usr/bin/env python3
+*2:"""mori-drift-recheck.py — the standing adjudicate RE-CHECK: every verdict carries the
+ 3:moment it was measured, and vendor build churn (page stamps, asset build-ids) no longer
+ 4:masquerades as content drift (round 66 capability; asset grammar round 67).
+ 5:
+SKILL.md registry evidence:
+SKILL row excerpt: name=standing drift re-check (r66/r67 tool); kind=gate; first entry command=`python tools/mori-drift-recheck.py --root DIR [--only S###,S### | --from-sweep SWEEP_RECEIPT] [--second-ua UA]`
+
+tools/mori-driver-liveness.py
+class: gate
+registry row: driver-liveness probe (r56 tool)
+purpose: Parse inline driver events into per-lane activity facts without a health verdict.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-driver-liveness.py:1-23')
+[mori-shokunin/tools/mori-driver-liveness.py#467A]
+ 1:#!/usr/bin/env python3
+*2:"""Hyaku driver-liveness reader (round 56, C1 — coverage advance, frontier FR5).
+ 3:
+ 4:Under the hyaku inline driver no shokunin-watchdog daemon runs, so the census
+ 5:watchdog surface fires WATCHDOG_ABSENT every round; the driver's own
+SKILL.md registry evidence:
+SKILL row excerpt: name=driver-liveness probe (r56 tool); kind=gate; first entry command=`python3 tools/mori-driver-liveness.py [--fleet-root DIR] [--log PATH] [--state-dir DIR] [--now NOW] [--fixture PATH]`
+
+tools/mori-entry-claims-check.py
+class: gate
+registry row: entry-claims checker (r60 tool)
+purpose: Verify quote-bound knowledge-entry claims with hardened grammar and binding predicates.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-entry-claims-check.py:1-23')
+[mori-shokunin/tools/mori-entry-claims-check.py#99A0]
+ 1:#!/usr/bin/env python3
+*2:"""Hardened quote-bound entry-claims verifier (round 60, C2 — depth capability).
+ 3:
+ 4:Evaluates one knowledge entry of the r59 claim class under a materialized
+ 5:root with the predicates the round-59 verifier spot-check routed as defects
+SKILL.md registry evidence:
+SKILL row excerpt: name=entry-claims checker (r60 tool); kind=gate; first entry command=`python3 tools/mori-entry-claims-check.py <entry> <root>`
+
+tools/mori-events-context-win.py
+class: probe
+registry row: events-context pairing (r71 tool)
+purpose: Pair Windows event counts with an uptime read on one explicitly limited receipt.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-events-context-win.py:1-23')
+[mori-shokunin/tools/mori-events-context-win.py#115F]
+ 1:#!/usr/bin/env python3
+*2:"""mori-events-context-win — one-shot read-only PAIRING runner: re-derives the
+ 3:r63-class Windows event-log kill/exhaustion counts WITH the r70-class boot
+ 4:window on the same receipt (fleet liveness, kill and OOM events, resource
+ 5:runway; detection and report only).
+SKILL.md registry evidence:
+SKILL row excerpt: name=events-context pairing (r71 tool); kind=probe; first entry command=`python tools/mori-events-context-win.py [--window N]`
+
+tools/mori-evidence-loss.py
+class: probe
+registry row: retained-loss audit; evidence-loss rule comparison
+purpose: Audit retained historical evidence and classify loss; compare synthetic evidence-loss rules.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-evidence-loss.py:1-23')
+[mori-shokunin/tools/mori-evidence-loss.py#F201]
+ 1:#!/usr/bin/env python3
+*2:"""Audit retained historical evidence and classify evidence-loss cases.
+ 3:
+ 4:The audit verifies relative evidence copies against both their recorded SHA-256
+ 5:and the named Git commit. A disposed record is structural evidence only: this
+ 6:tool does not authenticate its author or accept a lifecycle disposition.
+*7:"""
+ 8:
+ 9:from __future__ import annotations
+ 10:
+SKILL.md registry evidence:
+SKILL row excerpt: name=retained-loss audit; kind=probe (negative baseline-acceptance evidence, not independent-disposition authority); first entry command=`python3 tools/mori-evidence-loss.py audit --root . --required .ufo/waves/round-21/frozen/required.json --accounting corpus/evidence/loss-accounting-r21.json`
+SKILL row excerpt: name=evidence-loss rule comparison; kind=gate (finite synthetic policy tests); first entry command=`python3 tools/mori-evidence-loss.py classify --rule .ufo/waves/round-21/frozen/after-rule.json --cases .ufo/waves/round-21/frozen/cases.json`
+
+tools/mori-freeze-order.py
+class: gate
+registry row: r18 freeze-order (C2)
+purpose: Check whether frozen claim inputs predate their implementation commits.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-freeze-order.py:1-23')
+[mori-shokunin/tools/mori-freeze-order.py#E040]
+ 1:#!/usr/bin/env python3
+*2:"""Check whether frozen claim inputs predate their implementation commits."""
+ 3:
+ 4:import argparse
+ 5:import hashlib
+SKILL.md registry evidence:
+SKILL row excerpt: name=r18 freeze-order (C2); kind=gate; first entry command=`python3 tools/mori-freeze-order.py check --repo <repo> --register .ufo/waves/round-18/frozen/c2-register.json --corrections corpus/evidence/freeze-register.json --tip-for r18-C1=<REV> --tip-for r18-C2=<REV> --tip-for r18-C3=<REV>`
+
+tools/mori-gate-registry.py
+class: gate
+registry row: r44 gate registry (C2); r44 gate registry (C2) — write scope superseded
+purpose: Audit committed instruments against SKILL's gate-registry standard and attribution rules.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-gate-registry.py:1-23')
+[mori-shokunin/tools/mori-gate-registry.py#5DD5]
+ 1:#!/usr/bin/env python3
+*2:"""mori gate-registry auditor (round 45, v2 — P-C2).
+ 3:
+ 4:Checks the lane's stated gate standard against committed bytes. Every table in
+ 5:the registry file whose header row is the eight standard cells (name, kind,
+SKILL.md registry evidence:
+SKILL row excerpt: name=r44 gate registry (C2); kind=gate; first entry command=`python3 tools/mori-gate-registry.py --rev <rev> --audit <repo-relative path> [--audit ...]`
+SKILL row excerpt: name=r44 gate registry (C2) — write scope superseded; kind=gate; first entry command=`python3 tools/mori-gate-registry.py --rev <rev> --audit <repo-relative path> [--audit ...]`
+
+tools/mori-host-events-win.py
+class: probe
+registry row: host-events probe (r63 tool)
+purpose: Read bounded Windows event-log kill/exhaustion counts using provider/event-ID filters.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-host-events-win.py:1-23')
+[mori-shokunin/tools/mori-host-events-win.py#E6C2]
+ 1:#!/usr/bin/env python3
+*2:"""mori-host-events-win — one-shot read-only probe of the Windows event-log
+ 3:kill/exhaustion surface (fleet liveness, kill and OOM events, resource runway).
+ 4:
+ 5:Round 63 (C3, depth + capability acquisition). The lane's Linux kill/OOM
+SKILL.md registry evidence:
+SKILL row excerpt: name=host-events probe (r63 tool); kind=probe; first entry command=`python tools/mori-host-events-win.py [--window N] [--group-by log]`
+
+tools/mori-index-clean.sh
+class: gate
+registry row: index clean (r36)
+purpose: Check the Git index for staged paths and intent-to-add entries without rewriting it.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-index-clean.sh:1-23')
+[mori-shokunin/tools/mori-index-clean.sh#F24D]
+ 1:#!/usr/bin/env bash
+*2:# mori-index-clean.sh — read-only gate: is the git index of <repo> clean?
+ 3:#
+ 4:# Exit codes
+ 5:#   0  clean: no staged path and no intent-to-add entry (unstaged worktree
+SKILL.md registry evidence:
+SKILL row excerpt: name=index clean (r36); kind=gate; first entry command=`bash tools/mori-index-clean.sh <repo>`
+
+tools/mori-job-runway.py
+class: gate
+registry row: harness background-job runway (r25, C2)
+purpose: Read the configured harness job cap and installed binary clamp/default, not a live job count.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-job-runway.py:1-23')
+[mori-shokunin/tools/mori-job-runway.py#CF72]
+ 1:#!/usr/bin/env python3
+*2:"""Read-only harness background-job runway survey (omp harness).
+ 3:
+ 4:Round 25, claim C2 (coverage axis, new PROVINCE ground).  The omp harness
+ 5:computes a per-session background-job cap from two sources: the configured
+SKILL.md registry evidence:
+SKILL row excerpt: name=harness background-job runway (r25, C2); kind=gate (reads the operator's harness configuration and the installed binary; not a census or fleet-admission gate); first entry command=`python3 -I -B tools/mori-job-runway.py [--config PATH] [--binary PATH] [--selftest] [--cases PATH]`
+
+tools/mori-journal-window.py
+class: probe
+registry row: journal window (r16)
+purpose: Read a MESSAGE-free same-boot journal window after an exact retained anchor.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-journal-window.py:1-23')
+[mori-shokunin/tools/mori-journal-window.py#2125]
+ 1:#!/usr/bin/env python3
+*2:"""mori-journal-window — bounded MESSAGE-free same-boot journal window probe.
+ 3:
+ 4:Mori round-16 C1 coverage tool. Reads a mori-journal-anchor-v1 anchor file and
+ 5:asks journalctl for the record stream starting AT the anchor cursor. The window
+...
+ 21:corpus/knowledge/journal-positive-evidence-r15.md.
+*22:"""
+ 23:
+SKILL.md registry evidence:
+SKILL row excerpt: name=journal window (r16); kind=probe; first entry command=`python3 tools/mori-journal-window.py --anchor <PATH> --scope user\|system [--journalctl PATH] [--timeout SECONDS] [--max-bytes N]`
+
+tools/mori-misroot-sweep.py
+class: probe
+registry row: misroot sweep (r17)
+purpose: Report fleet-root misroot candidates from status paths and bounded file heads.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-misroot-sweep.py:1-23')
+[mori-shokunin/tools/mori-misroot-sweep.py#7EB2]
+ 1:#!/usr/bin/env python3
+*2:"""mori-misroot-sweep.py — detection-only fleet-root misroot candidate sweep.
+ 3:
+ 4:Round 16's mandatory sweep ran
+ 5:
+SKILL.md registry evidence:
+SKILL row excerpt: name=misroot sweep (r17); kind=probe; first entry command=`python3 tools/mori-misroot-sweep.py --fleet-root DIR --lane mori --round N`
+
+tools/mori-oom-killers.py
+class: gate
+registry row: userspace OOM killers (r26, C2)
+purpose: Survey userspace OOM-killer unit state and bounded action evidence without remediation.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-oom-killers.py:1-23')
+[mori-shokunin/tools/mori-oom-killers.py#54C6]
+ 1:#!/usr/bin/env python3
+*2:"""Read-only survey of this host's userspace OOM killers (FR10).
+ 3:
+ 4:Round 26, claim C2 (coverage axis, frontier FR10).  The tool reads what the
+ 5:two userspace killers are set to do and whether they have acted.  It never
+SKILL.md registry evidence:
+SKILL row excerpt: name=userspace OOM killers (r26, C2); kind=gate (host-surface verdict over two units; not a census or fleet-admission gate); first entry command=`python3 -I -B tools/mori-oom-killers.py [--inputs FILE \| --selftest \| --dump-inputs] [--cases FILE]`
+
+tools/mori-pin-check.py
+class: gate
+registry row: registry pin reconciler (r47, C1)
+purpose: Remeasure the self-test tally pins bound in SKILL's gate registry.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py:1-23')
+[mori-shokunin/tools/mori-pin-check.py#A4F4]
+ 1:#!/usr/bin/env python3
+*2:"""mori-pin-check — re-measure the self-test pins of SKILL.md's gate registry.
+ 3:
+ 4:Round 47 (C1, calibration). Replaces round 46's row-wide substring counter
+ 5:(`count-repins.py`), which turned green when a stale receipt string was moved
+SKILL.md registry evidence:
+SKILL row excerpt: name=registry pin reconciler (r47, C1); kind=gate; first entry command=`python3 tools/mori-pin-check.py --rev <rev> [--repo DIR] [--min-tally-pins N] [--baseline-rev REV] [--skill PATH] [--timeout S] [--scratch DIR]`
+
+tools/mori-pressure.py
+class: gate
+registry row: system pressure (r24, C2)
+purpose: Read system CPU, memory, IO and IRQ pressure with local threshold verdicts.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pressure.py:1-23')
+[mori-shokunin/tools/mori-pressure.py#7EEB]
+ 1:#!/usr/bin/env python3
+*2:"""Read-only system pressure (PSI) survey for CPU, memory, IO and IRQ.
+ 3:
+ 4:Round 24, claim C2 (coverage axis, frontier FR12).  The census reads only the
+ 5:user slice's ``memory.pressure``; the system PSI files under ``/proc/pressure``
+SKILL.md registry evidence:
+SKILL row excerpt: name=system pressure (r24, C2); kind=gate (host-surface verdict; not a census or fleet-admission gate); first entry command=`python3 tools/mori-pressure.py [--root DIR] [--warn-avg10 X] [--interval S] [--selftest [--cases FILE]]`
+
+tools/mori-receipt-complete.py
+class: gate
+registry row: receipt-complete guard (r63 tool)
+purpose: Check counter-receipt failed-anchor lists for truncation and count disagreement.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-receipt-complete.py:1-23')
+[mori-shokunin/tools/mori-receipt-complete.py#17B7]
+ 1:#!/usr/bin/env python3
+*2:"""mori-receipt-complete — guard: a counter receipt's `failed=` anchor list is
+ 3:complete and untruncated.
+ 4:
+ 5:Round 63 (C2, calibration). Mechanizes routed nit 1 of
+SKILL.md registry evidence:
+SKILL row excerpt: name=receipt-complete guard (r63 tool); kind=gate; first entry command=`python tools/mori-receipt-complete.py <receipt-path> [--expect N]`
+
+tools/mori-register-check.py
+class: gate
+registry row: register checker (r59 tool)
+purpose: Check active capabilities-register identity, required keys and evidence bindings.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-register-check.py:1-23')
+[mori-shokunin/tools/mori-register-check.py#2570]
+ 1:#!/usr/bin/env python3
+*2:"""Active capabilities-register checker (round 59, C1 — calibration capability).
+ 3:
+ 4:Reads a SCORECARD.md-shaped file and a MANIFEST.json-shaped file and verifies
+ 5:that the *active* capabilities register — the unique `## Capabilities` section
+SKILL.md registry evidence:
+SKILL row excerpt: name=register checker (r59 tool); kind=gate; first entry command=`python3 tools/mori-register-check.py --scorecard PATH --manifest PATH --root DIR [--require N]`
+
+tools/mori-retention-gate.py
+class: gate
+registry row: r18 retention (C1)
+purpose: Scan committed revision blobs under the lane's retained-context policy.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-gate.py:1-23')
+[mori-shokunin/tools/mori-retention-gate.py#7FA9]
+ 1:#!/usr/bin/env python3
+*2:"""C1 retained-context gate.
+ 3:
+ 4:The scan command reads only a revision's Git tree and blob objects. Matched line
+ 5:contents are never emitted; hit records contain path, line, class, and SHA-256.
+*6:"""
+ 7:
+ 8:from __future__ import annotations
+ 9:
+SKILL.md registry evidence:
+SKILL row excerpt: name=r18 retention (C1); kind=gate; first entry command=`python3 tools/mori-retention-gate.py scan --repo <repo> --rev <REV> --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json`
+
+tools/mori-retention-reconcile.py
+class: gate
+registry row: retention reconciliation schema-v2 (r23)
+purpose: Independently reconcile committed retention accounting against a retained receipt.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-reconcile.py:1-23')
+[mori-shokunin/tools/mori-retention-reconcile.py#8BB4]
+ 1:#!/usr/bin/env python3
+*2:"""Reconcile committed retention accounting. Agreement never grants clearance."""
+ 3:from __future__ import annotations
+ 4:import argparse
+ 5:from collections import Counter
+SKILL.md registry evidence:
+SKILL row excerpt: name=retention reconciliation schema-v2 (r23); kind=gate, artifact accounting only; first entry command=`python3 tools/mori-retention-reconcile.py check --repo "$PWD" --rev INPUT_COMMIT --receipt .ufo/waves/round-21/evidence/final/retention-floor.json --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json`
+
+tools/mori-rotation-schedule.py
+class: probe
+registry row: rotation-schedule probe (r74 tool)
+purpose: Run stated-window A/A capture comparisons and report rotation observations, not TTLs.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-rotation-schedule.py:1-23')
+[mori-shokunin/tools/mori-rotation-schedule.py#6200]
+ 1:#!/usr/bin/env python3
+*2:"""mori-rotation-schedule — the rotation-recurrence protocol as a designed
+ 3:multi-window schedule instrument over a bot-managed page's instrument-UA
+ 4:serving (fleet and host observability; detection and report only).
+ 5:
+SKILL.md registry evidence:
+SKILL row excerpt: name=rotation-schedule probe (r74 tool); kind=probe; first entry command=`python tools/mori-rotation-schedule.py --url URL --ua UA --pin PATH --out-dir DIR [--windows N,N,N] [--label ID] [--child PATH]`
+
+tools/mori-round13-regressions.py
+class: gate
+registry row: r13 regressions
+purpose: Grade round-13 census regression expectations against committed targets.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round13-regressions.py:1-23')
+[mori-shokunin/tools/mori-round13-regressions.py#A884]
+ 1:#!/usr/bin/env python3
+*2:"""mori-round13-regressions.py — round-13 regression gate (migrated round 14).
+ 3:
+ 4:REGISTERED GATE (registry home: this lane's SKILL.md; row `r13 regressions`).
+ 5:It reads committed targets, compares them against the expected values pinned in
+SKILL.md registry evidence:
+SKILL row excerpt: name=r13 regressions; kind=gate; first entry command=`python3 tools/mori-round13-regressions.py --output <dir>`
+
+tools/mori-round14-regressions.py
+class: gate
+registry row: r14 regressions
+purpose: Compare synthetic journal cases against the frozen and repaired round-14 census.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round14-regressions.py:1-23')
+[mori-shokunin/tools/mori-round14-regressions.py#B8CE]
+ 1:#!/usr/bin/env python3
+*2:"""mori-round14-regressions.py — isolated behavioral gate for the round-14 C1 repair.
+ 3:
+ 4:WHAT THIS GATE IS
+ 5:
+SKILL.md registry evidence:
+SKILL row excerpt: name=r14 regressions; kind=gate; first entry command=`python3 tools/mori-round14-regressions.py --output <dir>`
+
+tools/mori-round15-regressions.py
+class: gate
+registry row: r15 regressions
+purpose: Grade round-15 positive-evidence repairs using shared synthetic fixture packs.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round15-regressions.py:1-23')
+[mori-shokunin/tools/mori-round15-regressions.py#7D44]
+ 1:#!/usr/bin/env python3
+*2:"""mori-round15-regressions.py — isolated fixture-pack gate for the r15 C1 repair.
+ 3:
+ 4:WHAT THIS GATE IS
+ 5:
+SKILL.md registry evidence:
+SKILL row excerpt: name=r15 regressions; kind=gate; first entry command=`python3 tools/mori-round15-regressions.py --output <dir>`
+
+tools/mori-round16-context-check.py
+class: gate
+registry row: r16 context check
+purpose: Check wave-spec contexts for the round-16 contract restrictions.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round16-context-check.py:1-23')
+[mori-shokunin/tools/mori-round16-context-check.py#E6DF]
+ 1:#!/usr/bin/env python3
+*2:"""mori-round16-context-check.py — static gate for wave-spec contract context.
+ 3:
+ 4:WHAT THIS GATE IS
+ 5:
+SKILL.md registry evidence:
+SKILL row excerpt: name=r16 context check; kind=gate; first entry command=`python3 tools/mori-round16-context-check.py --spec PATH`
+
+tools/mori-round16-regressions.py
+class: gate
+registry row: r16 regressions
+purpose: Grade the journal-window probe against isolated shared fixture packs.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round16-regressions.py:1-23')
+[mori-shokunin/tools/mori-round16-regressions.py#528C]
+ 1:#!/usr/bin/env python3
+*2:"""mori-round16-regressions.py — isolated fixture-pack gate for the r16
+ 3:journal-window capability.
+ 4:
+ 5:This harness measures `tools/mori-journal-window.py` against shared fixture
+SKILL.md registry evidence:
+SKILL row excerpt: name=r16 regressions; kind=gate; first entry command=`python3 tools/mori-round16-regressions.py --tool tools/mori-journal-window.py --fixtures .ufo/waves/round-16/fixtures --expected .ufo/waves/round-16/expected.json --output <dir>`
+
+tools/mori-round17-context-check.py
+class: gate
+registry row: r17 context check
+purpose: Check wave-spec contexts for the round-17 contract restrictions.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round17-context-check.py:1-23')
+[mori-shokunin/tools/mori-round17-context-check.py#6912]
+ 1:#!/usr/bin/env python3
+*2:"""mori-round17-context-check.py — static gate for wave-spec contract context.
+ 3:
+ 4:WHAT THIS GATE IS
+ 5:
+SKILL.md registry evidence:
+SKILL row excerpt: name=r17 context check; kind=gate; first entry command=`python3 tools/mori-round17-context-check.py --spec PATH`
+
+tools/mori-round17-jj-regressions.py
+class: gate
+registry row: r17 jj regressions
+purpose: Grade census branch/authorship behavior in synthetic jj-colocated repositories.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round17-jj-regressions.py:1-23')
+[mori-shokunin/tools/mori-round17-jj-regressions.py#98D2]
+ 1:#!/usr/bin/env python3
+*2:"""mori round-17 C2 gate: jj-colocation correctness of tools/mori-census.sh.
+ 3:
+ 4:Contract (round-17 contract.md, C2, plus the CensusJj fail-closed amendment):
+ 5:  * the census resolves the lane branch from the helper mirror
+SKILL.md registry evidence:
+SKILL row excerpt: name=r17 jj regressions; kind=gate; first entry command=`python3 tools/mori-round17-jj-regressions.py --census PATH --output DIR [--scratch DIR] [--keep-scratch]`
+
+tools/mori-round17-seat-regressions.py
+class: gate
+registry row: r17 seat regressions
+purpose: Grade seat terminal-status behavior against committed synthetic transcript fixtures.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round17-seat-regressions.py:1-23')
+[mori-shokunin/tools/mori-round17-seat-regressions.py#0832]
+ 1:#!/usr/bin/env python3
+*2:"""mori-round17-seat-regressions.py — isolated fixture gate for the C1
+ 3:seat terminal-status capability (`tools/mori-seat-terminal.py`).
+ 4:
+ 5:The gate never reads a real sessions directory.  It walks one committed
+SKILL.md registry evidence:
+SKILL row excerpt: name=r17 seat regressions; kind=gate; first entry command=`python3 tools/mori-round17-seat-regressions.py --tool PATH --fixtures .ufo/waves/round-17/fixtures/seat --output DIR`
+
+tools/mori-round19-regressions.py
+class: gate
+registry row: r19 finite regressions
+purpose: Run independent synthetic round-19 regressions using committed expected.json as oracle.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round19-regressions.py:1-23')
+[mori-shokunin/tools/mori-round19-regressions.py#80DB]
+ 1:#!/usr/bin/env python3
+*2:"""Independent synthetic regression harness for mori round 19.
+ 3:
+ 4:Only the committed expected.json is an oracle.  Every repository inspected by a
+ 5:child tool is created under the caller's explicit TMPDIR and contains synthetic
+...
+ 8:values; raw stdout, stderr, review reasons and fixture values are never saved.
+*9:"""
+ 10:
+ 11:from __future__ import annotations
+ 12:
+SKILL.md registry evidence:
+SKILL row excerpt: name=r19 finite regressions; kind=gate; first entry command=`TMPDIR=<lane>/.scratch python3 tools/mori-round19-regressions.py --mode after --content-tool <absolute-content-tool> --freeze-tool <absolute-freeze-tool> --expected <lane>/.ufo/waves/round-19/frozen/expected.json --output <absent-output-file>`
+
+tools/mori-round41-calibration.py
+class: probe
+registry row: r41 calibration
+purpose: Count round-40 self-assessment mismatches against the frozen reference gate.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round41-calibration.py:1-23')
+[mori-shokunin/tools/mori-round41-calibration.py#E4EE]
+ 1:#!/usr/bin/env python3
+*2:"""Count round-40 C2 self-assessment mismatches against the frozen r40 gate.
+ 3:
+ 4:Usage: python3 tools/mori-round41-calibration.py <revision> --repo DIR --reference-rev REV
+ 5:       python3 tools/mori-round41-calibration.py --selftest
+...
+ 13:built.
+*14:"""
+ 15:import argparse
+ 16:import os
+ 17:import re
+SKILL.md registry evidence:
+SKILL row excerpt: name=r41 calibration; kind=probe (one dated self-assessment measurement, not a standing gate); first entry command=`python3 tools/mori-round41-calibration.py <revision> --repo DIR --reference-rev REV`
+
+tools/mori-routed-check.py
+class: gate
+registry row: routed round-23 items (r24, C1)
+purpose: Recheck round-23 routed defects R1–R4 from committed Git objects.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-routed-check.py:1-23')
+[mori-shokunin/tools/mori-routed-check.py#0EF2]
+ 1:#!/usr/bin/env python3
+*2:"""Read-only check of the round-23 routed defect items against committed bytes.
+ 3:
+ 4:One command re-derives the round-23 routed items R1..R4 at a committed
+ 5:revision.  Every predicate reads git objects only (ls-tree, cat-file, rev-parse,
+SKILL.md registry evidence:
+SKILL row excerpt: name=routed round-23 items (r24, C1); kind=gate; first entry command=`python3 -I tools/mori-routed-check.py --repo <repo> --rev <REV> [--round N]`
+
+tools/mori-routed-r24.py
+class: gate
+registry row: routed round-24 items (r25, C1)
+purpose: Recheck round-24 routed defects D1–D5 from committed bytes.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-routed-r24.py:1-23')
+[mori-shokunin/tools/mori-routed-r24.py#4D67]
+ 1:#!/usr/bin/env python3
+*2:"""Read-only check of the round-24 routed defect items D1..D5 against committed bytes.
+ 3:
+ 4:One command re-derives the round-24 routed items named in
+ 5:``corpus/lessons/round-24-verifier-spotcheck.md`` (the "Routed defects" list,
+SKILL.md registry evidence:
+SKILL row excerpt: name=routed round-24 items (r25, C1); kind=gate (committed-bytes consistency gate over the lane's own round-24 evidence; not a fleet-admission gate); first entry command=`python3 -I -B tools/mori-routed-r24.py --repo REPO --rev REV [--rerun]`
+
+tools/mori-runway-win.py
+class: probe
+registry row: runway probe (r64 tool)
+purpose: Read Windows memory load/commitment and volume free-space counts through the Windows API.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-runway-win.py:1-23')
+[mori-shokunin/tools/mori-runway-win.py#AAC7]
+ 1:#!/usr/bin/env python3
+*2:"""mori-runway-win — one-shot read-only probe of the Windows resource-runway
+ 3:surface: memory commitment/physical load and volume free space (fleet and host
+ 4:observability; resource runway per the province's Core row, detection and
+ 5:report only).
+SKILL.md registry evidence:
+SKILL row excerpt: name=runway probe (r64 tool); kind=probe; first entry command=`python tools/mori-runway-win.py`
+
+tools/mori-seat-terminal.py
+class: probe
+registry row: seat terminal status (r17)
+purpose: Classify terminal-at-scan seat-transcript status without a permanent-death claim.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-seat-terminal.py:1-23')
+[mori-shokunin/tools/mori-seat-terminal.py#6DFA]
+ 1:#!/usr/bin/env python3
+*2:"""mori-seat-terminal.py — read-only terminal-status census of OMP seat transcripts.
+ 3:
+ 4:Mori round 17 C1 coverage tool (contract C1, Amendment A1 items 1-8/10, and the
+ 5:wave-2 PrivacyFinal hardening).
+SKILL.md registry evidence:
+SKILL row excerpt: name=seat terminal status (r17); kind=probe; first entry command=`python3 tools/mori-seat-terminal.py --sessions-dir DIR [--prefix P ...] [--max-tail-bytes N] [--max-files N] [--settle-seconds N] [--now-ms MS]`
+
+tools/mori-settlement-scan.py
+class: gate
+registry row: settlement scanner (r59 tool)
+purpose: Validate wave-results object shape and report per-file settlement counts.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-settlement-scan.py:1-23')
+[mori-shokunin/tools/mori-settlement-scan.py#8AB1]
+ 1:#!/usr/bin/env python3
+*2:"""Wave-settlement results-file scanner (round 59, C2 — depth/coverage capability).
+ 3:
+ 4:Reads one or more orchestrator `<wave>-results.json` files (the inline spawn
+ 5:handoff's settlement artifact: written beside `<wave>-dispatch.json` when every
+SKILL.md registry evidence:
+SKILL row excerpt: name=settlement scanner (r59 tool); kind=gate; first entry command=`python3 tools/mori-settlement-scan.py <results.json …>`
+
+tools/mori-silence-cases.sh
+class: gate
+registry row: silence oracle
+purpose: Grade census lane-silence behavior against synthetic scenario expectations.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-silence-cases.sh:1-23')
+[mori-shokunin/tools/mori-silence-cases.sh#CB67]
+ 1:#!/usr/bin/env bash
+*2:# mori-silence-cases.sh — behavioral counting driver for mori-census.sh lane
+ 3:# silence grading (mori-shokunin r2). Scenario-owner file; census internals
+ 4:# belong to the implementation owner.
+ 5:#
+SKILL.md registry evidence:
+SKILL row excerpt: name=silence oracle; kind=gate; first entry command=`bash tools/mori-silence-cases.sh`
+
+tools/mori-source-drift.py
+class: probe
+registry row: source drift (r36); source drift (r37)
+purpose: Refetch source-registry URLs and classify each newest committed copy against served bytes.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-source-drift.py:1-23')
+[mori-shokunin/tools/mori-source-drift.py#A617]
+ 1:#!/usr/bin/env python3
+*2:"""mori-source-drift.py — re-fetch each corpus/SOURCES.md row that has a committed
+ 3:copy and classify the copy against today's body (round 36, C1 exploratory probe).
+ 4:
+ 5:Usage:
+SKILL.md registry evidence:
+SKILL row excerpt: name=source drift (r36); kind=probe; first entry command=`python3 tools/mori-source-drift.py --root <repo>`
+SKILL row excerpt: name=source drift (r37); kind=probe; first entry command=`python3 tools/mori-source-drift.py --root <repo>`
+
+tools/mori-sources-appendonly.py
+class: gate
+registry row: SOURCES append-only (r36); SOURCES append-only timing (r38)
+purpose: Check SOURCES immutable cells and permitted append-only supersession timing.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-sources-appendonly.py:1-23')
+[mori-shokunin/tools/mori-sources-appendonly.py#CD59]
+ 1:#!/usr/bin/env python3
+*2:"""mori-sources-appendonly.py — CORPUS.md rule 2 gate for corpus/SOURCES.md.
+ 3:
+ 4:Usage:
+ 5:    mori-sources-appendonly.py <rev> [--repo DIR] [--round-base REV] [--path P]
+SKILL.md registry evidence:
+SKILL row excerpt: name=SOURCES append-only (r36); kind=gate; first entry command=`python3 tools/mori-sources-appendonly.py <rev> [--repo DIR] [--round-base REV] [--path P]`
+SKILL row excerpt: name=SOURCES append-only timing (r38); kind=gate; first entry command=`python3 tools/mori-sources-appendonly.py <rev> --round-base REV`
+
+tools/mori-ua-variance.py
+class: probe
+registry row: UA-variance probe (r68/r69 tool)
+purpose: Separate per-response tokens from stable serving chrome using same-UA A/A observations.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-ua-variance.py:1-23')
+[mori-shokunin/tools/mori-ua-variance.py#3A04]
+ 1:#!/usr/bin/env python3
+*2:"""mori-ua-variance.py — separate PER-RESPONSE tokens from STABLE chrome on a bot-
+ 3:managed page's instrument-UA body, by same-UA A/A fetches (round 68; the r67
+ 4:SCORECARD planned item: "the bot-manager chrome is disclosed serving variance but
+ 5:the instrument-UA body of a bot-managed page is otherwise unadjudicated — a future
+SKILL.md registry evidence:
+SKILL row excerpt: name=UA-variance probe (r68/r69 tool); kind=probe; first entry command=`python tools/mori-ua-variance.py --capture --url URL --ua UA --out FILE`
+
+tools/mori-unlanded-check.py
+class: gate
+registry row: unlanded check (r48)
+purpose: List scoped round work present on disk but not committed.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-unlanded-check.py:1-23')
+[mori-shokunin/tools/mori-unlanded-check.py#F9CB]
+ 1:#!/usr/bin/env python3
+*2:"""mori-unlanded-check — list round work that exists on disk but is not committed.
+ 3:
+ 4:Round 48 (operability; mistake M1 of `corpus/lessons/round-48.md`). Round 47 filed its report
+ 5:while three late seat reports and `w2-results.json` sat untracked
+...
+ 21:Read-only: `git rev-parse` and `git status --no-optional-locks` only.
+*22:"""
+ 23:import os
+SKILL.md registry evidence:
+SKILL row excerpt: name=unlanded check (r48); kind=gate; first entry command=`python3 tools/mori-unlanded-check.py --repo DIR --round N`
+
+tools/mori-uptime-win.py
+class: probe
+registry row: uptime probe (r70 tool)
+purpose: Read the Windows biased system tick count with honest unavailable states.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-uptime-win.py:1-23')
+[mori-shokunin/tools/mori-uptime-win.py#CA1B]
+ 1:#!/usr/bin/env python3
+*2:"""mori-uptime-win — one-shot read-only probe of the Windows host-uptime
+ 3:surface: the system tick count (fleet and host observability; detection and
+ 4:report only).
+ 5:
+SKILL.md registry evidence:
+SKILL row excerpt: name=uptime probe (r70 tool); kind=probe; first entry command=`python tools/mori-uptime-win.py`
+
+tools/mori-vote-bind.py
+class: gate
+registry row: vote binder (r56 tool)
+purpose: Extract and tally vote bindings from plain text and JSON string-scalar seat outputs.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-vote-bind.py:1-23')
+[mori-shokunin/tools/mori-vote-bind.py#3CC6]
+ 1:#!/usr/bin/env python3
+*2:"""Dual-shape seat-output vote binder (round 56, C2 — operability capability).
+ 3:
+ 4:The round-55 C1 counter bound an agreeing vote only when the voter's captured
+ 5:output carried the exact `RECHECK <h> <w>` line as a stripped *text* line; all
+SKILL.md registry evidence:
+SKILL row excerpt: name=vote binder (r56 tool); kind=gate; first entry command=`python3 tools/mori-vote-bind.py {extract,tally} …`
+
+tools/mori-wave-settlement.py
+class: gate
+registry row: wave settlement (r20)
+purpose: Scan dispatch waves for per-seat report-file presence, not result acceptance.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-wave-settlement.py:1-23')
+[mori-shokunin/tools/mori-wave-settlement.py#DA4D]
+ 1:#!/usr/bin/env python3
+*2:"""Read-only per-seat settlement scan for mori swarm dispatch waves.
+ 3:
+ 4:Frozen contract: .ufo/waves/round-20/contract.md (C2) and frozen/c2-expected.json.
+ 5:Co-evolved refinements (round 20, after dispatch; disclosed in the round lesson):
+...
+ 18:A missing report is not a dead seat; this tool reports filesystem shape only.
+*19:"""
+ 20:
+ 21:from __future__ import annotations
+ 22:
+SKILL.md registry evidence:
+SKILL row excerpt: name=wave settlement (r20); kind=gate; first entry command=`python3 tools/mori-wave-settlement.py scan --lane-root DIR [--fleet-root DIR] [--out PATH]`
+
+tools/mori-workstate-win.py
+class: probe
+registry row: workstate probe (r71 tool)
+purpose: Read biased and unbiased Windows working-state time counts side by side.
+$ functions.grep(pattern='^"""|^# mori-|usage: mori-blind', path='/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-workstate-win.py:1-23')
+[mori-shokunin/tools/mori-workstate-win.py#5CD5]
+ 1:#!/usr/bin/env python3
+*2:"""mori-workstate-win — one-shot read-only probe of the Windows working-state
+ 3:time surface: GetTickCount64 (biased, ms) beside QueryUnbiasedInterruptTime
+ 4:(unbiased, 100-ns units), counts only (fleet and host observability; detection
+ 5:and report only).
+SKILL.md registry evidence:
+SKILL row excerpt: name=workstate probe (r71 tool); kind=probe; first entry command=`python tools/mori-workstate-win.py`
+
+Acceptance: not executed by this leaf. Parent owns post-integration gate execution and scratch commits under fleet executor developer bounds. The supplied entering control is retained in evidence/controls-r80.txt but is not represented as a run by this seat.
+Integration limit: population above is the observed 55 committed direct-child instruments. C1 will add mori-claim-sweep.py, increasing an integrated population to 56; parent must append its row against landed source evidence before grading integrated C3.

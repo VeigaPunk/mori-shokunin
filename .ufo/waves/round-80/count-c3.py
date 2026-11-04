@@ -84,6 +84,22 @@ def selfcheck(scratch):
         cases.append((label, r["met"] == expects[label],
                       f"named={r['named']} present={r['present']} "
                       f"missing={len(r['missing'])} extra={len(r['extra'])}"))
+    # mutation-seat survivors (r80 M01): a sibling-lane path and a directory must not count
+    d = tempfile.mkdtemp(dir=scratch)
+    os.makedirs(os.path.join(d, "tools", "fake-dir.py"))
+    for tname in tools:
+        open(os.path.join(d, "tools", tname), "w").write("# x\n")
+    open(os.path.join(d, "PROVINCE.md"), "w").write(
+        "# p\n\n" + "".join(f"- `tools/{t}` probe\n" for t in tools)
+        + "- `../tsukuroi-shokunin/tools/tsukuroi-census.sh` reads the same file\n")
+    env = ["-c", "user.name=t", "-c", "user.email=t@t"]
+    run(["git"] + env + ["-C", d, "init", "-q"])
+    run(["git"] + env + ["-C", d, "add", "-A"])
+    run(["git"] + env + ["-C", d, "commit", "-qm", "f"])
+    rev = run(["git", "-C", d, "rev-parse", "HEAD"]).stdout.strip()
+    r = grade(run(["git", "-C", d, "show", f"{rev}:PROVINCE.md"]).stdout, present_set(d, rev))
+    cases.append(("sibling_and_directory_ignored", r["met"],
+                  f"named={r['named']} present={r['present']} extra={r['extra']}"))
     ok = sum(1 for _, good, _ in cases if good)
     for label, good, line in cases:
         print(f"{'PASS' if good else 'FAIL'} {label} {line}")

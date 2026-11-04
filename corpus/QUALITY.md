@@ -1769,3 +1769,33 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
      Not covered: a receipt that names a command which did not produce the count (text
      binding is not provenance); claim shapes other than a bare `key=<integer>` line; the
      report or lesson prose itself.
+
+165. A selftest arm added for a named surviving mutant must fail on that mutant
+     and pass on the real bytes; a survivor is a lead for human judgement, never
+     proof that a test is missing. Grade the selftest's own verdict, not an
+     unrelated live-output check. Ground: S595 and
+     `corpus/knowledge/mutation-adequacy-r80.md` K1–K3; the local experiment is
+     `.ufo/waves/round-80/mutate-c2.py` (six frozen, named mutants), under
+     `.ufo/waves/round-80/contract.md` P-C2.
+     Shown able to fail: the entering receipt
+     `.ufo/waves/round-80/evidence/controls-r80.txt` records
+     `python3 -I .ufo/waves/round-80/mutate-c2.py --rev d5888922` -> rc 1,
+     `MUTATION_C2 survivors=2 killed=4 total=6 rev=d58889220d3c`;
+     `drop_admitted` and `cut_clause_boundary` remain green at `pass=4 fail=0`.
+     A repaired-arm claim needs mutant-red and real-green receipts; this rule
+     does not assert that those repairs have passed.
+     Not covered: equivalent-mutant adjudication, completeness, or other
+     lanes' tests; one kill establishes discrimination of that edit only.
+
+166. QUALITY 164's control-receipt guard enforces section-level textual
+     co-presence, not command relevance: a `$ <any text>` line binds a section.
+     Decimal/exponent-only values are outside its declared integer grammar and
+     are not claims. Record this D79-4 limit beside the rule's use; never read
+     an `unbound=0` verdict as proof that a command produced the stated count.
+     Ground: `corpus/lessons/round-79-verifier-spotcheck.md`, C1 independent
+     attack and routed D79-4, which explicitly calls this the frozen predicate,
+     not a defect. That review reports `$ this-is-not-a-counting-command`
+     binding a section and the decimal/exponent exclusions; it is historical
+     review evidence, not a new execution by this rule's author.
+     Not covered: semantic command validation or expanding the integer grammar;
+     this limit record changes neither the guard nor QUALITY 164.

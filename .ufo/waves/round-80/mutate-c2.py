@@ -159,13 +159,20 @@ def main(argv):
         if s.returncode != 0:
             print(f"MUTATION_SETUP {COUNTER} absent at rev", file=sys.stderr)
             return 2
+        base_path = os.path.join(tempfile.mkdtemp(dir=scratch), "count-c2.py")
+        open(base_path, "w", encoding="utf-8").write(s.stdout)
+        base_verdict, base_detail = selftest_verdict(base_path, os.path.dirname(base_path))
+        print(f"unmutated {base_verdict} {base_detail}")
+        if base_verdict != "survived":
+            print("MUTATION_SETUP unmutated selftest is not green at rev", file=sys.stderr)
+            return 2
         res = grade(s.stdout, scratch)
         if res is None:
             return 2
         survivors = res.count("survived")
         killed = len(res) - survivors
         print(f"MUTATION_C2 survivors={survivors} killed={killed} total={len(MUTANTS)} "
-              f"rev={rev[:12]}")
+              f"unmutated=green rev={rev[:12]}")
         return 0 if survivors == 0 else 1
     finally:
         shutil.rmtree(scratch, ignore_errors=True)

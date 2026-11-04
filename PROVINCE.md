@@ -535,3 +535,70 @@ normalized.
 
 Detection and report only: nothing on this host was killed, modified or
 reconfigured by this lane.
+
+
+## Instrument inventory (round 80)
+
+This table inventories the lane’s own read-only instruments, including its offline gates and synthetic regression drivers.
+It is not a scope expansion and does not claim that every instrument is a census surface.
+
+| tool | class | registry row | purpose |
+|---|---|---|---|
+| `tools/mori-anchor-check.py` | gate | anchor checker (r72 tool) | Verify located-line source anchors and recorded quote word counts against a local pin. |
+| `tools/mori-blind-check.sh` | gate | blind-writer gate (r31) | Check blind-writer report paths against the committed allow-file rules. |
+| `tools/mori-census.sh` | gate | census; drift pin | Report fleet/host census surfaces and CLEAN/DRIFT findings; also check a retained drift baseline. |
+| `tools/mori-cgroup-pressure.py` | gate | — | Read a named cgroup's CPU, memory, IO and IRQ pressure plus its accounting switch. |
+| `tools/mori-claim-sweep.py` | gate | self-assessment claim sweep (r80 tool, registry row 14) | Resolve the lane's own axes, capabilities and checklist claims: lane-pointer existence, pinned live selftest tallies and stale literals. |
+| `tools/mori-commit-runway.py` | gate | commit runway (r53, C2) | Read CommitLimit and Committed_AS with the overcommit-mode enforcement context. |
+| `tools/mori-content-review.py` | gate | r19 content review (C1) | Check blob-bound content-review dispositions over the frozen Mori population. |
+| `tools/mori-control-receipt.py` | gate | control-receipt guard (r79 tool) | Require a counting-command line in each receipt section carrying integer count claims. |
+| `tools/mori-counter-win.py` | probe | counter probe (r77 tool) | Read Windows memory commitment gauges and paging activity through bounded typeperf output. |
+| `tools/mori-disk-rate.py` | probe | disk write rate (r34) | Report two-sample disk write rates and device classes from diskstats and sysfs. |
+| `tools/mori-dispatch-ledger.py` | gate | r18 dispatch ledger (C3) | Bind and verify per-attempt dispatch payload identities for Mori waves. |
+| `tools/mori-drift-adjudicate.py` | gate | drift-finding adjudicator (r65 tool) | Classify source-drift findings into the documented closed disposition set. |
+| `tools/mori-drift-recheck.py` | gate | standing drift re-check (r66/r67 tool) | Recheck source-drift dispositions with as-of stamps and vendor-scoped churn grammars. |
+| `tools/mori-driver-liveness.py` | gate | driver-liveness probe (r56 tool) | Parse inline driver events into per-lane activity facts without a health verdict. |
+| `tools/mori-entry-claims-check.py` | gate | entry-claims checker (r60 tool) | Verify quote-bound knowledge-entry claims with hardened grammar and binding predicates. |
+| `tools/mori-events-context-win.py` | probe | events-context pairing (r71 tool) | Pair Windows event counts with an uptime read on one explicitly limited receipt. |
+| `tools/mori-evidence-loss.py` | probe | retained-loss audit; evidence-loss rule comparison | Audit retained historical evidence and classify loss; compare synthetic evidence-loss rules. |
+| `tools/mori-freeze-order.py` | gate | r18 freeze-order (C2) | Check whether frozen claim inputs predate their implementation commits. |
+| `tools/mori-gate-registry.py` | gate | r44 gate registry (C2); r44 gate registry (C2) — write scope superseded | Audit committed instruments against SKILL's gate-registry standard and attribution rules. |
+| `tools/mori-host-events-win.py` | probe | host-events probe (r63 tool) | Read bounded Windows event-log kill/exhaustion counts using provider/event-ID filters. |
+| `tools/mori-index-clean.sh` | gate | index clean (r36) | Check the Git index for staged paths and intent-to-add entries without rewriting it. |
+| `tools/mori-job-runway.py` | gate | harness background-job runway (r25, C2) | Read the configured harness job cap and installed binary clamp/default, not a live job count. |
+| `tools/mori-journal-window.py` | probe | journal window (r16) | Read a MESSAGE-free same-boot journal window after an exact retained anchor. |
+| `tools/mori-misroot-sweep.py` | probe | misroot sweep (r17) | Report fleet-root misroot candidates from status paths and bounded file heads. |
+| `tools/mori-oom-killers.py` | gate | userspace OOM killers (r26, C2) | Survey userspace OOM-killer unit state and bounded action evidence without remediation. |
+| `tools/mori-pin-check.py` | gate | registry pin reconciler (r47, C1) | Remeasure the self-test tally pins bound in SKILL's gate registry. |
+| `tools/mori-pressure.py` | gate | system pressure (r24, C2) | Read system CPU, memory, IO and IRQ pressure with local threshold verdicts. |
+| `tools/mori-receipt-complete.py` | gate | receipt-complete guard (r63 tool) | Check counter-receipt failed-anchor lists for truncation and count disagreement. |
+| `tools/mori-register-check.py` | gate | register checker (r59 tool) | Check active capabilities-register identity, required keys and evidence bindings. |
+| `tools/mori-retention-gate.py` | gate | r18 retention (C1) | Scan committed revision blobs under the lane's retained-context policy. |
+| `tools/mori-retention-reconcile.py` | gate | retention reconciliation schema-v2 (r23) | Independently reconcile committed retention accounting against a retained receipt. |
+| `tools/mori-rotation-schedule.py` | probe | rotation-schedule probe (r74 tool) | Run stated-window A/A capture comparisons and report rotation observations, not TTLs. |
+| `tools/mori-round13-regressions.py` | gate | r13 regressions | Grade round-13 census regression expectations against committed targets. |
+| `tools/mori-round14-regressions.py` | gate | r14 regressions | Compare synthetic journal cases against the frozen and repaired round-14 census. |
+| `tools/mori-round15-regressions.py` | gate | r15 regressions | Grade round-15 positive-evidence repairs using shared synthetic fixture packs. |
+| `tools/mori-round16-context-check.py` | gate | r16 context check | Check wave-spec contexts for the round-16 contract restrictions. |
+| `tools/mori-round16-regressions.py` | gate | r16 regressions | Grade the journal-window probe against isolated shared fixture packs. |
+| `tools/mori-round17-context-check.py` | gate | r17 context check | Check wave-spec contexts for the round-17 contract restrictions. |
+| `tools/mori-round17-jj-regressions.py` | gate | r17 jj regressions | Grade census branch/authorship behavior in synthetic jj-colocated repositories. |
+| `tools/mori-round17-seat-regressions.py` | gate | r17 seat regressions | Grade seat terminal-status behavior against committed synthetic transcript fixtures. |
+| `tools/mori-round19-regressions.py` | gate | r19 finite regressions | Run independent synthetic round-19 regressions using committed expected.json as oracle. |
+| `tools/mori-round41-calibration.py` | probe | r41 calibration | Count round-40 self-assessment mismatches against the frozen reference gate. |
+| `tools/mori-routed-check.py` | gate | routed round-23 items (r24, C1) | Recheck round-23 routed defects R1–R4 from committed Git objects. |
+| `tools/mori-routed-r24.py` | gate | routed round-24 items (r25, C1) | Recheck round-24 routed defects D1–D5 from committed bytes. |
+| `tools/mori-runway-win.py` | probe | runway probe (r64 tool) | Read Windows memory load/commitment and volume free-space counts through the Windows API. |
+| `tools/mori-seat-terminal.py` | probe | seat terminal status (r17) | Classify terminal-at-scan seat-transcript status without a permanent-death claim. |
+| `tools/mori-settlement-scan.py` | gate | settlement scanner (r59 tool) | Validate wave-results object shape and report per-file settlement counts. |
+| `tools/mori-silence-cases.sh` | gate | silence oracle | Grade census lane-silence behavior against synthetic scenario expectations. |
+| `tools/mori-source-drift.py` | probe | source drift (r36); source drift (r37) | Refetch source-registry URLs and classify each newest committed copy against served bytes. |
+| `tools/mori-sources-appendonly.py` | gate | SOURCES append-only (r36); SOURCES append-only timing (r38) | Check SOURCES immutable cells and permitted append-only supersession timing. |
+| `tools/mori-ua-variance.py` | probe | UA-variance probe (r68/r69 tool) | Separate per-response tokens from stable serving chrome using same-UA A/A observations. |
+| `tools/mori-unlanded-check.py` | gate | unlanded check (r48) | List scoped round work present on disk but not committed. |
+| `tools/mori-uptime-win.py` | probe | uptime probe (r70 tool) | Read the Windows biased system tick count with honest unavailable states. |
+| `tools/mori-vote-bind.py` | gate | vote binder (r56 tool) | Extract and tally vote bindings from plain text and JSON string-scalar seat outputs. |
+| `tools/mori-wave-settlement.py` | gate | wave settlement (r20) | Scan dispatch waves for per-seat report-file presence, not result acceptance. |
+| `tools/mori-workstate-win.py` | probe | workstate probe (r71 tool) | Read biased and unbiased Windows working-state time counts side by side. |
+
+Registry rows are named as carried in `SKILL.md`; gate includes registered regression gates. The registry-less cgroup-pressure instrument is classed as a gate from its local threshold verdict and exit contract (`tools/mori-cgroup-pressure.py:17-21`), not silently registered here. Per-instrument header and registry evidence, the committed population and its revision are retained in `.ufo/waves/round-80/inventory-src.txt`.

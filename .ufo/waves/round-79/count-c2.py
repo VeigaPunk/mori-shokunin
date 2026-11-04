@@ -159,6 +159,22 @@ def selfcheck(scratch):
     low = dict(good)
     low["operability"] = "round 40 (improved, score held)"
     cases.append(("subsumed_by_higher_round_unmet", low, rounds, False))
+    admitted = dict(good)
+    admitted["coverage"] = "round 47 (improved, score held)"
+    admitted_rounds = [
+        (rn, adm, {a: v for a, v in verdicts.items() if a != "coverage"})
+        for rn, adm, verdicts in rounds
+    ] + [(60, False, {"coverage": "improved"}),
+         (47, True, {"coverage": "improved"})]
+    cases.append(("nonadmitted_below_ceiling_ignored_met",
+                  admitted, admitted_rounds, True))
+    later_verdict = dict(good)
+    later_verdict["depth"] = "round 78 (score held); round 40 (improved, score held)"
+    cases.append(("verdict_after_clause_boundary_unmet",
+                  later_verdict, rounds, False))
+    later_round = {a: cell.split(";")[0] for a, cell in good.items()}
+    later_round["operability"] = "round 40 (score held); round 78 (improved, score held)"
+    cases.append(("later_round_in_cell_ignored_unmet", later_round, rounds, False))
     ok = 0
     for label, cells, rnds, expect in cases:
         d = tempfile.mkdtemp(dir=scratch)

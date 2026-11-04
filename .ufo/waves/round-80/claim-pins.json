@@ -1,0 +1,9 @@
+{
+  "schema": "mori-claim-pins-v1",
+  "tallies": {
+    "tools/mori-control-receipt.py": 19
+  },
+  "stale_literals": [
+    "selftest 18 in-memory cases"
+  ]
+}

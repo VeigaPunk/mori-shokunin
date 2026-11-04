@@ -84,14 +84,16 @@ def grade(repo, rev, scratch):
                   p.stdout)
     if not m:
         return 2, f"C1_SETUP sweep produced no summary rc={p.returncode}"
-    mismatches = int(m.group(1))
+    mismatches, unresolved, tallies, stale = (int(m.group(i)) for i in (1, 2, 3, 4))
     card = open(os.path.join(tree, "SCORECARD.md"), encoding="utf-8").read()
     stated = row_tally(card)
     live, why = live_tally(tree)
     if live is None:
         return 2, f"C1_SETUP control-receipt selftest {why}"
-    met = p.returncode == 0 and mismatches == 0 and stated == live
+    met = (p.returncode == 0 and mismatches == 0 and unresolved == 0
+           and tallies == 0 and stale == 0 and stated == live)
     tail = (f"tool=present sweep={p.returncode} mismatches={mismatches} "
+            f"unresolved={unresolved} tallies={tallies} stale={stale} "
             f"row_tally={stated} live_tally={live}")
     return (0 if met else 1), f"C1={'met' if met else 'unmet'} {tail}"
 
@@ -102,16 +104,22 @@ def selfcheck(scratch):
     for label, sweep, stated, live, expect_met in (
             ("conformant", 0, 19, 19, True),
             ("stale_row", 0, 18, 19, False),
-            ("sweep_mismatch", 1, 19, 19, False)):
+            ("sweep_mismatch", 1, 19, 19, False),
+            ("inconsistent_summary", "0s", 19, 19, False)):
         d = tempfile.mkdtemp(dir=scratch)
         repo = os.path.join(d, "r")
         os.makedirs(repo)
         os.makedirs(os.path.join(repo, "tools"))
         os.makedirs(os.path.join(repo, ".ufo/waves/round-80"))
-        open(os.path.join(repo, "tools/mori-claim-sweep.py"), "w").write(
-            "import sys\n"
-            f"print('CLAIM_SWEEP mismatches={0 if sweep == 0 else 1} unresolved=0 tallies=0 stale=0')\n"
-            f"sys.exit({sweep})\n")
+        if sweep == "0s":
+            body = ("import sys\nprint('CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 "
+                    "stale=1')\nsys.exit(0)\n")
+        else:
+            body = ("import sys\n"
+                    f"print('CLAIM_SWEEP mismatches={0 if sweep == 0 else 1} "
+                    "unresolved=0 tallies=0 stale=0')\n"
+                    f"sys.exit({sweep})\n")
+        open(os.path.join(repo, "tools/mori-claim-sweep.py"), "w").write(body)
         open(os.path.join(repo, CAPTOOL), "w").write(
             "print('CONTROL_RECEIPT_SELFTEST pass=%d fail=0')\n" % live)
         open(os.path.join(repo, ".ufo/waves/round-80/claim-pins.json"), "w").write("{}")

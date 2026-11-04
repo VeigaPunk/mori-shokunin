@@ -863,3 +863,9 @@ three rejected-closure entries (r59/r60/r61) rather than silently adopting them.
 | Ground | Entry | Bounded advance |
 |---|---|---|
 | The Vary-selected representation (r79, S594) | `knowledge/ua-serving-normative-r79.md` (S594) | RFC 9111 §4.1 makes request-header matching part of cache selection when a stored response names those fields in Vary — so a per-User-Agent byte difference at one URL is compatible with legitimate representation selection and is not content drift by itself; the entry grounds the lane's empirical ua-serving class (S591/S592/S593, r77/r78) in the normative mechanism while keeping the standing adjudication prerequisite (QUALITY 159) and naming what the section does not prove (no vendor negotiation, no Vary capture, no cause of a historical delta). |
+
+## Round-80 knowledge addition — mutation adequacy (new growth, indexed the round it lands)
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Mutation analysis as a test-adequacy criterion (r80, S595) | `knowledge/mutation-adequacy-r80.md` (S595; `corpus/knowledge/mutation-adequacy-r80.md`) | The paper's abstract defines adequacy through detection of systematically seeded artificial faults, grounding C2's frozen mutant-killing criterion; the source does not establish that a green selftest or killing six selected mutants proves general adequacy. |

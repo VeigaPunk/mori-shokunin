@@ -1,0 +1,177 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r80-w1",
+  "createdAt": "2026-11-04T06:07:41.809Z",
+  "updatedAt": "2026-11-04T06:07:41.809Z",
+  "reportDir": ".ufo/waves/round-80/w1",
+  "members": {
+    "Mo80E01SweepTool": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage"
+      ],
+      "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+    },
+    "Mo80E02Correct": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage"
+      ],
+      "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+    },
+    "Mo80E03Arms": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage"
+      ],
+      "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+    },
+    "Mo80E04Inventory": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage"
+      ],
+      "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+    },
+    "Mo80Sc01Recon": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage"
+      ],
+      "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+    },
+    "Mo80Sc02Source": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage"
+      ],
+      "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+    },
+    "Mo80S01Row": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage"
+      ],
+      "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+    },
+    "Mo80S02Entry": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage"
+      ],
+      "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+    },
+    "Mo80S03Lesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage"
+      ],
+      "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+    },
+    "Mo80Cn01Siblings": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage"
+      ],
+      "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+    },
+    "Mo80R01Counter": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage"
+      ],
+      "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+    },
+    "Mo80C01Contract": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage"
+      ],
+      "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+    },
+    "Mo80M01Mutant": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage"
+      ],
+      "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+    },
+    "Mo80R02Probe": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage"
+      ],
+      "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+    }
+  }
+}

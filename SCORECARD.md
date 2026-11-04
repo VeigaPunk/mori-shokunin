@@ -4013,4 +4013,38 @@ its correction paragraph after the r50 one, and no score moved.
 
 | Capability | What it can now do | Evidence pointer | First-working round |
 |---|---|---|---|
-| Control-receipt binding guard (`tools/mori-control-receipt.py`) | reads one receipt or a `--dir` of `*.txt` receipts, splits each at `## ` section headings, and reports whether every section that carries a bare `key=<integer>` claim also carries a counting command line (a `$ command` line, a command-verb line, or a line with ` cmd=`): per-file `CONTROL_RECEIPT <path> sections=S claims=C bound=B unbound=U`, one `unbound <path>#<section> claims=N keys=...` per violating section, and a `CONTROL_RECEIPT_SUMMARY` total; rc 0 conformant, 1 any unbound section, 2 setup; selftest 18 in-memory cases; stdout only — no file writes, no child processes, no network, no `/tmp` path of its own. Detects the D78-1 class on the r78 receipts (`unbound=11`, `controls-r78.txt#4.` named with the key) and reads clean on the r79 receipts (`unbound=0`) | `tools/mori-control-receipt.py` at the r79 landing; `.ufo/waves/round-79/evidence/after-r79.txt` (selftest 18/18, both live dirs); registry row 13 in `SKILL.md`; rule `corpus/QUALITY.md` 164 | 79 |
+| Control-receipt binding guard (`tools/mori-control-receipt.py`) | reads one receipt or a `--dir` of `*.txt` receipts, splits each at `## ` section headings, and reports whether every section that carries a bare `key=<integer>` claim also carries a counting command line (a `$ command` line, a command-verb line, or a line with ` cmd=`): per-file `CONTROL_RECEIPT <path> sections=S claims=C bound=B unbound=U`, one `unbound <path>#<section> claims=N keys=...` per violating section, and a `CONTROL_RECEIPT_SUMMARY` total; rc 0 conformant, 1 any unbound section, 2 setup; selftest 19 in-memory cases; stdout only — no file writes, no child processes, no network, no `/tmp` path of its own. Detects the D78-1 class on the r78 receipts (`unbound=11`, `controls-r78.txt#4.` named with the key) and reads clean on the r79 receipts (`unbound=0`) | `tools/mori-control-receipt.py` at the r79 landing; `.ufo/waves/round-79/evidence/after-r79.txt` (selftest 18/18 at the r79 wave freeze; the landed blob runs 19/19 — the r80 D79-1 correction, `corpus/lessons/round-80.md`), both live dirs; registry row 13 in `SKILL.md`; rule `corpus/QUALITY.md` 164 | 79 |
+
+## Round-80 correction (D79-1, calibration)
+
+The r79 spot-check `corpus/lessons/round-79-verifier-spotcheck.md` routed D79-1:
+the entering `d5888922` capabilities row at line 4016 stated an 18-case in-memory
+selftest, while the landed control-receipt guard carries 19 arms. Re-running
+`python3 -I tools/mori-control-receipt.py --selftest` produced
+`CONTROL_RECEIPT_SELFTEST pass=19 fail=0`, rc 0. Only that row's in-memory tally
+is corrected in place; every other byte of the row is retained. Its evidence-cell
+18/18 annotation is superseded here by 19/19: the r79 spot-check confirms that
+the cited receipt already records `selftest=19/0`. SKILL registry row 13 already
+states the landed 19/0 count; its 18-arm freeze reference is historical, not a
+current tally. No r79 artifact or axis score is changed: coverage 6, operability
+7, depth 5, freshness 5, calibration 5, adjacency 6.
+
+### Capabilities (round 80)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Self-assessment claim sweep (`tools/mori-claim-sweep.py`) | read-only gate over Axes and capabilities rows in SCORECARD and checklist rows in SHONEN, checking lane-pointer existence, pinned live selftest tallies and stale literals; prints per-mismatch findings and `CLAIM_SWEEP mismatches=M unresolved=U tallies=T stale=S carriers=C pointers=P`; rc 0 clean, 1 mismatches, 2 setup; selftest 30 in-memory cases; stdout only, spawning only pinned read-only selftests | `python3 -I tools/mori-claim-sweep.py --selftest` -> `CLAIM_SWEEP_SELFTEST pass=30 fail=0`, rc 0; `python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-80/claim-pins.json` -> `CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4 pointers=232`, rc 0 (both L1 retained receipts over worktree bytes, 2026-11-04; integration re-run pending); registry row 14 in `SKILL.md` | 80 |
+
+## Round 80
+
+Entering revision `d58889220d3c6a18d461f2d31b5ab162ffef1e4e`; frozen contract
+`.ufo/waves/round-80/contract.md`, do-nothing receipts
+`.ufo/waves/round-80/evidence/controls-r80.txt`. Axes: calibration, operability,
+coverage. These are declarations, not after-results: all three after cells are
+PENDING for the L1's post-integration measurements. No score moves.
+
+| Claim | Axis | Counting commands | At entering | After (measured this round) |
+|---|---|---|---|---|
+| C1 self-assessment sweep lands and the D79-1 current row tally is corrected | calibration | `python3 -I .ufo/waves/round-80/count-c1.py <rev>` | `C1=unmet tool=absent`, rc 1 at `d5888922`; the row's 18-case count disagrees with live 19/0 | PENDING |
+| C2 round-79 counter selftests kill all six frozen mutants, sourced S595 | operability | `python3 -I .ufo/waves/round-80/mutate-c2.py --rev <rev>` | `MUTATION_C2 survivors=2 killed=4 total=6`, rc 1 at `d5888922`; the frozen harness, not the historical survivor description, defines the denominator | PENDING |
+| C3 PROVINCE names every committed Python and shell instrument with class, registry row and purpose | coverage | `python3 -I .ufo/waves/round-80/count-c3.py <rev>` | `C3=unmet named=14 present=55 missing=41 extra=0`, rc 1 at `d5888922` | PENDING |

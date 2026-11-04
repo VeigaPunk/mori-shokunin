@@ -1,0 +1,281 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r80-w1",
+  "policy": {
+    "source": "config",
+    "maxLanes": 14,
+    "minLanes": 8,
+    "waveMinLanes": 8,
+    "waveMaxLanes": 16,
+    "declaredMaxLanes": 14,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 14,
+    "resume": 0,
+    "total": 14
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-80/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-80/w1",
+    "members": {
+      "Mo80E01SweepTool": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage"
+        ],
+        "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+      },
+      "Mo80E02Correct": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage"
+        ],
+        "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+      },
+      "Mo80E03Arms": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage"
+        ],
+        "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+      },
+      "Mo80E04Inventory": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage"
+        ],
+        "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+      },
+      "Mo80Sc01Recon": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage"
+        ],
+        "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+      },
+      "Mo80Sc02Source": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage"
+        ],
+        "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+      },
+      "Mo80S01Row": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage"
+        ],
+        "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+      },
+      "Mo80S02Entry": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage"
+        ],
+        "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+      },
+      "Mo80S03Lesson": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage"
+        ],
+        "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+      },
+      "Mo80Cn01Siblings": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage"
+        ],
+        "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+      },
+      "Mo80R01Counter": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage"
+        ],
+        "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+      },
+      "Mo80C01Contract": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage"
+        ],
+        "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+      },
+      "Mo80M01Mutant": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage"
+        ],
+        "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+      },
+      "Mo80R02Probe": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage"
+        ],
+        "milestone": "round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory"
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Goal\nmori round 80 (attempt 1), wave w1 — build + first falsifiers for three frozen claims. The\nlane is a fleet/host observability lane (detection and report only).\n\nRead first (absolute):\n- /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/contract.md  — THE FROZEN CONTRACT: claims, predicates P-C1/P-C2/P-C3, targets,\n  deliverable list, sweep-tool specification, bounds. It wins over this context.\n- /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/evidence/controls-r80.txt — the do-nothing controls (every claimed after-state is\n  absent at entering `d5888922`).\n- /home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md (the `## Axes` table; the capabilities tables; the r79 section at EOF)\n- /home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md (the gate registry near line 1360; the vocabulary of instrument rows)\n- /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/QUALITY.md (the criteria; esp. 90, 154, 159, 161-164)\n- /home/vgpnk/Projects/shokunin/mori-shokunin/PROVINCE.md (the province; the r30-named gap: many tools are not named there)\n\nThe three claims in one line each:\n- C1 calibration — land `tools/mori-claim-sweep.py` (frozen interface in the contract § \"Sweep\n  tool specification\") and correct the stale `18`-arm tally, so the self-assessment sweep reads\n  `CLAIM_SWEEP mismatches=0`.\n- C2 operability, sourced by S595 — `.ufo/waves/round-79/count-c2.py` gains one selftest arm per\n  surviving mutant; the frozen six-mutant harness must read `MUTATION_C2 survivors=0`.\n- C3 coverage — `PROVINCE.md` names every committed `tools/*.py|*.sh` instrument (14 of 55\n  named at entering; target 55 of 55) with class, registry row and a one-line purpose.\n\n# Bounds (all seats)\n- Your tools start at the FLEET root, not the lane: every path you read, write or run is\n  ABSOLUTE and under /home/vgpnk/Projects/shokunin/mori-shokunin unless this prompt names the fleet repo or a scratch copy.\n  Every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin — write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>.\n- You never commit, push, tag, stash, checkout, reset, switch, or run any mutating git/jj\n  command in the lane or the fleet repo. Read-only git (`git -C /home/vgpnk/Projects/shokunin/mori-shokunin show/log/cat-file/\n  rev-parse/ls-files/ls-tree`) is fine. The L1 integrates and commits; seats return files.\n- Never edit `MANIFEST.json`, the fleet root, `.ufo/state/`, `.ufo/watchdog.log`, `.scratch/`,\n  the frozen round-80 counters (`count-c1.py`, `count-c3.py`, `mutate-c2.py`), `contract.md`,\n  or any sibling lane repo.\n- FILE OWNERSHIP: edit only the files your item names. If your work needs another file, write\n  your version under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/ and name it in your report. Two seats never edit one file.\n- Scratch discipline: every clone/temp/counter work dir lives under `/fast/scratch/hyaku/mori-r80/<your-name>/`\n  (mkdir -p, pass it explicitly, `export TMPDIR` to it); delete it before you yield\n  (`trap 'rm -rf -- \"$S\"' EXIT`); /tmp only for files under 50 MB. A tree left on disk is a\n  defect you must report.\n- Git fixtures: `D=$(mktemp -d -p /fast/scratch/hyaku/mori-r80/<your-name>) && git -C \"$D\" init -q`, every later\n  call names `-C \"$D\"`, and `git -C \"$D\" rev-parse --show-toplevel` must equal `$D` before the\n  first commit.\n- Leaf seat: no subagent dispatch of your own (an executor may spawn exactly one read-only\n  labrat probe for one falsifiable hypothesis; every other role is a leaf).\n- Tooling authorization (operator 2026-10-19): you may install or upgrade tools that help the\n  task — read /home/vgpnk/.omp/agent/RULES.md first (official channels, update-safety gate;\n  record tool/version/channel/reason in your report). pacman is PAUSED host-wide: install via\n  `uv tool`/`npx`/an official binary in `~/.local/bin`, never `pacman -S`, `-Sy`, `-Syu`,\n  `-U`, `-R` or a partial upgrade; file the need in your report instead.\n- Never message `agent://all`. Detection and report only: no remediation, no OS/unit state\n  changes, no session/credential material.\n- English, evidence-dense: every claim you make carries a command you ran and its output, at\n  the bytes it ran over. A check you did not run is not a check that passed.\n\n# Deliverable form\nWrite your findings to your `Report:` path with: what you did (numbered), the commands and\noutputs, what you found (including negative results and anything you could not verify), and\nyour own defects (what you got wrong and how you caught it). Keep committed artifacts small\nand text-only.\n",
+    "tasks": [
+      {
+        "name": "Mo80E01SweepTool",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nBuild `/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-claim-sweep.py` — the self-assessment claim sweep (C1) — exactly to\nthe frozen interface in `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/contract.md` § \"Sweep tool specification\". Read that section\nfirst; it is the spec. Python 3 standard library only, `python -I` safe, one file.\n\nSummary of the frozen interface:\n- `--root DIR` (required for a run), `--pins FILE`, `--carriers A[,B]`, `--selftest`, `--help`.\n- Graded rows: `SCORECARD.md`'s `## Axes` table, every capabilities-table data row of\n  `SCORECARD.md`, every `- [` checklist line of `SHONEN.md`.\n- arm `unresolved`: backticked `corpus/…|tools/…|.ufo/…` tokens in graded rows must exist\n  under `--root` (strip a `:N`/`:N-M` line suffix and an `@<sha>` rev suffix; ignore tokens\n  inside fenced code blocks).\n- arm `tally`: each `tallies` entry `{tool_path: int}` in the pins file must equal the tool's\n  live `--selftest` count, parsed by the frozen grammar (`pass=N … fail=0`, `PASS (N cases)`,\n  `PASS N/N`, `pass=N`); a failing or unparseable selftest is a setup error (rc 2), never a pass.\n- arm `stale`: each literal in the pins file's `stale_literals` must occur 0 times in the\n  carriers (default `SCORECARD.md,SKILL.md,SHONEN.md,LOG.md`).\n- output: `CLAIM_SWEEP_MISMATCH <class> <carrier>:<line> <detail>` lines then\n  `CLAIM_SWEEP mismatches=M unresolved=U tallies=T stale=S carriers=C pointers=P`; rc 0 iff\n  M=0, 1 if M>0, 2 setup. Read-only: no writes, no socket, no `/tmp` path of its own.\n\nAlso write `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/claim-pins.json` (schema `mori-claim-pins-v1`) pinning\n`tools/mori-control-receipt.py` to the live count you measure (`--selftest` prints 19 now) and\nthe stale literal `selftest 18 in-memory cases`; do NOT pin your own tool.\n\nAcceptance (run all and paste outputs):\n1. `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-claim-sweep.py --selftest` -> `CLAIM_SWEEP_SELFTEST pass=P\n   fail=0` with P >= 12, rc 0. Arms must include at least: a stale literal present/absent, a\n   tally equal/mismatched, a dead pointer, a live pointer with `:12-14` and one with `@abcdef1`,\n   a token inside a fenced block that must NOT count, a token naming a sibling lane path that\n   must NOT count as a lane pointer, an unreadable carrier (rc 2), a missing pins file (rc 2),\n   and a clean fixture tree (rc 0).\n2. `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-claim-sweep.py --root /home/vgpnk/Projects/shokunin/mori-shokunin --pins /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/claim-pins.json` ->\n   rc 1 at today's bytes, and the output's first mismatch line must be the SCORECARD\n   control-receipt row's stale literal. Paste both.\n3. `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-claim-sweep.py --root /home/vgpnk/Projects/shokunin/mori-shokunin --pins /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/claim-pins.json\n   --carriers SCORECARD.md` after you temporarily copy SCORECARD.md to your scratch and\n   fix the literal there (never on the lane file) -> `mismatches=0` rc 0: prove the sweep can\n   reach zero on corrected bytes.\n\nReport at the trailer path: the selftest tally, the two run receipts, the interface you built,\nand any place the frozen spec was ambiguous and how you resolved it.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration, operability, coverage\nMilestone: round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory\n\nReport: write your scoped findings to .ufo/waves/round-80/w1/Mo80E01SweepTool.md"
+      },
+      {
+        "name": "Mo80E02Correct",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nThe r79 closure's routed defect D79-1: `/home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md`'s capabilities row for the\ncontrol-receipt guard states `selftest 18 in-memory cases` while the committed\n`tools/mori-control-receipt.py --selftest` prints `pass=19 fail=0`. Discharge it and register\nthe round's new sweep instrument.\n\nYou own exactly two files: `/home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md` and `/home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md`.\n\n1. `SCORECARD.md`: correct that row's tally to `19` in place, keeping every other byte of the\n   row. Append, at end of file, a `## Round-80 correction (D79-1, calibration)` paragraph that\n   names the r79 spot-check (`corpus/lessons/round-79-verifier-spotcheck.md`, routed defect\n   D79-1), the entering bytes, the live count, and the fact that no score moved. Then append a\n   capabilities-table row for `tools/mori-claim-sweep.py` (first-working round 80, evidence =\n   its selftest tally + the sweep run), and a short `## Round 80` section carrying the round's\n   three claim rows in the same shape as the round-79 section (leave the \"after\" cells to be\n   filled by the L1: write `PENDING` there and say so).\n2. `SKILL.md`: append gate-registry row 14 for `tools/mori-claim-sweep.py` at the registry home\n   (after row 13, the control-receipt guard, near line 1365). The row must carry all eight\n   registry fields: name, kind (`gate`), entry command, verdict map (rc 0/1/2), self-test cell\n   with the landed tally, pinned values, write scope (stdout only), owner (`mori`). Mirror the\n   shape of row 13 exactly. Do not touch any other row.\n\nRules:\n- Do not edit the r79 artefacts; do not rewrite history; the correction rides as a named\n  addition plus the one in-place cell. Keep every line you add free of literal `|` inside cells.\n- Run `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-control-receipt.py --selftest` yourself and cite its line.\n- After your edits run `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/count-c1.py d5888922` — it must\n  still read `C1=unmet` (the tool does not exist at that rev; your SCORECARD edit cannot make\n  the entering claim pass) and state why in your report.\n- Report every other occurrence you find of a superseded control-receipt tally across\n  `SCORECARD.md`, `SKILL.md`, `SHONEN.md`, `LOG.md` with `file:line` (`grep -n` receipts).\n\nReport at the trailer path: the diffs, the greps, the live selftest line, and your judgement of\nwhether the D79-1 class appears anywhere else in the two files.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration, operability, coverage\nMilestone: round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory\n\nReport: write your scoped findings to .ufo/waves/round-80/w1/Mo80E02Correct.md"
+      },
+      {
+        "name": "Mo80E03Arms",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nC2 (operability): `.ufo/waves/round-79/count-c2.py`'s selftest must kill the mutants its own\nfrozen harness finds. The harness is `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/mutate-c2.py` (frozen; read it first). At the\nentering bytes it reports `MUTATION_C2 survivors=2 killed=4 total=6` with `drop_admitted` and\n`cut_clause_boundary` surviving.\n\nYou own exactly one file: `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-79/count-c2.py`.\n\n1. Add THREE selftest arms to `selfcheck()` — one per class the r79 mutation seat named, which\n   also kills the two survivors above:\n   a. a non-admitted round BELOW the ceiling must not win: fixture rounds\n      `[(60, False, {\"coverage\": \"improved\"}), (47, True, {\"coverage\": \"improved\"})]` with\n      the coverage cell `round 47 (improved, score held)`, expect met=True;\n   b. a verdict word AFTER the first `;` must not count: depth cell\n      `round 78 (score held); round 40 (improved, score held)`, expect met=False;\n   c. a later `round N` in the cell must not win: operability cell\n      `round 40 (score held); round 78 (improved, score held)`, expect met=False.\n   Keep the existing four arms and their labels byte-identical.\n2. Change ONLY the selftest region: `def selfcheck(` to `def main(`. The predicate, the\n   `grade()`/`expectations()` logic, the CLI, the output grammar and the module docstring stay\n   byte-identical. Prove it: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff -U0 -- .ufo/waves/round-79/count-c2.py` must\n   show hunks only inside that region (paste the diff).\n3. Acceptance: `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-79/count-c2.py --selftest` -> \n   `C2_COUNTER_SELFTEST pass=7 fail=0` rc 0, and\n   `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/mutate-c2.py --rev <your-worktree-state>` is not possible before the L1\n   commits — instead run the harness against a temp commit: clone the lane into\n   `/fast/scratch/hyaku/mori-r80/Mo80E03Arms/clone` (`git clone --shared /home/vgpnk/Projects/shokunin/mori-shokunin <dir>`), make a fixture commit\n   there with your edit under lane identity is NOT allowed — use `git -C <dir> -c\n   user.name=t -c user.email=t@t commit` ONLY inside that scratch clone, then run\n   `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/mutate-c2.py --rev <that commit> --repo <dir>` and paste\n   `MUTATION_C2 survivors=0 killed=6 total=6`. Delete the clone before you yield.\n\nReport at the trailer path: the diff, the before/after harness lines, the selftest tally, and a\nnote on whether any of your three arms is vacuous (would pass on the mutant too).\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration, operability, coverage\nMilestone: round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory\n\nReport: write your scoped findings to .ufo/waves/round-80/w1/Mo80E03Arms.md"
+      },
+      {
+        "name": "Mo80E04Inventory",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nC3 (coverage): `/home/vgpnk/Projects/shokunin/mori-shokunin/PROVINCE.md` names 14 of the 55 committed `tools/*.py|*.sh`\ninstruments. Close the gap the lane has carried since round 30 (ScoutProvinceStale items 4-5)\nwith an APPEND-ONLY section.\n\nYou own exactly two files: `/home/vgpnk/Projects/shokunin/mori-shokunin/PROVINCE.md` and `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/inventory-src.txt`.\n\n1. Build the population yourself: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin ls-tree -r --name-only HEAD -- tools/` and\n   keep only `tools/<name>.py|*.sh` (fixtures and directories excluded). Expect 55.\n2. For EVERY such file, establish: its class (`gate` / `probe` / `counter` / `regression` /\n   fixture-helper), its SKILL gate-registry row (number or name, `—` if none), and a one-line\n   purpose. Ground each line in the file itself (docstring/`--help`) or its SKILL registry row\n   — never invent. Rows with no registry row: say what class the code shows and name the\n   evidence (`grep -n` of the docstring line).\n3. Append `## Instrument inventory (round 80)` at the end of `PROVINCE.md` (append-only: not one\n   byte above it changes) with a table `| tool | class | registry row | purpose |` holding one\n   row per instrument, preceded by two sentences stating what the table is (an inventory of\n   the lane's own read-only instruments) and what it is not (not a scope expansion, not a\n   claim that every instrument is a census surface).\n4. Write `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/inventory-src.txt`: the raw population, the classification evidence per row, and\n   the count.\n5. Acceptance: `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/count-c3.py d5888922` must still read `C3=unmet` (entering rev),\n   and after your edit run `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/count-c3.py $(git -C /home/vgpnk/Projects/shokunin/mori-shokunin rev-parse HEAD)` is not\n   yet possible — instead copy your edited PROVINCE.md into a scratch clone, commit it there\n   under `t <t@t>`, and run `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/count-c3.py <that commit> --repo <clone>` -> paste\n   `C3=met named=55 present=55 missing=0`. Delete the clone.\n\nReport at the trailer path: the row count, the classification method, the met/absent evidence\nfor registry-less instruments, and the scratch-clone `C3=met` line.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration, operability, coverage\nMilestone: round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory\n\nReport: write your scoped findings to .ufo/waves/round-80/w1/Mo80E04Inventory.md"
+      },
+      {
+        "name": "Mo80Sc01Recon",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nRead-only reconnaissance for the round's three claims — the data-walk the L1's planner seat\nwould otherwise do. Gather, with commands and outputs:\n\n1. **C1 population.** For `/home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md` (capabilities tables + `## Axes`) and\n   `/home/vgpnk/Projects/shokunin/mori-shokunin/SHONEN.md`: enumerate every backticked `corpus/…|tools/…|.ufo/…` pointer and every\n   stated selftest tally. Report how many pointers there are, how many resolve TODAY, and every\n   pointer that does not (file:line + token). Report every place a superseded control-receipt\n   arm count (`18`) still appears across `SCORECARD.md SKILL.md SHONEN.md LOG.md README.md`.\n2. **C1 risk.** Does `SCORECARD.md`'s adjacency `## Axes` cell cite anything that does not\n   resolve? The r79 spot-check (D79-3) claimed it cited a non-existent\n   `corpus/lessons/round-19-verifier-spotcheck.md`; check both the cell and whether\n   `MANIFEST.json@63729047` resolves in the fleet repo (`git -C /home/vgpnk/Projects/shokunin\n   cat-file -e 63729047:MANIFEST.json`) and `rounds[398]` is mori round 19. State the verdict.\n3. **C2 population.** List every selftest arm label currently inside\n   `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-79/count-c2.py` `selfcheck()`, and state which of the three r79\n   reported survivors are already killed at the entering bytes (the harness is\n   `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/mutate-c2.py`; run `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/mutate-c2.py --rev d5888922`).\n4. **C3 population.** The `tools/*` population at `d5888922` (count + list), the tools\n   `PROVINCE.md` already names, and the tools that are NOT instruments (fixture helpers,\n   round-only regressions) with the evidence for the exclusion.\n5. **Assimilation check.** Does `/home/vgpnk/Projects/shokuknow/merge/mori/` still hold the\n   staged package, and what does `.ufo/l0-questions.md` say about its id collision (grep the\n   mori lines)? Report the status, do not adopt anything.\n\nRead-only: write nothing outside your `Report:` path and your scratch dir.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage\nMilestone: round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory\n\nReport: write your scoped findings to .ufo/waves/round-80/w1/Mo80Sc01Recon.md"
+      },
+      {
+        "name": "Mo80Sc02Source",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nSource work for C2's grounding (S595): open, pin and quote-locate one source.\n\nCandidate: `https://arxiv.org/abs/2102.11378v2` (\"Practical Mutation Testing at Scale\"). Do the\nlane's gate in this order and paste every step:\n\n1. **Duplicate sweep BEFORE the fetch** (the r69 rule): `grep -n` `corpus/SOURCES.md` for the\n   exact URL, for `2102.11378`, and for `mutation test` (case-insensitive); name the nearest\n   held rows. Report hits.\n2. **Fetch** the abstract page twice (your fetch + one re-fetch) into\n   `/fast/scratch/hyaku/mori-r80/Mo80Sc02Source/`; `sha256sum` and `wc -lc` both copies; they must be identical\n   byte-for-byte. If arxiv.org is unreachable, say so with the curl code and stop — never\n   substitute another source silently.\n3. **Locate the quote.** Find the abstract's first sentence and give its `grep -n` line number\n   in the pinned copy plus the exact contiguous span. The quote must be <= 25 words; count them\n   (`wc -w`). Propose the shortest span that still supports \"mutation analysis assesses a test\n   suite's adequacy by measuring its ability to detect small artificial faults\".\n4. **Verify with the lane's own checker** if it applies: try\n   `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-anchor-check.py --pin <copy> --check '<spec>'` and report the\n   verdict or the reason it does not apply to an HTML page.\n5. Copy the pinned bytes to `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r80/arXiv-2102.11378v2-abs.html`\n   and write `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r80/README.md` (one short paragraph: what the pin\n   is, the sha256, the byte/line count, the fetch date, and that it is public-document bytes).\n6. State what the abstract does NOT support (no claim about equivalent mutants, no claim about\n   any Python tool, no claim that a green selftest is adequate) — the entry's Limits will quote\n   this list.\n\nReport at the trailer path: the sweep, both shas, the line number, the word count, the checker\nverdict, and the not-supported list.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage\nMilestone: round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory\n\nReport: write your scoped findings to .ufo/waves/round-80/w1/Mo80Sc02Source.md"
+      },
+      {
+        "name": "Mo80S01Row",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nWrite the SOURCES row for S595 and its index row (C2's sourced claim).\n\nYou own exactly two files: `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md` and `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/README.md`.\n\n1. Append row `S595` at the end of the SOURCES registry, 11 cells, exact current schema (see\n   the header row and `S594` at `corpus/SOURCES.md:375` for shape). Content:\n   - source: `Practical Mutation Testing at Scale — arXiv:2102.11378v2 —\n     https://arxiv.org/abs/2102.11378v2`\n   - kind `paper`; tier `A` with scope narrowed to what the abstract states\n     (`mutation analysis's own definition as a test-adequacy criterion`); scope cell says so.\n   - anchor: the pinned copy `corpus/evidence/sources-r80/arXiv-2102.11378v2-abs.html` with the\n     `grep -n` line of the abstract sentence, the sha256, and the byte/line count (take them\n     from `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/../round-80/w1/Mo80Sc02Source.md` if it exists, else re-measure yourself —\n     never copy a hash you did not see printed).\n   - teaches: one grounded benefit, <= 25 words of paraphrase, no quote marks needed here.\n   - status `mined`; opened `2026-11-04`; recheck `365d`; used-by\n     `corpus/knowledge/mutation-adequacy-r80.md`.\n   No cell may contain a literal `|`. Verify with the census:\n   `awk -F'|' '/^\\|[[:space:]]*S[0-9][0-9][0-9]+[[:space:]]*\\|/ && NF!=13 {n++} END{print n+0}'\n   corpus/SOURCES.md` -> `0`, and\n   `/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root\n   /home/vgpnk/Projects/shokunin mori` -> rc 0 (35 tolerated W04 warnings).\n2. Append one index row to `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/README.md` naming\n   `corpus/knowledge/mutation-adequacy-r80.md` in the same shape as the r79 row (`:865`).\n3. If `S595` is already taken, take the next unused id and say which in your report.\n\nReport at the trailer path: the row bytes, the two census commands with their output, and the\nexact id you used.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage\nMilestone: round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory\n\nReport: write your scoped findings to .ufo/waves/round-80/w1/Mo80S01Row.md"
+      },
+      {
+        "name": "Mo80S02Entry",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nWrite the knowledge entry that grounds C2, plus the two QUALITY rules this round lands.\n\nYou own exactly two files: `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/mutation-adequacy-r80.md` and\n`/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/QUALITY.md`.\n\n1. Entry `mutation-adequacy-r80.md`, opening with the provenance trio (`source:`, `verified-at:`,\n   `recheck:`) per CORPUS.md: `source:` cites S595, the arXiv URL and the pinned copy's sha;\n   `verified-at: 2026-11-04`; `recheck: 365d`. Then:\n   - K1 what mutation analysis measures (the abstract's own words, paraphrased, with the\n     located line from the pin);\n   - K2 the consequence for a selftest: an arm that no mutant can turn red is not evidence the\n     arm exists — one mutant per surviving mutation is the repair, and the grade is the\n     selftest's own verdict;\n   - K3 the direction of the inference (a killed mutant proves an arm discriminates; a survivor\n     proves only that no current arm discriminated that edit) and the cost side (every mutant\n     costs one selftest run, so the set is bounded and named);\n   - K4 the lane's own instance: the r79 counter's 4 arms, the 6-mutant harness at `d5888922`\n     reading `survivors=2`, and what a green selftest that prints `pass=0 fail=0` under a\n     missing `TMPDIR` means (a setup failure, not a pass — the lane observed this in\n     `tools/mori-disk-rate.py` and `tools/mori-round41-calibration.py` on 2026-11-04).\n   - `## Limits`: the abstract does not discuss equivalent mutants, does not name any Python\n     tool, and does not support a completeness claim; a surviving mutant is a lead for a human\n     judgement, never proof that a test is missing. `## Boundaries`: this is the lane's own\n     gate-quality craft, not a claim about another lane's tests.\n2. `QUALITY.md`: append exactly two criteria at end of file, numbered in the file's own\n   sequence (read the last number first):\n   - the survivor-as-lead rule (a selftest arm added for a named surviving mutant must fail\n     on that mutant and pass on the real bytes — cite the r80 harness);\n   - the D79-4 limit record: the control-receipt guard enforces section-level textual\n     co-presence, not command relevance — a `$ <any text>` line binds a section and\n     decimal/exponent-only values are outside the declared integer grammar (record it beside\n     the QUALITY 164 rule that introduced the guard).\n   Faithfully cite `corpus/lessons/round-79-verifier-spotcheck.md` for D79-4. Do not renumber or\n   rewrite existing criteria.\n\nReport at the trailer path: the entry's full text path, the two QUALITY numbers you used, and\nthe grep proving they are appended (not inserted).\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage\nMilestone: round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory\n\nReport: write your scoped findings to .ufo/waves/round-80/w1/Mo80S02Entry.md"
+      },
+      {
+        "name": "Mo80S03Lesson",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nDraft `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-80.md` — the round's mined mistake, its Gate scaffold and\nthe census record. The L1 fills the final numbers; you write everything that does not depend on\nthe landed revision.\n\nYou own exactly one file: `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-80.md`.\n\nSections, in this order:\n1. Front matter: `# Round 80 — mori (L1 MoriR80): three claims …`, author, round, date,\n   entering revision `d58889220d3c6a18d461f2d31b5ab162ffef1e4e`, and what the round ruled out.\n2. `## Gate` — one section per NEW source row (S595): the URL, the access date 2026-11-04, the\n   <=25-word located quote with its line number and word count, the pinned copy path + sha256,\n   the pre-fetch duplicate sweep result, and the verdict (admitted, scope narrowed). If the\n   source seat's report (`/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/w1/Mo80Sc02Source.md`) exists, use its shas; otherwise state\n   `PIN PENDING — filled by the L1` rather than inventing a hash.\n3. `## Mistakes` — mine ONE mistake with class · evidence pointer · captured-by · fix. The\n   mistake to mine is the r79 spot-check's D79-1 class (a corrected fact left standing in a\n   sibling file: `SKILL.md` said 19, `SCORECARD.md` said 18 after the tool grew an arm), which\n   is a spot-check disagreement, not a new invention. Give it the round's own fix (the sweep\n   instrument + the corrected row) and show the fix can fail: state the command that is red on\n   the entering bytes and green after, and paste the entering line\n   (`grep -c 'selftest 18 in-memory cases' SCORECARD.md` -> 1). Add a SECOND mistake only if\n   you can name one from this round's own evidence with the same four fields.\n4. `## Census` — paste the round-start census command and its exit code, obtained by running\n   it yourself:\n   `/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root\n   /home/vgpnk/Projects/shokunin mori`\n   Record the row count before (`grep -cE '^ {0,3}\\|[[:space:]]*S[0-9]{3,}[[:space:]]*\\|'\n   corpus/SOURCES.md`) and note that the after-value is filled by the L1.\n5. `## Refusals` — the things this round declined and why: the `merge/mori/` package (r61 L0),\n   the boot-scoped events window and any SOURCES-wide label sweep (the mori|round-65 and\n   round-73 L0s), touching `tools/mori-control-receipt.py`'s selftest (a registered tally-pinned\n   instrument; the r79 closure made D79-5 conditional), and any axis score change (no closure\n   states a new number).\n\nReport at the trailer path and name every placeholder the L1 must fill.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage\nMilestone: round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory\n\nReport: write your scoped findings to .ufo/waves/round-80/w1/Mo80S03Lesson.md"
+      },
+      {
+        "name": "Mo80Cn01Siblings",
+        "agent": "connector",
+        "task": "/skill:godspeed\n\nSibling-overlap scan for the round's three claims: does another lane already hold the same\nground, and is any of this round's work a duplicate?\n\nRead-only. Check, with file:line evidence:\n1. **C1 (self-assessment claim sweep).** Search the fleet for an existing instrument that\n   resolves a lane's own declared claims against committed bytes: `grep -rn` for\n   `claim`, `self-assessment`, `resolve`, `pointer` under `/home/vgpnk/Projects/shokunin/*/tools/`\n   and `*/scripts/`. Name the nearest three and state `adjacent`/`duplicate` per claim. Check\n   kumitate (which owns orchestration/tooling) and the fleet `scripts/hyaku/` helpers.\n2. **C2 (mutation adequacy of a selftest).** Does any lane already run mutation testing or own\n   a mutant harness? Check `kumitate`, `tameshi`, `protocol`, and the fleet `scripts/`. Report\n   every hit and whether the r80 harness duplicates it.\n3. **C3 (province instrument inventory).** Does another lane keep a tools inventory in its\n   PROVINCE/SKILL that mori's shape should match? Quote the closest one's shape (2-3 lines) so\n   the scribe can align formats.\n4. **Boundary.** For each claim state whether it stays inside mori's province\n   (`/home/vgpnk/Projects/shokunin/mori-shokunin/PROVINCE.md:1-20`): detection/report only; no dispatch, OS state, endpoint health or\n   credential material.\n5. Name any sibling artifact that would be *harmed* by mori's edit (a lane whose files mori's\n   sweep might scan, or a shared `scripts/` file) — mori edits none of them.\n\nReport at the trailer path: the three claims' verdicts with evidence, and the closest-match\nshapes.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage\nMilestone: round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory\n\nReport: write your scoped findings to .ufo/waves/round-80/w1/Mo80Cn01Siblings.md"
+      },
+      {
+        "name": "Mo80R01Counter",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAttack C1 and C3 as an adversary: the counters and the instruments they will grade.\n\nRead `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/contract.md` (frozen predicates) and `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/evidence/controls-r80.txt` first.\n\n1. **Counter selftests.** Run `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/count-c1.py --selftest` and\n   `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/count-c3.py --selftest`. For each counter, name one fixture it does NOT\n   exercise that could flip its verdict, and prove it with a scratch fixture of your own (build\n   it under `/fast/scratch/hyaku/mori-r80/Mo80R01Counter/`, own git repo, `t -c user.name=t -c user.email=t@t`).\n   Candidates: `count-c1` — a sweep that exits 0 but prints `mismatches=0` with a stale row\n   (covered?), a row tally stated twice, a SCORECARD with no capabilities table, a sweep that\n   prints the summary twice; `count-c3` — a PROVINCE naming a tool in a fenced code block, a\n   tool named with a trailing colon, a directory under `tools/` with a `.py` suffix, a tool\n   named in another lane's relative path (must not count).\n2. **The sweep's own arms.** When `/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-claim-sweep.py` exists (the executor seat\n   builds it in this same wave; if absent, say so and attack the frozen spec instead): run its\n   `--selftest`, then plant a defect it should catch in a scratch copy of the lane\n   (dead pointer, stale literal, mismatched pin) and confirm it goes red; then plant a benign\n   variant (a pointer with `:12-14`, a token in a fenced block) and confirm it stays green.\n   Report every false negative and false positive with the bytes.\n3. **Predicate identity.** For each of P-C1/P-C2/P-C3 state whether the contract sentence, the\n   counter's code path and the printed receipt label are the same claim. Name any gap (the\n   r79 closure graded three claims this way; a gap is a routed defect now, not later).\n4. Independent re-derivation: run `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/mutate-c2.py --rev d5888922` and\n   `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/count-c3.py d5888922` yourself and report the lines — do not read them from\n   the controls receipt.\n\nReport at the trailer path: findings with severity, the fixtures you built, and a clear\n`no finding` per numbered item where you found none.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage\nMilestone: round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory\n\nReport: write your scoped findings to .ufo/waves/round-80/w1/Mo80R01Counter.md"
+      },
+      {
+        "name": "Mo80C01Contract",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nFalsify the round's claim design before the data is final.\n\nRead `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/contract.md`, `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/evidence/controls-r80.txt`, `/home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md` (`## Axes`, the\ncapabilities tables), and `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-79/contract.md` (the r79 shape it follows).\n\n1. **Do-nothing control.** For each claim, is the target reachable without the claimed work?\n   Build the cheapest counter-example you can and report it: C1 — could the SCORECARD row alone\n   make `count-c1` read met without a working sweep (no: the counter runs the sweep blob at R —\n   verify that reading)? C2 — could the harness read `survivors=0` by a selftest that always\n   exits 1 (a vacuous counter-killer)? Check: `mutate-c2` calls the selftest and grades the\n   verdict — a selftest that always fails would kill every mutant and also fail the real bytes;\n   verify the real bytes' selftest is green at the worked revision, and say whether the\n   predicate needs an explicit \"and the unmutated selftest passes\" clause (the r79 closure\n   precedent: a counter that cannot be red on real bytes is broken). C3 — could a mechanical\n   dump of 55 rows pass with wrong classifications? State whether the predicate (names + paths)\n   admits that and whether the claim's text overreaches.\n2. **Axis fit.** Are the three axes distinct and is at least one on the lowest non-retired axis\n   (depth/freshness/calibration = 5)? Is C1 really calibration (a mismatch count between the\n   lane's self-assessment and observed repo state — AXES.md), C2 operability, C3 coverage?\n3. **Sizing.** Is each after-state one concrete value a closure can re-derive with one command\n   over committed bytes? Name any universal clause (\"all\", \"every\", \"no harm anywhere\") that\n   the counting command does not enumerate.\n4. **Harm.** Does any claim trade another axis? Check: does C3's inventory (55 rows) risk\n   asserting scope it does not own, or stale facts? Does C1's sweep hard-code a pin that will\n   rot (the tallies pin is a maintenance cost — say how the successor round must treat it)?\n5. **Same-sentence rule.** Quote contract sentence, counter output label and receipt label per\n   claim; name every mismatch in wording that could let a closure read a different claim.\n\nReport at the trailer path: one verdict per claim (`sound` / `needs the named clause` /\n`unsound`), the counter-examples you built, and the exact clause text you recommend — the L1\nfreezes before any seat scores.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage\nMilestone: round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory\n\nReport: write your scoped findings to .ufo/waves/round-80/w1/Mo80C01Contract.md"
+      },
+      {
+        "name": "Mo80M01Mutant",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nMutate the round's own new gates and report survivors with the exact hunk.\n\nTargets (attack in this order; skip a target that does not exist yet and say so):\n1. `/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-claim-sweep.py` — if the executor seat landed it in this wave: at least\n   six mutants, one per frozen arm and boundary: (a) drop the `:line` suffix stripping,\n   (b) drop the `@rev` stripping, (c) make the fenced-block skip a no-op, (d) make the tally\n   comparison `>=` instead of `==`, (e) make a missing carrier default to empty instead of\n   rc 2, (f) make `mismatches` count only `unresolved`. For each: run `--selftest`; KILLED iff\n   it goes red. Paste hunks and verdicts.\n2. `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/count-c3.py` — three mutants: (a) drop the sibling-lane skip,\n   (b) compare only `named >= present` (allow extra), (c) count directories as instruments.\n3. `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-79/count-c2.py` after the executor's arms land — run the frozen\n   harness yourself: `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-80/mutate-c2.py --rev <scratch clone commit>` and paste it.\n4. Report every surviving mutant with the class it belongs to and the arm that would kill it —\n   a survivor found this round is a routed defect for round 81, not a reason to change the\n   round's predicate.\n\nNever edit the lane files: copy to `/fast/scratch/hyaku/mori-r80/Mo80M01Mutant/`, mutate the copy, run it. Any\nscratch git repo is `git -C <dir> -c user.name=t -c user.email=t@t`.\n\nReport at the trailer path: the mutant table (target, mutant, hunk, killed/survived), and the\nsurvivor analysis.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage\nMilestone: round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory\n\nReport: write your scoped findings to .ufo/waves/round-80/w1/Mo80M01Mutant.md"
+      },
+      {
+        "name": "Mo80R02Probe",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nOne bounded empirical hypothesis, independently of the seats asserting the claims:\n\n**H: the round's deliverable shape can fail — a self-assessment sweep that grades tallies will\nreport the r79 stale-tally class on a tree that carries it, and report clean on the same tree\nwith the tally corrected, with no other change.**\n\nBuild it, read-only, under `/fast/scratch/hyaku/mori-r80/Mo80L01Probe/`:\n1. `git -C /home/vgpnk/Projects/shokunin/mori-shokunin archive d5888922 | tar -x -C <dir>` — the entering tree.\n2. If `/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-claim-sweep.py` exists (built in this wave), run it over that tree with\n   the pins file and record rc + the first mismatch line. Then edit ONLY the SCORECARD row's\n   `18` to `19` in your scratch copy and re-run: record rc + `CLAIM_SWEEP mismatches=`.\n3. If the sweep does not exist, prove the same shape with two pinned greps: the literal\n   `selftest 18 in-memory cases` present (rc/line) and absent after the one-number edit, and\n   say explicitly that this is a degraded probe of the same hypothesis.\n4. Add one adversarial variant: correct the number but leave a *different* dead pointer\n   (`corpus/lessons/does-not-exist.md` planted into a capabilities row in the copy) and check\n   whether the sweep's `unresolved` arm fires (if it exists) or whether the probe cannot\n   distinguish (say so — that is a finding).\n5. Report the sha256 of the two copies' `SCORECARD.md` so the delta is one edit.\n\nReport at the trailer path: hypothesis, the two runs, the adversarial variant, and the verdict\n(`supported` / `not supported` / `degraded probe`). Delete your scratch tree before yielding.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage\nMilestone: round 80 w1: C1 claim sweep, C2 counter arms, C3 province inventory\n\nReport: write your scoped findings to .ufo/waves/round-80/w1/Mo80R02Probe.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}
