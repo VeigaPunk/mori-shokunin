@@ -89,8 +89,8 @@ only `total` and `survivors` (and `arms`) are. Worth one line of comment, not a 
 
 | path:line | dead weight | evidence |
 |---|---|---|
-| `count-c1.py:194` | `return path` in nested `write()` — every call site ignores the return | read; `write(d, …)` used 8×, never bound |
-| `count-c1.py:81` | `run(…, timeout=300)` — `timeout` is never passed by any caller | grep: four `run(` call sites, none with `timeout` |
+| `count-c1.py:194` | `return path` in nested `write()` — every call site ignores the return | read; `write(d, …)` used 6×, never bound |
+| `count-c1.py:81` | `run(…, timeout=300)` — `timeout` is never passed by any caller | grep: five `run(` call sites (`:92,295,297,304,307`), none with `timeout` |
 | `count-c1.py:269-270` | `marker_literal` arm asserts `"M1-unanchored-conjunct" in open(__file__).read()`; the literal is in `MUTANTS` at `:59`, so the arm is a source self-reference, not a detection | read; mutation-free by construction |
 | `count-c1.py:152` | `want_arms is not None` — never false: `ARMS_BY_FILE` keys every subject (`:48-52`) and every fixture passes a keyed dict | coverage: branch not taken; read |
 | `count-c1.py:292-325` | `main`'s rev path (expected: selftest path only) | coverage report: 79% stmt, missing `93-94,137-138,140,292-325` |
