@@ -4358,7 +4358,7 @@ contract), population and defeat controls `.ufo/waves/round-85/evidence/controls
 `.ufo/waves/round-85/evidence/controls-r85-defeated.txt`. Axes: operability (C1, score 7),
 calibration (C2, score 5, tied lowest) and depth (C3, score 5, tied lowest, capability
 acquisition). No score moves. The after cells were measured at `25a74d4c34e8430e4fbb18d4038ef5db872fb0ee` by the round's frozen
-counters (receipt `.ufo/waves/round-85/evidence/after-r85.txt`, receipt commit `729b794aa7627190afa0ebd6d2d4dd07ae85e2af`; the counters
+counters (receipt `.ufo/waves/round-85/evidence/after-r85.txt`, receipt commit `42865833c9b9f9bdd33b6c3d13641bebfc66efd2`; the counters
 are the worktree bytes at that revision).
 
 | Claim | Axis | Counting command | At entering `2cc4b1ae` | After (measured at `25a74d4c34e8430e4fbb18d4038ef5db872fb0ee`) |
@@ -4377,8 +4377,12 @@ lines required, and the reconciliation walks both directions.
 | Capability | What it can now do | Evidence pointer | First-working round |
 |---|---|---|---|
 | Population-control counter (`.ufo/waves/round-85/count-c1.py`) | re-derives the two-survivor X1/X2 population at ANY revision from that revision's bytes, requires the two arm labels and exactly 17 passing arms in the graded r84 counter, runs each mutated copy's own `--selftest` in scratch, and requires the r84 counter's own 4-mutant `met` line at the same revision; 18 detector arms; stdout only, writes only under `--scratch` | `python3 -I .ufo/waves/round-85/count-c1.py --selftest` -> `C1_COUNTER_SELFTEST pass=18 fail=0`; at `25a74d4c34e8430e4fbb18d4038ef5db872fb0ee` it prints `mutants=2 killed=2 survivors=0 total=2 arms=17 r84=met`, rc 0 | 85 |
-| Receipt-provenance counter + generator (`.ufo/waves/round-85/count-c2.py`, `.ufo/waves/round-85/make-receipts.sh`) | grades three frozen receipts for exactly one cmd/rev/limits header each in the block before the single `# ---`, ancestor-bound revisions, sha256 bindings of the named subject paths at the receipt's own revision, malformed binding lines, and the frozen summary token after the separator; 18 detector arms | `python3 -I .ufo/waves/round-85/count-c2.py --selftest` -> `C2_COUNTER_SELFTEST pass=18 fail=0`; at `729b794aa7627190afa0ebd6d2d4dd07ae85e2af` it prints `receipts=3 bindings=5 bound=5 ... mismatch=0`, rc 0 | 85 |
+| Receipt-provenance counter + generator (`.ufo/waves/round-85/count-c2.py`, `.ufo/waves/round-85/make-receipts.sh`) | grades three frozen receipts for exactly one cmd/rev/limits header each in the block before the single `# ---`, ancestor-bound revisions, sha256 bindings of the named subject paths at the receipt's own revision, malformed binding lines, and the frozen summary token after the separator; 18 detector arms | `python3 -I .ufo/waves/round-85/count-c2.py --selftest` -> `C2_COUNTER_SELFTEST pass=18 fail=0`; at `42865833c9b9f9bdd33b6c3d13641bebfc66efd2` it prints `receipts=3 bindings=5 bound=5 ... mismatch=0`, rc 0 | 85 |
 | Own-census observation and reconciliation (`.ufo/waves/round-85/count-c3.py`) | runs `tools/mori-census.sh --drift <baseline>` three times from R's own bytes with a fresh scratch tree, requires rc 1 and identical non-empty token lines, runs the r83 drift counter at R and requires its `C2=met live=derived` tail, derives every union token's class independently, and reconciles both directions (`unmatched` for subject-named deltas the observation contradicts, `unnamed` for observation deltas the subject omits); 20 detector arms | `python3 -I .ufo/waves/round-85/count-c3.py --selftest` -> `C3_COUNTER_SELFTEST pass=20 fail=0`; at `25a74d4c34e8430e4fbb18d4038ef5db872fb0ee` it prints `observed=3 aa=stable own_tokens=64 subject_tokens=64 unmatched=0 unnamed=0`, rc 0 | 85 |
+
+Correction of record (L1, pre-report): the receipt commit is `42865833c9b9f9bdd33b6c3d13641bebfc66efd2`; `729b794aa7627190afa0ebd6d2d4dd07ae85e2af` carried the same three receipts
+before they were regenerated with the final `make-receipts.sh` bytes (one `rc=` line per body).
+C2 reads met at both commits.
 
 The C3 capability's before value is the counter's absence at the entering revision; running the
 counter retroactively over those bytes already reads `C3=met` (disclosed in

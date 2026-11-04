@@ -5252,6 +5252,10 @@ flip condition. Rows 371 → 372, census rc 0, 35 tolerated W04 warnings. QUALIT
 round's rules; the registry row 18 in `SKILL.md` carries the r84 counters and the record sweep's new
 tallies (r83's revision-scoped tallies stay as recorded).
 
+Correction of record (L1, pre-report): the receipt commit is `42865833c9b9f9bdd33b6c3d13641bebfc66efd2`; `729b794aa7627190afa0ebd6d2d4dd07ae85e2af` carried the same three receipts
+before they were regenerated with the final `make-receipts.sh` bytes (one `rc=` line per body).
+C2 reads met at both commits.
+
 **No-harm.** The standing battery at `da7631f4` reads `BATTERY pass=57 setup=4 fail=0` (`BATTERY
 57/61`, rc 2 for the four expected host-setup cases) — unchanged from r83
 (`.ufo/waves/round-84/evidence/battery-r84.txt`). The three r83 counters at the freeze commit still
@@ -5267,7 +5271,7 @@ A3 `89f82eac`, A4 `91f657f6` (disclosed in `.ufo/waves/round-85/contract.md` §A
 verified a receipt's digest at the graded tip instead of at the receipt's own `# rev:`; A2–A3 fixed
 the five graded-defects and two soft clauses the connector's sweep found; A4 corrected the C3
 entering-control text to the counter file's absence); measured `25a74d4c34e8430e4fbb18d4038ef5db872fb0ee` (receipt
-`.ufo/waves/round-85/evidence/after-r85.txt`, receipt commit `729b794aa7627190afa0ebd6d2d4dd07ae85e2af`). Axes: operability 7,
+`.ufo/waves/round-85/evidence/after-r85.txt`, receipt commit `42865833c9b9f9bdd33b6c3d13641bebfc66efd2`). Axes: operability 7,
 calibration 5 (tied lowest), depth 5 (tied lowest, capability acquisition). No score moves.
 
 **C1 — operability.** The r84 C1 reviewer's two surviving counter mutants (X1
@@ -5286,7 +5290,7 @@ armed counter still prints its own frozen 4-mutant `met` line. Entering:
 in the block before the single `# ---`; each binding is re-derived from the named path's bytes at
 the receipt's own revision, and a duplicate/empty/malformed header or a missing summary token is a
 mismatch. `.ufo/waves/round-85/make-receipts.sh <rev>` writes them. `python3 -I
-.ufo/waves/round-85/count-c2.py 729b794aa7627190afa0ebd6d2d4dd07ae85e2af` → `C2=met receipts=3 bindings=5 bound=5 revs=3 limits=3 cmd=3
+.ufo/waves/round-85/count-c2.py 42865833c9b9f9bdd33b6c3d13641bebfc66efd2` → `C2=met receipts=3 bindings=5 bound=5 revs=3 limits=3 cmd=3
 summary=3 mismatch=0`, rc 0; the flipped-digest control reads `bound=4 mismatch=1`, rc 1. D84-4
 (the quoted outputs with no committed receipt) and D84-5 (the battery header) are discharged.
 
