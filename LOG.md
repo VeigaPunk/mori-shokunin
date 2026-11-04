@@ -5123,3 +5123,76 @@ No-harm: the standing battery re-run at the dispatch tip is `BATTERY pass=60 set
 (`.ufo/waves/round-82/evidence/battery-r82.txt`), the four being the inherited lane-scoped
 scratch setup refusals. Population census rc 0; the claim sweep's pinned arm is green at the
 landed value (`pointers=249`); the r81 record-pins arm re-reads `pending=0 pinned=0`.
+
+## Round 83 (2026-11-04, L1 MoriR83) — three claims across three axes: C1 operability the r82 probe's surviving counter mutants get the failing arm each needs (22 killed + 1 equivalent by pre-data amendment A1), C2 calibration the drift classification is bound to its committed raw snapshot (exactly-one header lines, frozen path, hash, as-of, one live re-derivation), C3 depth the record sweep's revision arm scopes its byte occurrence to the line carrying the row anchor
+
+entering: `68185d6e719054c55b107280085b05609e96165b` (branch master, pushed, clean). Frozen
+contract + the three counters + do-nothing controls commit `9075c729`; pre-data amendment A1
+(equivalent mutant) `d2987c67`; wave w1 dispatch `466d28bc`; integration `c4845c83` (measured
+revision).
+
+C1 (operability 7). The r82 mutation probe left `MUTANTS killed=18 total=38 survivors=20`
+(`.ufo/waves/round-82/w1/Mo82M01Mutants.md`): the three counters' own selftests graded their
+helpers but not themselves. `.ufo/waves/round-83/count-c1.py` freezes the probe's 23-mutant
+counter table (anchors occurring exactly once), re-derives it at any revision and runs each
+mutated copy's own `--selftest` in scratch. The repairs add the failing arm the probe named per
+survivor — in-memory arms for the pure gates, a lifted pure gate for the exit-code/`met`
+conjunctions (anchors byte-unchanged), and main-path fixtures for the counter-a gates. Entering
+`C1=unmet harness=absent`; population control at the freeze `killed=3 equivalent=1 survivors=19`;
+measured `C1=met mutants=23 killed=22 equivalent=1 survivors=0 total=23 pristine=green
+detector=green` at `c4845c83` (deterministic across two runs). Amendment A1: `duplicates_accepted`
+is equivalent because `residual += duplicates` subsumes its clause; the exemption binds only while
+that coupling occurs once and the seat's independent arm map found the same mutant.
+
+C2 (calibration 5, tied lowest). The r82 classification was a function of a live census run, so a
+historical reading was not immutable. The header of `corpus/evidence/drift-classification-r82.txt`
+now names the committed raw snapshot `.ufo/waves/round-82/evidence/drift-r82-live.txt`, its sha256
+`6091bc46…` and the snapshot's own as-of `2026-11-04T07:45:13Z`; the counter requires exactly one
+of each header line and the frozen path (R02's duplicate-header and foreign-path attacks close),
+re-derives all 64 classes from the snapshot's token line and the baseline bytes, and runs one live
+census as an observation. The `## Retired` row and the freshness cell name the snapshot path.
+Entering `C2=unmet snapshot=absent`; measured `C2=met snapshot=bound asof=1 tokens=64 agreed=64
+residual=0 live=derived live_tokens=63 live_agree=63` at `c4845c83` — the live reading lacks
+`-FINDING:WATCHDOG_STALE`, which the snapshot carries; reported, never hidden, and it changes no
+class because the classification is bound to the snapshot.
+
+C3 (depth 5, tied lowest). QUALITY 168's named limit — a value occurring on an unrelated line
+still passed `rev-bytes` — is closed: the arm requires the token and the binding's `row_contains`
+on one line of `git show <rev>:<path>` (marker `ANCHORED_OCCURRENCE`, QUALITY 169), with the
+`elsewhere` defeated fixture (r82 tool rc 0 `revisions=0`; new tool reports `rev-bytes`). Two r82
+revision fixtures that encoded the unanchored semantics were updated to carry the anchor in the
+blob. Entering `C3=unmet arm=absent`; measured `C3=met arm=anchored defeated=2 fixtures=2/2
+bindings=3 revisions=0 arms=40` at `c4845c83`.
+
+Routed defects D82-1/D82-2: D82-1 the r80 capability row's `pointers=249` now carries a named
+correction naming the r82 record commit `f02ad83b` as the revision whose run produced 249 and
+separating the historical `075574c8`/237 attribution; D82-2 the round-83 C3 selftest tally at the
+measured bytes is committed at `.ufo/waves/round-83/evidence/c3-selftest-r83.txt`.
+
+Frontier step. S598 opens PIT's "What is mutation testing?" (pinned
+`corpus/evidence/sources-r83/pitest-home.html`, sha256 `b0c7e050…`, 12023 bytes / 284 lines;
+three independent fetches byte-identical, ETag `"6a1fe9b2-2ef7"` revalidating 304; located quote
+at raw line 114, 14 words; the page's own "51 words" block measured at raw lines 106-114, and the
+L1's first 108-113 anchor corrected). The mutators page is refused (operator catalogue, no
+adequacy rule) with its flip condition. Rows 370 -> 371, census rc 0, 35 tolerated W04 warnings.
+`corpus/knowledge/counter-mutation-adequacy-r83.md` lands the rule (K1), the four requirements of
+a mutation-adequate counter selftest (K2), the twenty survivor classes and their arm classes (K3)
+and the limits (K4). The staged `merge/mori` package still collides (128/136 staged ids; guard
+re-proven on an indented scratch row); the r61 L0 stands, nothing adopted.
+
+L2: ONE v1 wave, 14 seats (validated under `ufo-wave-policy.json` band 8-16; dispatch
+`w1-dispatch.json`), roles 6 executor / 2 scout / 2 reviewer / 1 scribe / 1 critic / 1
+mutation-tester / 1 connector = attack 4/14 (28.6 %), connectors 1; residual none; the planner
+seat is the L1; seats routed through the host table, no `model` passed. Seat reports in
+`.ufo/waves/round-83/w1/`. Dead seats: `Mo83E02C1C2`, `Mo83E03C1C3`, `Mo83E05Anchor`,
+`Mo83S01Lesson`, `Mo83C01Crit` — no output, no live process, never replaced; the L1 executed their
+assignments from scratch prototypes validated against the frozen detectors (count-c2/count-c3
+arms, the anchored occurrence in the record sweep, the lesson/Gate/census and the frontier rows).
+The critic seat's mission-contract attack therefore rests on the two reviewers, the arm map and
+the mutation probe.
+
+No-harm: the standing battery re-run at the landed tip `c4845c83` is `BATTERY pass=57 setup=4 fail=0` (`BATTERY 57/61`)
+(`.ufo/waves/round-83/evidence/battery-r83-final.txt`; the dispatch-tip run at the freeze bytes was
+`BATTERY pass=57 setup=4 fail=0`, `battery-r83-dispatch.txt`). Population census rc 0; the claim
+sweep is green at the new pointer count (`pointers=255` after this round's registry and capability
+rows); no prior counter value regressed.

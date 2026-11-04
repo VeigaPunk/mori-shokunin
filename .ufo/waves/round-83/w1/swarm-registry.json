@@ -1,0 +1,163 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r83-w1",
+  "createdAt": "2026-11-04T08:20:40.660Z",
+  "updatedAt": "2026-11-04T08:20:40.660Z",
+  "reportDir": ".ufo/waves/round-83/w1",
+  "members": {
+    "Mo83E01C1C1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "depth"
+      ],
+      "milestone": "round 83 w1: C1 arms for the six count-c1.py survivors"
+    },
+    "Mo83E02C1C2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "depth"
+      ],
+      "milestone": "round 83 w1: C1 arms for the seven count-c2.py survivors"
+    },
+    "Mo83E03C1C3": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "depth"
+      ],
+      "milestone": "round 83 w1: C1 arms for the seven count-c3.py survivors"
+    },
+    "Mo83E04Snap": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "depth"
+      ],
+      "milestone": "round 83 w1: C2 snapshot provenance binding"
+    },
+    "Mo83E05Anchor": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "depth"
+      ],
+      "milestone": "round 83 w1: C3 anchored occurrence in the revision arm"
+    },
+    "Mo83E06D82": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "depth"
+      ],
+      "milestone": "round 83 w1: routed-defect discharge D82-1 and D82-2 evidence"
+    },
+    "Mo83Sc01Source": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage",
+        "freshness"
+      ],
+      "milestone": "round 83 w1: source pin for mutation adequacy (S598 candidate)"
+    },
+    "Mo83Sc02Arms": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage",
+        "freshness"
+      ],
+      "milestone": "round 83 w1: arm map and collision scan for the 20 survivors"
+    },
+    "Mo83K01Conn": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "adjacency",
+        "coverage"
+      ],
+      "milestone": "round 83 w1: sibling-overlap scan for the three instruments"
+    },
+    "Mo83S01Lesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "round 83 w1: lesson with Mistakes and Census, coverage-map row"
+    },
+    "Mo83R01C1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability"
+      ],
+      "milestone": "round 83 w1: attack C1 — population, anchors and arm honesty"
+    },
+    "Mo83R02C23": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability"
+      ],
+      "milestone": "round 83 w1: attack C2 and C3 — provenance and anchored occurrence"
+    },
+    "Mo83C01Crit": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration",
+        "depth"
+      ],
+      "milestone": "round 83 w1: falsify the three frozen claims before data"
+    },
+    "Mo83M01Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "operability",
+        "depth"
+      ],
+      "milestone": "round 83 w1: independent mutation probe of the round-83 counters"
+    }
+  }
+}

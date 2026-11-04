@@ -4212,3 +4212,73 @@ only, not its value: the r82 edit that raised the graded count 237→249 updated
 left the r81-era revision label standing (the label entered with `b10e91ee`, "pointers=237
 measured at `075574c8`"). No frozen r80 or r82 text is rewritten by this paragraph; the
 r82-inserted in-row correction (240 at `482dc48d`, 237 at `075574c8`) stands.
+
+## Round 83
+
+Entering revision `68185d6e719054c55b107280085b05609e96165b`; frozen contract
+`.ufo/waves/round-83/contract.md` (freeze `9075c729`) with the three counters and their
+do-nothing controls (`.ufo/waves/round-83/evidence/controls-r83.txt`), plus pre-data amendment A1
+(`d2987c67`) adjudicating one equivalent mutant. Axes: operability (C1), calibration (C2, tied
+lowest) and depth (C3, tied lowest). No score moves. The after cells were measured at
+`c4845c83244317bd85d047583c53d93263d84f31` by the round's frozen counters (receipt
+`.ufo/waves/round-83/evidence/after-r83.txt`), and the same commands were re-run at the record
+commit.
+
+| Claim | Axis | Counting command | At entering `68185d6e` | After (measured at `c4845c83`) |
+|---|---|---|---|---|
+| C1 the r82 mutation probe's surviving counter mutants get the failing arm each needs | operability | `python3 -I .ufo/waves/round-83/count-c1.py <rev>` | `C1=unmet harness=absent`, rc 1; population control at the freeze commit `C1=unmet mutants=23 killed=3 equivalent=1 survivors=19 total=23 pristine=green` | `C1=met mutants=23 killed=22 equivalent=1 survivors=0 total=23 pristine=green detector=green`, rc 0 |
+| C2 the drift classification is bound to its committed raw snapshot with hash, as-of and one live re-derivation | calibration | `python3 -I .ufo/waves/round-83/count-c2.py <rev>` | `C2=unmet snapshot=absent`, rc 1 | `C2=met snapshot=bound asof=1 tokens=64 agreed=64 residual=0 live=derived live_tokens=63 live_agree=63`, rc 0 |
+| C3 the revision arm scopes its byte occurrence test to the binding's anchored row | depth | `python3 -I .ufo/waves/round-83/count-c3.py <rev>` | `C3=unmet arm=absent`, rc 1 | `C3=met arm=anchored defeated=2 fixtures=2/2 bindings=3 revisions=0 arms=40`, rc 0 |
+
+C1's repairs are implementation repairs inside the r82 counters; the r82 frozen predicates stay
+byte-unchanged and every frozen anchor still occurs exactly once (an unanchored anchor reads
+`unmet`). One mutant is adjudicated **equivalent** by pre-data amendment A1: `duplicates_accepted`
+mutates a clause that `residual += duplicates` already subsumes, so no arm can observe a
+difference; the exemption binds only while that coupling occurs once, and the counter grades the
+mutant normally if the coupling disappears. `count-c1.py`'s own detector selftest grew from 4 to
+6 arms. The seat mutation probe's independent arm map found the same equivalent mutant.
+
+C2 binds the r82 classification to the committed snapshot: header `# Snapshot:` /
+`# Snapshot-sha256:` / `# As-of:` lines (exactly one each, frozen path), re-derivation of all 64
+classes from the snapshot's token line, and one live census read reported as
+`live_tokens=`/`live_agree=`. The live census reads 63 tokens because `-FINDING:WATCHDOG_STALE`
+is present in the snapshot and absent live — an observation, not a class change. The `## Retired`
+row `drift-pin-r10` names the snapshot path; the r10 baseline stays byte-unchanged and the live
+`--drift` run still exits 1.
+
+C3 closes QUALITY 168's named limit: `ANCHORED_OCCURRENCE` requires the token and the binding's
+`row_contains` on one line of `git show <rev>:<path>`; the `elsewhere` fixture (value only on an
+unrelated line) is caught as `rev-bytes` where the r82 tool read `revisions=0`, rc 0. QUALITY 169
+records the rule and its remaining limits (substring anchor, two anchor rows, prose token).
+
+Routed defects D82-1/D82-2: D82-1's correction of record names `f02ad83b` as the r82 record
+commit whose run produced `pointers=249`, separating the historical `075574c8`/237 attribution;
+D82-2's post-repair C3 selftest tally is committed at
+`.ufo/waves/round-83/evidence/c3-selftest-r83.txt`.
+
+### Capabilities (round 83)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Counter mutation gate (`.ufo/waves/round-83/count-c1.py`) | re-derives the r82 probe's 23-mutant counter population at ANY revision from that revision's own bytes, runs each mutated copy's `--selftest` in scratch, and prints `C1=met mutants=23 killed=22 equivalent=1 survivors=0 total=23 pristine=green`; an unanchored anchor, an empty mutation, a red pristine, a missing equivalence coupling or a red detector keeps it unmet; 6 detector arms; stdout only, writes only under `--scratch` | `python3 -I .ufo/waves/round-83/count-c1.py --selftest` -> `C1_COUNTER_SELFTEST pass=6 fail=0`; at `c4845c83` it prints `killed=22 equivalent=1 survivors=0`, rc 0 | 83 |
+| Snapshot-bound classification (`.ufo/waves/round-83/count-c2.py`) | grades the classification against the committed raw snapshot (exactly-one header lines, frozen path, sha256, as-of) and the baseline-derived class of every token, and runs one live census as a reported observation; prints `C2=met snapshot=bound asof=1 tokens=64 agreed=64 residual=0 live=derived`; 12 selftest arms | `python3 -I .ufo/waves/round-83/count-c2.py --selftest` -> `C2_COUNTER_SELFTEST pass=12 fail=0`; `C2=met ... live_tokens=63 live_agree=63` at `c4845c83`, rc 0 | 83 |
+| Anchored occurrence (`tools/mori-record-sweep.py`, `ANCHORED_OCCURRENCE`) | the revision arm's byte check requires the `key=value` token and the binding's `row_contains` on one line, so a value occurring only on an unrelated line is `rev-bytes`; 40 selftest arms and an `elsewhere` fixture | `python3 -I tools/mori-record-sweep.py --selftest` -> `RECORD_SWEEP_SELFTEST pass=40 fail=0`; `C3=met arm=anchored defeated=2 fixtures=2/2 bindings=3 revisions=0 arms=40` at `c4845c83`, rc 0 | 83 |
+
+## Planned (round 84)
+
+1. **operability** — the round-83 counters' own mutation survivors. The mutation-tester seat
+   (`Mo83M01Mut`) ran its probe but did not finish a tally (its own driver defects plus the
+   mid-wave counter edits), so the item carries forward with the four extra mutants the C1
+   reviewer's independent 24th-mutant sweep measured at `c4845c83`
+   (`w1/Mo83R01C1.md` §6): `M24a` c1:170 `killed_n = total - survivors` → `total` and `M24b`
+   c1 `green()` dropping `"fail=0" in out` are **non-equivalent survivors** needing one arm each;
+   `M24c`/`M24d` (c2 `met` dropping `not unclassified` / `residual == 0`) are provably
+   equivalent and need an A1-style adjudication. The r82 lesson repeats here: a counter that
+   grades helpers but not itself is not yet adequate.
+2. **calibration** — the anchored arm's first named limit: a `row_contains` that is a substring of
+   another row's text selects the first matching row. Add the first-match disambiguation (or
+   all-anchor-rows requirement) and its defeated fixture, so QUALITY 169's not-covered clause can
+   shrink.
+3. **depth** — the C2 live-reading delta (`-FINDING:WATCHDOG_STALE` present in the snapshot,
+   absent live) is reported but not explained: a per-token live-delta classification (absent-live /
+   class-changed) would make the observation a fact rather than a number.

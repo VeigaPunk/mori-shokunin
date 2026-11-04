@@ -1,0 +1,37 @@
+# mori round-83 after-measurement — revision c4845c83244317bd85d047583c53d93263d84f31
+# each command grades that revision's own bytes; taken from the lane root.
+
+$ python3 -I .ufo/waves/round-83/count-c1.py c4845c83
+MUTANT count-c1.py green_ignores_fail_token killed rc=1
+MUTANT count-c1.py killed_ignores_rc killed rc=1
+MUTANT count-c1.py ignore_pristine_red killed rc=1
+MUTANT count-c1.py accept_empty_population killed rc=1
+MUTANT count-c1.py unanchored_excused killed rc=1
+MUTANT count-c1.py detector_gate_dropped killed rc=1
+MUTANT count-c1.py unanchored_still_graded killed rc=1
+MUTANT count-c2.py stale_accepted killed rc=1
+MUTANT count-c2.py duplicates_accepted equivalent rc=0
+MUTANT count-c2.py retired_paths_unchecked killed rc=1
+MUTANT count-c2.py red_literal_unchecked killed rc=1
+MUTANT count-c2.py green_census_tokens_accepted killed rc=1
+MUTANT count-c2.py finding_branch_inverted killed rc=1
+MUTANT count-c2.py malformed_not_residual killed rc=1
+MUTANT count-c2.py keyshape_guard_inverted killed rc=1
+MUTANT count-c2.py derive_key_eol_only killed rc=1
+MUTANT count-c3.py population_gate_dropped killed rc=1
+MUTANT count-c3.py defeated_accepted killed rc=1
+MUTANT count-c3.py carrier_drift_allowed killed rc=1
+MUTANT count-c3.py bindings_floor_dropped killed rc=1
+MUTANT count-c3.py selftest_red_accepted killed rc=1
+MUTANT count-c3.py revisions_default_zero killed rc=1
+MUTANT count-c3.py summary_first_line killed rc=1
+C1=met mutants=23 killed=22 equivalent=1 survivors=0 total=23 pristine=green detector=green rev=c4845c832443
+rc=0
+
+$ python3 -I .ufo/waves/round-83/count-c2.py c4845c83
+C2=met snapshot=bound asof=1 tokens=64 agreed=64 residual=0 live=derived live_tokens=63 live_agree=63 rev=c4845c832443
+rc=0
+
+$ python3 -I .ufo/waves/round-83/count-c3.py c4845c83
+C3=met arm=anchored defeated=2 fixtures=2/2 bindings=3 revisions=0 arms=40 rev=c4845c832443
+rc=0

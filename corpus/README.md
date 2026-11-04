@@ -881,3 +881,9 @@ three rejected-closure entries (r59/r60/r61) rather than silently adopting them.
 | Ground | Entry | Bounded advance |
 |---|---|---|
 | Record revision precision (r82, S597) | `knowledge/record-revision-precision-r82.md` (S597; `corpus/knowledge/record-revision-precision-r82.md`) | gitrevisions(7) at tag v2.56.0 defines the `<rev>:<path>` suffix that names a blob or tree in the named tree-ish, so a record's revision label is gradable as bytes; the entry's decision table separates row-value, rev-unresolvable, path-absent and rev-bytes, names the D80-4/D81-1 population, and states what the test cannot prove (no coincidental-occurrence discrimination, no command-output provenance, only registered bindings). |
+
+## Round-83 knowledge addition — counter mutation adequacy (new growth, indexed the round it lands)
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Counter mutation adequacy (r83, S598) | `knowledge/counter-mutation-adequacy-r83.md` (S598; `corpus/knowledge/counter-mutation-adequacy-r83.md`) | PIT's own "What is mutation testing?" page states the killed/lived mechanism and that the killed percentage gauges test adequacy, so a surviving mutant is a finding about the suite rather than a pass; the entry fixes the four requirements an adequate counter selftest needs (pristine green first, exactly-once anchors, an rc-or-token kill rule, the detector gate bound into the verdict), tabulates the twenty r82 survivor classes and the arm class each needs, and states the limits (a kill constrains one expression; anchors are brittle; the score is not correctness). |

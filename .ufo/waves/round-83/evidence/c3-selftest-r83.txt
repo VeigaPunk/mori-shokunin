@@ -1,0 +1,27 @@
+# Bytes measured: mori-shokunin worktree at HEAD 466d28bc229f13106e9fa1d3d65221b19a58e120 with both counter files byte-identical to HEAD (git status clean for both paths at measurement, 2026-11-04); .ufo/waves/round-82/count-c3.py sha256 aa56ba485ab6918a3cf91aad7022c9a16730144cb7d9ebd9d7e5e6c9e55dbc7c; .ufo/waves/round-83/count-c3.py sha256 40e9fc76f08131d21b2de367eb57de04076871b775901f3da224bac594f82285
+# Post-repair tally the round-82 closure (D82-2) said was missing; scratch HYAKU_SCRATCH=/fast/scratch/hyaku/mori-r83/Mo83E06D82, cwd = lane root.
+
+$ python3 -I .ufo/waves/round-82/count-c3.py --selftest
+PASS summary_parse {'revisions': 2, 'bindings': 5}
+PASS pins_schema [{'carrier': 'A', 'rev': 'x', 'path': 'A', 'key': 'k', 'value': 1, 'row_contains': 'r'}]
+PASS pins_absent_list no revisions key
+PASS carrier_drift_guard text compare
+PASS arms_floor floor=30
+PASS population_frozen_ok as frozen
+PASS population_triplicate_unmet bindings=5
+PASS population_subset_unmet one binding
+C3_COUNTER_SELFTEST pass=8 fail=0
+rc=0
+
+$ python3 -I .ufo/waves/round-83/count-c3.py --selftest
+PASS summary_parse {'revisions': 2, 'bindings': 5}
+PASS pins_schema [{'carrier': 'A', 'rev': 'x', 'path': 'A', 'key': 'k', 'value': 1, 'row_contains': 'r'}]
+PASS pins_absent_list no revisions key
+PASS arms_floor floor=40
+PASS marker_literal marker=ANCHORED_OCCURRENCE
+PASS population_frozen_ok as frozen
+PASS population_triplicate_unmet bindings=5
+PASS population_subset_unmet one binding
+PASS population_rev_drift_unmet wrong rev
+C3_COUNTER_SELFTEST pass=9 fail=0
+rc=0
