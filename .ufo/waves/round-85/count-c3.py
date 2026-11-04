@@ -146,6 +146,19 @@ def subject_signal(output):
     return fields, pairs
 
 
+def subject_ok(rc, fields):
+    """The subject run must exit 0 with verdict met and live derived."""
+    return (rc == 0 and fields.get("verdict") == "met"
+            and fields.get("live") == "derived")
+
+
+def met_verdict(own_ok, stable, own_tokens, subject_tokens, unmatched, unnamed,
+                malformed, duplicates):
+    """The full met conjunction for one graded revision."""
+    return (own_ok and stable and own_tokens and subject_tokens == len(own_tokens)
+            and unmatched == 0 and unnamed == 0 and malformed == 0 and duplicates == 0)
+
+
 def reconcile(own_pairs, subject_pairs):
     """(unmatched, unnamed, lines): subject classes vs the counter's own observation."""
     own = dict(own_pairs)
@@ -184,13 +197,19 @@ def observe(census, baseline, fleet_root, scratch):
     return p.returncode, drift_tokens(output), ""
 
 
+def stability(rcs, token_lines):
+    """Every run exited 1 with a non-empty token line, and all lines are identical."""
+    first = token_lines[0] if token_lines else []
+    return (all(rc == 1 for rc in rcs)
+            and all(bool(tokens) for tokens in token_lines)
+            and all(tokens == first for tokens in token_lines[1:]))
+
+
 def observe_three(census, baseline, fleet_root, scratch):
     runs = [observe(census, baseline, fleet_root, scratch) for _ in range(OBSERVATIONS)]
     rcs = [rc for rc, _tokens, _reason in runs]
     token_lines = [tokens for _rc, tokens, _reason in runs]
-    stable = (all(rc == 1 for rc in rcs)
-              and all(bool(tokens) for tokens in token_lines)
-              and all(tokens == token_lines[0] for tokens in token_lines[1:]))
+    stable = stability(rcs, token_lines)
     return stable, rcs, token_lines[0] if token_lines else [], runs
 
 
@@ -274,6 +293,18 @@ def selfcheck():
         "C2=unmet snapshot=absent live=derived live_tokens=64\n")
     cases.append(("subject_verdict_required", fields_u.get("verdict") == "unmet", "unmet"))
     cases.append(("observations", OBSERVATIONS == 3, "3"))
+    cases.append(("stability_rc_must_be_1",
+                  not stability([0, 1, 1], [["a"], ["a"], ["a"]]), "rc 0"))
+    cases.append(("stability_rc_required",
+                  not stability([2, 2, 2], [["a"], ["a"], ["a"]]), "rc 2"))
+    cases.append(("stability_exact_order",
+                  not stability([1, 1], [["a", "b"], ["b", "a"]]), "order"))
+    cases.append(("subject_verdict_met_required",
+                  not subject_ok(0, {"verdict": "unmet", "live": "derived"}), "unmet"))
+    cases.append(("reconcile_agreed_skip",
+                  reconcile([("A", "agreed")], [])[1] == 0, "skip"))
+    cases.append(("met_requires_subject_tokens",
+                  not met_verdict(True, True, ["a"], 99, 0, 0, 0, 0), "99"))
     cases.append(("marker_literal", "OBSERVATIONS = 3" in open(os.path.abspath(__file__)).read(),
                   "marker"))
     ok = sum(1 for _, good_case, _ in cases if good_case)
@@ -339,7 +370,7 @@ def main(argv):
             return 1
         rc, out = subject_run(subject, rev, repo, fleet, scratch)
         fields, subject_pairs = subject_signal(out)
-        if rc != 0 or fields.get("verdict") != "met" or fields.get("live") != "derived":
+        if not subject_ok(rc, fields):
             print("C3=unmet observed=%d aa=stable subject=unmet rc=%d rev=%s"
                   % (OBSERVATIONS, rc, rev[:12]))
             for line in out.splitlines():
@@ -354,8 +385,8 @@ def main(argv):
             subject_tokens = int(fields.get("live_tokens", "-1"))
         except ValueError:
             subject_tokens = -1
-        met = (own_ok and stable and own_tokens and subject_tokens == len(own_tokens)
-               and unmatched == 0 and unnamed == 0 and malformed == 0 and duplicates == 0)
+        met = met_verdict(own_ok, stable, own_tokens, subject_tokens,
+                          unmatched, unnamed, malformed, duplicates)
         for line in lines:
             print(line)
         for line in out.splitlines():
