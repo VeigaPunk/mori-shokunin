@@ -1,4 +1,4 @@
-source: S597 (pending Gate landing)
+source: S597
 verified-at: 2026-11-04
 recheck: 365d
 

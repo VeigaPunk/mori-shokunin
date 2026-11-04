@@ -875,3 +875,9 @@ three rejected-closure entries (r59/r60/r61) rather than silently adopting them.
 |Ground|Entry|Bounded advance|
 |---|---|---|
 | Record claim integrity as a cell-value discipline (r81, S596) | `knowledge/record-claim-integrity-r81.md` (S596; `corpus/knowledge/record-claim-integrity-r81.md`) | stat(2)'s `st_mode` type bits ground the file-type check behind the directory-as-tool trap; the entry's decision table grades six entering record shapes — `PENDING` after-cells, the 232-vs-233 self-cited command, a summary-trusting gate, the two path-shape traps, and a correction left standing in a sibling carrier. |
+
+## Round-82 knowledge addition — record revision precision (new growth, indexed the round it lands)
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Record revision precision (r82, S597) | `knowledge/record-revision-precision-r82.md` (S597; `corpus/knowledge/record-revision-precision-r82.md`) | gitrevisions(7) at tag v2.56.0 defines the `<rev>:<path>` suffix that names a blob or tree in the named tree-ish, so a record's revision label is gradable as bytes; the entry's decision table separates row-value, rev-unresolvable, path-absent and rev-bytes, names the D80-4/D81-1 population, and states what the test cannot prove (no coincidental-occurrence discrimination, no command-output provenance, only registered bindings). |
