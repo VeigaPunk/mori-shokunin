@@ -298,3 +298,23 @@ records, at worktree counter bytes: the freeze population control; the A5 tripwi
 `C3=unmet ... import-failed:SystemExit`; and a null classifier defeated as
 `C3=unmet ... selftest=red`. The corrected population-control receipt sits beside the three
 entering controls as the critic asked.
+
+## Pre-data amendment A8 — supersede pointers and the per-fixture mismatch kind (critic/reviewer F1–F5)
+
+Filed 2026-11-04 from seat `Mo84R03Record` §1 (F1–F5), before any after-value.
+
+- **F1/F3 (supersede pointers).** The P-C1 four-mutant table at the top of this file quotes the
+  r83 reviewer's prose anchors; **it is superseded by A2**, which carries the operative anchors
+  (M24b four-space-indented, M24c `and not unclassified`, M24d `and residual == 0`) and the
+  measurement that each occurs exactly once. F3's "both `old` anchors" is likewise superseded:
+  there are four, two per graded file. No frozen byte above is rewritten.
+- **F2** is fixed by A4 (the `blind_case_tally` assertion is `killed=1 survivors=1 total=2`).
+- **F4 (split not bound).** Already fixed by A5: `main` now requires the printed split
+  `killed=2 equivalent=2 total=4`, not `survivors == 0` alone; a `killed=3 equivalent=1` run reads
+  `C1=unmet target=split`. The record must still cite the literal target line, not rc 0 alone.
+- **F5 (per-fixture kind).** The C2 counter now requires `carrier-ambiguous` → `row-value` and
+  `rev-ambiguous` → `rev-bytes` (previously either token satisfied either fixture). Named limit,
+  unchanged from A1: the finding's line number is not bound (the fixture's HEAD line numbering is
+  an implementation detail); the graded words are the detail and `revisions>=1`. `arms` stays a
+  floor (`>= 44`), not an exact equality: the target names 44 and the tool lands exactly 44, but a
+  later arm addition must not make the claim unverifiable.

@@ -266,11 +266,12 @@ def main(argv):
             return 2
         fixtures_ok = 0
         defeated = 0
+        expect = {"carrier-ambiguous": "row-value", "rev-ambiguous": "rev-bytes"}
         for kind in ("carrier-ambiguous", "rev-ambiguous"):
             new_rc, new_fields, new_out, old_rc = verdicts[kind]
             new_red = (new_rc == 1 and new_fields.get("revisions", 0) >= 1
                        and "REVISION_MISMATCH" in new_out
-                       and ("row-value" in new_out or "rev-bytes" in new_out))
+                       and expect[kind] in new_out)
             if new_red and old_rc == 0:
                 defeated += 1
                 fixtures_ok += 1
