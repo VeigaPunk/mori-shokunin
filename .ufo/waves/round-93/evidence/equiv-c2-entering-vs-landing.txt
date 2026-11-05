@@ -1,0 +1,7 @@
+A=7b3fe9d540c98b8b0390a0f9bbe78de4341092a5
+B=1fc921cf75afa6650b9dc9451b33a2ec0610ae0a
+mori-blind-check.sh: different [tree/tools/mori-blind-check.sh ]
+mori-misroot-sweep.py: different [tree/tools/mori-misroot-sweep.py ]
+mori-round17-context-check.py: different [tree/tools/mori-round17-context-check.py ]
+mori-round17-jj-regressions.py: identical
+OVERALL: different
