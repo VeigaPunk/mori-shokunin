@@ -354,6 +354,26 @@ attributes to each tool.
 - No host sysctl, service, limit, or kernel setting was touched; no git/jj mutation was performed
   (`git archive`, `git show`, `git log -S`, `git rev-parse`, `git ls-tree` only).
 
+## 7. Incident check (cross-lane scratch deletion reported by a sibling seat)
+
+A sibling seat (`ConnectorScope-23`, kake r97) reported that it ran `rm -rf /fast/scratch/hyaku/kake-r97`
+— the round PARENT dir — deleting sibling scratch trees at ~18:14Z. Checked against this seat:
+
+- My lane scratch root is `/fast/scratch/hyaku/mori-r97`, a **different** root from the deleted
+  `kake-r97`; it is intact (sibling mori trees `Mo97CritC2`, `Mo97ExecReplay`, `Mo97ExecTrial`,
+  `Mo97RevC1`, `l1` all still present).
+- My own seat scratch `/fast/scratch/hyaku/mori-r97/Mo97ScoutLive` was already removed by me on exit;
+  nothing of mine was lost. This report file is intact (24911 bytes).
+- Frozen instruments re-verified intact after the incident, matching the contract's recorded digests:
+  `count-c1.py` sha256 `78a09016fa8151b72049400600b6b154437c919df6fccb55b8bfa6253b4d2a95`,
+  `count-c2.py` sha256 `957a7be605ba920734a218388b7ebb50f4f829979931c6e4193caee2149a1e91`.
+- The measured landing revision `e85ed91249953094b067554bfa79fcdc65791f8e` is still present
+  (`git cat-file -e` OK). HEAD has since moved to `5497e6f70aaf21a38fc0140d9f7291a5571f4987`
+  (the L1 integrated after my measurements); every number in this report was taken against
+  `git archive e85ed912…`, never the working tree, so nothing here is affected.
+- Nothing frozen was touched (counters, contract, receipts, `corpus/`, `SKILL.md`, host settings).
+  No remediation by me; the incident is the reporting seat's to route.
+
 VERDICT C2 holds: all three pins byte-match their recorded digests, the live re-open at 2026-11-05T20:51:58Z/20:57:38Z shows a 1-line stamp-only delta per page, the time-only swap reproduces each pin's sha256 exactly, and the fresh drift-recheck classifies all three `time-churn` — the residual items are the S628 "14 words" miscount and the undeclared markdown-link normalisation, neither of which is a C2 predicate input.
 VERDICT C1 holds: the landing tree's `SKILL.md` carries the four registry rows, each tool's selftest exits 0 with the line the row states, and the frozen counter prints `C1=met unregistered=0 registry=met targets_ok=4/4` on my own re-run.
 

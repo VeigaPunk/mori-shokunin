@@ -189,9 +189,30 @@ So the S623 pin is today's live body with one stamp line restored — bit-for-bi
 ## 5. Findings for the L1 (not repairs — nothing here was changed)
 
 **F1 — lesson census count is off by one (a count stated without the row it counts; the lesson text is landed at
-`e85ed912` and this seat did not edit it).** `corpus/lessons/round-97.md:61-62` says the census-before run gave
-"`mori ok`, **42 W04**". The same command on the same lane prints **43** W04 rows, and it printed 43 at the entering
-revision too, so the delta is not this round's row:
+`e85ed912` and this seat did not edit it).** `corpus/lessons/round-97.md` §Frontier step says the census-before run
+gave "`mori ok`, **42 W04**". The same command on the same lane prints **43** W04 rows, and it printed 43 at the
+entering revision too, so the delta is not this round's row:
+
+**Confirmed by the lane's own committed receipts (added after this seat's first pass; the L1's commits
+`5497e6f7` and `b6d03408` landed after my seat finished).** `.ufo/waves/round-97/evidence/census-before.txt` and
+`census-after.txt`, both committed in `b6d03408`, each contain **43** `W04` rows and end `mori ok` / `exit=0`:
+
+```
+$ git show b6d03408:.ufo/waves/round-97/evidence/census-before.txt | grep -cP '\tW04\t'   -> 43
+$ git show b6d03408:.ufo/waves/round-97/evidence/census-after.txt  | grep -cP '\tW04\t'   -> 43
+$ git show b6d03408:.ufo/waves/round-97/evidence/census-after.txt | tail -2
+mori	ok	/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+exit=0
+$ git show b6d03408:.ufo/waves/round-97/evidence/census-after.txt | grep -P '\tW04\t' | tail -1
+mori	W04	S622 duplicate url git-scm.com/docs/git-log across scopes
+```
+
+So the committed receipts and the committed lesson **disagree with each other**: the receipts say 43, the lesson's
+prose says 42. The receipt is the command's own output; the prose is the count. The committed
+`## Planned (round 98)` list in `SCORECARD.md` has four items and does not mention this. Correction-of-record
+candidate for the closure; no claim impact (neither C1 nor C2 reads the census count).
+
+My own measurement, taken before those receipts existed:
 
 ```
 $ scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori | awk -F'\t' '$2=="W04"{n++} END{print n}'
@@ -210,48 +231,68 @@ is wrong against its own command — the count is 43 before and after; (b) `w1/M
 43. The lesson's census **exit 0** claim stands (measured: exit 0, `mori ok`). This is a counting-attribution defect
 of the same family as the r96 lesson's `unpinned=3` slip (r96 Mistake 2), and it is a **correction-of-record**
 candidate for the L1, not a claim impact: neither C1 nor C2 reads the census count.
-**Status: still open.** Re-checked after the concurrent lesson edit — `corpus/lessons/round-97.md:89-90` still reads
-"`mori ok`, 42 W04", while the census prints 43 W04 rows (measured again after that edit). The concurrent edit fixed
-F2 but left this count untouched.
+**Status: still open, and now visible inside the lane's own committed bytes.** At the final revision
+`b6d03408` the lesson still reads "`mori ok`, 42 W04" (`corpus/lessons/round-97.md`, §Frontier step) while the
+census receipts committed in the same commit (`evidence/census-before.txt`, `evidence/census-after.txt`) each hold
+43 W04 rows. The concurrent edit that fixed F2 left this count untouched, and the committed
+`## Planned (round 98)` list in `SCORECARD.md` does not mention it.
 
-**F2 — the S628 quote word count was 12, not 14 (CORRECTED concurrently; see status note).** At the landing commit
+**F2 — the S628 quote word count was 12, not 14 (CORRECTED and now committed).** At the landing commit
 `e85ed912`, `corpus/lessons/round-97.md` §Gate said the located quote is "14 words"; the pinned copy's raw lines 6-7
 are 12 whitespace-separated tokens
 (`This repository contains scripts for automatically building the Python documentation on [docs.python.org](https://docs.python.org).`).
 The ≤25-word rule was still met; only the stated count was wrong. Independently reported by `w1/Mo97RevC2.md` §4
-nit 1 and `w1/Mo97ScoutLive.md`. **Status: another seat has since edited the lesson in the worktree** (uncommitted,
-`git status` shows ` M corpus/lessons/round-97.md`) and the cell now reads "…12 words by `wc -w` — the first draft of
-this cell said 14, corrected after seat Mo97ScoutLive §3b…". F2 is therefore closed by that concurrent edit; the
-landing commit still carries the wrong count, so the correction is worth a note in the closure. No claim impact.
+nit 1 and `w1/Mo97ScoutLive.md`. **Status: fixed.** The committed lesson at `b6d03408` now reads "12 words by `wc -w`
+— the first draft of this cell said 14, corrected after seat Mo97ScoutLive §3b", and the lesson carries a
+`quote-length label not counted` mistake row naming the 14-vs-12 slip with the QUALITY 90 ground. Closed; no claim
+impact.
 
-**F3 — an uncommitted `SCORECARD.md` draft already exists in the worktree (not mine).** `git status --porcelain`
-shows ` M SCORECARD.md` and ` M SKILL.md` at HEAD `e85ed912`. The SCORECARD diff already carries a
-`## Round 97 verdict` section and a `## Planned (round 98)` list. The L1 should reconcile its integration with that
-text rather than add a second copy. The `SKILL.md` diff is a post-landing edit to two of the four new registry rows
-(the cgroup row's `--group` note and the drift row's `unresolved` class). **I checked that this edit does not break
-C1**: with the worktree `SKILL.md` substituted into the landing tree, the frozen counter still reads
-`C1=met unregistered=0 registry=met targets_ok=4/4` (exit 0). I did not make or attribute that edit. A concurrent
-`corpus/lessons/round-97.md` edit has also added a `## Wave w1 findings (14 seats)` section; I did not write it.
+**F3 — the L1's own `SCORECARD.md`/`SKILL.md`/lesson edits are now committed (not mine).** At the time of this
+seat's first pass `git status --porcelain` showed ` M SCORECARD.md`, ` M SKILL.md` and
+` M corpus/lessons/round-97.md` at HEAD `e85ed912` — the L1's draft integration, plus the registry-cell corrections
+(the cgroup row's `--group` note and the drift row's `unresolved` class). **I checked that the `SKILL.md` edit does
+not break C1**: with the worktree `SKILL.md` substituted into the landing tree, the frozen counter still read
+`C1=met unregistered=0 registry=met targets_ok=4/4` (exit 0). Those edits are committed in `5497e6f7`; the working
+tree is now clean at `b6d03408`. I did not make or attribute any of them.
 
-**F4 — wave state at the time of writing.** Dispatch `w1-dispatch.json`: 14 seats (2 scout, 2 executor, 2 reviewer,
+**F4 — wave state (final).** Dispatch `w1-dispatch.json`: 14 seats (2 scout, 2 executor, 2 reviewer,
 2 critic, 3 mutation-tester, 1 connector, 1 revenger, 1 scribe; attack seats 7 of 14 by the lane's convention —
 reviewer + critic + mutation-tester, as in r93 6/12 and r94 6/12; the revenger seat is not counted). Validator rc 0
 (`w1-validator.out`: `validator rc=0 (stderr empty); dispatch=w1-dispatch.json tasks=14`). At 18:07 local, 13 report
-files were on disk in `.ufo/waves/round-97/w1/` (12 peers plus this one); **`Mo97ScoutConsider` had not yet written
-its report file**. `w1-results.json` does not exist in the wave directory. Dead-seat accounting is the L1's to settle
-at integration.
+files were on disk in `.ufo/waves/round-97/w1/` (12 peers plus this one); `Mo97ScoutConsider` had not yet written its
+report file. **All 14 report files are now present** and are committed in `5497e6f7`; the working tree is clean at
+`b6d03408`. `w1-results.json` is not in the wave directory — that is the orchestrator-owned file (r96 routed defect
+3, not lane-editable), so no seat-level settlement is mine to read.
 
-**F5 — the L1's integration was already in the worktree while this seat drafted.** At 18:07–18:09 local, `git status`
-showed ` M LOG.md`, ` M SCORECARD.md`, ` M SKILL.md` and ` M corpus/lessons/round-97.md` (all uncommitted, at HEAD
-`e85ed912`), i.e. the L1 had already written its own `## Round 97 — 2026-11-05 …` LOG entry and
-`## Round 97 verdict …` SCORECARD section before this seat's drafts existed. **The L1 must reconcile, not
-double-append**: the draft blocks in §6 and §7 below are a complete alternative formulation (each claim's command,
-the quoted before/after lines and both commit hashes spelled out, the receipts paths, and a seven-item
-`## Planned (round 98)` list). The two texts agree on every measured value (C1 `unmet unregistered=4 …` → `met
-unregistered=0 … targets_ok=4/4`; C2 `unmet … unpinned=3` → `met … targets_ok=3/3 hole_guard=pass`; no score move;
-both verdicts left to the closure) and differ only in phrasing and in that the L1's text adds the wave findings and
-the domain-trial corrections. Where the L1's `## Planned (round 98)` differs from §7 item 7, the census-count
-discrepancy (F1) is not yet in it.
+**F5 — the L1's integration was already in the worktree while this seat drafted; it is now committed.** At
+18:07–18:09 local, `git status` showed ` M LOG.md`, ` M SCORECARD.md`, ` M SKILL.md` and
+` M corpus/lessons/round-97.md` (all uncommitted, at HEAD `e85ed912`), i.e. the L1 had already written its own
+`## Round 97 — 2026-11-05 …` LOG entry and `## Round 97 verdict …` SCORECARD section before this seat's drafts
+existed. **The L1 reconciled rather than double-appended**: the committed `SCORECARD.md` carries one
+`## Round 97 verdict` section and one four-item `## Planned (round 98)` list (`5497e6f7`), and the committed
+`LOG.md` carries one round-97 entry. The two texts agree on every measured value (C1 `unmet unregistered=4 …` →
+`met unregistered=0 … targets_ok=4/4`; C2 `unmet … unpinned=3` → `met … targets_ok=3/3 hole_guard=pass`; no score
+move; both verdicts left to the closure). The committed list differs from my draft §7 in that it does not carry the
+census-count correction (F1). My draft blocks in §6 and §7 stand as the alternative formulation the L1 may draw on;
+nothing in them contradicts the committed text.
+
+**F6 — the final committed revision re-measures both claims as met (confirmation, not a new claim).** The L1's
+`b6d03408` adds `evidence/final-c1.txt` and `evidence/final-c2.txt`, measured at the post-correction revision
+`5497e6f7` (the landing plus the registry cell corrections):
+
+```
+$ git show b6d03408:.ufo/waves/round-97/evidence/final-c1.txt | grep -E '^C1='
+C1=met unregistered=0 registry=met targets_ok=4/4 checks_failed=- root=/fast/scratch/hyaku/mori-r97/l1/final
+exit=0
+$ git show b6d03408:.ufo/waves/round-97/evidence/final-c2.txt | grep -E '^C2='
+C2=met mismatch=0 unpinned=0 targets_ok=3/3 hole_guard=pass live=S615:time-churn,S616:time-churn,S623:time-churn checks_failed=- root=/fast/scratch/hyaku/mori-r97/l1/final
+exit=0
+```
+
+Both final receipts carry the same counter sha256 pins as the freeze (`78a09016…d2a95`, `957a7be6…9a1e91`), so the
+post-landing registry-cell corrections did not move either verdict. The four receipts I quoted in §3
+(`before-c1.txt`, `before-c2.txt`, `landing-c1.txt`, `landing-c2.txt`) are byte-identical to the versions committed
+in `5497e6f7` — I re-checked their `C1=`/`C2=` lines against the committed blobs at `b6d03408`.
 
 ## 6. Draft block 1 — LOG.md entry (append at end of `LOG.md`; L1 to integrate)
 
@@ -380,5 +421,22 @@ Detection and report only. This seat edited no product code, no tool, no corpus 
 counter, no receipt, no `MANIFEST.json`, nothing outside its own report file, and no sibling lane. The two blocks
 above are drafts for the L1 to integrate; the L1 owns the final text, the wave settlement, the dead-seat accounting
 and any correction of record for findings F1 and F2.
+
+**Post-draft state (added when the L1's commits landed after this seat finished).** The lane has since been
+integrated by the L1: `5497e6f7` (wave-1 evidence — all 14 seat reports, the four receipts, the registry cell
+corrections, the lesson, LOG and SCORECARD) and `b6d03408` (final-revision receipts and census before/after). HEAD
+is `b6d03408`, the working tree is clean, and this seat's report file is committed with the wave evidence. The
+L1's committed `## Round 97 verdict` SCORECARD section and round-97 LOG entry agree with the draft blocks in §6 and
+§7 on every measured value. **F1 (the lesson's "42 W04" against the census's own committed 43-row receipts) is
+still open in the committed bytes and is not in the committed `## Planned (round 98)` list** — it is the one item of
+my §7 list the L1's text does not carry, and it is the only thing this seat asks to be carried forward. F2 is
+fixed in the committed lesson. F6 records that the final committed revision re-measures both claims as met.
+
+**Cross-lane incident note.** At ~18:14Z a sibling lane's seat (`ConnectorScope-23`, kake r97) deleted the round
+parent scratch directory `/fast/scratch/hyaku/kake-r97`, removing sibling seats' scratch trees under it. That path
+is the kake lane's; the mori lane's scratch is `/fast/scratch/hyaku/mori-r97`, which was untouched — verified after
+the report: this lane's frozen counter bytes, receipts, lesson, MANIFEST and the committed digests are all intact,
+and this seat's own scratch was already removed on exit. Nothing this seat produced depended on kake scratch. The
+incident is the reporting seat's to route; this seat records only that it did not affect mori.
 
 Report: .ufo/waves/round-97/w1/Mo97ScribeLog.md
