@@ -1,0 +1,2 @@
+C1=unmet cases_ok=0/15 selftest=absent live=absent registry=met sourced=unmet province=unmet checks_failed=selftest,live,sourced,province root=/fast/scratch/hyaku/mori-r98/before/t
+exit=1
