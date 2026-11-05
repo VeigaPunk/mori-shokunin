@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>sysctl(8) - Linux manual page</title>
+    <link rel="stylesheet" type="text/css" href="../../../style.css" title="style" />
+    <link rel="stylesheet" type="text/css" href="../style.css" title="style" />
+</head>
+
+<body>
+
+<div class="page-top"><a id="top_of_page"></a></div>
+<!--%%%TOP_BAR%%%-->
+    <div class="nav-bar">
+        <table class="nav-table">
+            <tr>
+                <td class="nav-cell">
+                    <p class="nav-text">
+                        <a href="../../../index.html">man7.org</a> &gt; Linux &gt; <a href="../index.html">man-pages</a>
+                    </p>
+                </td>
+                <td class="training-cell">
+                    <p class="training-text"><a class="training-link" href="http://man7.org/training/">Linux/UNIX system programming training</a></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+<hr class="nav-end" />
+
+<!--%%%PAGE_START%%%-->
+<h1>sysctl(8) &mdash; Linux manual page</h1>
+
+
+<table class="sec-table">
+<tr>
+    <td>
+        <p class="section-dir">
+<a href="#NAME">NAME</a> | <a href="#SYNOPSIS">SYNOPSIS</a> | <a href="#DESCRIPTION">DESCRIPTION</a> | <a href="#PARAMETERS">PARAMETERS</a> | <a href="#FILES">FILES</a> | <a href="#NOTES">NOTES</a> | <a href="#EXAMPLES">EXAMPLES</a> | <a href="#SEE_ALSO">SEE&nbsp;ALSO</a> | <a href="#REPORTING_BUGS">REPORTING&nbsp;BUGS</a> | <a href="#COLOPHON">COLOPHON</a>
+        </p>
+    </td>
+</tr>
+<tr>
+    <td class="search-box">
+        <div class="man-search-box">
+
+            <form method="get" action="https://www.google.com/search">
+                <fieldset class="man-search">
+                    <input type="text" name="q" size="10" maxlength="255" value="" />
+                    <input type="hidden" name="sitesearch" value="man7.org/linux/man-pages" />
+                    <input type="submit" name="sa" value="Search online pages" />
+                </fieldset>
+            </form>
+
+        </div>
+    </td>
+    <td> </td>
+</tr>
+</table>
+
+<!--%%%TEXT_START%%%-->
+<pre>
+<span class="headline"><i>SYSCTL</i>(8)                System Manager's Manual                <i>SYSCTL</i>(8)</span>
+</pre>
+<h2><a id="NAME" href="#NAME"></a>NAME  &nbsp; &nbsp; &nbsp; &nbsp; <a href="#top_of_page"><span class="top-link">top</span></a></h2><pre>
+       sysctl - configure kernel parameters at runtime
+</pre>
+<h2><a id="SYNOPSIS" href="#SYNOPSIS"></a>SYNOPSIS  &nbsp; &nbsp; &nbsp; &nbsp; <a href="#top_of_page"><span class="top-link">top</span></a></h2><pre>
+       <b>sysctl </b>[<i>option</i> ...] <i>variable</i>[<b>=</b><i>value</i>] ...
+
+       <b>sysctl -p </b><i>file-or-regexp</i> ...
+</pre>
+<h2><a id="DESCRIPTION" href="#DESCRIPTION"></a>DESCRIPTION  &nbsp; &nbsp; &nbsp; &nbsp; <a href="#top_of_page"><span class="top-link">top</span></a></h2><pre>
+       <b>sysctl </b>is used to modify kernel parameters at runtime.  The
+       parameters available are those listed under <i>/proc/sys/</i>.  Procfs is
+       required for <b>sysctl </b>support in Linux.  You can use <b>sysctl </b>to both
+       read and write sysctl data.
+</pre>
+<h2><a id="PARAMETERS" href="#PARAMETERS"></a>PARAMETERS  &nbsp; &nbsp; &nbsp; &nbsp; <a href="#top_of_page"><span class="top-link">top</span></a></h2><pre>
+       <i>variable</i>
+              The name of a key to read from.  An example is
+              kernel.ostype.  The '/' separator is also accepted in place
+              of a '.'.
+
+       <i>variable</i>=<i>value</i>
+              To set a key, use the form <i>variable</i>=<i>value</i> where <i>variable</i> is
+              the key and <i>value</i> is the value to set it to.  If the value
+              contains quotes or characters which are parsed by the
+              shell, you may need to enclose the value in double quotes.
+
+       <b>-n</b>, <b>--values</b>
+              Use this option to disable printing of the key name when
+              printing values.
+
+       <b>-e</b>, <b>--ignore</b>
+              Use this option to ignore errors about unknown keys.
+
+       <b>-N</b>, <b>--names</b>
+              Use this option to only print the names.  It may be useful
+              with shells that have programmable completion.
+
+       <b>-q</b>, <b>--quiet</b>
+              Use this option to not display the values set to stdout.
+
+       <b>-w</b>, <b>--write</b>
+              Force all arguments to be write arguments and print an
+              error if they cannot be parsed this way.
+
+       <b>-p</b>[<i>FILE</i>], <b>--load</b>[=<i>FILE</i>]
+              Load in <b>sysctl </b>settings from the file specified or
+              <i>/etc/sysctl.conf</i> if none given.  Specifying - as filename
+              means reading data from standard input. Using this option
+              will mean arguments to <b>sysctl </b>are files, which are read in
+              the order they are specified.  The file argument may be
+              specified as regular expression.
+
+       <b>-a</b>, <b>--all</b>
+              Display all values currently available except deprecated
+              and verboten parameters.
+
+       <b>--deprecated</b>
+              Include deprecated parameters to <b>--all </b>values listing.
+
+       <b>-b</b>, <b>--binary</b>
+              Print value without new line.
+
+       <b>--system</b>
+              Load settings from all system configuration files. See the
+              <b>SYSTEM FILE PRECEDENCE </b>section below.
+
+       <b>-r</b>, <b>--pattern </b><i>pattern</i>
+              Only apply settings that match <i>pattern</i>.  The <i>pattern</i> uses
+              extended regular expression syntax.
+
+       <b>-A     </b>Alias of <b>-a</b>
+
+       <b>-d     </b>Alias of <b>-h</b>
+
+       <b>-f     </b>Alias of <b>-p</b>
+
+       <b>-X     </b>Alias of <b>-a</b>
+
+       <b>-o     </b>Does nothing, exists for BSD compatibility.
+
+       <b>-x     </b>Does nothing, exists for BSD compatibility.
+
+       <b>-h</b>, <b>--help</b>
+              Display help text and exit.
+
+       <b>-V</b>, <b>--version</b>
+              Display version information and exit.
+</pre>
+<h2><a id="FILES" href="#FILES"></a>FILES  &nbsp; &nbsp; &nbsp; &nbsp; <a href="#top_of_page"><span class="top-link">top</span></a></h2><pre>
+       <i>/proc/sys</i>
+       <i>/etc/sysctl.d/</i>*<i>.conf</i>
+       <i>/run/sysctl.d/</i>*<i>.conf</i>
+       <i>/usr/local/lib/sysctl.d/</i>*<i>.conf</i>
+       <i>/usr/lib/sysctl.d/</i>*<i>.conf</i>
+       <i>/lib/sysctl.d/</i>*<i>.conf</i>
+       <i>/etc/sysctl.conf</i>
+</pre>
+<h2><a id="NOTES" href="#NOTES"></a>NOTES  &nbsp; &nbsp; &nbsp; &nbsp; <a href="#top_of_page"><span class="top-link">top</span></a></h2><pre>
+   <b>System file precedence</b>
+       When using the <b>--system </b>option, <b>sysctl </b>will read files from
+       directories in the following list in given order from top to
+       bottom. Once a file of a given filename is loaded, any file of the
+       same name in subsequent directories is ignored.
+
+       <i>/etc/sysctl.d/</i>*<i>.conf</i>
+       <i>/run/sysctl.d/</i>*<i>.conf</i>
+       <i>/usr/local/lib/sysctl.d/</i>*<i>.conf</i>
+       <i>/usr/lib/sysctl.d/</i>*<i>.conf</i>
+       <i>/lib/sysctl.d/</i>*<i>.conf</i>
+
+       All configuration files are sorted in lexicographic order,
+       regardless of the directory they reside in. Configuration files
+       can either be completely replaced (by having a new configuration
+       file with the same name in a directory of higher priority) or
+       partially replaced (by having a configuration file that is ordered
+       later).
+
+       The file <i>/etc/sysctl.conf</i> is read last which means it can
+       replace/override any parameters previously set in files in the
+       listed directories.
+
+   <b>Deprecated parameters</b>
+       The <b>base_reachable_time </b>and <b>retrans_time </b>are deprecated.  The
+       <b>sysctl </b>command does not allow changing values of these parameters.
+       Users who insist to use deprecated kernel interfaces should push
+       values to <b>/proc </b>file system by other means.  For example:
+
+       echo 256 &gt; /proc/sys/net/ipv6/neigh/eth0/base_reachable_time
+
+   <b>Verboten parameters</b>
+       Certain kernel parameters should not be read due to side-effects
+       and will be skipped by <b>sysctl </b>using the <b>--all </b>option.
+
+       <b>stat_refresh</b>
+              This parameter returns no value but flushes per-cpu vm
+              statistics.
+</pre>
+<h2><a id="EXAMPLES" href="#EXAMPLES"></a>EXAMPLES  &nbsp; &nbsp; &nbsp; &nbsp; <a href="#top_of_page"><span class="top-link">top</span></a></h2><pre>
+       /sbin/sysctl -a
+       /sbin/sysctl -n kernel.hostname
+       /sbin/sysctl -w kernel.domainname="example.com"
+       /sbin/sysctl -p/etc/sysctl.conf
+       /sbin/sysctl -a --pattern forward
+       /sbin/sysctl -a --pattern forward$
+       /sbin/sysctl -a --pattern 'net.ipv4.conf.(eth|wlan)0.arp'
+       /sbin/sysctl --pattern '^net.ipv6' --system
+</pre>
+<h2><a id="SEE_ALSO" href="#SEE_ALSO"></a>SEE ALSO  &nbsp; &nbsp; &nbsp; &nbsp; <a href="#top_of_page"><span class="top-link">top</span></a></h2><pre>
+       <a href="../man5/proc.5.html">proc(5)</a>, <a href="../man5/sysctl.conf.5.html">sysctl.conf(5)</a>, <a href="../man7/regex.7.html">regex(7)</a>
+</pre>
+<h2><a id="REPORTING_BUGS" href="#REPORTING_BUGS"></a>REPORTING BUGS  &nbsp; &nbsp; &nbsp; &nbsp; <a href="#top_of_page"><span class="top-link">top</span></a></h2><pre>
+       Please send bug reports to ⟨procps@freelists.org⟩.
+</pre>
+<h2><a id="COLOPHON" href="#COLOPHON"></a>COLOPHON  &nbsp; &nbsp; &nbsp; &nbsp; <a href="#top_of_page"><span class="top-link">top</span></a></h2><pre>
+       This page is part of the <i>procps-ng</i> (/proc filesystem utilities)
+       project.  Information about the project can be found at 
+       ⟨<a href="https://gitlab.com/procps-ng/procps">https://gitlab.com/procps-ng/procps</a>⟩.  If you have a bug report
+       for this manual page, see
+       ⟨<a href="https://gitlab.com/procps-ng/procps/blob/master/Documentation/bugs.md">https://gitlab.com/procps-ng/procps/blob/master/Documentation/bugs.md</a>⟩.
+       This page was obtained from the project's upstream Git repository
+       ⟨<a href="https://gitlab.com/procps-ng/procps.git">https://gitlab.com/procps-ng/procps.git</a>⟩ on 2026-08-04.  (At that
+       time, the date of the most recent commit that was found in the
+       repository was 2026-07-30.)  If you discover any rendering
+       problems in this HTML version of the page, or you believe there is
+       a better or more up-to-date source for the page, or you have
+       corrections or improvements to the information in this COLOPHON
+       (which is <i>not</i> part of the original manual page), send a mail to
+       man-pages@man7.org
+
+<span class="footline">procps-ng                       2024-07-19                      <i>SYSCTL</i>(8)</span>
+</pre>
+
+<hr class="end-man-text" />
+<p>Pages that refer to this page:
+    <a href="../man1/perfalloc.1.html">perfalloc(1)</a>,&nbsp;
+    <a href="../man1/pmdadarwin.1.html">pmdadarwin(1)</a>,&nbsp;
+    <a href="../man1/pmdaperfevent.1.html">pmdaperfevent(1)</a>,&nbsp;
+    <a href="../man5/coredump.conf.5.html">coredump.conf(5)</a>,&nbsp;
+    <a href="../man5/lxc.container.conf.5.html">lxc.container.conf(5)</a>,&nbsp;
+    <a href="../man5/proc.5.html">proc(5)</a>,&nbsp;
+    <a href="../man5/sysctl.conf.5.html">sysctl.conf(5)</a>,&nbsp;
+    <a href="../man5/sysctl.d.5.html">sysctl.d(5)</a>,&nbsp;
+    <a href="../man8/flowtop.8.html">flowtop(8)</a>,&nbsp;
+    <a href="../man8/systemd-coredump.8.html">systemd-coredump(8)</a>,&nbsp;
+    <a href="../man8/systemd-sysctl.service.8.html">systemd-sysctl.service(8)</a>
+</p>
+<hr/>
+
+ 
+<hr class="start-footer" />
+
+<div class="footer">
+
+<table class="colophon-table">
+    <tr>
+    <td class="pub-info">
+        <p>
+            HTML rendering created 2026-09-09
+            by <a href="https://man7.org/mtk/index.html">Michael Kerrisk</a>,
+            author of
+            <a href="https://man7.org/tlpi/"><em>The Linux Programming Interface</em></a>.
+        </p>
+        <p>
+            For details of in-depth
+            <strong>Linux/UNIX system programming training courses</strong>
+            that I teach, look <a href="https://man7.org/training/">here</a>.
+        </p>
+        <p>
+            Hosting by <a href="https://www.jambit.com/index_en.html">jambit GmbH</a>.
+        </p>
+    </td>
+    <td class="colophon-divider">
+    </td>
+    <td class="tlpi-cover">
+        <a href="https://man7.org/tlpi/"><img src="https://man7.org/tlpi/cover/TLPI-front-cover-vsmall.png" alt="Cover of TLPI" /></a>
+    </td>
+    </tr>
+</table>
+
+</div>
+
+<hr class="end-footer" />
+
+
+
+<!--BEGIN-SITETRACKING-->
+<!-- SITETRACKING.man7.org_linux_man-pages -->
+
+<!-- Default Statcounter code for man7.org/linux/man-pages
+http://www.man7.org/linux/man-pages -->
+<script type="text/javascript">
+var sc_project=7422636;
+var sc_invisible=1;
+var sc_security="9b6714ff";
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="Web Analytics
+Made Easy - StatCounter" href="https://statcounter.com/"
+target="_blank"><img class="statcounter"
+src="https://c.statcounter.com/7422636/0/9b6714ff/1/"
+alt="Web Analytics Made Easy -
+StatCounter"></a></div></noscript>
+<!-- End of Statcounter Code -->
+
+
+
+<!-- Start of Google Analytics Code -->
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-9830363-8']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- End of Google Analytics Code -->
+
+<!--END-SITETRACKING-->
+
+</body>
+</html>

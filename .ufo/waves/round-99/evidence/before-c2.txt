@@ -1,0 +1,8 @@
+axis coverage expect=round_98 pointer=missing
+axis operability expect=round_97 pointer=missing
+axis depth expect=round_86 pointer=missing
+axis freshness expect=round_97 pointer=missing
+axis calibration expect=round_98 pointer=missing
+axis adjacency expect=round_19 pointer=ok
+C2=unmet mismatches=5 cells_unchanged=yes gate=rc1 mismatched_axes=coverage,operability,depth,freshness,calibration rev=73308ff6e5c9
+exit=1

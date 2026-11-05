@@ -1,0 +1,2 @@
+C1=unmet cases_ok=24/60 seed=104000810118508 selftest=ok live=ok(limit=122865,used_lb=6,state=ok) incident=ok registry=met sourced=unmet checks_failed=battery,sourced
+exit=1
