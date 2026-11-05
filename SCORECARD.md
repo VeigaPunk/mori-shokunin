@@ -4609,3 +4609,67 @@ expectation-met, not gate behaviour (legibility defect, carried).
    lane path).
 4. **depth** — the dated full-census snapshot for the r86 value channel
    (`differs`/`masked`/`absent`), carried from rounds 86, 88 and 89.
+
+## Round 90 (2026-11-05, L1 MoriR90, resumed attempt) — branch reachability in the receipt gate, the three neighbouring arms, and a frozen arm-count that had to be merged
+
+Entering `d1c8488986512a6a0475af88cc52779ce4703e00` (the commit that preserved attempt 1's
+in-flight round-90 files; it adds only `.ufo/waves/round-90/`, and every graded subject is
+byte-identical to the frozen contract's entering `037c02ca`). Frozen contract
+`.ufo/waves/round-90/contract.md`; do-nothing, blanket-refusal and label-only controls in
+`evidence/controls-r90.txt` before any after-value. Axes: **operability** (C1, score 7) and
+**calibration** (C2, score 5 — tied lowest non-retired with depth 5 and freshness 5, so the
+stagnation nudge does not waive it). No score moves; both axes graded improved.
+
+| Claim | Axis | Counting command | Before `037c02ca` | After `11197820` |
+|---|---|---|---|---|
+| C1 the round-87 receipt gate refuses the non-executing-branch class (8 frozen ids) with `harm=0` on the 78-case population and `branch_open=0` on the round-90 held-out battery | operability | `python3 -I .ufo/waves/round-90/count-c1.py <rev> --repo <clone>` | `C1=unmet branch_open=8 harm=0 newopen=0 open=30 cases=78`; battery absent | `C1=met branch_open=0 harm=0 newopen=0 open=22 cases=78`; `BATTERY cases=18 branch_cases=14 branch_open=0 harm=0 newopen=0` |
+| C2 the three round-89 neighbouring survivors are killed with attributed and isolated FAIL sets (B1 `own_ok_arm_count`, B4 `met_line_call_site`, B6 `clone_root_negative`) | calibration | `python3 -I .ufo/waves/round-90/count-c2.py <rev> --repo <clone>` | `C2=unmet mutants=15 killed=12 survivors=3 … arms=28,26` | `C2=met mutants=15 killed=15 survivors=0 unattributed=0 unanchored=0 isolated=0 literal_anchors=0 arms=29,27` |
+
+Receipt `.ufo/waves/round-90/evidence/after-r90.txt` (both counters, before and after, one clone,
+`# rev:`/`# counter-sha256:`/`# subject-sha256:` pinned). Landing commit `11197820` carries the
+three subjects and the battery; the gate's own selftest stays at **26 arms** (the r88/r89 `arms=26`
+pins are not moved). Verdicts: **operability improved**, **calibration improved**; coverage, depth,
+freshness and adjacency unchanged (no claim).
+
+Named limits (measured, not waived): the 22 provenance-class counterfeits stay bound and are
+reported, never targeted (functions, `PATH`/interpreter substitution, `sitecustomize`, blob
+overwrite, heredoc data, `uv run -m`, `bash -n`, `cat`/`$0`, absolute tokens, command substitution
+inside an `echo`/`printf` operand). Seat `Mo90C01Critic` measured that a 21-string lookup table
+reaches P-C1's frozen line (`C1=met` at `3c73e6562793`): the graded interface is the recorded text
+only, so the predicate cannot separate a rule from a table, and the battery's `class` field is its
+author's word. The landed rule is a grammar walk, and the round's own harm batteries plus the r89
+`noharm`/`heldout` batteries were re-run against it (`harm=0`), but the discrimination is assurance,
+not predicate. QUALITY 191 routes a counter-synthesized (nonce) guard to r91.
+
+Frozen-constant defect, disclosed: P-C2 froze `arms=29,27` (one arm per declared mutant), but B4
+and B6 are both subjects of the r88 count-c2, so a correct landing there is 28. The landing merges
+the only two mutation-free constant pins (`arms_pinned`: `SUBJECT_ARMS == 26`; `marker_literal`:
+the `missing-replay` label) into one `frozen_constants` arm that keeps both assertions —
+26 + 2 − 1 = 27 with no assertion lost and no declared mutant touched. Measured alternative
+(`Mo90C01Critic` §2): deleting `marker_literal` outright also reaches 27; the merge is strictly
+stronger. QUALITY 190.
+
+The two new r88 arms are **structural** pins, not behavioural ones: a behavioural negative on
+`own_ok_of`/`clone_root_ok` also reds under the frozen `C1-own-ok` / `C2-clone-top` blunter mutants
+and turns their kills into `isolated` (measured; QUALITY 192). What a structural pin leaves open is
+every reformatting-equivalent defect.
+
+### Demonstrated instruments (round 90)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| `invocations_visited` reachability pre-pass in the receipt gate | refuse a bound path in a command position the recorded text proves cannot execute: AND-OR short circuit from a literal status, sequencing after `exit`/`return`, unselected `if`/`elif`/`else` bodies, subshell status, `!`, non-iterating loops, statements after `break`, unmatched literal `case` arms | `.ufo/waves/round-87/count-c2.py`; `corpus/knowledge/branch-reachability-r90.md`; `evidence/after-r90.txt` | round 90 |
+| held-out branch battery `.ufo/waves/round-90/battery/branch-heldout.json` | 18 cases (14 branch rejects of shapes the eight frozen ids do not use, 4 provenance `met` cases that must still bind) written by a seat that did not see the rule; the frozen C1 predicate reads `branch_cases >= 12` from it | seat `w1/Mo90E04Battery.md`; `evidence/after-r90.txt` | round 90 |
+
+## Planned (round 91)
+
+1. **operability** — C1's discrimination: a counter-synthesized guard (template + per-run nonce)
+   so the class claim cannot be met by a lookup table (QUALITY 191); carry the 22 provenance-class
+   counterfeits as reported, never targeted.
+2. **calibration** — arm the r87 gate's still-unarmed clauses and the `./`-spelled counterfeits the
+   round-90 reviewer measured beyond the population (`bash -c 'exit 0' <path>`, a function
+   defined-then-`exit 0` before the path); keep the structural-pin caveat with each.
+3. **freshness** — the dated full-census snapshot for the r86 value channel
+   (`differs`/`masked`/`absent`), carried from rounds 86, 88, 89 and 90.
+4. **depth** — the r89 counters' `28/26` subject pins are superseded by this landing; record the
+   supersession in `corpus/README.md` frontier rather than editing the frozen receipts.

@@ -2208,3 +2208,34 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
       `7715bb56` reads `harm=0 newopen=0 open=30 gained=2` on the same 78 cases and `harm=0
       open=0 gained=3` on the 34-case battery. Not covered: a battery is still a fixed case set —
       `open=30` is not a census of shell syntax, and no static rule proves the blob ran.
+
+## Criteria added round 90 — an after-constant is re-derived from a landing, a class guard needs inputs its author cannot read, and a negative arm is structural when a blunter mutant exists
+
+190. A frozen after-constant (an arm count, a population size, a printed tally) is re-derived from a
+     candidate landing **before** the predicate freezes; a constant copied from a plan is not a
+     measurement, and the counter's own pristine check can only be exercised once the landing
+     exists. Ground: `corpus/lessons/round-90.md`, `## Mistakes`
+     (`frozen-after-constant-unreachable`); `.ufo/waves/round-90/contract.md` P-C2 froze
+     `arms=29,27` while B4 and B6 are both subjects of `.ufo/waves/round-88/count-c2.py`, so a
+     correct landing is 29,28 and the frozen `pristine-arms` check makes every kill ungradeable.
+     Shown able to fail: the first integrated candidate reads `C2=unmet … arms=29,28` with all
+     fifteen mutants killed; the landed tree reads `arms=29,27` only after the two mutation-free
+     constant pins are merged into one arm with both assertions kept.
+191. A class claim's guard needs inputs the rule's author cannot read. A battery committed in the
+     same revision as the rule is a list the rule can be written against, so the predicate must
+     check rule shape, or the guard must be generated at grade time (a template plus a per-run
+     nonce), never a JSON file beside the rule. Ground: `.ufo/waves/round-90/w1/Mo90C01Critic.md`
+     §1 (`C1=met` reached by a 21-string lookup wrapper at `3c73e6562793`) and
+     `corpus/lessons/round-90.md`, `## Mistakes` (`class-target-reachable-by-a-lookup-table`).
+     Shown able to fail: the lookup wrapper reaches the frozen line unchanged; the landed grammar
+     walk reaches it only by refusing the classes it models.
+192. When a frozen mutant blunts a whole helper (`return (True or …)`, `return True`), no
+     behavioural negative on that helper can kill it in isolation — every negative arm fails under
+     the blunter mutant too. Arm it structurally (parse the source, pin the shape), say in the
+     arm's docstring that a structural pin is not a semantic proof, and record what it leaves open.
+     Ground: `.ufo/waves/round-90/w1/Mo90C01Critic.md` §2 and the measured
+     `isolated … fails=own_ok_arm_count,own_ok_red` / `isolated … fails=clone_root_negative,
+     clone_top_bound`; `corpus/lessons/round-90.md`, `## Mistakes`
+     (`behavioural-negative-arm-collides-with-a-blunter-mutant`). Shown able to fail: the
+     first-pass behavioural arms read `isolated=2` (`C2=unmet`); the landed structural pins read
+     `killed=15 isolated=0`.

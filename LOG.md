@@ -5622,3 +5622,39 @@ unchanged. No score moved. Sources: S607/S609/S610/S611 admitted, S608 rejected 
 `corpus/lessons/round-89.md` (`## Mistakes` and `## Mistakes (repair 2)`), all with able-to-fail
 fixes. `considerthese/2026-10-26.md` suggestion 2 landed as the carry-over ledger in the lesson.
 No new L0 question; the mori r65/r73 instrument ruling and r61 assimilation questions stand.
+
+## Round 90 — 2026-11-05 (L1 MoriR90, resumed attempt)
+
+Entering `d1c8488986512a6a0475af88cc52779ce4703e00` (attempt 1's in-flight round-90 files preserved
+after its L1 died on a provider failure; every graded subject is byte-identical to the contract's
+`037c02ca`). Two frozen claims (contract `.ufo/waves/round-90/contract.md`; controls before data
+`evidence/controls-r90.txt`), distinct axes, both verified on committed bytes at `11197820`:
+
+- **C1 operability — the r87 receipt gate refuses the non-executing-branch class.** A subtract-only
+  reachability pre-pass (`invocations_visited`) walks the recorded command once: AND-OR short
+  circuit from a literal status (`false &&`, `true ||`, `: ||`, `printf … ||`), sequencing after a
+  literal `exit`/`return` in the same environment, unselected `if`/`elif`/`else` bodies, subshell
+  status propagation (`(exit 3) && …`), `!` negation, loops that cannot iterate (`while false`,
+  `until true`, `for v in` with no words), statements after `break`/`continue`, and an unmatched
+  literal `case` arm. Glued control tokens (`);`, `)||`, `)&`) are split first, so a subshell's
+  terminator never ends its parent (the reviewer's measured harm class). Entering
+  `C1=unmet branch_open=8 harm=0 newopen=0 open=30 cases=78` rc 1 → `C1=met branch_open=0 harm=0
+  newopen=0 open=22 cases=78` rc 0, plus a first eval of the round-90 held-out battery
+  `BATTERY cases=18 branch_cases=14 branch_open=0 harm=0 newopen=0`. The gate's own selftest stays
+  at 26 arms, so the r88/r89 `arms=26` pins are not moved.
+- **C2 calibration — the three round-89 neighbouring survivors armed with isolated kills.**
+  `.ufo/waves/round-88/count-c1.py` 28 → 29 arms (`own_ok_arm_count`) and `count-c2.py` 26 → 27
+  (`met_line_call_site`, `clone_root_negative`, with the two mutation-free constant pins merged into
+  `frozen_constants`). Entering `C2=unmet mutants=15 killed=12 survivors=3 … arms=28,26` rc 1 →
+  `C2=met mutants=15 killed=15 survivors=0 unattributed=0 unanchored=0 isolated=0
+  literal_anchors=0 arms=29,27` rc 0.
+- **Frontier** — S612–S616 admitted (POSIX 2.9.3/2.9.4.4/2.15, Python ast/tokenize; opened by seat
+  Mo90S01Sources, quotes re-checked by the L1 against the pinned copies), knowledge
+  `corpus/knowledge/branch-reachability-r90.md`, QUALITY 190–192, lesson
+  `corpus/lessons/round-90.md` (four mistakes mined; assimilation `none`).
+- **Wave** — one v1 wave, 13 seats (4 executor, 1 scout, 2 scribe, 2 reviewer, 1 critic,
+  1 mutation-tester, 1 connector, 1 sentinel; attack share 5/13); L1 holds the planner seat and the
+  planning data-walk rode `Mo90K01Conn`.
+- **Disclosed** — the frozen `arms=29,27` was unreachable without merging two constant pins (two
+  count-c2 subjects carry two labels); the critic measured that a 21-string lookup table also
+  reaches P-C1's line, so the predicate grades verdicts, not rule shape (QUALITY 190/191).
