@@ -1,0 +1,18 @@
+K0 expect=unmet got=unmet AS_EXPECTED | C1=unmet cases_ok=23/50 families_failed=A1-auth-status,A2-auth-spelling,A3-auth-escaped,A4-auth-status-composed,A5-auth-spelling-composed,Z1-zai-unmapped-auth selftest=ok r17gate=ok registry=unmet sourced=unmet checks_failed=battery,registry,sourced seed=100 tool_rc=1
+K1 expect=unmet got=unmet AS_EXPECTED | C1=unmet cases_ok=39/50 families_failed=N3-other-stays,N5-other-composed selftest=rc1 r17gate=rc1 registry=met sourced=met(S637,S638) checks_failed=battery,selftest,r17gate seed=100 tool_rc=1
+K2 expect=unmet got=unmet AS_EXPECTED | C1=unmet cases_ok=36/50 families_failed=A2-auth-spelling,A3-auth-escaped,A5-auth-spelling-composed selftest=rc1 r17gate=ok registry=met sourced=met(S637,S638) checks_failed=battery,selftest seed=100 tool_rc=1
+K3 expect=unmet got=unmet AS_EXPECTED | C1=unmet cases_ok=37/50 families_failed=A1-auth-status,A4-auth-status-composed,Z1-zai-unmapped-auth selftest=rc1 r17gate=ok registry=met sourced=met(S637,S638) checks_failed=battery,selftest seed=100 tool_rc=1
+K4 expect=unmet got=unmet AS_EXPECTED | C1=unmet cases_ok=43/50 families_failed=N1-quota-wins,N2-rate-wins selftest=rc1 r17gate=ok registry=met sourced=met(S637,S638) checks_failed=battery,selftest seed=100 tool_rc=1
+K5 expect=unmet got=unmet AS_EXPECTED | C1=unmet cases_ok=39/50 families_failed=A2-auth-spelling,A3-auth-escaped,A4-auth-status-composed,A5-auth-spelling-composed,Z1-zai-unmapped-auth selftest=ok r17gate=ok registry=met sourced=met(S637,S638) checks_failed=battery seed=100 tool_rc=1
+K6 expect=unmet got=unmet AS_EXPECTED | C1=unmet cases_ok=50/50 families_failed=- selftest=ok r17gate=ok registry=met sourced=unmet checks_failed=sourced seed=100 tool_rc=1
+K7 expect=unmet got=unmet AS_EXPECTED | C1=unmet cases_ok=50/50 families_failed=- selftest=ok r17gate=rc1 registry=met sourced=met(S637,S638) checks_failed=r17gate seed=100 tool_rc=1
+K8 expect=unmet got=unmet AS_EXPECTED | C1=unmet cases_ok=50/50 families_failed=- selftest=ok r17gate=ok registry=unmet sourced=met(S637,S638) checks_failed=registry seed=100 tool_rc=1
+P1 expect=met got=met AS_EXPECTED | C1=met cases_ok=50/50 families_failed=- selftest=ok r17gate=ok registry=met sourced=met(S637,S638) checks_failed=- seed=100 tool_rc=1
+K0c expect=unmet got=unmet AS_EXPECTED | C2=unmet stated=58 mismatches=7 uncorrected=7 spurious=0 altered=0 census=ok checks_failed=mismatch base=d1bd1b33
+K1c expect=unmet got=unmet AS_EXPECTED | C2=unmet stated=45 mismatches=0 uncorrected=0 spurious=0 altered=5 census=ok checks_failed=altered base=d1bd1b33
+K2c expect=unmet got=unmet AS_EXPECTED | C2=unmet stated=58 mismatches=7 uncorrected=7 spurious=0 altered=0 census=ok checks_failed=mismatch base=d1bd1b33
+K3c expect=unmet got=unmet AS_EXPECTED | C2=unmet stated=58 mismatches=7 uncorrected=0 spurious=27 altered=0 census=ok checks_failed=spurious base=d1bd1b33
+K4c expect=unmet got=unmet AS_EXPECTED | C2=unmet stated=58 mismatches=0 uncorrected=0 spurious=0 altered=5 census=ok checks_failed=altered base=d1bd1b33
+K5c expect=unmet got=unmet AS_EXPECTED | C2=unmet stated=58 mismatches=7 uncorrected=6 spurious=2 altered=0 census=ok checks_failed=mismatch,spurious base=d1bd1b33
+P2 expect=met got=met AS_EXPECTED | C2=met stated=58 mismatches=7 uncorrected=0 spurious=0 altered=0 census=ok checks_failed=- base=d1bd1b33
+CONTROLS_DONE unexpected=0 rev=d1bd1b339b894de0249b0f60702dff9962da88d9 seed=100

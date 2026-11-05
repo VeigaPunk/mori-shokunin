@@ -1,0 +1,15 @@
+# 2026-11-05T23:10:13Z entering d1bd1b33 archive -> python3 count-c1.py --root DIR --seed 100
+C1=unmet cases_ok=23/50 families_failed=A1-auth-status,A2-auth-spelling,A3-auth-escaped,A4-auth-status-composed,A5-auth-spelling-composed,Z1-zai-unmapped-auth selftest=ok r17gate=ok registry=unmet sourced=unmet checks_failed=battery,registry,sourced seed=100 tool_rc=1
+  miss C009:A2-auth-spelling:want=dead_auth:got=dead_error_other
+  miss C035:A4-auth-status-composed:want=dead_auth:got=dead_error_other
+  miss C005:A1-auth-status:want=dead_auth:got=dead_error_other
+  miss C013:A2-auth-spelling:want=dead_auth:got=dead_error_other
+  miss C037:A5-auth-spelling-composed:want=dead_auth:got=dead_error_other
+  miss C006:A1-auth-status:want=dead_auth:got=dead_error_other
+  miss C018:A3-auth-escaped:want=dead_auth:got=dead_error_other
+  miss C016:A2-auth-spelling:want=dead_auth:got=dead_error_other
+  miss C039:A5-auth-spelling-composed:want=dead_auth:got=dead_error_other
+  miss C010:A2-auth-spelling:want=dead_auth:got=dead_error_other
+  miss C011:A2-auth-spelling:want=dead_auth:got=dead_error_other
+  miss C040:A5-auth-spelling-composed:want=dead_auth:got=dead_error_other
+exit=1

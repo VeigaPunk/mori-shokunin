@@ -1,0 +1,12 @@
+# 2026-11-05T23:00:43Z python3 .ufo/waves/round-100/probe-live-errors.py ~/.omp/agent/sessions/-Projects-shokunin 2
+files_read 4812 window_days 2.0
+194 status=402 r99_class=dead_quota -
+149 status=401 r99_class=dead_error_other auth-evidence
+114 status=429 r99_class=dead_rate_limit -
+60 status=None r99_class=dead_quota -
+39 status=429 r99_class=dead_quota -
+32 status=None r99_class=dead_error_other auth-evidence
+6 status=403 r99_class=dead_error_other auth-evidence
+3 status=None r99_class=dead_error_other -
+r99_dead_error_other 190 of_which_auth_evidence 187
+exit=0

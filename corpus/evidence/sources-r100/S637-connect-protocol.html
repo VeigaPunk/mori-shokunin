@@ -1,0 +1,787 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-g5ptsecz"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Connect Protocol Reference | Connect</title><link rel="canonical" href="https://connectrpc.com/docs/protocol/"/><link rel="sitemap" href="/sitemap-index.xml"/><script src="https://cdn.usefathom.com/script.js" data-site="BWSMOXXQ" data-spa="auto" defer></script><link rel="shortcut icon" href="/img/fav@2x.png" type="image/png"/><meta name="generator" content="Astro v7.4.4"/><meta name="generator" content="Starlight v0.42.8"/><meta property="og:title" content="Connect Protocol Reference"/><meta property="og:type" content="article"/><meta property="og:url" content="https://connectrpc.com/docs/protocol/"/><meta property="og:locale" content="en"/><meta property="og:description" content="The Connect protocol specification: unary and streaming RPCs over HTTP, with full examples and error codes."/><meta property="og:site_name" content="Connect"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="The Connect protocol specification: unary and streaming RPCs over HTTP, with full examples and error codes."/><link rel="preload" as="font" type="font/woff2" href="/_astro/dm-mono-latin-400-normal.4GdczIuU.woff2" crossorigin><link rel="preload" as="font" type="font/woff2" href="/_astro/inter-latin-400-normal.C38fXH4l.woff2" crossorigin><style>
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: optional;
+  src: url('/_astro/dm-mono-latin-400-normal.4GdczIuU.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: optional;
+  src: url('/_astro/inter-latin-400-normal.C38fXH4l.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 400;
+  font-display: optional;
+  src: url('/_astro/inter-latin-400-italic.D1l0FflY.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: optional;
+  src: url('/_astro/inter-latin-700-normal.Yt3aPRUw.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 700;
+  font-display: optional;
+  src: url('/_astro/inter-latin-700-italic.BsEzapPQ.woff2') format('woff2');
+}
+</style><meta property="og:site_name" content="Protobuf RPC that works"><meta property="og:type" content="website"><meta property="og:image" content="https://connectrpc.com/img/og@2x.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://connectrpc.com/img/og@2x.png"><meta name="twitter:domain" content="connectrpc.com"><meta name="twitter:url" content="https://connectrpc.com"><meta name="twitter:title" content="Connect"><meta name="twitter:description" content="Simple, reliable, interoperable: Protobuf RPC that works."><script type="application/ld+json">{"@context":"https://schema.org/","@type":"WebSite","name":"Protobuf RPC that works","url":"https://connectrpc.com/"}</script><!-- Strip shell prompts and command output from copy buttons inside
+     Expressive Code terminal frames. EC stores the clipboard text in
+     data-code (newlines encoded as \x7F). For terminal frames we keep only
+     lines that start with "$ " (the actual command, with the prompt removed)
+     plus their backslash-continuations.
+     See https://github.com/expressive-code/expressive-code/discussions/372 --><script>
+  function processTerminalCopyButtons() {
+    document
+      .querySelectorAll('.is-terminal .copy button[data-code]:not([data-processed])')
+      .forEach(function (button) {
+        button.dataset.processed = '';
+        var decoded = button.dataset.code.replace(/\x7f/g, '\n');
+        var commandLines = [];
+        var inContinuation = false;
+        decoded.split('\n').forEach(function (line) {
+          if (/^\s*\$ /.test(line)) {
+            var stripped = line.replace(/^\s*\$ /, '');
+            commandLines.push(stripped);
+            inContinuation = /\\\s*$/.test(stripped);
+          } else if (inContinuation) {
+            commandLines.push(line);
+            inContinuation = /\\\s*$/.test(line);
+          }
+        });
+        button.dataset.code = commandLines.join('\n').replace(/\n/g, '\x7f');
+      });
+  }
+  document.addEventListener('astro:page-load', processTerminalCopyButtons);
+  document.addEventListener('DOMContentLoaded', processTerminalCopyButtons);
+</script><script>
+  !(function (key) {
+    if (window.reb2b) return;
+    window.reb2b = { loaded: true };
+    var s = document.createElement("script");
+    s.async = true;
+    s.src =
+      "https://b2bjsstore.s3.us-west-2.amazonaws.com/b/" + key + "/" + key + ".js.gz";
+    document
+      .getElementsByTagName("script")[0]
+      .parentNode.insertBefore(s, document.getElementsByTagName("script")[0]);
+  })("1LNKLDHDJYOJ");
+</script><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/_astro/print.ehPL0gv-.css" media="print"><link rel="stylesheet" href="/_astro/middleware.WDQYc2Zz.css"><style>@layer starlight.components{svg:where(.astro-hkc32dio){color:var(--sl-icon-color);font-size:var(--sl-icon-size,1em);width:1em;height:1em;overflow:visible}}
+@layer starlight.components{starlight-tabs:where(.astro-scn3uvmv){display:block}.tablist-wrapper:where(.astro-scn3uvmv){overflow-x:auto}:where(.astro-scn3uvmv)[role=tablist]{border-bottom:2px solid var(--sl-color-gray-5);padding:0;list-style:none;display:flex}.tab:where(.astro-scn3uvmv){display:flex}.tab:where(.astro-scn3uvmv)>:where(.astro-scn3uvmv)[role=tab]{--sl-tab-color-border:var(--sl-color-gray-5);line-height:var(--sl-line-height-headings);box-shadow:0 2px 0 var(--sl-tab-color-border);color:var(--sl-color-gray-3);outline-offset:var(--sl-outline-offset-inside);overflow-wrap:initial;align-items:center;gap:.5rem;padding:.275rem 1.25rem;text-decoration:none;display:flex}.tab:where(.astro-scn3uvmv) :where(.astro-scn3uvmv)[role=tab][aria-selected=true]{--sl-tab-color-border:var(--sl-color-text-accent);color:var(--sl-color-white);font-weight:600}.tablist-wrapper:where(.astro-scn3uvmv)~[role=tabpanel]{margin-top:1rem}}
+</style><script type="module" src="/_astro/page.cNngjUgL.js"></script></head><body class="astro-g5ptsecz"><a class="sl-skip-link astro-qb7clj6f" href="#_top">Skip to content</a><div class="page astro-c5db5sch"><header class="header astro-c5db5sch"><div class="header astro-ktgj4fl6"><div class="title-wrapper sl-flex astro-ktgj4fl6"><a href="/" class="site-title sl-flex astro-ipmp35fu"><svg width="80" height="94" viewBox="0 0 80 94" fill="none" class="logo astro-ipmp35fu" aria-hidden="true">
+    <path d="M79.9924 13.9978L75.2801 18.7102C70.6282 14.053 64.8992 10.6155 58.6009 8.7023C52.3026 6.78909 45.6295 6.4593 39.1733 7.74214C32.717 9.02499 26.677 11.8809 21.5885 16.0566C16.5001 20.2323 12.5204 25.5989 10.0024 31.6807C7.48427 37.7625 6.50552 44.3716 7.15287 50.9222C7.80021 57.4728 10.0537 63.7624 13.7135 69.2337C17.3733 74.705 22.3263 79.1888 28.1337 82.2878C33.941 85.3868 40.4233 87.0052 47.0057 86.9995V93.6673C39.3313 93.6685 31.7751 91.7769 25.0063 88.1603C18.2376 84.5436 12.4652 79.3134 8.20062 72.933C3.93601 66.5526 1.31076 59.2189 0.557422 51.5816C-0.195914 43.9442 0.945922 36.239 3.88177 29.1483C6.81761 22.0577 11.4568 15.8005 17.3885 10.9311C23.3202 6.06162 30.3613 2.73023 37.888 1.23196C45.4147 -0.266304 53.1948 0.11481 60.5391 2.34154C67.8833 4.56828 74.5651 8.5719 79.9924 13.9978Z" fill="#77E1FF" />
+    <path d="M46.9976 13.666C39.6585 13.669 32.5254 16.0935 26.7047 20.5637C20.884 25.0338 16.7009 31.2997 14.8043 38.3896C12.9078 45.4794 13.4036 52.997 16.215 59.7763C19.0264 66.5556 23.9962 72.2178 30.3536 75.8847L33.6808 70.1125C30.3864 68.2187 27.5346 65.6428 25.3166 62.5573C23.0986 59.4718 21.5655 55.9479 20.82 52.2218C20.0746 48.4956 20.1339 44.6532 20.9942 40.9518C21.8544 37.2505 23.4956 33.7757 25.8079 30.7602C28.1202 27.7447 31.0501 25.2581 34.4015 23.4669C37.7529 21.6758 41.4483 20.6215 45.2403 20.3746C49.0323 20.1277 52.8332 20.694 56.3885 22.0354C59.9439 23.3769 63.1715 25.4626 65.8553 28.1529L70.5676 23.4378C67.4766 20.3362 63.803 17.8762 59.758 16.1992C55.713 14.5222 51.3765 13.6613 46.9976 13.666Z" fill="#77E1FF" />
+    <path d="M70.5695 70.5654C66.6944 74.453 61.9196 77.3241 56.6689 78.924C51.4181 80.5239 45.8536 80.8031 40.4691 79.7368C35.0846 78.6706 30.0464 76.2919 25.8016 72.8117C21.5568 69.3315 18.2366 64.8575 16.1354 59.7864C14.0343 54.7154 13.2172 49.2042 13.7567 43.7417C14.2962 38.2792 16.1755 33.0343 19.228 28.4722C22.2805 23.9101 26.4117 20.172 31.2553 17.5894C36.0989 15.0067 41.505 13.6595 46.9941 13.6671V7.00195C40.4164 7.00338 33.9405 8.62695 28.1401 11.7289C22.3398 14.8308 17.3939 19.3153 13.7406 24.7851C10.0873 30.255 7.83931 36.5414 7.1958 43.0876C6.55228 49.6337 7.53307 56.2376 10.0513 62.3141C12.5696 68.3907 16.5475 73.7524 21.6328 77.9245C26.7181 82.0965 32.7539 84.95 39.2054 86.2323C45.6569 87.5145 52.3251 87.1859 58.6193 85.2756C64.9135 83.3653 70.6394 79.9323 75.2899 75.2805L70.5695 70.5654Z" fill="#161EDE" />
+    <path d="M61.1449 61.1384C59.1309 63.1485 56.7111 64.7057 54.0472 65.706C51.3833 66.7064 48.5366 67.1268 45.6973 66.9391C42.8579 66.7515 40.0913 65.9602 37.5822 64.618C35.0731 63.2759 32.8793 61.4138 31.1472 59.1561C29.4152 56.8984 28.1849 54.2972 27.5383 51.5261C26.8918 48.755 26.8441 45.8778 27.3982 43.0868C27.9524 40.2957 29.0957 37.6551 30.7519 35.3412C32.408 33.0272 34.5388 31.0933 37.002 29.6686L33.6721 23.8965C30.3858 25.795 27.5425 28.373 25.3324 31.4583C23.1222 34.5437 21.596 38.0652 20.8559 41.7876C20.1157 45.51 20.1785 49.3475 21.0402 53.0436C21.9019 56.7398 23.5425 60.2094 25.8526 63.2207C28.1626 66.232 31.0887 68.7156 34.4354 70.5054C37.7821 72.2953 41.4723 73.3502 45.2594 73.5996C49.0464 73.8491 52.8431 73.2874 56.3957 71.952C59.9483 70.6166 63.1749 68.5384 65.86 65.8561L61.1449 61.1384Z" fill="#161EDE" />
+  </svg><span translate="no" class="astro-ipmp35fu">Connect</span></a></div><nav class="nav-links sl-hidden md:sl-flex astro-ktgj4fl6" aria-label="Main"><a href="/docs/introduction/" class="nav-link astro-ktgj4fl6">Docs</a><a href="https://github.com/connectrpc" class="nav-link astro-ktgj4fl6">GitHub</a><a href="https://buf.build/links/slack" class="nav-link astro-ktgj4fl6">Slack</a><a href="/demo/" class="nav-link astro-ktgj4fl6">Demo</a></nav><div class="header-actions sl-flex print:hidden astro-ktgj4fl6"><div class="sl-flex search-wrapper astro-ktgj4fl6"><site-search class="astro-ktgj4fl6 astro-b5kgnn7o" data-translations="{&quot;placeholder&quot;:&quot;Search&quot;}"><button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-b5kgnn7o"><svg aria-hidden="true" class="astro-b5kgnn7o astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg><span class="sl-hidden md:sl-block astro-b5kgnn7o" aria-hidden="true">Search</span><kbd class="sl-hidden md:sl-flex astro-b5kgnn7o" style="display: none;"><kbd class="astro-b5kgnn7o">Ctrl</kbd><kbd class="astro-b5kgnn7o">K</kbd></kbd></button><dialog style="padding:0" aria-label="Search" class="astro-b5kgnn7o"><div class="dialog-frame sl-flex astro-b5kgnn7o"><button data-close-modal class="sl-flex md:sl-hidden astro-b5kgnn7o">Cancel</button><div class="search-container astro-b5kgnn7o"><div id="starlight__search" class="astro-b5kgnn7o"></div></div></div></dialog></site-search><script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script><script type="module" src="/_astro/Search.astro_astro_type_script_index_0_lang.Djc9ZKGJ.js"></script></div><div class="sl-hidden md:sl-flex desktop-extras astro-ktgj4fl6"><connect-theme-toggle class="astro-ofod6dsd"><button type="button" class="theme-toggle astro-ofod6dsd" aria-label="Select theme" title="Select theme" data-theme-pref="auto"><span class="theme-icon theme-icon-auto astro-ofod6dsd" aria-hidden="true"><svg aria-hidden="true" class="astro-ofod6dsd astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></span><span class="theme-icon theme-icon-light astro-ofod6dsd" aria-hidden="true"><svg aria-hidden="true" class="astro-ofod6dsd astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg></span><span class="theme-icon theme-icon-dark astro-ofod6dsd" aria-hidden="true"><svg aria-hidden="true" class="astro-ofod6dsd astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg></span></button></connect-theme-toggle><script>
+  // Reflect the persisted preference on the toggle before paint so the
+  // correct icon is visible immediately, avoiding a flash of the default.
+  (() => {
+    const stored =
+      typeof localStorage !== "undefined" &&
+      localStorage.getItem("starlight-theme");
+    const pref = stored === "light" || stored === "dark" ? stored : "auto";
+    for (const el of document.querySelectorAll("connect-theme-toggle button")) {
+      el.dataset.themePref = pref;
+    }
+  })();
+</script><script type="module">var e=`starlight-theme`,t=[`auto`,`light`,`dark`],n=e=>e===`light`||e===`dark`||e===`auto`?e:`auto`,r=()=>n(typeof localStorage<`u`?localStorage.getItem(e):null);function i(t){typeof localStorage<`u`&&localStorage.setItem(e,t===`light`||t===`dark`?t:``)}var a=()=>matchMedia(`(prefers-color-scheme: light)`).matches?`light`:`dark`;function o(e){document.documentElement.dataset.theme=e===`auto`?a():e,i(e);for(let t of document.querySelectorAll(`connect-theme-toggle button`))t.dataset.themePref=e}matchMedia(`(prefers-color-scheme: light)`).addEventListener(`change`,()=>{r()===`auto`&&o(`auto`)});var s=class extends HTMLElement{constructor(){super(),this.querySelector(`button`)?.addEventListener(`click`,()=>{let e=r(),n=t[(t.indexOf(e)+1)%t.length];o(n)})}};customElements.define(`connect-theme-toggle`,s),o(r());</script><script type="module">var e=class extends HTMLElement{constructor(){super();let e=this.querySelector(`select`);e&&(e.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=e.currentTarget.value)}),window.addEventListener(`pageshow`,t=>{if(!t.persisted)return;let n=e.querySelector(`option[selected]`)?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}};customElements.define(`starlight-lang-select`,e);</script><a href="https://buf.build" class="buf-button sl-hidden md:sl-flex astro-ktgj4fl6" aria-label="Created by Buf"><span class="astro-ktgj4fl6">Created by</span><span class="buf-logo astro-ktgj4fl6"><svg width="813" height="347" viewBox="0 0 813 347" fill="none" aria-hidden="true" class="astro-ktgj4fl6">
+<rect x="110.222" y="89.8118" width="36.7412" height="257.188" fill="#0E5DF5" />
+<rect x="183.707" y="89.8118" width="36.7412" height="257.188" fill="#0E5DF5" />
+<rect x="257.188" y="89.8118" width="36.7412" height="257.188" fill="#0E5DF5" />
+<rect x="330.67" y="89.8118" width="36.7412" height="257.188" fill="#0E5DF5" />
+<rect width="36.7412" height="257.188" fill="#5FDCFF" />
+<rect x="73.4814" width="36.7412" height="257.188" fill="#5FDCFF" />
+<rect x="146.963" width="36.7412" height="257.188" fill="#5FDCFF" />
+<rect x="220.448" width="36.7412" height="257.188" fill="#5FDCFF" />
+<path d="M811.596 136.851V160.028H786.706V254.906H753.368V160.028H731.561V136.851H753.368V119.839C753.368 110.325 756.146 102.942 761.702 97.6897C767.335 92.4377 775.289 89.8118 785.564 89.8118H812.623L812.737 111.961H797.21C792.947 111.961 790.017 113.027 788.419 115.158C786.896 117.213 786.135 120.638 786.135 125.434V136.851H811.596Z" fill="currentColor" />
+<path d="M644.654 257.189C639.174 257.189 633.77 256.352 628.441 254.678C623.19 253.003 618.394 250.529 614.056 247.256C609.717 243.983 606.216 239.949 603.552 235.154C600.964 230.359 599.67 224.802 599.67 218.485V136.851H633.008V214.26C633.008 219.741 634.797 224.231 638.375 227.733C641.952 231.234 647.204 232.985 654.13 232.985C660.676 232.985 665.852 231.31 669.658 227.961C673.54 224.536 675.481 219.779 675.481 213.69V136.851H708.477V254.906H683.359L679.477 231.5C678.107 238.427 675.519 243.755 671.713 247.485C667.983 251.138 663.683 253.65 658.811 255.02C654.016 256.466 649.297 257.189 644.654 257.189Z" fill="currentColor" />
+<path d="M449.059 254.906V89.8118H508.885C530.502 89.8118 546.524 93.5414 556.952 101.001C567.456 108.384 572.708 119.078 572.708 133.083C572.708 141.304 570.615 148.459 566.428 154.548C562.242 160.561 554.783 165.813 544.05 170.304C550.977 172.054 556.571 174.414 560.834 177.382C565.096 180.351 568.369 183.662 570.653 187.315C572.936 190.893 574.496 194.66 575.334 198.618C576.171 202.5 576.59 206.344 576.59 210.15C576.59 225.373 571.414 236.638 561.062 243.945C550.71 251.252 534.232 254.906 511.625 254.906H449.059ZM482.283 229.103H512.31C522.358 229.103 529.931 227.086 535.031 223.051C540.207 219.017 542.795 213.613 542.795 206.839C542.795 201.968 541.539 197.895 539.027 194.622C536.515 191.273 533.09 188.762 528.751 187.087C524.489 185.412 519.617 184.575 514.137 184.575H482.283V229.103ZM482.283 158.087H514.137C517.562 158.087 520.835 157.707 523.956 156.945C527.153 156.108 529.969 154.852 532.405 153.178C534.917 151.503 536.896 149.372 538.342 146.784C539.788 144.12 540.511 140.999 540.511 137.422C540.511 130.267 537.809 124.863 532.405 121.209C527.077 117.48 520.226 115.615 511.854 115.615H482.283V158.087Z" fill="currentColor" />
+</svg></span></a></div><div class="sl-flex md:sl-hidden mobile-extras astro-ktgj4fl6"><connect-theme-toggle class="astro-ofod6dsd"><button type="button" class="theme-toggle astro-ofod6dsd" aria-label="Select theme" title="Select theme" data-theme-pref="auto"><span class="theme-icon theme-icon-auto astro-ofod6dsd" aria-hidden="true"><svg aria-hidden="true" class="astro-ofod6dsd astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></span><span class="theme-icon theme-icon-light astro-ofod6dsd" aria-hidden="true"><svg aria-hidden="true" class="astro-ofod6dsd astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg></span><span class="theme-icon theme-icon-dark astro-ofod6dsd" aria-hidden="true"><svg aria-hidden="true" class="astro-ofod6dsd astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg></span></button></connect-theme-toggle><script>
+  // Reflect the persisted preference on the toggle before paint so the
+  // correct icon is visible immediately, avoiding a flash of the default.
+  (() => {
+    const stored =
+      typeof localStorage !== "undefined" &&
+      localStorage.getItem("starlight-theme");
+    const pref = stored === "light" || stored === "dark" ? stored : "auto";
+    for (const el of document.querySelectorAll("connect-theme-toggle button")) {
+      el.dataset.themePref = pref;
+    }
+  })();
+</script></div></div></div><script>
+  // Lock body scroll while a full-screen mobile menu drawer is open.
+  document.querySelectorAll("details.mobile-menu").forEach((d) => {
+    d.addEventListener("toggle", () => {
+      document.documentElement.classList.toggle("mobile-menu-open", d.open);
+    });
+  });
+</script></header><nav class="sidebar print:hidden astro-c5db5sch" aria-label="Main"><button popovertarget="starlight__sidebar" class="sl-menu-button sl-flex md:sl-hidden print:hidden astro-r2osgdlg"><svg aria-hidden="true" class="open-menu astro-r2osgdlg astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg><svg aria-hidden="true" class="close-menu astro-r2osgdlg astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg><span class="sr-only astro-r2osgdlg">Menu</span></button><script type="module">var e=class extends HTMLElement{constructor(){super();let e=matchMedia(`(min-width: 50em)`),t=()=>{this.popover=e.matches?null:`auto`};t(),e.addEventListener(`change`,t),this.addEventListener(`toggle`,e=>{let t=e.newState===`open`;document.querySelectorAll(`.main-frame, .sl-skip-link`).forEach(e=>e.toggleAttribute(`inert`,t))})}};customElements.define(`sl-sidebar-pane`,e);</script><sl-sidebar-pane popover id="starlight__sidebar" class="sidebar-pane astro-c5db5sch"><div class="sidebar-content sl-flex astro-c5db5sch"><sl-sidebar-state-persist data-hash="0bb1ooa" class="astro-ipdry5cl"><script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script><ul class="top-level astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/docs/introduction/" class="large astro-rmhv4bp6"><span class="astro-rmhv4bp6">Introduction</span></a></li><li class="astro-rmhv4bp6"><details class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Governance</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="0"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/docs/governance/project-governance/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Governance</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/governance/security/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Security</span></a></li><li class="astro-rmhv4bp6"><details class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">RFCs</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="1"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/docs/governance/rfc/002-go-cors-authn/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">002: CORS and authn for Go</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/governance/rfc/003-http-codes/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">003: Amend Connect HTTP codes</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/governance/rfc/004-dart-implementation/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">004: Dart Implementation</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/governance/rfc/005-python-implementation/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">005: Python Implementation</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/governance/rfc/006-es-validation/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">006: Request validation for ECMAScript</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/governance/rfc/007-rust-implementation/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">007: Rust Implementation</span></a></li></ul></details></li></ul></details></li><li class="astro-rmhv4bp6"><details class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Connect for Go</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="2"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/docs/go/getting-started/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Getting started</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/routing/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Routing</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/serialization-and-compression/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Serialization &amp; compression</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/errors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Errors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/headers-and-trailers/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Headers &amp; trailers</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/interceptors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Interceptors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/observability/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Observability</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/streaming/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Streaming</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/testing/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Testing</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/in-process-transport/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">In-process transport</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/deployment/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Deployment &amp; h2c</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/get-requests-and-caching/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Get Requests and Caching</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/grpc-compatibility/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">gRPC compatibility</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/common-errors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Common errors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/godoc/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Godoc</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/go/migrating-to-v2/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Migrating to v2</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Connect for Web</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="3"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/docs/web/getting-started/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Getting started</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/web/generating-code/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Generating code</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/web/using-clients/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Using clients</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/web/errors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Errors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/web/headers-and-trailers/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Headers &amp; trailers</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/web/cancellation-and-timeouts/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Cancellation &amp; Timeouts</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/web/interceptors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Interceptors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/web/choosing-a-protocol/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Choosing a protocol</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/web/supported-browsers-and-frameworks/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Supported browsers &amp; frameworks</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/web/testing/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Testing</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/web/get-requests-and-caching/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Get Requests and Caching</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/web/ssr/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Server-Side Rendering (SSR)</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/web/query/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Connect for TanStack Query</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Connect for Node.js</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="4"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/docs/node/getting-started/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Getting started</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/node/implementing-services/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Implementing services</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/node/server-plugins/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Server plugins</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/node/interceptors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Interceptors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/node/using-clients/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Using clients</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/node/get-requests-and-caching/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Get Requests and Caching</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/node/testing/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Testing</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/node/timeouts/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Timeouts</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Connect for Python</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="5"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/docs/python/getting-started/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Getting started</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/python/serialization-and-compression/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Serialization &amp; compression</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/python/errors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Errors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/python/headers-and-trailers/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Headers &amp; trailers</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/python/interceptors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Interceptors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/python/streaming/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Streaming</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/python/deployment/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Deployment</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/python/get-requests-and-caching/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Get Requests and Caching</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/python/grpc-compatibility/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">gRPC Compatibility</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/python/observability/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Observability</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/python/testing/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Testing</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Connect for Rust</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="6"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/docs/rust/getting-started/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Getting started</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/rust/routing/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Routing</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/rust/serialization-and-compression/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Serialization &amp; compression</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/rust/errors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Errors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/rust/headers-and-trailers/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Headers &amp; trailers</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/rust/interceptors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Interceptors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/rust/streaming/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Streaming</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/rust/deployment/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Deployment</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/rust/get-requests-and-caching/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Get Requests and Caching</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/rust/grpc-compatibility/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">gRPC compatibility</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/rust/testing/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Testing</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/rust/docs-rs/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">docs.rs</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Connect for Kotlin</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="7"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/docs/kotlin/getting-started/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Getting started</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/kotlin/android-example/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Android example</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/kotlin/generating-code/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Generating code</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/kotlin/using-clients/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Using clients</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/kotlin/get-requests-and-caching/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Get Requests and Caching</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/kotlin/errors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Errors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/kotlin/interceptors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Interceptors</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Connect for Swift</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="8"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/docs/swift/getting-started/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Getting started</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/swift/generating-code/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Generating code</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/swift/using-clients/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Using clients</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/swift/errors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Errors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/swift/interceptors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Interceptors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/swift/testing/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Testing &amp; mocking</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Connect for Dart</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="9"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/docs/dart/getting-started/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Getting started</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/dart/generating-code/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Generating code</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/dart/using-clients/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Using clients</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/dart/errors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Errors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/dart/interceptors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Interceptors</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/dart/testing/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Testing</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><a href="/docs/curl-and-other-clients/" class="large astro-rmhv4bp6"><span class="astro-rmhv4bp6">cURL &amp; other clients</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/multi-protocol/" class="large astro-rmhv4bp6"><span class="astro-rmhv4bp6">Multi-Protocol Support</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/cors/" class="large astro-rmhv4bp6"><span class="astro-rmhv4bp6">CORS</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/protocol/" aria-current="page" class="large astro-rmhv4bp6"><span class="astro-rmhv4bp6">Connect Protocol</span></a></li><li class="astro-rmhv4bp6"><a href="/docs/faq/" class="large astro-rmhv4bp6"><span class="astro-rmhv4bp6">FAQs</span></a></li></ul><script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script></sl-sidebar-state-persist><div class="md:sl-hidden"><div class="mobile-preferences sl-flex astro-p4azlveh"><div class="social-icons astro-p4azlveh"><a href="https://github.com/connectrpc" rel="me" class="sl-flex astro-n2mnl6yq"><span class="sr-only astro-n2mnl6yq">GitHub</span><svg aria-hidden="true" class="astro-n2mnl6yq astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a><a href="https://buf.build/links/slack" rel="me" class="sl-flex astro-n2mnl6yq"><span class="sr-only astro-n2mnl6yq">Slack</span><svg aria-hidden="true" class="astro-n2mnl6yq astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52Zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313ZM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834Zm0 1.271a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312Zm10.122 2.521a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834Zm-1.268 0a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312Zm-2.523 10.122a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52Zm0-1.268a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313Z"/></svg></a></div><connect-theme-toggle class="astro-ofod6dsd"><button type="button" class="theme-toggle astro-ofod6dsd" aria-label="Select theme" title="Select theme" data-theme-pref="auto"><span class="theme-icon theme-icon-auto astro-ofod6dsd" aria-hidden="true"><svg aria-hidden="true" class="astro-ofod6dsd astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></span><span class="theme-icon theme-icon-light astro-ofod6dsd" aria-hidden="true"><svg aria-hidden="true" class="astro-ofod6dsd astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg></span><span class="theme-icon theme-icon-dark astro-ofod6dsd" aria-hidden="true"><svg aria-hidden="true" class="astro-ofod6dsd astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg></span></button></connect-theme-toggle><script>
+  // Reflect the persisted preference on the toggle before paint so the
+  // correct icon is visible immediately, avoiding a flash of the default.
+  (() => {
+    const stored =
+      typeof localStorage !== "undefined" &&
+      localStorage.getItem("starlight-theme");
+    const pref = stored === "light" || stored === "dark" ? stored : "auto";
+    for (const el of document.querySelectorAll("connect-theme-toggle button")) {
+      el.dataset.themePref = pref;
+    }
+  })();
+</script></div></div></div></sl-sidebar-pane></nav><div class="main-frame astro-c5db5sch"><script type="module">var e=document.getElementById(`starlight__sidebar`),t=e?.querySelector(`sl-sidebar-state-persist`),n=`sl-sidebar-state`,r=()=>{let r=[],i=t?.dataset.hash||``;try{let e=sessionStorage.getItem(n),t=JSON.parse(e||`{}`);Array.isArray(t.open)&&t.hash===i&&(r=t.open)}catch{}return{hash:i,open:r,scroll:e?.scrollTop||0}},i=e=>{try{sessionStorage.setItem(n,JSON.stringify(e))}catch{}},a=()=>i(r()),o=(e,t)=>{let n=r();n.open[t]=e,i(n)};t?.addEventListener(`click`,e=>{if(!(e.target instanceof Element))return;let t=e.target.closest(`summary`)?.closest(`details`);if(!t)return;let n=t.querySelector(`sl-sidebar-restore`),r=parseInt(n?.dataset.index||``);isNaN(r)||o(!t.open,r)}),addEventListener(`visibilitychange`,()=>{document.visibilityState===`hidden`&&a()});</script><div class="lg:sl-flex astro-lrzkfocr"><aside class="right-sidebar-container print:hidden astro-lrzkfocr"><div class="right-sidebar astro-lrzkfocr"><div class="lg:sl-hidden astro-qok35upx"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-66cqc7ze"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-66cqc7ze"><details id="starlight__mobile-toc" class="astro-66cqc7ze"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-66cqc7ze"><span class="toggle sl-flex astro-66cqc7ze">On this page<svg aria-hidden="true" class="caret astro-66cqc7ze astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></span><span class="display-current astro-66cqc7ze"></span></summary><div class="dropdown astro-66cqc7ze"><ul class="isMobile astro-jugkfwgx" style="--depth: 0;"><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#_top" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Overview</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#design-goals" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Design Goals</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#summary" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Summary</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#outline" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Outline</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#unary-request-response-rpcs" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Unary (Request-Response) RPCs</span></a><ul class="isMobile astro-jugkfwgx" style="--depth: 1;"><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#unary-request" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Unary-Request</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#unary-get-request" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Unary-Get-Request</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#unary-response" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Unary-Response</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#unary-examples" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Examples</span></a></li></ul></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#streaming-rpcs" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Streaming RPCs</span></a><ul class="isMobile astro-jugkfwgx" style="--depth: 1;"><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#streaming-request" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Streaming-Request</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#streaming-response" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Streaming-Response</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#streaming-examples" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Examples</span></a></li></ul></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#error-codes" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Error Codes</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#error-end-stream" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Error and EndStreamResponse</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#protobuf" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Protocol Buffers</span></a></li></ul></div></details></nav></mobile-starlight-toc><script type="module" src="/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.C3fM4Kra.js"></script></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-qok35upx"><div class="sl-container astro-qok35upx"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-jugkfwgx" style="--depth: 0;"><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#_top" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Overview</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#design-goals" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Design Goals</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#summary" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Summary</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#outline" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Outline</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#unary-request-response-rpcs" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Unary (Request-Response) RPCs</span></a><ul class="astro-jugkfwgx" style="--depth: 1;"><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#unary-request" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Unary-Request</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#unary-get-request" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Unary-Get-Request</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#unary-response" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Unary-Response</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#unary-examples" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Examples</span></a></li></ul></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#streaming-rpcs" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Streaming RPCs</span></a><ul class="astro-jugkfwgx" style="--depth: 1;"><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#streaming-request" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Streaming-Request</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#streaming-response" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Streaming-Response</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#streaming-examples" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Examples</span></a></li></ul></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#error-codes" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Error Codes</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#error-end-stream" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Error and EndStreamResponse</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#protobuf" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Protocol Buffers</span></a></li></ul></nav></starlight-toc><script type="module" src="/_astro/TableOfContents.astro_astro_type_script_index_0_lang.BpJaGz7G.js"></script></div></div></div></aside><div class="main-pane astro-lrzkfocr"><main data-pagefind-body class="astro-g5ptsecz" lang="en" dir="ltr"><div class="content-panel astro-a7po4psb"><div class="sl-container astro-a7po4psb"><h1 id="_top" class="astro-bebwqqxs">Connect Protocol Reference</h1></div></div><div class="content-panel astro-a7po4psb"><div class="sl-container astro-a7po4psb"><div class="sl-markdown-content"><p>This document specifies the Connect protocol for making RPCs over HTTP. The
+protocol does <em>not</em> depend on framing details specific to a particular HTTP
+version.</p>
+<p>Rules use <a href="https://datatracker.ietf.org/doc/html/rfc5234.html">ABNF syntax</a>,
+but the design goals and summary are approachable for casual readers. There
+are also examples of <a href="#unary-examples">unary</a> and <a href="#streaming-examples">streaming</a>
+RPCs.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="design-goals">Design Goals</h2><a class="sl-anchor-link" href="#design-goals"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Design Goals”</span></a></div>
+<p>This protocol aims to:</p>
+<ul>
+<li>Be human-readable and debuggable with general-purpose HTTP tools, especially
+for unary RPCs.</li>
+<li>Remain conceptually close to <a href="https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md">gRPC’s HTTP/2 protocol</a>, so Connect
+implementations can support both protocols.</li>
+<li>Depend only on widely-implemented HTTP features and specify behavior in terms
+of <a href="https://www.rfc-editor.org/rfc/rfc9110.html">high-level semantics</a>, so that Connect
+implementations can easily use off-the-shelf networking libraries.</li>
+</ul>
+<div class="sl-heading-wrapper level-h2"><h2 id="summary">Summary</h2><a class="sl-anchor-link" href="#summary"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Summary”</span></a></div>
+<p>When used with Protocol Buffer schemas, the Connect protocol supports unary,
+client streaming, server streaming, and bidirectional streaming RPCs, with
+either binary Protobuf or JSON payloads. Bidirectional streaming requires
+HTTP/2, but the other RPC types also support HTTP/1.1. The protocol doesn’t use
+HTTP trailers at all, so it works with any networking infrastructure.</p>
+<p>Unary RPCs use the <code dir="auto">application/proto</code> and <code dir="auto">application/json</code> Content-Types and
+look similar to a stripped-down REST dialect. Most requests are POSTs, paths are
+derived from the Protobuf schema, request and response bodies are valid
+Protobuf or JSON (without gRPC-style binary framing), and responses have
+meaningful HTTP status codes. For example:</p>
+<div class="expressive-code"><link rel="stylesheet" href="/_astro/ec.aiyd6.css"><script type="module" src="/_astro/ec.0vx5m.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="http"><code><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> POST /connectrpc.greet.v1.GreetService/Greet HTTP/1.1</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Host: demo.connectrpc.com</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Content-Type: application/json</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">></span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> {</span><span style="--0:#005CC5;--1:#79B8FF">"name"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"Buf"</span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; HTTP/</span><span style="--0:#005CC5;--1:#79B8FF">1.1</span><span style="--0:#24292E;--1:#E1E4E8"> </span><span style="--0:#005CC5;--1:#79B8FF">200</span><span style="--0:#24292E;--1:#E1E4E8"> OK</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; Content-Type: application/json</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; {</span><span style="--0:#005CC5;--1:#79B8FF">"greeting"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"Hello, Buf!"</span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="> POST /connectrpc.greet.v1.GreetService/Greet HTTP/1.1> Host: demo.connectrpc.com> Content-Type: application/json>> {&#x22;name&#x22;: &#x22;Buf&#x22;}< HTTP/1.1 200 OK< Content-Type: application/json<< {&#x22;greeting&#x22;: &#x22;Hello, Buf!&#x22;}"><div></div></button></div></figure></div>
+<p>For RPCs that have no side effects, it is possible to use GET requests instead:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="http"><code><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> GET /connectrpc.greet.v1.GreetService/Greet?encoding=json&#x26;message=%7B%22name%22%3A%22Buf%22%7D HTTP/1.1</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Host: demo.connectrpc.com</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; HTTP/1.1 200 OK</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; Content-Type: application/json</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; {</span><span style="--0:#005CC5;--1:#79B8FF">"greeting"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"Hello, Buf!"</span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="> GET /connectrpc.greet.v1.GreetService/Greet?encoding=json&#x26;message=%7B%22name%22%3A%22Buf%22%7D HTTP/1.1> Host: demo.connectrpc.com< HTTP/1.1 200 OK< Content-Type: application/json<< {&#x22;greeting&#x22;: &#x22;Hello, Buf!&#x22;}"><div></div></button></div></figure></div>
+<p>A request is considered to have no side effects if the associated RPC is
+annotated as such with the <code dir="auto">IdempotencyLevel</code> option:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="protobuf"><code><div class="ec-line"><div class="code"><span style="--0:#BF3441;--1:#F97583">service</span><span style="--0:#24292E;--1:#E1E4E8"> </span><span style="--0:#6F42C1;--1:#B392F0">ElizaService</span><span style="--0:#24292E;--1:#E1E4E8"> {</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#BF3441;--1:#F97583">rpc</span><span style="--0:#24292E;--1:#E1E4E8"> </span><span style="--0:#6F42C1;--1:#B392F0">Say</span><span style="--0:#24292E;--1:#E1E4E8">(</span><span style="--0:#BF3441;--1:#F97583">stream</span><span style="--0:#24292E;--1:#E1E4E8"> </span><span style="--0:#6F42C1;--1:#B392F0">SayRequest</span><span style="--0:#24292E;--1:#E1E4E8">) </span><span style="--0:#BF3441;--1:#F97583">returns</span><span style="--0:#24292E;--1:#E1E4E8"> (</span><span style="--0:#6F42C1;--1:#B392F0">SayResponse</span><span style="--0:#24292E;--1:#E1E4E8">) {</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#BF3441;--1:#F97583">option</span><span style="--0:#24292E;--1:#E1E4E8"> </span><span style="--0:#005CC5;--1:#79B8FF">idempotency_level</span><span style="--0:#24292E;--1:#E1E4E8"> </span><span style="--0:#BF3441;--1:#F97583">=</span><span style="--0:#24292E;--1:#E1E4E8"> </span><span style="--0:#005CC5;--1:#79B8FF">NO_SIDE_EFFECTS</span><span style="--0:#24292E;--1:#E1E4E8">;</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292E;--1:#E1E4E8">  </span></span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="service ElizaService {  rpc Say(stream SayRequest) returns (SayResponse) {    option idempotency_level = NO_SIDE_EFFECTS;  }}"><div></div></button></div></figure></div>
+<p>The unary ABNF rules describe how metadata (like timeouts and
+compression schemes) are encoded into HTTP headers and explain the details of
+the error model. The <a href="#unary-examples">examples below</a> also show a wider
+variety of scenarios.</p>
+<p>Streaming RPCs are naturally a bit more complex: they use the
+<code dir="auto">application/connect+proto</code> and <code dir="auto">application/connect+json</code> Content-Types and
+look similar to gRPC-Web. Requests are still POSTs and paths are still derived
+from the Protobuf schema, but each request and response message is wrapped in a
+few bytes of binary framing data. Responses always have an HTTP status of 200
+OK, with any errors sent in the last portion of the body. For example, a client
+streaming call might look like this:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="http"><code><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> POST /connectrpc.greet.v1.GreetService/GreetGroup HTTP/1.1</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Host: demo.connectrpc.com</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Content-Type: application/connect+json</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">></span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> &#x3C;binary framing: standard message>{</span><span style="--0:#005CC5;--1:#79B8FF">"name"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"Buf"</span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> &#x3C;binary framing: standard message>{</span><span style="--0:#005CC5;--1:#79B8FF">"name"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"Connect"</span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; HTTP/</span><span style="--0:#005CC5;--1:#79B8FF">1.1</span><span style="--0:#24292E;--1:#E1E4E8"> </span><span style="--0:#005CC5;--1:#79B8FF">200</span><span style="--0:#24292E;--1:#E1E4E8"> OK</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; Content-Type: application/connect+json</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; &#x3C;binary framing: standard message>{</span><span style="--0:#005CC5;--1:#79B8FF">"greeting"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"Hello, Buf and Connect!"</span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; &#x3C;binary framing: error and trailers>{}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="> POST /connectrpc.greet.v1.GreetService/GreetGroup HTTP/1.1> Host: demo.connectrpc.com> Content-Type: application/connect+json>> <binary framing: standard message>{&#x22;name&#x22;: &#x22;Buf&#x22;}> <binary framing: standard message>{&#x22;name&#x22;: &#x22;Connect&#x22;}< HTTP/1.1 200 OK< Content-Type: application/connect+json<< <binary framing: standard message>{&#x22;greeting&#x22;: &#x22;Hello, Buf and Connect!&#x22;}< <binary framing: error and trailers>{}"><div></div></button></div></figure></div>
+<p>Again, the ABNF rules describe the streaming HTTP headers, error model, and
+framing data. The <a href="#streaming-examples">examples below</a> show both successes and
+errors.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="outline">Outline</h2><a class="sl-anchor-link" href="#outline"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Outline”</span></a></div>
+<ul>
+<li><strong>Request</strong> → Unary-Request / Unary-Get-Request / Streaming-Request</li>
+<li><strong><a href="#unary-request">Unary-Request</a></strong> → Unary-Request-Headers Bare-Message</li>
+<li><strong><a href="#unary-get-request">Unary-Get-Request</a></strong> → Unary-Get-Request-Headers</li>
+<li><strong><a href="#streaming-request">Streaming-Request</a></strong> → Streaming-Request-Headers *Enveloped-Message</li>
+</ul>
+<p>Clients send HTTP requests to servers. Unary requests contain exactly one
+message, while streaming requests contain zero or more messages.</p>
+<ul>
+<li><strong>Response</strong> → Unary-Response / Streaming-Response</li>
+<li><strong><a href="#unary-response">Unary-Response</a></strong> → Unary-Response-Headers Bare-Message</li>
+<li><strong><a href="#streaming-response">Streaming-Response</a></strong> → Streaming-Response-Headers 1*Enveloped-Message</li>
+</ul>
+<p>Servers return HTTP responses to clients. Unary responses contain exactly one
+message, while streaming responses contain one or more messages.</p>
+<p>The rules in this document use HTTP/2-style notation (for example, ”:method
+POST” and ”:path /foo/bar” instead of “POST /foo/bar HTTP/1.1”). On the wire,
+Connect implementations must represent these semantics appropriately for the
+HTTP version in use.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="unary-request-response-rpcs">Unary (Request-Response) RPCs</h2><a class="sl-anchor-link" href="#unary-request-response-rpcs"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Unary (Request-Response) RPCs”</span></a></div>
+<p>Most RPCs are unary (or request-response). Structurally, unary RPC is similar
+to the resource-oriented model of the web. The Connect protocol takes special
+care to make unary RPCs easy to work with using web browsers, cURL, and other
+general-purpose HTTP tools.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="unary-request">Unary-Request</h3><a class="sl-anchor-link" href="#unary-request"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Unary-Request”</span></a></div>
+<ul>
+<li><strong>Unary-Request</strong> → Unary-Request-Headers Bare-Message</li>
+<li><strong>Unary-Request-Headers</strong> → Unary-Call-Specification *Leading-Metadata</li>
+<li><strong>Unary-Call-Specification</strong> → Method-Post Path Unary-Content-Type [Connect-Protocol-Version] [Timeout] [Content-Encoding] [Accept-Encoding]</li>
+<li><strong>Method-Post</strong> → ”:method POST”</li>
+<li><strong>Path</strong> → ":path" ”/” [Routing-Prefix ”/”] Procedure-Name ; case-sensitive</li>
+<li><strong>Routing-Prefix</strong> → {<em>arbitrary prefix</em>}</li>
+<li><strong>Procedure-Name</strong> → {<em>IDL-specific service &#x26; method name</em>} ; see <a href="#protobuf">Protocol Buffers</a></li>
+<li><strong>Message-Codec</strong> → (“proto” / “json” / {<em>custom</em>})</li>
+<li><strong>Unary-Content-Type</strong> → “content-type” “application/” Message-Codec</li>
+<li><strong>Connect-Protocol-Version</strong> → “connect-protocol-version” “1”</li>
+<li><strong>Timeout</strong> → “connect-timeout-ms” Timeout-Milliseconds</li>
+<li><strong>Timeout-Milliseconds</strong> → {<em>positive integer as ASCII string of at most 10 digits</em>}</li>
+<li><strong>Content-Encoding</strong> → “content-encoding” Content-Coding</li>
+<li><strong>Content-Coding</strong> → “identity” / “gzip” / “br” / “zstd” / {<em>custom</em>}</li>
+<li><strong>Accept-Encoding</strong> → “accept-encoding” Content-Coding *(”,” [” ”] Content-Coding) ; subset of HTTP quality value syntax</li>
+<li><strong>Leading-Metadata</strong> → Custom-Metadata</li>
+<li><strong>Custom-Metadata</strong> → ASCII-Metadata / Binary-Metadata</li>
+<li><strong>ASCII-Metadata</strong> → Header-Name ASCII-Value</li>
+<li><strong>Binary-Metadata</strong> → {Header-Name “-bin”} {base64-encoded value}</li>
+<li><strong>Header-Name</strong> → 1*( %x30-39 / %x61-7A / ”_” / ”-” / ”.”) ; 0-9 a-z _ - .</li>
+<li><strong>ASCII-Value</strong> → 1*( %x20-%x7E ) ; space &#x26; printable ASCII</li>
+<li><strong>Bare-Message</strong> → *{binary octet}</li>
+</ul>
+<p><strong>Unary-Request-Headers</strong> are sent as — and have the same semantics as
+— HTTP headers. Servers may respond with an error if the client sends too
+many headers.</p>
+<p>If the server doesn’t support the specified <strong>Message-Codec</strong>, it must respond
+with an HTTP status code of 415 Unsupported Media Type.</p>
+<p>The <strong>Connect-Protocol-Version</strong> header distinguishes unary Connect RPC traffic
+from other requests that may use the same Content-Type. (In the future, it may
+also be used to support revisions to this protocol.) Clients, especially
+generated clients, should send this header. Servers and proxies may reject
+traffic without this header with an HTTP status code of 400.</p>
+<p>Following standard HTTP semantics, servers must assume “identity” if the client
+omits <strong>Content-Encoding</strong>.</p>
+<p>If the client omits <strong>Accept-Encoding</strong>, servers must assume that the client
+accepts the <strong>Content-Encoding</strong> used for the request if present. Servers must
+assume that all clients accept “identity” as their least preferred encoding,
+even when <strong>Accept-Encoding</strong> is omitted. Servers should treat <strong>Accept-Encoding</strong>
+as an ordered list, with the client’s most preferred encoding first and least
+preferred encoding last. This is a simplification of standard HTTP semantics
+that excludes quality values. If the client uses an unsupported <strong>Content-Encoding</strong>,
+servers should return an error with code “unimplemented” and a message listing the
+supported encodings.</p>
+<p>If <strong>Timeout</strong> is omitted, the server should assume an infinite timeout. The
+protocol accommodates timeouts of more than 100 days. Client implementations
+may set a default timeout for all RPCs, and server implementations may clamp
+timeouts to an appropriate maximum.</p>
+<p>HTTP doesn’t allow header values to be arbitrary binary blobs, so Connect
+differentiates between <strong>ASCII-Metadata</strong> and <strong>Binary-Metadata</strong>. Binary
+headers must use keys ending in “-bin”, and implementations should emit
+unpadded base64-encoded values. Implementations must accept both padded and
+unpadded values. Because binary and non-ASCII headers are relatively uncommon,
+implementations may represent HTTP headers using an off-the-shelf type rather
+than reifying these rules in a custom type. Implementations using an
+off-the-shelf type should prominently document these rules. For both ASCII and
+binary metadata, keys beginning with “connect-” are reserved for use by the
+Connect protocol.</p>
+<p><strong>Bare-Message</strong> is the RPC request payload, serialized using the codec
+indicated by <strong>Unary-Content-Type</strong> and possibly compressed using
+<strong>Content-Encoding</strong>. It’s sent on the wire as the HTTP request content (often
+called the body). Servers must not attempt to decompress zero-length HTTP request
+content.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="unary-get-request">Unary-Get-Request</h3><a class="sl-anchor-link" href="#unary-get-request"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Unary-Get-Request”</span></a></div>
+<ul>
+<li><strong>Unary-Get-Request</strong> → Unary-Get-Request-Headers</li>
+<li><strong>Unary-Get-Request-Headers</strong> → Unary-Get-Call-Specification *Leading-Metadata</li>
+<li><strong>Unary-Get-Call-Specification</strong> → Method-Get Path ”?” Query-Get [Timeout] [Accept-Encoding]</li>
+<li><strong>Method-Get</strong> → ”:method GET”</li>
+<li><strong>Query-Get</strong> → [Connect-Version-Query] [Base64-Query] [Compression-Query] Encoding-Query Message-Query</li>
+<li><strong>Message-Query</strong> → “message=” (*{percent-encoded octet})</li>
+<li><strong>Base64-Query</strong> → “&#x26;base64=1”</li>
+<li><strong>Encoding-Query</strong> → “&#x26;encoding=” Message-Codec</li>
+<li><strong>Compression-Query</strong> → “&#x26;compression=” Content-Coding</li>
+<li><strong>Connect-Version-Query</strong> → “&#x26;connect=v1”</li>
+</ul>
+<p><strong>Unary-Get-Request</strong> is a special variant of the unary request designed to
+utilize only ordinary HTTP GET requests, for side-effect-free RPCs such as
+simple queries. These requests do not require any special HTTP headers, and can
+be viewed in a browser tab. They are designed to be easy to make and easy to
+cache in browsers, proxies, and CDNs.</p>
+<p><strong>Unary-Get-Request-Headers</strong> are sent as — and have the same semantics as
+— HTTP headers. Servers may respond with an error if the client sends too
+many headers.</p>
+<p><strong>Query-Get</strong> is sent as the query part of the URI for the request. It has the
+same semantics as HTTP URI query parameters. Clients should order parameters as
+shown in the <strong>Query-Get</strong> rule above to maximize hit rates on shared caches.
+Servers must accept query parameters in any order and allow unknown query parameters
+alongside the Connect query parameters. Servers may respond with an error if the
+query parameter is too long to fit in a header or results in a path or URL that
+is too long.</p>
+<p>Message payloads in Get requests should be encoded in a deterministic fashion.
+Not all codecs can provide a single “canonical” encoding for any given
+semantically-identical message; however, when a codec is used for an HTTP GET
+request, it should at least use deterministic encoding such that a given domain
+object will encode to the same exact message where possible. This is important
+for the use case of cached HTTP GET requests, where multiple distinct message
+encodings could lead to sub-optimal cache behavior.</p>
+<p><strong>Message-Query</strong> is the RPC request payload, serialized using the codec
+indicated by <strong>Encoding-Query</strong> and possibly compressed using the encoding
+specified in <strong>Compression-Query</strong>. If <strong>Base64-Query</strong> is specified, the raw
+binary octets will be encoded with the RFC 4648 §5 “URL-safe” base64 data
+encoding, otherwise a text payload can be encoded as UTF-8 using the
+percent-encoding scheme specified in RFC 1738. Optionally, the base64-encoded
+message may contain padding characters, but these characters must be
+percent-encoded if present.</p>
+<p>Note that base64 encoding must be used if the message payload contains binary
+data. Payloads using percent-encoding without base64 are only permitted to have
+bytes that form valid UTF-8 codepoints. Clients should not send requests with
+percent-encoded binary data, and servers may reject requests with
+percent-encoded binary data. Therefore, requests with any compression other
+than <code dir="auto">identity</code> and any encoding that uses binary data (such as <code dir="auto">proto</code>)
+should use base64 encoding. Also, note that clients are still required to
+explicitly specify <strong>Base64-Query</strong> even when base64 encoding is required.</p>
+<p>If <strong>Base64-Query</strong> is present, the value of the parameter should be one. Other
+values for the “base64” parameter will simply be ignored. Generally, a request
+with a payload that is not base64-encoded shouldn’t need a “base64” parameter.</p>
+<p>If the server doesn’t support the specified <strong>Message-Codec</strong>, it must respond
+with an HTTP status code of 415 Unsupported Media Type.</p>
+<p>Servers must assume “identity” if the client omits <strong>Compression-Query</strong>. If
+the client omits <strong>Accept-Encoding</strong>, servers must assume that the client
+accepts the <strong>Compression-Query</strong> value used for the request. Servers must
+assume that all clients accept “identity” as their least preferred encoding.
+Server implementations may choose to accept the full HTTP quality value syntax
+for <strong>Accept-Encoding</strong>, but client implementations must restrict themselves to
+sending the easy-to-parse subset outlined above. Servers should treat
+<strong>Accept-Encoding</strong> as an ordered list, with the client’s most preferred
+encoding first and least preferred encoding last. If the client uses an
+unsupported <strong>Compression-Query</strong> value, servers should return an error with
+code “unimplemented” and a message listing the supported encodings.
+Servers must not attempt to decompress zero-length <strong>Message-Query</strong>.</p>
+<p>If <strong>Timeout</strong> is omitted, the server should assume an infinite timeout. The
+protocol accommodates timeouts of more than 100 days. Client implementations
+may set a default timeout for all RPCs, and server implementations may clamp
+timeouts to an appropriate maximum. Note that timeouts, if specified, remain
+specified using HTTP headers rather than query parameters.</p>
+<p>The <strong>Connect-Version-Query</strong> parameter distinguishes Connect Get requests from
+other HTTP GET requests. (In the future, it may also be used to support
+revisions to this protocol.) Clients, especially generated clients, should send
+this header. Servers and proxies may reject traffic without this parameter with
+an HTTP status code of 400.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="unary-response">Unary-Response</h3><a class="sl-anchor-link" href="#unary-response"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Unary-Response”</span></a></div>
+<ul>
+<li><strong>Unary-Response</strong> → Unary-Response-Headers Bare-Message</li>
+<li><strong>Unary-Response-Headers</strong> → HTTP-Status Unary-Content-Type [Content-Encoding] [Accept-Encoding] *Leading-Metadata *Prefixed-Trailing-Metadata</li>
+<li><strong>HTTP-Status</strong> → ":status" (“200” / {<em>error code translated to HTTP</em>})</li>
+<li><strong>Prefixed-Trailing-Metadata</strong> → Prefixed-ASCII-Metadata / Prefixed-Binary-Metadata</li>
+<li><strong>Prefixed-ASCII-Metadata</strong> → Prefixed-Header-Name ASCII-Value</li>
+<li><strong>Prefixed-Binary-Metadata</strong> → {Prefixed-Header-Name “-bin”} {base64-encoded value}</li>
+<li><strong>Prefixed-Header-Name</strong> → “trailer-” Header-Name</li>
+</ul>
+<p><strong>Unary-Response-Headers</strong> are sent as — and have the same semantics as
+— HTTP headers. This includes <strong>Prefixed-Trailing-Metadata</strong>: though it’s
+sent on the wire alongside <strong>Leading-Metadata</strong>, support for trailing metadata
+lets Connect implementations use common interfaces for streaming and unary RPC.
+Implementations must transparently prefix trailing metadata keys with
+“trailer-” when writing data to the wire and strip the prefix when reading data
+from the wire. As noted above, <strong>Leading-Metadata</strong> keys beginning with
+“connect-” and <strong>Prefixed-Trailing-Metadata</strong> keys beginning with
+“trailer-connect-” are reserved for use by the Connect protocol.</p>
+<p>If <strong>Content-Encoding</strong> is omitted, clients must assume “identity”. Servers
+must either respond with an error or use a <strong>Content-Encoding</strong> supported by
+the client.</p>
+<p>Successful responses have an <strong>HTTP-Status</strong> of 200. In those cases,
+<strong>Unary-Content-Type</strong> is the same as the request’s <strong>Unary-Content-Type</strong>.
+<strong>Bare-Message</strong> is the RPC response payload, serialized using the codec indicated
+by <strong>Unary-Content-Type</strong> and possibly compressed using <strong>Content-Encoding</strong>.
+It’s sent on the wire as the HTTP response content (often called the body).
+Clients must not attempt to decompress zero-length HTTP response content.</p>
+<p>Errors are sent with a non-200 <strong>HTTP-Status</strong>. In those cases,
+<strong>Unary-Content-Type</strong> <em>must</em> be “application/json”. <strong>Bare-Message</strong> is either
+omitted or a JSON-serialized <a href="#error-end-stream">Error</a>, possibly compressed
+using <strong>Content-Encoding</strong> and sent on the wire as the HTTP response content.
+Clients must not attempt to decompress zero-length HTTP response content. If
+<strong>Bare-Message</strong> is an Error, <strong>HTTP-Status</strong> should match Error.code as specified
+in <a href="#error-codes">the table below</a>. When reading data from the wire, client
+implementations must use the <a href="#http-to-error-code">HTTP-to-Connect mapping</a> to infer a Connect
+error code if <strong>Bare-Message</strong> is missing or malformed.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="unary-examples">Examples</h3><a class="sl-anchor-link" href="#unary-examples"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Examples”</span></a></div>
+<p>Using HTTP/1.1 notation, a simple request and successful response:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="http"><code><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> POST /connectrpc.greet.v1.GreetService/Greet HTTP/1.1</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Host: demo.connectrpc.com</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Content-Type: application/json</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">></span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> {</span><span style="--0:#005CC5;--1:#79B8FF">"name"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"Buf"</span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; HTTP/</span><span style="--0:#005CC5;--1:#79B8FF">1.1</span><span style="--0:#24292E;--1:#E1E4E8"> </span><span style="--0:#005CC5;--1:#79B8FF">200</span><span style="--0:#24292E;--1:#E1E4E8"> OK</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; Content-Type: application/json</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; {</span><span style="--0:#005CC5;--1:#79B8FF">"greeting"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"Hello, Buf!"</span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="> POST /connectrpc.greet.v1.GreetService/Greet HTTP/1.1> Host: demo.connectrpc.com> Content-Type: application/json>> {&#x22;name&#x22;: &#x22;Buf&#x22;}< HTTP/1.1 200 OK< Content-Type: application/json<< {&#x22;greeting&#x22;: &#x22;Hello, Buf!&#x22;}"><div></div></button></div></figure></div>
+<p>The same RPC, but sent as a unary GET request instead:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="http"><code><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> GET /connectrpc.greet.v1.GreetService/Greet?message=%7B%22name%22%3A%22Buf%22%7D&#x26;encoding=json&#x26;connect=v1 HTTP/1.1</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Host: demo.connectrpc.com</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; HTTP/1.1 200 OK</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; Content-Type: application/json</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; {</span><span style="--0:#005CC5;--1:#79B8FF">"greeting"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"Hello, Buf!"</span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="> GET /connectrpc.greet.v1.GreetService/Greet?message=%7B%22name%22%3A%22Buf%22%7D&#x26;encoding=json&#x26;connect=v1 HTTP/1.1> Host: demo.connectrpc.com< HTTP/1.1 200 OK< Content-Type: application/json<< {&#x22;greeting&#x22;: &#x22;Hello, Buf!&#x22;}"><div></div></button></div></figure></div>
+<p>(Note that when typing into a browser URL bar, most characters will
+automatically be encoded for you.)</p>
+<p>The same RPC, but with a 5s timeout, asymmetric compression, and some
+custom leading and trailing metadata.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="http"><code><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> POST /connectrpc.greet.v1.GreetService/Greet HTTP/1.1</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Host: demo.connectrpc.com</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Content-Type: application/json</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Accept-Encoding: gzip, br</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Connect-Timeout-Ms: 5000</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Acme-Shard-Id: 42</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">></span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> {</span><span style="--0:#005CC5;--1:#79B8FF">"name"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"Buf"</span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; HTTP/</span><span style="--0:#005CC5;--1:#79B8FF">1.1</span><span style="--0:#24292E;--1:#E1E4E8"> </span><span style="--0:#005CC5;--1:#79B8FF">200</span><span style="--0:#24292E;--1:#E1E4E8"> OK</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; Content-Type: application/json</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; Content-Encoding: gzip</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; Trailer-Acme-Operation-Cost: </span><span style="--0:#005CC5;--1:#79B8FF">237</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; &#x3C;gzipped JSON></span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="> POST /connectrpc.greet.v1.GreetService/Greet HTTP/1.1> Host: demo.connectrpc.com> Content-Type: application/json> Accept-Encoding: gzip, br> Connect-Timeout-Ms: 5000> Acme-Shard-Id: 42>> {&#x22;name&#x22;: &#x22;Buf&#x22;}< HTTP/1.1 200 OK< Content-Type: application/json< Content-Encoding: gzip< Trailer-Acme-Operation-Cost: 237<< <gzipped JSON>"><div></div></button></div></figure></div>
+<p>The same RPC again, but with a Protobuf-encoded request and an error response:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="http"><code><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> POST /connectrpc.greet.v1.GreetService/Greet HTTP/1.1</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Host: demo.connectrpc.com</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Content-Type: application/proto</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">></span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> &#x3C;uncompressed binary Protobuf></span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; HTTP/1.1 501 Not Implemented</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; Content-Type: application/json</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; {</span></div></div><div class="ec-line"><div class="code"><span style="--0:#B31D28;--0fs:italic;--1:#FDAEB7;--1fs:italic">&#x3C;</span><span style="--0:#24292E;--1:#E1E4E8">   </span><span style="--0:#005CC5;--1:#79B8FF">"code"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"unimplemented"</span><span style="--0:#24292E;--1:#E1E4E8">,</span></div></div><div class="ec-line"><div class="code"><span style="--0:#B31D28;--0fs:italic;--1:#FDAEB7;--1fs:italic">&#x3C;</span><span style="--0:#24292E;--1:#E1E4E8">   </span><span style="--0:#005CC5;--1:#79B8FF">"message"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"connectrpc.greet.v1.GreetService/Greet is not implemented"</span></div></div><div class="ec-line"><div class="code"><span style="--0:#B31D28;--0fs:italic;--1:#FDAEB7;--1fs:italic">&#x3C;</span><span style="--0:#24292E;--1:#E1E4E8"> }</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="> POST /connectrpc.greet.v1.GreetService/Greet HTTP/1.1> Host: demo.connectrpc.com> Content-Type: application/proto>> <uncompressed binary Protobuf>< HTTP/1.1 501 Not Implemented< Content-Type: application/json<< {<   &#x22;code&#x22;: &#x22;unimplemented&#x22;,<   &#x22;message&#x22;: &#x22;connectrpc.greet.v1.GreetService/Greet is not implemented&#x22;< }"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="streaming-rpcs">Streaming RPCs</h2><a class="sl-anchor-link" href="#streaming-rpcs"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Streaming RPCs”</span></a></div>
+<p>Streaming RPCs may be half- or full-duplex. In server streaming RPCs, the
+client sends a single message and the server responds with a stream of
+messages. In client streaming RPCs, the client sends a stream of messages and
+the server responds with a single message. In bidirectional streaming RPCs,
+both the client and server send a stream of messages. Depending on the Connect
+implementation, IDL, and HTTP version in use, some or all of these streaming
+RPC types may be unavailable.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="streaming-request">Streaming-Request</h3><a class="sl-anchor-link" href="#streaming-request"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Streaming-Request”</span></a></div>
+<ul>
+<li><strong>Streaming-Request</strong> → Streaming-Request-Headers *Enveloped-Message</li>
+<li><strong>Streaming-Request-Headers</strong> → Streaming-Call-Specification *Leading-Metadata</li>
+<li><strong>Streaming-Call-Specification</strong> → Method-Post Path Streaming-Content-Type [Connect-Protocol-Version] [Timeout] [Streaming-Content-Encoding] [Streaming-Accept-Encoding]</li>
+<li><strong>Streaming-Content-Type</strong> → “content-type” “application/connect+” (“proto” / “json” / {<em>custom</em>})</li>
+<li><strong>Streaming-Content-Encoding</strong> → “connect-content-encoding” Content-Coding</li>
+<li><strong>Streaming-Accept-Encoding</strong> → “connect-accept-encoding” Content-Coding *(”,” [” ”] Content-Coding)</li>
+<li><strong>Enveloped-Message</strong> → Envelope-Flags Message-Length Message</li>
+<li><strong>Envelope-Flags</strong> → %d0-255 ; 8 bitwise flags encoded as 1 byte unsigned integer</li>
+<li><strong>Message-Length</strong> → {<em>length of Message</em>} ; encoded as 4 byte unsigned integer, big-endian</li>
+<li><strong>Message</strong> → *{binary octet}</li>
+</ul>
+<p>If <strong>Streaming-Content-Type</strong> does not begin with “application/connect+”,
+servers should respond with an HTTP status of 415 Unsupported Media Type. This
+prevents HTTP clients unaware of Connect’s semantics from interpreting a
+streaming error response, which uses an HTTP Status of 200 OK, as successful.</p>
+<p>Servers must interpret <strong>Streaming-Content-Encoding</strong> and
+<strong>Streaming-Accept-Encoding</strong> using the same inference and error-reporting
+rules as <strong>Content-Encoding</strong> and <strong>Accept-Encoding</strong>.</p>
+<p>The HTTP request content is a sequence of zero or more <strong>Enveloped-Message</strong>.
+The first byte is <strong>Envelope-Flags</strong>, a set of 8 bitwise flags.</p>
+<ul>
+<li>If the least significant bit is 1, the <strong>Message</strong> is compressed using the
+algorithm specified in <strong>Streaming-Content-Encoding</strong>. If
+<strong>Streaming-Content-Encoding</strong> is omitted or “identity”, this bit must be 0.
+Compression contexts are not maintained over message boundaries.</li>
+<li>If the next least significant bit is 1, the <strong>Message</strong> is an
+<a href="#error-end-stream">EndStreamResponse</a> rather than the response type
+defined in the service’s IDL. Response streams must set this bit on the final
+<strong>Enveloped-Message</strong> in the stream, and must leave this bit unset on all
+other messages in the stream. Request streams must always leave this bit
+unset. (Note that this is not the same as the gRPC-Web protocol, which uses
+the <em>most</em> significant bit to mark trailers.)</li>
+<li>The six most significant bits are reserved for future protocol extensions.</li>
+</ul>
+<div class="sl-heading-wrapper level-h3"><h3 id="streaming-response">Streaming-Response</h3><a class="sl-anchor-link" href="#streaming-response"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Streaming-Response”</span></a></div>
+<ul>
+<li><strong>Streaming-Response</strong> → Streaming-Response-Headers 1*Enveloped-Message</li>
+<li><strong>Streaming-Response-Headers</strong> → ”:status 200” Streaming-Content-Type [Streaming-Content-Encoding] [Streaming-Accept-Encoding] *Leading-Metadata</li>
+</ul>
+<p>Streaming responses always have an HTTP status of 200 OK. As noted above,
+server implementations must send an <a href="#error-end-stream">EndStreamResponse</a>
+as the final message in the stream, and must not send an EndStreamResponse
+earlier in the stream.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="streaming-examples">Examples</h3><a class="sl-anchor-link" href="#streaming-examples"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Examples”</span></a></div>
+<p>Using HTTP/1.1 notation and putting each <strong>Enveloped-Message</strong> on a separate
+line for readability, a successful client streaming RPC:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="http"><code><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> POST /connectrpc.greet.v1.GreetService/GreetGroup HTTP/1.1</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Host: demo.connectrpc.com</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Content-Type: application/connect+json</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">></span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> &#x3C;flags: 0>&#x3C;length: 15>{</span><span style="--0:#005CC5;--1:#79B8FF">"name"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"Buf"</span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> &#x3C;flags: </span><span style="--0:#005CC5;--1:#79B8FF">0</span><span style="--0:#24292E;--1:#E1E4E8">>&#x3C;length: </span><span style="--0:#005CC5;--1:#79B8FF">19</span><span style="--0:#24292E;--1:#E1E4E8">>{</span><span style="--0:#005CC5;--1:#79B8FF">"name"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"Connect"</span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; HTTP/</span><span style="--0:#005CC5;--1:#79B8FF">1.1</span><span style="--0:#24292E;--1:#E1E4E8"> </span><span style="--0:#005CC5;--1:#79B8FF">200</span><span style="--0:#24292E;--1:#E1E4E8"> OK</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; Content-Type: application/connect+json</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; &#x3C;flags: </span><span style="--0:#005CC5;--1:#79B8FF">0</span><span style="--0:#24292E;--1:#E1E4E8">>&#x3C;length: </span><span style="--0:#005CC5;--1:#79B8FF">39</span><span style="--0:#24292E;--1:#E1E4E8">>{</span><span style="--0:#005CC5;--1:#79B8FF">"greeting"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"Hello, Buf and Connect!"</span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; &#x3C;flags: </span><span style="--0:#005CC5;--1:#79B8FF">2</span><span style="--0:#24292E;--1:#E1E4E8">>&#x3C;length: </span><span style="--0:#005CC5;--1:#79B8FF">2</span><span style="--0:#24292E;--1:#E1E4E8">>{}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="> POST /connectrpc.greet.v1.GreetService/GreetGroup HTTP/1.1> Host: demo.connectrpc.com> Content-Type: application/connect+json>> <flags: 0><length: 15>{&#x22;name&#x22;: &#x22;Buf&#x22;}> <flags: 0><length: 19>{&#x22;name&#x22;: &#x22;Connect&#x22;}< HTTP/1.1 200 OK< Content-Type: application/connect+json<< <flags: 0><length: 39>{&#x22;greeting&#x22;: &#x22;Hello, Buf and Connect!&#x22;}< <flags: 2><length: 2>{}"><div></div></button></div></figure></div>
+<p>A failed server streaming RPC:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="http"><code><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> POST /connectrpc.greet.v1.GreetService/GreetIndividuals HTTP/1.1</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Host: demo.connectrpc.com</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> Content-Type: application/connect+proto</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">></span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">> &#x3C;flags: 0>&#x3C;length: 8>&#x3C;binary proto></span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; HTTP/1.1 200 OK</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; Content-Type: application/connect+proto</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">&#x3C; &#x3C;flags: 2>&#x3C;length: 58>{</span><span style="--0:#005CC5;--1:#79B8FF">"error"</span><span style="--0:#24292E;--1:#E1E4E8">: {</span><span style="--0:#005CC5;--1:#79B8FF">"code"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"unavailable"</span><span style="--0:#24292E;--1:#E1E4E8">, </span><span style="--0:#005CC5;--1:#79B8FF">"message"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"overloaded"</span><span style="--0:#24292E;--1:#E1E4E8">}}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="> POST /connectrpc.greet.v1.GreetService/GreetIndividuals HTTP/1.1> Host: demo.connectrpc.com> Content-Type: application/connect+proto>> <flags: 0><length: 8><binary proto>< HTTP/1.1 200 OK< Content-Type: application/connect+proto<< <flags: 2><length: 58>{&#x22;error&#x22;: {&#x22;code&#x22;: &#x22;unavailable&#x22;, &#x22;message&#x22;: &#x22;overloaded&#x22;}}"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="error-codes">Error Codes</h2><a class="sl-anchor-link" href="#error-codes"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Error Codes”</span></a></div>
+<p>Connect represents categories of errors as codes, and each code maps to a
+specific HTTP status code. The codes and their semantics were chosen to match
+gRPC. Only the codes below are valid — there are no user-defined codes.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>HTTP Status</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">canceled</code></td><td>499 Client Closed Request</td><td>RPC canceled, usually by the caller.</td></tr><tr><td><code dir="auto">unknown</code></td><td>500 Internal Server Error</td><td>Catch-all for errors of unclear origin and errors without a more appropriate code.</td></tr><tr><td><code dir="auto">invalid_argument</code></td><td>400 Bad Request</td><td>Request is invalid, regardless of system state.</td></tr><tr><td><code dir="auto">deadline_exceeded</code></td><td>504 Gateway Timeout</td><td>Deadline expired before RPC could complete or before the client received the response.</td></tr><tr><td><code dir="auto">not_found</code></td><td>404 Not Found</td><td>User requested a resource (for example, a file or directory) that can’t be found.</td></tr><tr><td><code dir="auto">already_exists</code></td><td>409 Conflict</td><td>Caller attempted to create a resource that already exists.</td></tr><tr><td><code dir="auto">permission_denied</code></td><td>403 Forbidden</td><td>Caller isn’t authorized to perform the operation.</td></tr><tr><td><code dir="auto">resource_exhausted</code></td><td>429 Too Many Requests</td><td>Operation can’t be completed because some resource is exhausted. Use unavailable if the server is temporarily overloaded and the caller should retry later.</td></tr><tr><td><code dir="auto">failed_precondition</code></td><td>400 Bad Request</td><td>Operation can’t be completed because the system isn’t in the required state.</td></tr><tr><td><code dir="auto">aborted</code></td><td>409 Conflict</td><td>The operation was aborted, often because of concurrency issues like a database transaction abort.</td></tr><tr><td><code dir="auto">out_of_range</code></td><td>400 Bad Request</td><td>The operation was attempted past the valid range.</td></tr><tr><td><code dir="auto">unimplemented</code></td><td>501 Not Implemented</td><td>The operation isn’t implemented, supported, or enabled.</td></tr><tr><td><code dir="auto">internal</code></td><td>500 Internal Server Error</td><td>An invariant expected by the underlying system has been broken. Reserved for serious errors.</td></tr><tr><td><code dir="auto">unavailable</code></td><td>503 Service Unavailable</td><td>The service is currently unavailable, usually transiently. Clients should back off and retry idempotent operations.</td></tr><tr><td><code dir="auto">data_loss</code></td><td>500 Internal Server Error</td><td>Unrecoverable data loss or corruption.</td></tr><tr><td><code dir="auto">unauthenticated</code></td><td>401 Unauthorized</td><td>Caller doesn’t have valid authentication credentials for the operation.</td></tr></tbody></table>
+<p>When choosing between <code dir="auto">invalid_argument</code>, <code dir="auto">failed_precondition</code>, and <code dir="auto">out_of_range</code>,
+use <code dir="auto">invalid_argument</code> if the failure is independent of the system state. For
+example, attempting to seek to a file offset larger than 2^32-1 on a 32-bit
+system should return <code dir="auto">invalid_argument</code>. Use <code dir="auto">out_of_range</code> as a common
+sub-category of <code dir="auto">failed_precondition</code>, so clients iterating through a space can
+detect when they’re done. For example, attempting to seek past the
+end of a particular file should return <code dir="auto">out_of_range</code>.</p>
+<p>When choosing between <code dir="auto">unauthenticated</code>, <code dir="auto">permission_denied</code>, <code dir="auto">resource_exhausted</code>, and
+<code dir="auto">not_found</code>, use <code dir="auto">unauthenticated</code> if the user can’t be identified or presents
+invalid credentials. Use <code dir="auto">resource_exhausted</code> if a per-user quota (for example, a
+rate limit) is exhausted. Use <code dir="auto">not_found</code> if an operation is denied for a class
+of users (for example, because of a gradual rollout or an undocumented
+allowlist). Use <code dir="auto">permission_denied</code> for other authorization-based rejections.</p>
+<p>When choosing between <code dir="auto">failed_precondition</code>, <code dir="auto">aborted</code>, and <code dir="auto">unavailable</code>, use
+<code dir="auto">unavailable</code> if the client can back off and retry the operation. Use <code dir="auto">aborted</code> if
+the client should retry at a higher level (for example, restarting a
+read-modify-write cycle). Use <code dir="auto">failed_precondition</code> if the client must explicitly
+fix the system state before retrying (for example, by emptying a directory
+before attempting to remove it).</p>
+<p>Clients must exercise judgment when deciding which errors to retry —
+there’s no set of error codes which are safe to retry for all applications.
+Typically, services explicitly identify idempotent methods in their IDL.</p>
+<p>If clients receive a response with non-200 HTTP status codes and no explicit
+Connect error code, they should infer a Connect code using the following table.
+This mapping is a superset of gRPC’s: in all cases where gRPC maps an HTTP
+status code to a specific gRPC status code (that is, something other than
+unknown or internal), Connect maps to the semantically-equivalent error code.</p>
+<div class="sl-heading-wrapper level-h4"><h4 id="http-to-error-code">HTTP to Error Code</h4><a class="sl-anchor-link" href="#http-to-error-code"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “HTTP to Error Code”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>HTTP Status</th><th>Inferred Code</th></tr></thead><tbody><tr><td>400 Bad Request</td><td><code dir="auto">internal</code></td></tr><tr><td>401 Unauthorized</td><td><code dir="auto">unauthenticated</code></td></tr><tr><td>403 Forbidden</td><td><code dir="auto">permission_denied</code></td></tr><tr><td>404 Not Found</td><td><code dir="auto">unimplemented</code></td></tr><tr><td>429 Too Many Requests</td><td><code dir="auto">unavailable</code></td></tr><tr><td>502 Bad Gateway</td><td><code dir="auto">unavailable</code></td></tr><tr><td>503 Service Unavailable</td><td><code dir="auto">unavailable</code></td></tr><tr><td>504 Gateway Timeout</td><td><code dir="auto">unavailable</code></td></tr><tr><td><em>all others</em></td><td><code dir="auto">unknown</code></td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="error-end-stream">Error and EndStreamResponse</h2><a class="sl-anchor-link" href="#error-end-stream"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Error and EndStreamResponse”</span></a></div>
+<p>Connect serializes errors and the block of data at the end of each response
+stream using JSON. This keeps errors human-readable and easy to debug.</p>
+<p>An <code dir="auto">Error</code> is a code, an optional message, and an optional array of details.
+Code and message (if present) are UTF-8 strings. When message is omitted or the
+empty string, clients may synthesize a user-facing message (and thereby avoid
+representing the message as an optional or nullable type, if such types exist
+in the implementation language). <code dir="auto">{"code": null}</code> and <code dir="auto">{}</code> are invalid. The
+simplest form of <code dir="auto">Error</code> contains just a code:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="json"><code><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">{</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#005CC5;--1:#79B8FF">"code"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"unavailable"</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;code&#x22;: &#x22;unavailable&#x22;}"><div></div></button></div></figure></div>
+<p>Details are an optional mechanism for servers to attach strongly-typed messages
+to errors. Each detail is an object with “type” and “value” properties and any
+number of other properties. The “type” field contains the fully-qualified
+Protobuf message name as a UTF-8 string, and the “value” field contains
+unpadded, base64-encoded binary Protobuf data. For readability on the wire,
+server implementations may also serialize the detail to JSON and include the
+resulting value under the “debug” key. Clients must not depend on data in the
+“debug” key when deserializing details.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="json"><code><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">{</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#005CC5;--1:#79B8FF">"code"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"unavailable"</span><span style="--0:#24292E;--1:#E1E4E8">,</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#005CC5;--1:#79B8FF">"message"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"overloaded: back off and retry"</span><span style="--0:#24292E;--1:#E1E4E8">,</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#005CC5;--1:#79B8FF">"details"</span><span style="--0:#24292E;--1:#E1E4E8">: [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292E;--1:#E1E4E8">    </span></span><span style="--0:#24292E;--1:#E1E4E8">{</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#005CC5;--1:#79B8FF">"type"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"google.rpc.RetryInfo"</span><span style="--0:#24292E;--1:#E1E4E8">,</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#005CC5;--1:#79B8FF">"value"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"CgIIPA"</span><span style="--0:#24292E;--1:#E1E4E8">,</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#005CC5;--1:#79B8FF">"debug"</span><span style="--0:#24292E;--1:#E1E4E8">: {</span><span style="--0:#005CC5;--1:#79B8FF">"retryDelay"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"30s"</span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292E;--1:#E1E4E8">    </span></span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292E;--1:#E1E4E8">  </span></span><span style="--0:#24292E;--1:#E1E4E8">]</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;code&#x22;: &#x22;unavailable&#x22;,  &#x22;message&#x22;: &#x22;overloaded: back off and retry&#x22;,  &#x22;details&#x22;: [    {      &#x22;type&#x22;: &#x22;google.rpc.RetryInfo&#x22;,      &#x22;value&#x22;: &#x22;CgIIPA&#x22;,      &#x22;debug&#x22;: {&#x22;retryDelay&#x22;: &#x22;30s&#x22;}    }  ]}"><div></div></button></div></figure></div>
+<p>An <code dir="auto">EndStreamMessage</code> is the final message in streaming response. It conveys
+whether or not the RPC succeeded and any trailing metadata. Trailing metadata
+is modeled as an object: keys follow <strong>Header-Name</strong>, and values are arrays of
+UTF-8 strings. Each string is either an <strong>ASCII-Value</strong> or a base64-encoded
+binary value. Keys beginning with “connect-” are reserved for use by the
+Connect protocol. Semantically, trailing metadata should be treated as HTTP
+headers: keys are case-insensitive, values for the same key can be joined with
+commas, and so on. (In practice, Connect implementations typically deserialize
+trailing metadata into the same data structure used for HTTP headers.)</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="json"><code><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">{</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#005CC5;--1:#79B8FF">"error"</span><span style="--0:#24292E;--1:#E1E4E8">: {</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#005CC5;--1:#79B8FF">"code"</span><span style="--0:#24292E;--1:#E1E4E8">: </span><span style="--0:#032F62;--1:#9ECBFF">"unavailable"</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292E;--1:#E1E4E8">  </span></span><span style="--0:#24292E;--1:#E1E4E8">},</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#005CC5;--1:#79B8FF">"metadata"</span><span style="--0:#24292E;--1:#E1E4E8">: {</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#005CC5;--1:#79B8FF">"acme-operation-cost"</span><span style="--0:#24292E;--1:#E1E4E8">: [</span><span style="--0:#032F62;--1:#9ECBFF">"237"</span><span style="--0:#24292E;--1:#E1E4E8">]</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292E;--1:#E1E4E8">  </span></span><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E;--1:#E1E4E8">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;error&#x22;: {    &#x22;code&#x22;: &#x22;unavailable&#x22;  },  &#x22;metadata&#x22;: {    &#x22;acme-operation-cost&#x22;: [&#x22;237&#x22;]  }}"><div></div></button></div></figure></div>
+<p>Failed RPCs must provide an <code dir="auto">Error</code> in the “error” property, and successful
+RPCs must omit the property. <code dir="auto">{"error": null}</code>, <code dir="auto">{"error": {}}</code>, and
+<code dir="auto">{"error": {"code": null}}</code> are invalid. The “metadata” property is optional.
+After a successful RPC, <code dir="auto">EndStreamResponse</code> can be as simple as <code dir="auto">{}</code>.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="protobuf">Protocol Buffers</h2><a class="sl-anchor-link" href="#protobuf"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Protocol Buffers”</span></a></div>
+<p>When used with Protocol Buffer IDL,</p>
+<ul>
+<li><strong>Procedure-Name</strong> → ?( {<em>proto package name</em>} ”.” ) {<em>service name</em>} ”/” {<em>method name</em>}</li>
+<li><strong>Unary-Content-Type</strong> → “content-type application/” (“proto” / “json”)</li>
+<li><strong>Streaming-Content-Type</strong> → “content-type application/connect+” (“proto” / “json”)</li>
+</ul>
+<p>Choose the “proto” content types for binary serialization and the “json” types
+to use the canonical JSON mapping.</p>
+<p>Protocol Buffers support unary RPCs and all three types of streaming.</p></div><footer class="sl-flex astro-ddtxxk7k"><div class="meta sl-flex astro-ddtxxk7k"></div></footer></div></div></main></div></div></div><footer class="site-footer astro-wprpg2ff"><div class="site-footer-inner astro-wprpg2ff"><div class="legal-group astro-wprpg2ff"><a class="legal-link astro-wprpg2ff" href="https://www.linuxfoundation.org/terms">Terms</a><a class="legal-link astro-wprpg2ff" href="https://www.linuxfoundation.org/privacy">Privacy</a><a class="legal-link astro-wprpg2ff" href="https://www.linuxfoundation.org/trademark-usage">Trademarks</a><a class="legal-link astro-wprpg2ff" href="https://github.com/connectrpc/connectrpc.com/blob/main/LICENSE">License</a></div><div class="copyright astro-wprpg2ff"><div class="astro-wprpg2ff">Copyright © 2022–2026 The Connect Authors</div><span class="astro-wprpg2ff">We are a Cloud Native Computing Foundation sandbox project</span><svg role="img" viewBox="-3.65 -3.40 358.80 85.80" width="200" class="cncf-logo astro-wprpg2ff" aria-hidden="true"><style>svg {enable-background:new 0 0 351.3 79}</style><style>.st10{opacity:.8}.st11{opacity:.6}</style><path id="XMLID_207_" d="M96.9 24.5c2.7 0 4.9-1.1 6.5-3.2l3.5 3.6c-2.8 3.1-6 4.7-9.8 4.7-3.7 0-6.8-1.2-9.3-3.6-2.4-2.4-3.6-5.4-3.6-9 0-3.6 1.2-6.6 3.7-9 2.5-2.4 5.5-3.6 9.1-3.6 4 0 7.3 1.5 10 4.6l-3.4 3.8c-1.7-2.1-3.9-3.2-6.4-3.2-2 0-3.8.7-5.2 2-1.5 1.3-2.2 3.1-2.2 5.4s.7 4.1 2.1 5.4c1.4 1.5 3 2.1 5 2.1z" /><path id="XMLID_205_" d="M111.2 29.4V5h5.4v19.5H127v4.8h-15.8z" /><path id="XMLID_157_" d="M150.8 26c-2.5 2.4-5.5 3.6-9.1 3.6-3.6 0-6.6-1.2-9.1-3.6-2.5-2.4-3.7-5.4-3.7-9 0-3.6 1.2-6.6 3.7-9 2.5-2.4 5.5-3.6 9.1-3.6 3.6 0 6.6 1.2 9.1 3.6 2.5 2.4 3.7 5.4 3.7 9 0 3.6-1.3 6.6-3.7 9zm-1.9-9c0-2.2-.7-4-2.1-5.6-1.4-1.5-3.1-2.3-5.1-2.3-2 0-3.7.8-5.1 2.3-1.4 1.5-2.1 3.4-2.1 5.6 0 2.2.7 4 2.1 5.5 1.4 1.5 3.1 2.3 5.1 2.3 2 0 3.7-.8 5.1-2.3 1.4-1.4 2.1-3.3 2.1-5.5z" /><path id="XMLID_155_" d="M165.5 23.1c.9 1.1 2.1 1.7 3.7 1.7 1.5 0 2.7-.6 3.6-1.7.9-1.1 1.3-2.7 1.3-4.6V5h5.4v13.6c0 3.5-1 6.2-2.9 8.1-2 1.9-4.4 2.8-7.5 2.8-3 0-5.5-1-7.5-2.9s-2.9-4.6-2.9-8.1V5h5.4v13.4c0 2 .5 3.5 1.4 4.7z" /><path id="XMLID_151_" d="M203.8 8.2c2.3 2.1 3.5 5.1 3.5 8.9s-1.1 6.8-3.4 9-5.7 3.3-10.4 3.3h-8.3V5h8.6c4.3 0 7.7 1.1 10 3.2zm-4 14.5c1.3-1.3 2-3.1 2-5.5s-.7-4.2-2-5.5c-1.3-1.3-3.4-1.9-6.1-1.9h-3v14.8h3.4c2.5-.1 4.4-.7 5.7-1.9z" /><path id="XMLID_103_" d="M238.2 5h5.4v24.3h-5.4L226.6 14v15.3h-5.4V5h5.1l11.9 15.7V5z" /><path id="XMLID_100_" d="M267 29.4l-2.3-5.3h-10.2l-2.3 5.3h-5.8L257 5h5.3l10.5 24.3H267zm-7.4-17.1l-3.1 7.1h6.1l-3-7.1z" /><path id="XMLID_98_" d="M284.1 9.7v19.6h-5.4V9.7h-6.9V5H291v4.7h-6.9z" /><path id="XMLID_96_" d="M295 5h5.4v24.3H295V5z" /><path id="XMLID_94_" d="M315.4 20.5L321.6 5h5.9l-9.8 24.3h-4.6L303.3 5h5.9l6.2 15.5z" /><path id="XMLID_12_" d="M347.9 5v4.8h-12.1v5h10.9v4.6h-10.9v5h12.5v4.8h-17.9V5h17.5z" /><path d="M84.2 68.9l2.4-2.8c3.5 3.2 6.9 4.8 11.7 4.8 4.6 0 7.6-2.4 7.6-5.8V65c0-3.2-1.7-5-8.8-6.5-7.8-1.7-11.4-4.2-11.4-9.8v-.1c0-5.3 4.7-9.3 11.2-9.3 5 0 8.5 1.4 12 4.2l-2.2 3c-3.2-2.6-6.3-3.7-9.8-3.7-4.4 0-7.2 2.4-7.2 5.5v.1c0 3.2 1.7 5 9.2 6.6 7.6 1.7 11.1 4.4 11.1 9.6v.1c0 5.8-4.9 9.6-11.6 9.6-5.7 0-10.1-1.8-14.2-5.4zm47.6-29.3h3.6l15.5 34.2h-4.1l-4-9h-18.5l-4 9h-3.9l15.4-34.2zm9.5 21.8L133.6 44l-7.8 17.3h15.5zm18.8-21.6h3.6l21.4 27.3V39.8h3.7v34h-3.1l-22-27.9v27.9H160v-34zm40.8 0h11.8c10.7 0 18.1 7.3 18.1 16.9v.1c0 9.6-7.4 17-18.1 17h-11.8v-34zm11.8 30.5c8.6 0 14.1-5.8 14.1-13.4v-.1c0-7.5-5.5-13.5-14.1-13.5h-8v26.9h8zm28.6-30.5h14.5c3.9 0 6.9 1.1 8.9 3 1.4 1.5 2.2 3.3 2.2 5.4v.1c0 4.4-2.7 6.7-5.4 7.9 4 1.2 7.3 3.5 7.3 8.2v.1c0 5.8-4.9 9.3-12.3 9.3h-15.1v-34zM255.1 55c4.6 0 7.8-2.1 7.8-6.1v-.1c0-3.4-2.7-5.5-7.5-5.5h-10.3V55h10zm1.4 15.4c5.1 0 8.4-2.3 8.4-6.1v-.1c0-3.7-3.1-5.8-9-5.8h-10.7v12h11.3zm20.8-13.5c0-9.5 7-17.7 17.4-17.7 10.3 0 17.3 8.1 17.3 17.5v.1c0 9.4-7 17.6-17.4 17.6s-17.3-8.1-17.3-17.5zm30.7 0c0-7.8-5.6-14.1-13.4-14.1-7.8 0-13.3 6.2-13.3 13.9v.1c0 7.7 5.6 14 13.4 14 7.7.1 13.3-6.2 13.3-13.9zm22.6-.4L318 39.8h4.5l10.4 13.9 10.3-13.9h4.5l-12.6 16.6 13.1 17.4h-4.6l-10.9-14.6-10.9 14.6h-4.4l13.2-17.3z" /><path fill="none" d="M13.6 14.1V16v-1.9z" /><path d="M29.7 65.4c.1 0 0 0 0 0z" /><path d="M27.3 14.1l-13.7.1V16l.1 11.8-.1 9v14.8c1.8-1.5 3.5-3.3 5.4-4.8 2.8-2.4 6-3.5 9.5-3.1l4.3 1.8c1.1-1.6 2.8-2.3 4.8-2.3 1.6 0 3.3.2 4.9.2.2-.6.4-1.1.5-1.7.5-2.9 1.6-5.5 2.5-8.2 1.6-5.1 3-10.3 4.9-15.2.1-.9 1-1.1 1.5-1.7h2.5l.7.7c1 .8 1.7 1.7 1.1 3.1l-8.7 22.8c.2 1.1 1.1.7 1.7.7 2.8.1 3.4.8 3 3.5-.1.9 0 1.9 0 2.8 1.5-.6 2.9-1.2 4.5-1.6 3-.7 5.7.2 8.1 2l.1-7.9V14H36.3l-9 .1z" opacity=".2" /><path d="M53 20.4zM32.2 57.2c.1 0 .1 0 0 0 .1 0 .1 0 0 0z" /><path d="M65 65.3v-.1.1zm-13.7.1c5.8 0 7.8 4.3 13.5 4.3.3 0-.1-4.5.1-4.5V51.8l-.1-.1v-1.1c-2.5-1.9-5.1-2.8-8.1-2-1.5.4-3 .9-4.5 1.6 0 .5-.1 1-.3 1.5-1 2.6-2.7 4.9-3.9 7.4-.3.7-.7 1.8-1.8 1.5-.1 0-.2 0-.3-.1-1.7.1-3.5.2-4.9-1.1-.5-.5-1.2-.2-1.8-.3-1.7.2-3.3.3-5 .7-1.4-.1-2.9 1-4.2 1.1-.9.5-3.1 1-4.1-.2h-.1s-.1 0-.1-.1l.3-.5c1.5-3.9 4.5-10.2 6.2-13.7.1-.3.3-.6.5-.8l-4.3-1.8c-3.5-.5-6.7.7-9.5 3.1-1.8 1.5-3.5 3.3-5.4 4.8v13.8h1.2c.1-.1-1.6 1.3-1.5 1.2 4.9 0 9.1-1.2 14-1.2" opacity=".4" /><path d="M46.7 65.4H65v-.2h-.8m-38.4-4.5c.1 0 .1 0 0 0 .1 0 .1 0 0 0 0-.1 0 0 0 0zm20.4-.1z" /><path d="M53 20.3c0 .1 0 .1 0 0 .3-.4.5-.9.7-1.3.2-1.2-.6-1.9-1.4-2.5h-.4c-.5.6-1.4.8-1.5 1.7l.2.4c2.2-.6 2.3-.5 2.4 1.7z" class="st10" /><path d="M53.7 19l.4.4c.9-.4-.1-1.8 1-2.1l-.7-.7h-2.1c.8.5 1.6 1.2 1.4 2.4z" class="st10" /><path d="M43.4 41.5c2.1.4 2.3-1.2 2.8-2.5 2.7-6.1 5.1-12.2 6.8-18.6v-.1c-.1-2.2-.3-2.3-2.4-1.7 0 0-.1-.3-.2-.4-1.9 5-3.3 10.2-4.9 15.2-.9 2.7-2 5.4-2.5 8.2.2 0 .3-.1.4-.1zM26.1 60l3.8-6.7c1.1-2.3 2.1-4.6 3.3-6.7.7-1 1.6-1.9 2.9-2.1.2-.1.4-.1.6-.2 2.1-.5 4.1 0 6.2.2 2.3.1 4.7.2 7 .3 1.4.1 2 1.1 1.5 2.4l-.3.6c-.9 2.1-1.4 3.1-3.1 3.1 1.3.3 1.4 1.1.7 2.7s-1.6 3.3-2.2 5c-.2.6-.4 1.1-.4 1.7.1 0 .2.1.3.1 1-3.3 2.8-6.1 4.3-9.6.8-1.3.8-1.7 1.5-2.5v3.2c.2-.5.3-1 .3-1.5 0-.9-.2-1.9 0-2.8.4-2.7-.2-3.4-3-3.5-.6 0-1.5.4-1.7-.7-.4.4-.7 1.1-1.3.3-1.2.3-2.5.1-3.7-.1-1.6-.1-3.3-.3-4.9-.2-2 0-3.7.7-4.8 2.3-.2.3-.4.5-.5.8-2 3.7-5 10-6.5 13.9z" class="st11" /><path d="M46.3 43.5c.9-3.2 2.4-6.2 3.6-9.3 1.1-3.1 2.4-6.1 3.2-9.2.5-1.9 1.3-3.6 1.1-5.6l-.4-.4c-.2.5-.4.9-.7 1.4-1.8 6.4-4.2 12.6-6.9 18.6-.6 1.3-.8 2.9-2.8 2.5-.1 0-.2.2-.2.2-.2.6-.4 1.1-.5 1.7 1.1.1 2.3.4 3.6.1z" class="st11" /><path d="M32.2 57.2c-.1-.1-.1-.2-.2-.3l-2.3-3.5v-.1L26.1 60l-.3.5s.1 0 .1.1c1 1.1 3.2.7 4.1.2l2-3.2c.1-.1.2-.2.2-.4zm21.9-37.8c.3 2-.6 3.8-1.1 5.6-.8 3.2-2.1 6.2-3.2 9.2-1.1 3.1-2.6 6.1-3.6 9.3.7.8.9 0 1.3-.3l8.7-22.8c.5-1.4-.1-2.3-1.1-3.1-1.2.3-.1 1.7-1 2.1zM50.5 51c-1.5 3.4-3.3 6.2-4.3 9.6h.1c1.1.3 1.5-.7 1.8-1.5 1.2-2.5 2.9-4.8 3.9-7.4v-3.2c-.7.8-.8 1.2-1.5 2.5z" class="st10" /><path d="M48.5 53.8c.8-1.7.6-2.5-.7-2.7-.3 0-.6 0-.9-.1-2.8-.1-5.5-.3-8.3-.4-.8 0-1.6-.1-2 .7 1.2 2.5 2.4 4.9 2.5 7.8.6.1 1.3-.1 1.8.3 1.4 1.4 3.2 1.2 4.9 1.1 0-.6.2-1.1.4-1.7.8-1.7 1.6-3.3 2.3-5z" class="st11" /><path d="M34.6 53.5c.9-1 1.3-1.5 2.1-2.2.5-.8 1.3-.7 2-.7 2.8.1 5.5.3 8.3.4.3.1.6.1.9.1 1.7 0 2.2-1 3.1-3.1l.3-.6c.5-1.3-.1-2.3-1.5-2.4-2.3-.2-4.7-.2-7-.3-2.1-.2-4.1-.7-6.2-.2-.2 0-.4.1-.6.2-1.3.2-2.1 1.1-2.9 2.1 1.9 1.8 3 4 1.5 6.7z" class="st10" /><path d="M32.1 57c0 .1.1.2.2.2.9-1.3 1.4-2.3 2.3-3.6v-.2c1.5-2.7.4-4.9-1.5-6.8-1.2 2.1-2.2 4.4-3.3 6.7v.1l2.3 3.6z" class="st10" /><path d="M36.7 51.3c-.8.7-1.2 1.2-2 2.3l-.1.1c-.9 1.2-1.5 2.3-2.3 3.6-.1.1-.2.2-.3.4l-2 3.2c1.3-.1 2.8-1.2 4.2-1.1 1.6-.4 3.3-.5 5-.7-.1-2.9-1.4-5.4-2.5-7.8z" class="st11" /><path d="M27.3 65.4H13.6V51.7H3.3v24h24zm37.6-13.7l.1 13.5v.1l-13.7.1v10.3h24v-24H64.9zM13.6 16v-1.9h13.7V3.7h-24v24h10.4zM51.3 3.7V14H65v13.7h10.3v-24z" /><path d="M36.3 14h15V3.7h-24v10.4zm28.6 37.7h10.4v-24H65v15m-51.4 8.9V36.7l.1-9H3.3v24h10.3zm22.7 24.1h15V65.4h-24v10.3z" class="st10" /></svg></div></div></footer></div><script>
+  // Keep the active right-rail TOC link in view as the page scrolls.
+  // Starlight's <starlight-toc> sets aria-current="true" on the link that
+  // matches the heading currently in view; we observe that attribute and
+  // scroll the TOC pane so the active link is visible.
+  (function () {
+    function track() {
+      document.querySelectorAll(".right-sidebar-panel starlight-toc").forEach((toc) => {
+        if (toc.dataset.followScroll) return;
+        toc.dataset.followScroll = "1";
+        const scrollIntoToc = (link) => {
+          if (!link) return;
+          // Use the TOC pane as the scroll container, not the whole window.
+          link.scrollIntoView({ block: "nearest", inline: "nearest" });
+        };
+        const obs = new MutationObserver((mutations) => {
+          for (const m of mutations) {
+            if (m.attributeName !== "aria-current") continue;
+            if (m.target.getAttribute("aria-current") === "true") {
+              scrollIntoToc(m.target);
+            }
+          }
+        });
+        toc.querySelectorAll("a").forEach((a) =>
+          obs.observe(a, { attributes: true, attributeFilter: ["aria-current"] }),
+        );
+        // Scroll to the currently-active link on initial load.
+        scrollIntoToc(toc.querySelector('a[aria-current="true"]'));
+      });
+    }
+    document.addEventListener("DOMContentLoaded", track);
+    document.addEventListener("astro:page-load", track);
+  })();
+</script></body></html>
