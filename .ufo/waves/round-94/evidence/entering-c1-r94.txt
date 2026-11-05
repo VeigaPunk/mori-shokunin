@@ -1,0 +1,16 @@
+# round-94 entering receipts (base 84b15230; taken before the freeze commit; controls-r94.py run as pre-freeze check)
+## C1 do-nothing and embedded-hash controls (v1 frozen r93 counter vs v2 round-94 counter)
+CTRL do-nothing v1=C1=met v2=C1=met
+CTRL do-nothing v1_line=C1=met trio=98 claim_r92_true=1 files=19 adm_ok=19 adm_fail=0 patched12=12 seven_same=7 census=ok rev=84b152308fa6
+CTRL do-nothing v2_line=C1=met trio=98 files=19 adm_ok=19 adm_fail=0 patched12=12 seven_same=7 census=ok rev=84b152308fa6
+CTRL left rev=b88087eed54b v1=C1=met v2=C1=unmet v2_line=C1=unmet trio=98 files=19 adm_ok=18 adm_fail=1 patched12=12 seven_same=7 census=ok checks_failed=admission rev=b88087eed54b
+CTRL right rev=05e2ef7826be v1=C1=met v2=C1=unmet v2_line=C1=unmet trio=98 files=19 adm_ok=18 adm_fail=1 patched12=12 seven_same=7 census=ok checks_failed=admission rev=05e2ef7826be
+CTRL middle rev=1bde6a35a606 v1=C1=met v2=C1=unmet v2_line=C1=unmet trio=98 files=19 adm_ok=18 adm_fail=1 patched12=12 seven_same=7 census=ok checks_failed=admission rev=1bde6a35a606
+EMBED_FALSE_PASS v1=3/3 v2=0/3 live_v2=met do_nothing_v1=C1=met do_nothing_v2=C1=met
+controls_rc=0
+## C1 v2 live report at base
+C1=met trio=98 files=19 adm_ok=19 adm_fail=0 patched12=12 seven_same=7 census=ok rev=84b152308fa6
+rc=0
+## C1 v1 frozen counter at base (before)
+C1=met trio=98 claim_r92_true=1 files=19 adm_ok=19 adm_fail=0 patched12=12 seven_same=7 census=ok rev=84b152308fa6
+rc=0

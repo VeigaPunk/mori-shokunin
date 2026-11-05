@@ -1,0 +1,9 @@
+# round-94 controls receipt at entering base 84b15230 (pre-freeze run; controls-r94.py, exit code shown)
+CTRL do-nothing v1=C1=met v2=C1=met
+CTRL do-nothing v1_line=C1=met trio=98 claim_r92_true=1 files=19 adm_ok=19 adm_fail=0 patched12=12 seven_same=7 census=ok rev=84b152308fa6
+CTRL do-nothing v2_line=C1=met trio=98 files=19 adm_ok=19 adm_fail=0 patched12=12 seven_same=7 census=ok rev=84b152308fa6
+CTRL left rev=bfdfbd3aef75 v1=C1=met v2=C1=unmet v2_line=C1=unmet trio=98 files=19 adm_ok=18 adm_fail=1 patched12=12 seven_same=7 census=ok checks_failed=admission rev=bfdfbd3aef75
+CTRL right rev=44b03291f6a1 v1=C1=met v2=C1=unmet v2_line=C1=unmet trio=98 files=19 adm_ok=18 adm_fail=1 patched12=12 seven_same=7 census=ok checks_failed=admission rev=44b03291f6a1
+CTRL middle rev=601e498eb10f v1=C1=met v2=C1=unmet v2_line=C1=unmet trio=98 files=19 adm_ok=18 adm_fail=1 patched12=12 seven_same=7 census=ok checks_failed=admission rev=601e498eb10f
+EMBED_FALSE_PASS v1=3/3 v2=0/3 live_v2=met do_nothing_v1=C1=met do_nothing_v2=C1=met
+controls_rc=0

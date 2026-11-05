@@ -1,0 +1,29 @@
+# premise greps (QUALITY 196 style), run at base 84b15230
+P1 admission substring test in v1:
+141:            if ac and va and ac[:7] in va:
+P2 host literal in round-93 counters:
+.ufo/waves/round-93/count-c1.py:1
+.ufo/waves/round-93/count-c2.py:1
+.ufo/waves/round-93/controls-r93.sh:1
+P3 verified-at token vs admission %h (19 files, 8-char tokens):
+audit-r11.md ac=e4855e8c tok=e4855e8c len_ac=8 token_prefix=True
+counter-semantics-r78.md ac=2360cc3b tok=2360cc3b len_ac=8 token_prefix=True
+counter-win-r77.md ac=6a230c4b tok=6a230c4b len_ac=8 token_prefix=True
+drift-pin-r10.md ac=5be89432 tok=5be89432 len_ac=8 token_prefix=True
+execution-binding-r89.md ac=c89e5b6e tok=c89e5b6e len_ac=8 token_prefix=True
+kernel-v7.3-recheck-r53.md ac=2a4213bf tok=2a4213bf len_ac=8 token_prefix=True
+lane-silence-r2.md ac=3da84149 tok=3da84149 len_ac=8 token_prefix=True
+progressing-weak-r2.md ac=3da84149 tok=3da84149 len_ac=8 token_prefix=True
+rotation-receipt-grammar-r76.md ac=71107662 tok=71107662 len_ac=8 token_prefix=True
+rotation-schedule-r74.md ac=dc50c80b tok=dc50c80b len_ac=8 token_prefix=True
+rotation-series-r75.md ac=32132cfb tok=32132cfb len_ac=8 token_prefix=True
+selftest-flake-r9.md ac=cffb37ef tok=cffb37ef len_ac=8 token_prefix=True
+silence-cutover-r3.md ac=1439c473 tok=1439c473 len_ac=8 token_prefix=True
+silence-grading-r2.md ac=3da84149 tok=3da84149 len_ac=8 token_prefix=True
+surfaces-r8.md ac=9738f1ab tok=9738f1ab len_ac=8 token_prefix=True
+verdict-machine-r4.md ac=5b62c897 tok=5b62c897 len_ac=8 token_prefix=True
+verdict-machine-r5.md ac=a420deb7 tok=a420deb7 len_ac=8 token_prefix=True
+verdict-machine-r6.md ac=92b2e427 tok=92b2e427 len_ac=8 token_prefix=True
+workstate-win-r71.md ac=3627fac0 tok=3627fac0 len_ac=8 token_prefix=True
+token_prefix_ok=19/19
+P4 digest debt carried from round 93 (contract P3): not claimed this round

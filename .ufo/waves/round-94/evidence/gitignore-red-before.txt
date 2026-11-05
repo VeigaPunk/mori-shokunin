@@ -1,0 +1,6 @@
+# D3 red-before: check-ignore of an orchestrator dispatch marker at entering base (exit 1 = not ignored)
+check_ignore_rc=1
+?? .ufo/waves/round-92/w1.ready.dispatched
+?? .ufo/waves/round-93/w1.ready
+?? .ufo/waves/round-93/w1.ready.dispatched
+?? .ufo/waves/round-94/

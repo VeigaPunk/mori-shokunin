@@ -1,0 +1,9 @@
+# round-94 C2 before: host literals in round-93 counters (diagnostic) and round-94 counter C2 at base
+C2_REPORT rev=84b152308fa6 scan=.ufo/waves/round-93 literal=6 files=5
+rc=0
+.ufo/waves/round-93/count-c1.py:39:CENSUS = "/home/vgpnk/Projects/shokunin/scripts/sources-census.sh"
+.ufo/waves/round-93/count-c2.py:39:CENSUS = "/home/vgpnk/Projects/shokunin/scripts/sources-census.sh"
+.ufo/waves/round-93/controls-r93.sh:81:sed -i 's#/home/vgpnk/#/home/someone/#g; s#/home/vgpnk#/home/someone#g' "$D"/tools/mori-blind-check.sh "$D"/tools/mori-misroot-sweep.py "$D"/tools/mori-round17-context-check.py
+## C2 full check at base (round-94 counters absent at base; unmet expected)
+C2=unmet literal_r94=0 files_r94=0 frozen_r93=unchanged env_i=unmet env_unset=rc2 checks_failed=files,env_i rev=84b152308fa6
+rc=1
