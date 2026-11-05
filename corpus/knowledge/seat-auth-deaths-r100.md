@@ -33,7 +33,9 @@ reset; the operator needs the three apart to decide between re-login, re-routing
 ## Rule (as landed)
 
 1. Z.AI business codes keep their round-17 meaning (`1113`/`1308` quota, `1302` rate) when the provider is `zai`.
-2. Quota evidence (`quota`, `usage limit`, `402`, `credits`) → `dead_quota`.
+2. Quota evidence (`quota`, `Quota`, `QUOTA`, `usage limit`, `402`, `credits`) → `dead_quota`. The two capitalised
+   spellings were added after the landing measurement: without them `403 Quota exceeded for project …` and
+   `403 QUOTA_EXCEEDED` became `dead_auth` (`.ufo/waves/round-100/w1/Mo100CritC1.md` H03/H04).
 3. Rate evidence (HTTP 429 or a rate spelling) → `dead_rate_limit`.
 4. Auth evidence → `dead_auth`: HTTP 401 or 403, or one of the spellings `permission_denied`,
    `PERMISSION_DENIED`, `unauthenticated`, `UNAUTHENTICATED`, `authentication_error`, `permission_error`.
@@ -51,6 +53,9 @@ no seat moves between the other classes.
   (the Go constant names of the same codes) and a bare `401 Unauthorized` text without an `errorStatus` stay
   `dead_error_other`.
 - The plain words `permission denied` (with a space) are not auth evidence: a file-system error says the same.
+- The numeric quota and rate spellings (`402`, `429`) match as substrings, a round-17 rule this round keeps: a
+  request id or trace number holding `429` turns an auth death into `dead_rate_limit` (found by the round-100
+  counter's own random tails, `.ufo/waves/round-100/w1/Mo100ExecReplay.md`; routed to the next round).
 - Devin's `failed_precondition: Your weekly usage quota has been exhausted` is a quota death by its text, not auth.
 - The output schema name stays `mori-seat-terminal-v1`; the class list and `totals` keys gain `dead_auth`, so a
   consumer that checks the exact key set (the round-17 fixture gate did) must add it.

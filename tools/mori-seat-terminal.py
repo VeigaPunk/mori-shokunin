@@ -137,7 +137,9 @@ RATE_TOKENS = (
     "RATE_LIMITED",
 )
 RATE_TOKEN_BYTES = tuple(token.encode("ascii") for token in RATE_TOKENS)
-QUOTA_TOKENS = ("quota", "usage limit", "402", "credits")
+# "Quota"/"QUOTA" added post-landing in round 100 (w1 Mo100CritC1 H03/H04): a 403 whose quota text is capitalised
+# ("403 Quota exceeded for project ...", "QUOTA_EXCEEDED") is a quota death, never dead_auth.
+QUOTA_TOKENS = ("quota", "Quota", "QUOTA", "usage limit", "402", "credits")
 QUOTA_TOKEN_BYTES = tuple(token.encode("ascii") for token in QUOTA_TOKENS)
 QUOTA_CODES = frozenset(("1113", "1308"))
 RATE_CODES = frozenset(("1302",))
@@ -1667,6 +1669,32 @@ def _selftest():
                 "rc": 1,
                 "finding_id": FINDING_DEAD,
                 "seats": {"Quota403.Seat": "dead_quota"},
+                "files_scanned": 1,
+            },
+        )
+
+        add(
+            "auth-403-capitalised-quota-is-quota",
+            [
+                (
+                    "sessions/QuotaCap403.Seat.jsonl",
+                    [
+                        _msg(
+                            "assistant",
+                            stopReason="error",
+                            completedAt=_SELFTEST_NOW_MS - 1000000,
+                            errorStatus=403,
+                            errorMessage="403 QUOTA_EXCEEDED: project over its daily limit",
+                            provider="google",
+                            model="m",
+                        )
+                    ],
+                )
+            ],
+            {
+                "rc": 1,
+                "finding_id": FINDING_DEAD,
+                "seats": {"QuotaCap403.Seat": "dead_quota"},
                 "files_scanned": 1,
             },
         )
