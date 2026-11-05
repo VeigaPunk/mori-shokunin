@@ -1,0 +1,3 @@
+rev=e4fb203f8249868b58692e2bb1660f7d0f93b212
+C1=met cases_ok=15/15 selftest=ok live=ok(limit=122865,used_lb=6,state=ok) registry=met sourced=met(S629,S630,S631,S632) province=met checks_failed=- root=/fast/scratch/hyaku/mori-r98/final/t
+exit=0
