@@ -1,0 +1,283 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r95-w1",
+  "policy": {
+    "source": "config",
+    "maxLanes": 16,
+    "minLanes": 8,
+    "waveMinLanes": 8,
+    "waveMaxLanes": 16,
+    "declaredMaxLanes": 16,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 12,
+    "resume": 0,
+    "total": 12
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-95/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-95/w1",
+    "members": {
+      "Mo95E01Replay": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "depth",
+          "freshness",
+          "coverage",
+          "adjacency"
+        ],
+        "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+      },
+      "Mo95E02Relo": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "depth",
+          "freshness",
+          "coverage",
+          "adjacency"
+        ],
+        "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+      },
+      "Mo95S01Src": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "depth",
+          "freshness",
+          "coverage",
+          "adjacency"
+        ],
+        "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+      },
+      "Mo95Sc01Lesson": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "depth",
+          "freshness",
+          "coverage",
+          "adjacency"
+        ],
+        "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+      },
+      "Mo95R01Atk": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "depth",
+          "freshness",
+          "coverage",
+          "adjacency"
+        ],
+        "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+      },
+      "Mo95R02Atk": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "depth",
+          "freshness",
+          "coverage",
+          "adjacency"
+        ],
+        "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+      },
+      "Mo95K01Crit": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "depth",
+          "freshness",
+          "coverage",
+          "adjacency"
+        ],
+        "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+      },
+      "Mo95K02Crit": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "depth",
+          "freshness",
+          "coverage",
+          "adjacency"
+        ],
+        "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+      },
+      "Mo95M01Mut": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "depth",
+          "freshness",
+          "coverage",
+          "adjacency"
+        ],
+        "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+      },
+      "Mo95M02Mut": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "depth",
+          "freshness",
+          "coverage",
+          "adjacency"
+        ],
+        "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+      },
+      "Mo95Lab01": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "revenger",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "depth",
+          "freshness",
+          "coverage",
+          "adjacency"
+        ],
+        "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+      },
+      "Mo95Conn01": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "depth",
+          "freshness",
+          "coverage",
+          "adjacency"
+        ],
+        "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "# Goal\nmori round 95 attempt 1, wave w1 (one wave, 12 seats). Lane repo (absolute): /home/vgpnk/Projects/shokunin/mori-shokunin. Fleet root (absolute): /home/vgpnk/Projects/shokunin.\nEntering lane HEAD: 754f4991198c16ddd1d4a3ea9206cfb7d74d6827. Frozen commit (contract, counters, before receipts): 2dc476d7fdb68bf916685a9f217a92047662baeb.\nContract (read first): /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/contract.md\n\n# Claims (frozen; no seat edits them)\nC1 calibration: the round-94 admission battery must kill all seven non-equivalent mutants of count-c1v2.py. Counter: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/count-c1.py (predicate P-C1r95). Before: four survivors (m2,m3,m4,m6). Expected after: survivors=0, pristine green.\nC2 operability (capability): the round-94 counter runs with the account home directory absent (inside unshare -rm with an empty tmpfs), and the round-93 counter does not. Counter: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/count-c2.sh (predicate P-C2r95). Before receipt: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/evidence/before-c2-r95.txt.\nFrozen files, never edited by a seat: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/contract.md, count-c1.py, count-c2.sh, evidence/*, and every round-93 and round-94 artifact. Your item below says what to replay, attack, draft or probe. Attacks cite the frozen artifacts; they never rewrite a predicate.\n\n# Rules\n- Every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin — write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Your report path is given in your item.\n- Scratch: every clone, fixture, copy and extract lives under $HYAKU_SCRATCH/mori-r95/<your seat name>/ with HYAKU_SCRATCH defaulting to /fast/scratch/hyaku. mkdir -p it, pass TMPDIR explicitly to every counter (TMPDIR=<your scratch>), never rely on an inherited TMPDIR. /tmp is for files under 50 MB only. Delete your scratch dir before you yield: trap 'rm -rf -- \"$S\"' EXIT.\n- Git: never run git commit, git add, git stash, git checkout, git switch, git reset, git pull, git push, jj, or any mutating git/jj command in the lane, the fleet root, shokuknow or any sibling repo. Read-only git (log, show, diff, status, ls-files, rev-parse, check-ignore, cat-file) is fine in the lane. Any fixture repo: D=$(mktemp -d) under your scratch dir, every git call names -C \"$D\", verify git -C \"$D\" rev-parse --show-toplevel equals $D before the first commit.\n- Write scope: only your own report file (given in your item) and your scratch. Never edit tracked lane files (SCORECARD.md, LOG.md, corpus/*, tools/*, .ufo/waves/round-95/count-c1.py, count-c2.sh, contract.md, evidence/*, or any round-93/94 file). Never edit the fleet root, .ufo/state, .ufo/watchdog.log, MANIFEST.json, or any sibling lane. shokuknow is read-only: do not run its tools or write into it.\n- Host: never mutate host sysctls, kernel settings, services, mounts outside your own unshare namespace, or packages. Do not run sudo writes. User namespaces are read-only for you: use unshare -rm as the only namespace mechanism, and only inside your own scratch-run commands.\n- Tooling authorization (operator, 2026-10-19): you and every seat may install or upgrade tools that help the task. Read /home/vgpnk/.omp/agent/RULES.md first (official channels, update-safety gate); record tool, version, channel and reason in your report. pacman transactions are PAUSED host-wide: install via uv tool, npx, or an official binary in ~/.local/bin, or file an L0 line; never pacman -S/-Sy/-Syu/-U/-R.\n- Honesty: an unrun check has not passed. Paste exact commands, outputs and exit codes. Never fabricate evidence or verdicts; a seat whose check cannot run says so and names the blocker.\n- Never call agent://all. Message only your own seats by id if you must coordinate.\n- Your report must be a real file with evidence pointers (command + output, path:line, or commit hash). A report with no evidence is a failed seat.\n- Last line of your final output: `SEAT <name> <VERDICT>` with VERDICT one of: PASS, FAIL, UNMET, BLOCKED, or the item's own verdict vocabulary stated in your item.\n",
+    "tasks": [
+      {
+        "name": "Mo95E01Replay",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nTask (Mo95E01Replay, role executor).\nIndependent replay of C1 and the C2 predicate at the freeze commit 2dc476d7fdb68bf916685a9f217a92047662baeb.\n1. S=$HYAKU_SCRATCH/mori-r95/Mo95E01Replay; mkdir -p; trap 'rm -rf -- \"$S\"' EXIT. git clone --no-local --no-checkout /home/vgpnk/Projects/shokunin/mori-shokunin \"$S/clone\"; git -C \"$S/clone\" checkout -q --detach 2dc476d7fdb68bf916685a9f217a92047662baeb.\n2. Verify pins: git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 2dc476d7fdb68bf916685a9f217a92047662baeb:.ufo/waves/round-95/count-c1.py | sha256sum (expect 6c288d70c39a5736b6aba0b4a0525159010124c0b5494f047a10aab6dfeaa450); same for count-c2.sh (expect 014980bc82b71b7a48764b45e7e550050e928956a32cd6e4ef3b4208aa844b9f); pristine counter git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 2dc476d7fdb68bf916685a9f217a92047662baeb:.ufo/waves/round-94/count-c1v2.py | sha256sum (expect 6eb7fa4cf0ecf86064bb2714a5b93b52bf3356dc6e38e5dc7ee51f7255a7b384).\n3. Run: TMPDIR=\"$S\" python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/count-c1.py 2dc476d7fdb68bf916685a9f217a92047662baeb --lane /home/vgpnk/Projects/shokunin/mori-shokunin --census /home/vgpnk/Projects/shokunin/scripts/sources-census.sh ; record every stdout line and the exit code. Expect C1=met survivors=0 killed=7/7, exit 0. Also record the before field (before_r94_survivors, r94_survivor_ids).\n4. Run: TMPDIR=\"$S\" bash /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/count-c2.sh 2dc476d7fdb68bf916685a9f217a92047662baeb /home/vgpnk/Projects/shokunin/mori-shokunin /home/vgpnk/Projects/shokunin ; record the line and exit code. Expect exit 0.\n5. Replay the do-nothing control separately: the round-94 frozen battery alone, run from the same clone with python3 -I $S/clone/.ufo/waves/round-94/controls-r94.py /home/vgpnk/Projects/shokunin/mori-shokunin /home/vgpnk/Projects/shokunin (exit recorded; its own expectation EMBED_FALSE_PASS v2=0/3 does not test the r95 mutants, so state that plainly).\nVerdict vocabulary: REPLAYED (every expectation reproduced) or DIFFERS (name the line).\n\nReport: write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/w1/Mo95E01Replay.md (create the directory if needed). Last line of your final output: SEAT Mo95E01Replay <VERDICT>.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration, operability, depth, freshness, coverage, adjacency\nMilestone: Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-95/w1/Mo95E01Replay.md"
+      },
+      {
+        "name": "Mo95E02Relo",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nTask (Mo95E02Relo, role executor).\nC2 discriminator controls at 2dc476d7fdb68bf916685a9f217a92047662baeb. Goal: prove the C2 verdict is produced by the namespace and not by a stub.\n1. S=$HYAKU_SCRATCH/mori-r95/Mo95E02Relo; trap cleanup. git clone --no-local --no-checkout /home/vgpnk/Projects/shokunin/mori-shokunin \"$S/clone\"; checkout 2dc476d7fdb68bf916685a9f217a92047662baeb detached.\n2. Namespace check: unshare -rm sh -c 'mount -t tmpfs tmpfs \"$HOME_DIR\" && test ! -e \"$HOME_DIR/Projects/shokunin/scripts/sources-census.sh\" && echo HIDDEN' with HOME_DIR set to the account home (getent passwd \"$(id -un)\" | cut -d: -f6). Record output. Then the same test without the mount: expect the census to exist.\n3. Negative control A (round-94 counter with a host default): in a scratch commit on top of 2dc476d7fdb68bf916685a9f217a92047662baeb (use D=$(mktemp -d) under $S, git -C \"$D\" init, or a branch in $S/clone that is not pushed), change count-c1v2.py census_path() so it falls back to /home/vgpnk/Projects/shokunin/scripts/sources-census.sh when no --census is given and SHOKUNIN_ROOT is unset. Run count-c2.sh on that commit. Expect exit 1 (the after verdict is the mutated counter: this is a literal-fallback mutant, reading only the same census it would fall back to inside the namespace, so ALSO record what the namespace does with that path: a fallback to the hidden literal path must make the after verdict fail). Report the exact exit and line.\n4. Negative control B (no namespace): run count-c2.sh with a fleet argument whose scripts/sources-census.sh is absent (use an empty temp fleet dir under $S). Expect C2_SETUP exit 2.\n5. Check the C2 counter's own scratch cleanup: after its run, ls $HYAKU_SCRATCH/mori-r95 shows no c2-* leftovers from your runs.\nVerdict vocabulary: DISCRIMINATES (the controls flip the verdict as expected) or DOES-NOT (name the control).\n\nReport: write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/w1/Mo95E02Relo.md (create the directory if needed). Last line of your final output: SEAT Mo95E02Relo <VERDICT>.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration, operability, depth, freshness, coverage, adjacency\nMilestone: Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-95/w1/Mo95E02Relo.md"
+      },
+      {
+        "name": "Mo95S01Src",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nTask (Mo95S01Src, role scout).\nOpen and verify two sources for the sandbox mechanism. Do NOT append anything to SOURCES.md; the L1 appends.\nDuplicate sweep first (before any fetch): grep -nE 'man7.org/linux/man-pages/man1/unshare|man7.org/linux/man-pages/man7/user_namespaces|man7.org/linux/man-pages/man7/mount_namespaces' /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md — record the output (empty expected).\nSource A (S626 candidate): https://man7.org/linux/man-pages/man1/unshare.1.html (unshare(1), util-linux). Source B (S627 candidate): https://man7.org/linux/man-pages/man7/user_namespaces.7.html (user_namespaces(7)).\nFor each: fetch with curl -fsSL into $HYAKU_SCRATCH/mori-r95/Mo95S01Src/ (scratch); record HTTP status, byte count, sha256 (full), access date (today, 2026-11-05 — confirm with date -u). Strip tags (python3 html.parser or sed) into visible text; find a located quote of at most 25 words that supports: (A) unshare -r/--map-root-user maps the current user to root in the new user namespace, and -m/--mount creates a new mount namespace; (B) mount operations in a new mount namespace do not propagate to the parent namespace (or the nearest supported statement; if absent, say so and do not invent). Count the quote occurrences in the visible text (expect 1). Record the anchor (section id) and the revision/version shown on the page (man page version string).\nCopy the two fetched pages' sha256 into your report; do not commit the page copies to the lane.\nVerdict vocabulary: SOURCES-READY (both opened, both quotes located, counts 1) or PARTIAL (name which quote fails).\n\nReport: write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/w1/Mo95S01Src.md (create the directory if needed). Last line of your final output: SEAT Mo95S01Src <VERDICT>.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, depth, freshness, coverage, adjacency\nMilestone: Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-95/w1/Mo95S01Src.md"
+      },
+      {
+        "name": "Mo95Sc01Lesson",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nTask (Mo95Sc01Lesson, role scribe).\nDraft the round-95 lesson body (the L1 integrates it into /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-95.md; you write only your report file).\nDraft these sections in your report, as Markdown text ready to paste:\n1. `# Round 95 — mori lesson` header line and the entering/freeze revisions (754f4991198c16ddd1d4a3ea9206cfb7d74d6827, 2dc476d7fdb68bf916685a9f217a92047662baeb).\n2. `## Claims and verdicts` — for C1 and C2: the frozen predicate sentence (copy it from contract.md), the before and after numbers as measured in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/evidence/before-c1-r95.txt and before-c2-r95.txt, and the named limits from contract.md. Do not state a verdict you have not checked against the evidence; leave `Verdict:` as `pending non-author closure` for each.\n3. `## Mistakes` — table rows with columns class · evidence pointer · captured-by · fix. Use the round-94 record as the source of mined mistakes. Candidate classes: `successor-as-before` (round 94; fixed this round by measuring a pre-existing artifact), `control-battery-gap` (round 94 survivors m2,m3,m4,m6; fixed in the r95 battery, shown able to fail by the before run), `env-fail-open-missing-counter` (round 94; NOT fixed this round; route to round 96). Check each cited path exists (ls) and each cited line number (sed -n) before you write it; a wrong pointer is a defect you must report.\n4. `## Routed defects` — the round-94 routed items this round did not take (D1 planner binding, sibling host-literal class, digest debt P4, the round-90 nonce guard QUALITY 191, env_unset fail-open). State each as routed or taken, with the reason.\n5. `## Gate` — leave the S626/S627 rows as placeholders `[L1 fills from scout Mo95S01Src]`; the L1 fills them.\n6. Draft three QUALITY.md criteria (numbers 205, 206, 207) in the form `N. <criterion>. Ground: <file:line>. Shown able to fail: <the command and its observed failing output>.` Ground them only in files you have opened this round.\nVerdict vocabulary: DRAFTED (all six sections present) or INCOMPLETE (name the gap).\n\nReport: write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/w1/Mo95Sc01Lesson.md (create the directory if needed). Last line of your final output: SEAT Mo95Sc01Lesson <VERDICT>.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, depth, freshness, coverage, adjacency\nMilestone: Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-95/w1/Mo95Sc01Lesson.md"
+      },
+      {
+        "name": "Mo95R01Atk",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nTask (Mo95R01Atk, role reviewer).\nAttack C1 (predicate P-C1r95) at 2dc476d7fdb68bf916685a9f217a92047662baeb. Read contract.md section C1 and count-c1.py first. Do not edit anything in the lane.\nAttacks to run and record, each with its command and output:\nA1. Fixture validity: for each of the seven fixture revisions, confirm the single intended difference against BASE (git diff --stat and git diff for the fixture commits in your scratch clone; use git -C $S/clone show <rev> to see each fixture). A fixture that changes more than its named item is a defect.\nA2. Vacuity: does any mutant get killed by a fixture for a reason other than the mutated conjunct? For each kill in the KILL lines, show the verdict difference (token and checks_failed) and argue whether the kill is caused by the mutated line. Use a control: revert the single mutant line in a scratch copy and confirm the kill disappears.\nA3. Forgery of the battery: write a scratch counter that always prints C1=met and exits 0. Run count-c1.py with it substituted for the pristine (use a scratch copy of the script with the sha pin patched in the scratch copy only, and say so). Expected: survivors=7, exit 1. Report the result.\nA4. Equivalence of m5: prove or refute `adm_fail != 0 or adm_ok != 19` equals `adm_fail != 0 or adm_ok < 1` over every reachable pair (adm_ok, adm_fail) with adm_ok + adm_fail = 19. Show the truth table or a short argument with the counter's loop as the source.\nA5. Crash accounting: confirm that a mutant which crashes is counted as killed with `crash`, and whether any counted kill is a crash (grep crash_ids in the output).\nA6. Any other defect in count-c1.py (hardcoded /tmp, host literal, unpinned input, the TMPDIR handling). Read the file and report line numbers.\nVerdict vocabulary: HOLDS (no attack succeeds) or BREAKS (name A-number and the observed proof).\n\nReport: write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/w1/Mo95R01Atk.md (create the directory if needed). Last line of your final output: SEAT Mo95R01Atk <VERDICT>.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, depth, freshness, coverage, adjacency\nMilestone: Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-95/w1/Mo95R01Atk.md"
+      },
+      {
+        "name": "Mo95R02Atk",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nTask (Mo95R02Atk, role reviewer).\nAttack C2 (predicate P-C2r95) at 2dc476d7fdb68bf916685a9f217a92047662baeb. Read contract.md section C2 and count-c2.sh first. Do not edit the lane.\nAttacks, each with command and output:\nB1. Hidden verification: independently confirm inside unshare -rm that the census under the account home directory is absent AND that the lane clone is still readable (git -C in the clone works inside the namespace).\nB2. Literal scan: grep -rnE '/home/[a-z]|vgpnk' over .ufo/waves/round-94/count-c1v2.py .ufo/waves/round-94/count-c2v2.py .ufo/waves/round-94/controls-r94.py .ufo/waves/round-95/count-c1.py .ufo/waves/round-95/count-c2.sh (run against the freeze commit via git show). Report exact hits (expect count-c2.sh to have none; state whether the round-94 counters have any).\nB3. Positive control validity: the round-93 counter run outside the namespace is met. Confirm it reads the host census path, and that the namespace only removes that path.\nB4. Stub attack: create a scratch commit in your scratch clone where .ufo/waves/round-94/count-c1v2.py is replaced by a stub that prints C1=met and exits 0. Run count-c2.sh on that commit. Report whether C2 passes (it should; this is a known limit: C2 measures the artifact at the revision). Then state the limit plainly.\nB5. Before-state faking: create a scratch commit where .ufo/waves/round-93/count-c1.py prints C1=met on its own (a stub). Run count-c2.sh on it. Expect exit 1 (before must be unmet). Report.\nB6. Sandbox leak: check that the namespace did not mount anything onto the real home (findmnt inside and outside), and that no mount remains after the run.\nVerdict vocabulary: HOLDS (C2 measures what P-C2r95 says, limits named) or BREAKS (name B-number and proof).\n\nReport: write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/w1/Mo95R02Atk.md (create the directory if needed). Last line of your final output: SEAT Mo95R02Atk <VERDICT>.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, depth, freshness, coverage, adjacency\nMilestone: Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-95/w1/Mo95R02Atk.md"
+      },
+      {
+        "name": "Mo95K01Crit",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nTask (Mo95K01Crit, role critic).\nFalsify both claims' framing against AXES.md, LEARNING.md and the round-94 closure. Read /home/vgpnk/Projects/shokunin/mori-shokunin/AXES.md section on calibration and operability, /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-94-verifier-spotcheck.md section 2 and 6, and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-94/w1/Mo94K01Crit.md section 2f.\nQuestions to answer with evidence (cite file:line):\nK1. Is C1 a calibration move? AXES.md defines calibration as self-assessment quality (gaps named honestly, overreach caught) and the protocol says a calibration claim counts mismatches between self-assessment and observed repo state. Does the C1 count (survivors of the battery) count such a mismatch, or is it test-coverage growth dressed as calibration? Give a verdict and the reason.\nK2. Is C1 reachable by do-nothing? Run the frozen counter at the entering revision with only the R94 fixtures (the before field) and confirm do-nothing gives survivors=4.\nK3. Is C2 an operability move or a capability row? Name the existing artifact that moved (round-93 counter behaviour) and whether a capability row is the honest entry. Check that SCORECARD capability rows need a first-working round and a running command.\nK4. Is the C2 before admissible under critic K01 §2f (a pre-existing host-bound counter, not absence)? Confirm with the before receipt.\nK5. Would either claim pass if the work were not done? State it per claim.\nK6. Any claim language universal (all, every, complete, no harm) without an enumerating command: list them.\nVerdict vocabulary per claim: ADMIT-CANDIDATE, NOT-ADMIT (state the reason), with the evidence pointers.\n\nReport: write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/w1/Mo95K01Crit.md (create the directory if needed). Last line of your final output: SEAT Mo95K01Crit <VERDICT>.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, depth, freshness, coverage, adjacency\nMilestone: Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-95/w1/Mo95K01Crit.md"
+      },
+      {
+        "name": "Mo95K02Crit",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nTask (Mo95K02Crit, role critic).\nHarm check across all six axes and discernment review for round 95, against the frozen artifacts at 2dc476d7fdb68bf916685a9f217a92047662baeb.\nH1. Adjacency: does the namespace sandbox touch any host state outside its own namespace? Read count-c2.sh and state every write path (scratch, clone, census copy). Confirm nothing under the fleet root or the lane tracked tree is written by the counter (git status in the lane before and after running it: read-only git only; record the porcelain output).\nH2. Scratch residue: after running count-c1.py and count-c2.sh, is anything left under $HYAKU_SCRATCH/mori-r95 from them? List with ls -la before and after your own runs.\nH3. Sysctl and namespace limits: does running unshare -rm change /proc/sys/user/max_user_namespaces? (read before and after; must be unchanged.)\nH4. Coverage of the mutants: is the claim that the mutant set is complete? The set is the seven listed; list any obvious conjunct of count-c1v2.py that is not covered by the set and not declared, with line numbers.\nH5. Discernment: read the round-94 spot-check's disagreements (section 2) and state whether round 95 addresses each of them, and what is still open.\nVerdict vocabulary: NO-HARM (each axis: unchanged or improved, with evidence) or HARM (name axis and proof).\n\nReport: write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/w1/Mo95K02Crit.md (create the directory if needed). Last line of your final output: SEAT Mo95K02Crit <VERDICT>.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, depth, freshness, coverage, adjacency\nMilestone: Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-95/w1/Mo95K02Crit.md"
+      },
+      {
+        "name": "Mo95M01Mut",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nTask (Mo95M01Mut, role mutation-tester).\nResidual mutation sweep of count-c1v2.py, NOT scored, to find survivors the frozen battery still misses (they become round-96 routed debt).\nSteps: S=$HYAKU_SCRATCH/mori-r95/Mo95M01Mut; trap cleanup. Clone the lane --no-local, checkout 2dc476d7fdb68bf916685a9f217a92047662baeb. Copy .ufo/waves/round-94/count-c1v2.py into a scratch directory (never into the lane).\nWrite 6 new single-edit mutants that the frozen set does not contain, each a different conjunct: (n1) the trio count threshold off by one at a different site; (n2) patched12 counting `unchanged` as changed; (n3) the seven_same check dropped; (n4) the census command given the wrong argument order; (n5) admission token length threshold 7 changed to 8; (n6) the fails list missing `admission` entirely. For each, run a copy of count-c1.py that imports the mutant bytes: copy count-c1.py into the scratch dir, change its MUTANTS dict to contain ONLY your new mutant, and run it with --lane /home/vgpnk/Projects/shokunin/mori-shokunin --census /home/vgpnk/Projects/shokunin/scripts/sources-census.sh and TMPDIR=$S. Record each KILL/survive line. Expect the frozen R95 fixtures to kill most; name any survivor and the fixture that would kill it (proposed, not run as frozen).\nVerdict vocabulary: SWEPT (list every survivor with a proposed fixture) — and state the count of mutants run.\n\nReport: write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/w1/Mo95M01Mut.md (create the directory if needed). Last line of your final output: SEAT Mo95M01Mut <VERDICT>.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, depth, freshness, coverage, adjacency\nMilestone: Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-95/w1/Mo95M01Mut.md"
+      },
+      {
+        "name": "Mo95M02Mut",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nTask (Mo95M02Mut, role mutation-tester).\nMutate count-c2.sh (scratch copy; never the lane file) and run each mutant with the same arguments: bash <mutant> 2dc476d7fdb68bf916685a9f217a92047662baeb /home/vgpnk/Projects/shokunin/mori-shokunin /home/vgpnk/Projects/shokunin. Expected: the pristine copy exits 0.\nM1: remove the hidden check (set hidden=1 unconditionally). Expect exit 1? Record; the discriminator is whether hidden=0 ever goes through. Make the hidden check actually fail by replacing the in_ns call with a no-op so the test runs on the real home: expect exit 1 (hidden=0).\nM2: after-run uses the round-93 counter instead of round-94. Expect exit 1.\nM3: remove the control_outside check. Expect exit 0 (documented as an unkilled survivor; state it).\nM4: replace the unshare command with an empty function (no namespace). Expect exit 1.\nM5: after-run without --census (uses SHOKUNIN_ROOT unset). Expect exit 1 (after gets C1_SETUP rc2).\nM6: before check replaced with `b_ok=1` unconditionally. Expect exit 1 only if after or hidden fails; the pristine must still exit 0 when the namespace hides home, so state the result: expect exit 0 (survivor), and say why.\nRecord for each: the mutant diff, the output line, the exit code, and the verdict (KILLED if exit differs from pristine, SURVIVED otherwise).\nVerdict vocabulary: SWEPT (kill table with exit codes; survivors named with reason).\n\nReport: write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/w1/Mo95M02Mut.md (create the directory if needed). Last line of your final output: SEAT Mo95M02Mut <VERDICT>.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, depth, freshness, coverage, adjacency\nMilestone: Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-95/w1/Mo95M02Mut.md"
+      },
+      {
+        "name": "Mo95Lab01",
+        "agent": "revenger",
+        "task": "/skill:godspeed\n\nTask (Mo95Lab01, role revenger; a labrat probe is not a swarm role).\nFalsifiable hypothesis test (probe): H1 — the round-93 counter's C2 before verdict (C1=unmet inside the namespace) is caused ONLY by the absent census path under the home directory, not by the counter's logic. Predicted: if a copy of the census script is made readable at the literal path INSIDE the namespace (bind or copy after the tmpfs mount, inside the same unshare command), the round-93 counter prints C1=met rc 0.\nProcedure: S=$HYAKU_SCRATCH/mori-r95/Mo95Lab01; trap cleanup; clone --no-local --no-checkout /home/vgpnk/Projects/shokunin/mori-shokunin \"$S/clone\" and checkout 2dc476d7fdb68bf916685a9f217a92047662baeb. Get the home directory via getent. Inside unshare -rm: mount tmpfs over the home directory; create the directory path Projects/shokunin/scripts under it; copy /home/vgpnk/Projects/shokunin/scripts/sources-census.sh to that path; then run python3 -I $S/clone/.ufo/waves/round-93/count-c1.py 2dc476d7fdb68bf916685a9f217a92047662baeb --repo $S/clone with HOME set to a scratch home. Record the verdict and rc.\nFalsifier arm: repeat with the copied census made to exit 1 (a stub). Predicted: C1=unmet census. If it prints C1=met, the hypothesis is refuted.\nSecond arm: repeat the round-94 counter with --census pointing to the stub in the namespace: predicted C1=unmet census.\nReport: hypothesis, prediction, observed lines, rc values, verdict SUPPORTED or REFUTED, and the limit (the copy changes the namespace, so the test shows the cause is the path, not the logic).\n\nReport: write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/w1/Mo95Lab01.md (create the directory if needed). Last line of your final output: SEAT Mo95Lab01 <VERDICT>.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, depth, freshness, coverage, adjacency\nMilestone: Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-95/w1/Mo95Lab01.md"
+      },
+      {
+        "name": "Mo95Conn01",
+        "agent": "connector",
+        "task": "/skill:godspeed\n\nTask (Mo95Conn01, role connector).\nCross-lane connector sweep (report only; never edit a sibling or the lane).\nQuestion: which sibling lanes (under /home/vgpnk/Projects/shokunin, every directory named *-shokunin) carry a counter or tool with a host home literal in live tooling, and do any of them already have a sandbox-style path? Steps: grep -rlE '/home/vgpnk' --include='*.py' --include='*.sh' /home/vgpnk/Projects/shokunin/*-shokunin/ 2>/dev/null (exclude .git); list each file with the first matching line number. For each sibling lane with hits, state whether the same namespace-based check (count-c2.sh pattern) would apply, and which command a sibling lane could run. Also grep for `unshare` across the same set to see if any sibling already uses a namespace for host independence.\nDo not run any sibling tool. Do not write to any sibling. Output: a table (sibling, file, first line, namespace applicable yes/no, reason). Route each finding as a line to be appended to the operator L0 file by the L1 (you propose the L0 text; you do not append it).\nVerdict vocabulary: MAPPED (table complete with counts: total hits, siblings with hits) — state the exact count of matching files.\n\nReport: write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-95/w1/Mo95Conn01.md (create the directory if needed). Last line of your final output: SEAT Mo95Conn01 <VERDICT>.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, depth, freshness, coverage, adjacency\nMilestone: Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-95/w1/Mo95Conn01.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

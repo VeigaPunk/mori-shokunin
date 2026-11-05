@@ -5737,3 +5737,13 @@ counters carry no host home literal and run with HOME unset and the root from en
 - Trend verdicts and axis verdicts are in `corpus/lessons/round-94.md` and the round report.
 - Wave `w1`: 12 seats (3 executor, 1 scout, 2 reviewer, 2 critic, 2 mutation-tester, 1 connector, 1 scribe); attack share
   6/12 = 50 %; all 12 returned output; none dead.
+
+## Round 95 — 2026-11-05 (L1 MoriR95, attempt 2)
+
+Two claims, frozen at `2dc476d7` before any seat output (attempt 1). C1 calibration: the round-94 battery kills the seven non-equivalent counter mutants with four added fixtures (4→0 survivors on the named set). C2 operability (capability acquisition): the home-hidden counting harness runs with an outside control; the frozen do-nothing control already meets the predicate, so the operability claim is not admitted.
+
+- Evidence motivating the round: round-94 Mistakes 1–3 (`corpus/lessons/round-94.md`), the non-author spot-check (`corpus/lessons/round-94-verifier-spotcheck.md` §6).
+- Landed: frozen `count-c1.py`, `count-c2.sh`, contract and before receipts (`2dc476d7`); wave `w1` spec, dispatch, registry and seat outputs; S626 (mined) and S627 (rejected) rows; `corpus/lessons/round-95.md`; QUALITY 205–208; SCORECARD round-95 section and capability row.
+- Not landed: a successor battery or harness (routed to round 96); calibration credit (not admitted, non-author critic); the operability move (not admitted, do-nothing control).
+- Dead seats disclosed: `Mo95M01Mut`, `Mo95M02Mut` (mutation-testers), `Mo95Sc01Lesson` (scribe); critic `Mo95K01Crit` landed its report with an empty final yield.
+- Trend verdicts and axis verdicts are in `corpus/lessons/round-95.md` and the round report.

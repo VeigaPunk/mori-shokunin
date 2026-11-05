@@ -4789,3 +4789,30 @@ The round-93 spot-check D1 (planner) stays open and operator-owned; D3 (untracke
    the `C1_SETUP` line text, not only the exit code (critic K01 §2c).
 3. **depth** — carried: the 31 prefix-only digest rows and S125 unpinned (contract P4 of round 93); the round-90 nonce guard (QUALITY 191).
 4. **operator** — D1 planner binding (L0); the sibling host-literal class (seven siblings, `w1/Mo94Conn01.md`) routed through L0.
+
+## Round 95 (2026-11-05, L1 MoriR95, attempt 2) — C1 met as frozen (calibration not admitted); C2 met as frozen, do-nothing control reaches it (not admitted); capability row entered
+
+Entering `754f4991198c16ddd1d4a3ea9206cfb7d74d6827`; freeze `2dc476d7fdb68bf916685a9f217a92047662baeb` (contract,
+counters, before receipts); wave `w1` (attempt 1 dispatch, resumed by attempt 2): 12 seats; three dead seats disclosed in
+`corpus/lessons/round-95.md` (two mutation-testers, one scribe) plus one critic whose report landed and whose final yield was empty.
+Axes: **calibration** (C1, score 5) and **operability** (C2, score 7). No score moves are claimed.
+
+| Claim | Axis | Counting command | Before (entering / round-94 subset) | After (freeze `2dc476d7`) | Verdict |
+|---|---|---|---|---|---|
+| C1 the round-94 admission battery kills the seven non-equivalent counter mutants | calibration | `python3 -I .ufo/waves/round-95/count-c1.py <rev> --lane <lane> --census <census>` (`C1=met survivors=0 killed=7/7`) | `before_r94_survivors=4 r94_survivor_ids=m2,m3,m4,m6` (`evidence/before-c1-r95.txt:1`) | `C1=met survivors=0 killed=7/7 pristine=green` (`evidence/before-c1-r95.txt:1`; replays `w1/Mo95E01Replay.md`, `w1/Mo95R01Atk.md`, `w1/Mo95K02Crit.md`) | met as frozen; **calibration not admitted** (critic K01: battery coverage, not a counted self-assessment mismatch); residuals m8, m10, m11 named |
+| C2 the counting surface runs with the account home absent | operability (capability) | `bash .ufo/waves/round-95/count-c2.sh <rev> <lane> <fleet>` (`HOSTINDEP hidden=1 …`) | round-93 counter in namespace: `C1=unmet(rc=1)` (`evidence/before-c2-r95.txt:1`) | `HOSTINDEP hidden=1 before=C1=unmet(rc=1) after=C1=met(rc=0) control_outside=C1=met(rc=0)` (`evidence/landing-c2-r95.txt`) | met as frozen; **not admitted as operability**: P-C2r95 is already met at entering `754f4991` (K01 K5 rc 0); harness capability demonstrated |
+
+Learning trends (lane): expansion unchanged (no admitted `knowledge/` entry; S626 mined as a registry row, S627 rejected); quality improved (QUALITY 205–208 grounded and shown able to fail; battery survivors named); discernment unchanged (the calibration disagreement from the non-author critic is open for the operator).
+
+### Capabilities (round 95)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| host-independent counting namespace (bounded to the harness) | runs the frozen home-hidden comparison of the round-93 and round-94 counters under `unshare -rm` with an outside positive control; prints `HOSTINDEP hidden=1 …`, exit 0 | `.ufo/waves/round-95/count-c2.sh`; `.ufo/waves/round-95/evidence/landing-c2-r95.txt`; `w1/Mo95R02Atk.md` B1–B6; `w1/Mo95Lab01.md` | 95 |
+
+### Planned (round 96)
+
+1. **calibration / quality** — a successor battery (new revision, never an edit of the frozen counter): single-variable fixtures for m8 (`seven_same` gate), m10 (`verified-at` constraint) and m11 (head window), and fix the kill-rule doc/code mismatch (`count-c1.py:212`).
+2. **operability** — a successor C2 harness that forces the dormant literal path (`census_path` fallback) and reads the `C1_SETUP` text (QUALITY 207); the entering-state do-nothing control scored before the freeze (QUALITY 208).
+3. **operator** — rulings on the C1 axis classification and the C2 do-nothing defect (L0 line this round); D1 planner binding; sibling host-literal class.
+4. **depth** — carried: the digest debt (`unpinned=3`: S125, S622, S623) and the round-90 nonce guard (QUALITY 191).

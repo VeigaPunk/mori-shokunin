@@ -1,0 +1,10 @@
+# census-before r95 (run at entering 754f4991 + freeze 2dc476d7 SOURCES unchanged)
+$ grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|' mori-shokunin/corpus/SOURCES.md
+397
+$ sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori | grep -c ' W0[0-9] \|E0[0-9] '  (warnings/errors counts)
+exit=0
+0
+43
+mori	W04	S622 duplicate url git-scm.com/docs/git-log across scopes
+mori	ok	/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+exit recorded: 0

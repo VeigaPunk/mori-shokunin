@@ -1,0 +1,189 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r95-w1",
+  "createdAt": "2026-11-05T11:02:43.238Z",
+  "updatedAt": "2026-11-05T11:02:43.238Z",
+  "reportDir": ".ufo/waves/round-95/w1",
+  "members": {
+    "Mo95E01Replay": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+    },
+    "Mo95E02Relo": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+    },
+    "Mo95S01Src": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+    },
+    "Mo95Sc01Lesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+    },
+    "Mo95R01Atk": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+    },
+    "Mo95R02Atk": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+    },
+    "Mo95K01Crit": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+    },
+    "Mo95K02Crit": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+    },
+    "Mo95M01Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+    },
+    "Mo95M02Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+    },
+    "Mo95Lab01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "revenger",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+    },
+    "Mo95Conn01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round95 attempt1: C1 battery kills m2,m3,m4,m6 via frozen fixtures; C2 host-independence capability; S626/S627 sources; 12 seats"
+    }
+  }
+}
