@@ -1409,3 +1409,23 @@ did on entry. Checks: `python3 -I .ufo/waves/round-89/noharm-c1.py <rev>` (34 ca
 `harm=0 open=0`) and `python3 -I .ufo/waves/round-89/heldout-c1.py <rev>` (78 counted cases from
 two seats that did not author the rule; exit 0 iff `harm=0 newopen=0` against entering
 `30a29797`) — floors, not a grammar census.
+
+Round-90 registry pointer (`11197820`, supersedes nothing byte-unchanged; it corrects two pointers):
+the gate's binding is now the round-89 repair-2 rule **minus command positions the recorded text
+proves cannot execute** — AND-OR short circuit from a literal status (`false &&`, `true ||`,
+`: ||`, `printf … ||`), everything after a literal `exit`/`return` in the same environment, the
+unselected `if`/`elif`/`else` body, a subshell whose body terminates, `!` negation, loops that
+cannot iterate (`while false`, `until true`, `for v in` with no words), statements after
+`break`/`continue`, and an unmatched literal `case` arm; glued control tokens (`);`, `)||`, `)&`)
+are split so a subshell's terminator never ends its parent. Still not execution proof: the whole
+provenance class named in the paragraph above stays bound and is reported, never targeted.
+Checks: `python3 -I .ufo/waves/round-90/count-c1.py <rev> --repo <clone>` (exit 0 iff
+`C1=met branch_open=0 harm=0 newopen=0 open=22 cases=78` and the round-90 battery
+`.ufo/waves/round-90/battery/branch-heldout.json` reads `branch_cases>=12 branch_open=0`) and
+`python3 -I .ufo/waves/round-90/count-c2.py <rev> --repo <clone>` (exit 0 iff all fifteen mutants
+are killed in isolation). Pointer corrections (round-89 verifier spotcheck D3): the round-89 row's
+pinned receipt pointer now resolves to `.ufo/waves/round-89/evidence/after-r89-final.txt`
+(`7715bb56`), not `after-r89.txt` (repair 1, `9f4d20b9`); and the r89 counters'
+`ARMS_BY_FILE = {"count-c1.py": 28, "count-c2.py": 26}` pins are **superseded** by this landing
+(29/27) — the frozen r89 receipts stay byte-unchanged and are not re-run against the new subject
+bytes.

@@ -5658,3 +5658,28 @@ after its L1 died on a provider failure; every graded subject is byte-identical 
 - **Disclosed** — the frozen `arms=29,27` was unreachable without merging two constant pins (two
   count-c2 subjects carry two labels); the critic measured that a 21-string lookup table also
   reaches P-C1's line, so the predicate grades verdicts, not rule shape (QUALITY 190/191).
+
+### Round-90 corrections of record (append-only; no filed line rewritten)
+
+- **D2 (round-89 verifier spotcheck) — registry row count.** The `## Round 89` entry above states
+  "registry 379 → 383". The committed census is 379 → **384**: `git diff --numstat 760428ab
+  688fe24f -- corpus/SOURCES.md` gives `5 0`, and the row count after round 89 is 384
+  (`grep -cE '^ {0,3}\| S[0-9]{3,}' corpus/SOURCES.md`). Round 90 adds five more (S612–S616):
+  384 → 389, measured at `9441ef30` with the same command.
+- **D1 (claim coupling).** The round-90 C2 subject still carries `SUBJECT_ARMS = 26`, the r87
+  gate's arm count, as a latent cross-claim pin; the round-90 C1 landing does not move the gate's
+  arm count (26 before and after), so C2 grades without C1 this round, and the counters' target
+  strings read each other's subjects nowhere. Every r90 mutant anchor was re-checked to occur
+  exactly once at the entering revision (seat `Mo90K01Conn` §1), which is the re-derivation the
+  spotcheck asked for.
+- **D5 (seat-role label).** This round's wave roles come from `.ufo/waves/round-90/w1-results.json`,
+  not from prose: the 13 seats are 4 executor, 1 scout, 2 scribe, 2 reviewer, 1 critic,
+  1 mutation-tester, 1 connector, 1 sentinel.
+- **D6 (orchestration).** Two attempts of this lane-round (MoriR90a2, MoriR90a3) died on provider
+  failures without a report; this is the resumed attempt and it re-verified every inherited byte
+  before reusing it (`w1-spec.inherited.json` is the preserved spec). No inherited work was
+  attributed to a different author.
+- **D7 (carried).** The r87 gate's still-unarmed clauses and the r89 `FX` label polarity are
+  carried unchanged; the 30 open held-out counterfeits of round 89 are now 22 at the same
+  population (`open 30 → 22`), and the ten still-bound battery cases of the first integrated
+  candidate are closed by the landed glued-token fix (`branch_open 10 → 0`).
