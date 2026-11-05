@@ -1,0 +1,142 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r90-w1",
+  "createdAt": "2026-11-05T03:30:37.658Z",
+  "updatedAt": "2026-11-05T03:30:45.875Z",
+  "reportDir": ".ufo/waves/round-90/w1",
+  "members": {
+    "Mo90E01Gate": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "Candidate branch-reachability rule for the round-87 receipt gate"
+    },
+    "Mo90E02ArmB1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Arm B1: own_ok_of's arm-count pin in round-88 count-c1"
+    },
+    "Mo90E03ArmsB46": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Arms B4/B6: the printed met line's call site and clone_root_ok's negative"
+    },
+    "Mo90E04Battery": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "Held-out branch battery, written by a seat that does not author the rule"
+    },
+    "Mo90Sc01Scope": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "depth"
+      ],
+      "milestone": "Classify the 22 provenance counterfeits the gate still binds"
+    },
+    "Mo90S01Sources": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "freshness",
+        "depth"
+      ],
+      "milestone": "Source rows and the reachability knowledge entry"
+    },
+    "Mo90S02Lesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Round lesson draft: gate, mistakes, assimilation pointer"
+    },
+    "Mo90R01C1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "Attack C1: the branch rule's harm and its counterfeits"
+    },
+    "Mo90R02C2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Attack C2: isolation, literal anchors and forged arms"
+    },
+    "Mo90C01Critic": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability"
+      ],
+      "milestone": "Falsify the two claims' design"
+    },
+    "Mo90M01Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "Mutate the candidate branch rule and the three new arms"
+    },
+    "Mo90K01Conn": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "Sibling overlap: what the gate change and the arm bumps move elsewhere"
+    },
+    "Mo90Se01Boundary": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "sentinel",
+      "item": null,
+      "axes": [
+        "adjacency"
+      ],
+      "milestone": "Boundary and write-scope check of the round's instruments"
+    }
+  }
+}

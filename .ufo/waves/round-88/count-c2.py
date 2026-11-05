@@ -23,6 +23,7 @@ Usage: count-c2.py <rev> [--repo DIR] [--scratch DIR] | count-c2.py --selftest
 Exit 0 met, 1 unmet, 2 setup. Read-only over the lane: `git clone --shared`, `git show`.
 """
 import argparse
+import ast
 import os
 import re
 import shutil
@@ -262,7 +263,6 @@ def selfcheck(scratch):
     cases.append(("target_fields",
                   all(field in TARGET for field in
                       ("fx=4", "clean=1", "refused=2", "absent=1", "arms=26")), "target"))
-    cases.append(("arms_pinned", SUBJECT_ARMS == 26, "26"))
     cases.append(("target_full",
                   TARGET == "real=met fx=4 clean=1 refused=2 absent=1 arms=26", TARGET))
     cases.append(("met_line_derived",
@@ -293,8 +293,40 @@ def selfcheck(scratch):
     cases.append(("absent_without_supersedes", no_supersedes, "ValueError"))
     cases.append(("vacuous_body_fabricated",
                   "RECORD_SWEEP fabricated=1" in vacuous and "TOKEN" not in vacuous, "body"))
-    cases.append(("marker_literal", "missing-replay" in open(os.path.abspath(__file__)).read(),
-                  "label"))
+    # Round 90: the two mutation-free constant pins (`arms_pinned`, `marker_literal`) are one
+    # arm so the frozen subject count (26 + 2 new arms - 1 merge = 27) holds with no assertion
+    # dropped; no declared mutant mutates either constant.
+    cases.append(("frozen_constants",
+                  SUBJECT_ARMS == 26
+                  and "missing-replay" in open(os.path.abspath(__file__)).read(),
+                  "subject arm pin + label"))
+    with open(os.path.abspath(__file__), encoding="utf-8") as source:
+        tree = ast.parse(source.read())
+
+    def met_line_call_site():
+        """Structural pin on revision passing, not a semantic proof of execution."""
+        calls = [node for node in ast.walk(tree)
+                 if isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+                 and node.func.id == "met_line"]
+        named = [call for call in calls if len(call.args) == 1 and not call.keywords
+                 and isinstance(call.args[0], ast.Name) and call.args[0].id == "rev"]
+        truncated = [call for call in calls
+                     if any(isinstance(arg, ast.Subscript) for arg in call.args)]
+        return bool(named) and not truncated
+
+    def clone_root_negative():
+        """Structural prefix-rule pin; not a semantic proof of root identity."""
+        roots = [node for node in ast.walk(tree)
+                 if isinstance(node, ast.FunctionDef) and node.name == "clone_root_ok"]
+        return len(roots) == 1 and not any(
+            (isinstance(node, ast.Attribute)
+             and node.attr in {"startswith", "endswith", "find", "index"})
+            or (isinstance(node, ast.Compare)
+                and any(isinstance(op, (ast.In, ast.NotIn)) for op in node.ops))
+            for statement in roots[0].body for node in ast.walk(statement))
+
+    cases.append(("met_line_call_site", met_line_call_site(), "untruncated revision"))
+    cases.append(("clone_root_negative", clone_root_negative(), "no prefix operation"))
     ok = sum(1 for _, good_case, _ in cases if good_case)
     for label, good_case, line in cases:
         print("%s %s %s" % ("PASS" if good_case else "FAIL", label, line))

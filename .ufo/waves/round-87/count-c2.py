@@ -312,6 +312,213 @@ def same_path(token, path, repo):
     return False
 
 
+STATIC_OK = frozenset(("true", ":", "echo", "printf"))          # statically succeed (S612)
+STATIC_FAIL = frozenset(("false",))                              # statically fail
+TERMINATORS = frozenset(("exit", "return"))                      # end the current environment
+LOOP_TERMINATORS = frozenset(("break", "continue"))              # end this loop iteration
+NUMBER = re.compile(r"^[0-9]+$")
+KEYWORDS = frozenset(("then", "else", "elif", "fi", "do", "done", "if", "while", "until", "for"))
+
+
+def plain_word(word):
+    """True when `word` is a literal the shell does not expand (no dollar, backtick, escaped
+    character, quote, tilde, brace or glob character)."""
+    return bool(word) and not any(ch in word for ch in "$`\\*?[]{}~\"'")
+
+
+def simple_status(words):
+    """(status, terminates) for one simple command: 'ok', 'fail', 'unknown'."""
+    i = 0
+    negate = False
+    while i < len(words) and words[i] == "!":          # `!` inverts the command status
+        negate = not negate
+        i += 1
+    rest = words[i:]
+    h = head_index(rest)
+    if h is None:
+        status, term = "unknown", False
+    else:
+        base = os.path.basename(rest[h])
+        if base in STATIC_FAIL:
+            status, term = "fail", False
+        elif base in STATIC_OK:
+            status, term = "ok", False
+        elif base in LOOP_TERMINATORS:
+            status, term = "unknown", True
+        elif base in TERMINATORS:
+            arg = rest[h + 1] if h + 1 < len(rest) else ""
+            if base == "exit" and NUMBER.match(arg):
+                status = "ok" if int(arg) == 0 else "fail"
+            else:
+                status = "unknown"
+            term = True
+        else:
+            status, term = "unknown", False
+    if negate and status != "unknown":
+        status = "fail" if status == "ok" else "ok"
+    return status, term
+
+
+def strip_keyword(words):
+    """The words a keyword-prefixed segment (`then cmd`, `do cmd`) actually runs."""
+    i = 0
+    while i < len(words) and words[i] in KEYWORDS:
+        i += 1
+    return words[i:]
+
+
+def arm_live(subject, patterns, fallback):
+    """True/False/None: whether a `case` arm can run. None means 'cannot prove either way'."""
+    if not subject or not patterns:
+        return None
+    if not plain_word(subject) or not all(plain_word(p) for p in patterns):
+        return None
+    return any(p == subject for p in patterns)
+
+
+def control_atoms(tokens):
+    """Split every control token into single operators, so a glued `)`+separator (`);`, `)||`,
+    `)&`) closes its group before the separator's liveness rule applies."""
+    out = []
+    for token in tokens:
+        if (set(token) <= CONTROL and token not in ("(", ")", "&&", "||", ";;")):
+            i = 0
+            while i < len(token):
+                char = token[i]
+                if char in "&|;" and i + 1 < len(token) and token[i + 1] == char:
+                    out.append(char * 2)
+                    i += 2
+                else:
+                    out.append(char)
+                    i += 1
+        else:
+            out.append(token)
+    return out
+
+
+def invocations_visited(tokens):
+    """[(words, targets, live)] in token order; `live` is False only when the recorded text
+    proves the command cannot execute (S612 AND-OR lists, S613 if/elif/else, S614 exit,
+    loops that cannot iterate, an unmatched literal `case` arm, `break` before the command).
+    Subtract-only: an unknown status never cuts and a pipeline part never ends its parent."""
+    out, words, targets, target = [], [], [], False
+    live, status, terminated, piped = True, "unknown", False, False
+    stack = []            # [(kind, saved_live)] for '(' ... ')' and if/while/for ... fi/done
+    conds = []            # condition status per open `if`/`while`/`until`/`for`
+    selected = []         # per open `if`: some branch is already provably taken
+    case = None           # open `case`: {"subject":…, "pats":[…], "base":live, "matched":…}
+
+    def flush():
+        nonlocal status, terminated, live, case
+        if not words and not targets:
+            return
+        head = words[0]
+        base = stack[-1][1] if stack else live
+        body_live = live
+        if head == "then":
+            body_live = base and (not conds or conds[-1] != "fail")
+        elif head == "elif":
+            cond = simple_status(strip_keyword(words))[0]
+            body_live = base and not (selected and selected[-1]) and cond != "fail"
+        elif head == "else":
+            body_live = base and not (selected and selected[-1])
+        elif head == "do" and conds:
+            body_live = base and conds[-1] != "fail"
+        out.append((list(words), list(targets), body_live))
+        live = body_live
+        if head == "elif":
+            cond = simple_status(strip_keyword(words))[0]
+            if conds:
+                conds[-1] = cond
+            if selected:
+                selected[-1] = selected[-1] or cond == "ok"
+        elif head == "if":
+            cond = simple_status(strip_keyword(words))[0]
+            conds.append(cond)
+            selected.append(cond == "ok")
+            stack.append(("if", live))
+        elif head in ("while", "until", "for"):
+            if head == "for":
+                # `for v in` with no words iterates zero times; `for v in a b` may iterate
+                cond = ("fail" if (len(words) > 2 and words[2] == "in" and len(words) == 3)
+                        else "unknown")
+            else:
+                cond = simple_status(strip_keyword(words))[0]
+                if head == "until" and cond != "unknown":
+                    cond = "fail" if cond == "ok" else "ok"
+            conds.append(cond)
+            stack.append((head, live))
+        elif head == "case" and len(words) > 2 and words[2] == "in":
+            case = {"subject": words[1], "pats": words[3:], "base": base, "matched": None}
+        elif head == "esac" and case is not None:
+            live = case["base"]
+            case = None
+        elif head in ("fi", "done"):
+            if stack:
+                live = stack.pop()[1]
+            if conds:
+                conds.pop()
+            if selected:
+                selected.pop()
+        s, term = (simple_status(strip_keyword(words)) if head in ("then", "do", "else", "elif")
+                   else simple_status(words))
+        status, terminated = s, (term and not piped)
+        del words[:], targets[:]
+
+    for token in control_atoms(tokens):
+        if target:
+            targets.append(token)
+            target = False
+        elif token in REDIRECTS:
+            target = True
+        elif set(token) <= CONTROL and token not in ("(", ")"):
+            if token == ";;":                       # end of a `case` arm
+                flush()
+                if case is not None:
+                    live = False if case["matched"] else case["base"]
+                    case["matched"] = None
+                status, terminated = "unknown", False
+                continue
+            flush()
+            if token == "|":
+                piped = True
+                live = live and not terminated
+                status, terminated = "unknown", False
+            elif token == "&&":
+                piped = False
+                live = live and status != "fail" and not terminated
+                status, terminated = "unknown", False
+            elif token == "||":
+                piped = False
+                live = live and status != "ok" and not terminated
+                status, terminated = "unknown", False
+            else:                                   # ';' or '&'
+                piped = False
+                live = live and not terminated
+                status, terminated = "unknown", False
+        elif token == "(":
+            flush()
+            stack.append(("(", live))
+            status, terminated = "unknown", False
+        elif token == ")":
+            flush()
+            if case is not None and case["matched"] is None:
+                arm = arm_live(case["subject"], case["pats"], live)
+                if arm is not None:
+                    case["matched"] = arm
+                    live = case["base"] if arm else False
+            inner = status
+            for i in range(len(stack) - 1, -1, -1):
+                if stack[i][0] == "(":
+                    live = stack[i][1]
+                    del stack[i:]
+                    break
+            status, terminated = inner, False
+        else:
+            words.append(token)
+    flush()
+    return out
+
 def binds(cmd, path, repo=None, depth=0):
     """True when `path` occurs in `cmd` outside every position that provably does not execute
     it: comments, redirection targets, echo/printf/:/true/false operands and CPython's
@@ -321,7 +528,9 @@ def binds(cmd, path, repo=None, depth=0):
     tokens = shell_tokens(strip_comments(cmd)) if depth <= DEPTH else None
     if tokens is None:
         return entering_binds(cmd, path)
-    for words, _targets in invocations(tokens):
+    for words, _targets, live in invocations_visited(tokens):
+        if not live:                        # the text proves this command cannot execute
+            continue
         excluded = excluded_words(words)
         for k, word in enumerate(words):
             if k in excluded:

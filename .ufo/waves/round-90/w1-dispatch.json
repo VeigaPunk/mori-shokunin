@@ -1,0 +1,241 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r90-w1",
+  "policy": {
+    "source": "config",
+    "maxLanes": 13,
+    "minLanes": 8,
+    "waveMinLanes": 8,
+    "waveMaxLanes": 16,
+    "declaredMaxLanes": 13,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 13,
+    "resume": 0,
+    "total": 13
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-90/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-90/w1",
+    "members": {
+      "Mo90E01Gate": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability"
+        ],
+        "milestone": "Candidate branch-reachability rule for the round-87 receipt gate"
+      },
+      "Mo90E02ArmB1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration"
+        ],
+        "milestone": "Arm B1: own_ok_of's arm-count pin in round-88 count-c1"
+      },
+      "Mo90E03ArmsB46": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration"
+        ],
+        "milestone": "Arms B4/B6: the printed met line's call site and clone_root_ok's negative"
+      },
+      "Mo90E04Battery": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability"
+        ],
+        "milestone": "Held-out branch battery, written by a seat that does not author the rule"
+      },
+      "Mo90Sc01Scope": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "depth"
+        ],
+        "milestone": "Classify the 22 provenance counterfeits the gate still binds"
+      },
+      "Mo90S01Sources": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "freshness",
+          "depth"
+        ],
+        "milestone": "Source rows and the reachability knowledge entry"
+      },
+      "Mo90S02Lesson": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "calibration"
+        ],
+        "milestone": "Round lesson draft: gate, mistakes, assimilation pointer"
+      },
+      "Mo90R01C1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "operability"
+        ],
+        "milestone": "Attack C1: the branch rule's harm and its counterfeits"
+      },
+      "Mo90R02C2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration"
+        ],
+        "milestone": "Attack C2: isolation, literal anchors and forged arms"
+      },
+      "Mo90C01Critic": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability"
+        ],
+        "milestone": "Falsify the two claims' design"
+      },
+      "Mo90M01Mut": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "operability"
+        ],
+        "milestone": "Mutate the candidate branch rule and the three new arms"
+      },
+      "Mo90K01Conn": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null,
+        "axes": [
+          "operability",
+          "calibration"
+        ],
+        "milestone": "Sibling overlap: what the gate change and the arm bumps move elsewhere"
+      },
+      "Mo90Se01Boundary": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "sentinel",
+        "item": null,
+        "axes": [
+          "adjacency"
+        ],
+        "milestone": "Boundary and write-scope check of the round's instruments"
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "You are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Goal\nmori round 90 (resumed attempt); L1 MoriR90 is planner and integration owner. TWO frozen claims, contract at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/contract.md — read it first.\nC1 operability: the round-87 receipt gate refuses the non-executing-branch class (8 frozen counterfeits) with harm=0 on the 78-case population.\nC2 calibration: the three round-89 neighbouring mutants (B1/B4/B6) are killed with attributed AND isolated FAIL sets; the frozen counter is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/count-c2.py.\n\n# Hard rules\n- Your tools start at the FLEET root /home/vgpnk/Projects/shokunin, not the lane. Use absolute paths everywhere; every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin — write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>.\n- Write ONLY under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/w1/ (your report file, named exactly as your seat name) and under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/battery/ when your item says so. Candidates go to /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/w1/candidates/.\n- NEVER edit the lane's production files (tools/, corpus/, SCORECARD.md, LOG.md, .ufo/waves/round-8*/), the fleet repo, sibling lanes, MANIFEST.json, .ufo/state/, .scratch/, templates/ or scripts/. The L1 integrates candidates.\n- NEVER commit, push, or run a mutating git/jj command anywhere (no add/commit/checkout/reset/stash/pull/push, no jj commit/new/describe/squash/rebase/abandon/bookmark/undo). Read-only git (show, log, cat-file, ls-tree, rev-parse, status, diff, merge-base) is fine. Fixture repos: `D=$(mktemp -d) && git -C \"$D\" init -q` and every later git call names `-C \"$D\"`; verify `git -C \"$D\" rev-parse --show-toplevel` equals `$D` before any commit there.\n- Scratch root: every clone, fixture and temp dir lives under $HYAKU_SCRATCH/mori-r90/<your-seat-name>/ with HYAKU_SCRATCH defaulting to /fast/scratch/hyaku; create it with mkdir -p and pass it explicitly (TMPDIR=..., --scratch ..., mkdtemp(dir=...)). /tmp is for files under 50 MB only. Remove your scratch dir before you yield (`trap 'rm -rf -- \"$S\"' EXIT` in shell, `finally: shutil.rmtree` in Python); copy receipts into your wave dir first. A seat that ends with its tree still on disk reports that as a defect of itself.\n- One live clone per seat: `git clone --shared`, `git worktree add` or `git archive`; never a full clone or a mirror of the lane.\n- Never message agent://all; the L1 is MoriR90.\n- Tooling authorization (operator, 2026-10-19): you may install or upgrade tools that help the task — read /home/vgpnk/.omp/agent/RULES.md first (official channels, update-safety gate, record tool/version/channel/reason in your report). pacman guard (orchestrator ruling 2026-10-20): ALL pacman transactions are PAUSED host-wide; install via `uv tool`/`npx`/an official binary in ~/.local/bin, or file nothing and use what exists. Never `-Sy`, `-Syu`, `-U`, `-R`, downgrade or restart a host service.\n- Entering revision for every read: d1c8488986512a6a0475af88cc52779ce4703e00 (lane master tip). Never cite a hash you did not verify with `git -C /home/vgpnk/Projects/shokunin/mori-shokunin rev-parse`.\n- Be brief and concrete. Name what you measured, with the command and its output line. No fabricated evidence: an unrun check has not passed.\n",
+    "tasks": [
+      {
+        "name": "Mo90E01Gate",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/contract.md P-C1 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-87/count-c2.py (functions shell_tokens, invocations, excluded_words, binds, binding_problems).\nTask: write a COMPLETE candidate gate at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/w1/candidates/r87-gate.py (copy of the committed file at d1c8488986512a6a0475af88cc52779ce4703e00 plus your change). The change is a subtract-only reachability pre-pass inside `binds`: a word that provably cannot execute in the recorded command text must not bind. Frozen classes to close (8 cases, commands are in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/r/Mo89R03Repair-evidence/cases.json and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/r/Mo89C02Critic-evidence/heldout-all.txt, ids N-A08-exit-before, N-A09-or-short-circuit, N-A10-false-and, H01-or-short-circuit, H02-false-and, H03-exit-before, H04-if-false, H09-heredoc-or-subshell-false):\n(a) a list separator after an unconditional `exit`/`return` at the same nesting level; (b) the right side of `&&` whose left side statically fails (`false`, `(exit N)` with N>0); (c) the right side of `||` whose left side statically succeeds (`true`, `:`, `printf`, `echo`); (d) the `then` body of `if false;` and the `else` body of `if true;`.\nHard requirement: HARM=0. No command the committed gate binds as executing may be newly refused. Grade your candidate with all three batteries already in the lane: `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/noharm-c1.py <candidate-rev-or-path>` is not usable on a path, so instead write a small scratch harness that imports your candidate as a module and the committed gate, then applies the two gates to every case in the 78-case population and to every case of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/r/Mo89R03Repair-evidence/cases.json + the noharm battery used by noharm-c1.py (read that file for its case source). Report: per-class result for the 8 frozen ids, harm count over the `met` cases, newopen over the `reject` cases, and the residual `open` count.\nIf a class cannot be closed without harm, close what you can and say exactly which case is still bound and why. Do not weaken the rule to a token lookup of the case strings; a rule that only matches the eight literal commands is worthless and will be rejected by the reviewer. Run nothing in the lane's production tree.\nDeliverable: candidate file + `Report: .ufo/waves/round-90/w1/Mo90E01Gate.md` with the measured numbers, the rule you implemented (one paragraph), and the exact commands.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability\nMilestone: Candidate branch-reachability rule for the round-87 receipt gate\n\nReport: write your scoped findings to .ufo/waves/round-90/w1/Mo90E01Gate.md"
+      },
+      {
+        "name": "Mo90E02ArmB1",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/contract.md P-C2 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-88/count-c1.py at d1c8488986512a6a0475af88cc52779ce4703e00 (own_ok_of at :106, arms list at the end of selfcheck, EXPECTED_ARMS at the top).\nTask: write a COMPLETE candidate at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/w1/candidates/r88-count-c1.py. Add exactly ONE arm named `own_ok_arm_count` that fails when own_ok_of accepts a wrong arm count, i.e. it asserts own_ok_of(0, \"C1_COUNTER_SELFTEST pass=<EXPECTED_ARMS> fail=0\") is True and own_ok_of(0, \"C1_COUNTER_SELFTEST pass=<EXPECTED_ARMS-1> fail=0\") is False. Bump EXPECTED_ARMS 28 -> 29 (the new arm) and keep the `own_arms_pinned` arm last.\nVerify with the frozen counter's own rule: `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/count-c2.py` grades `.ufo/waves/round-88/count-c1.py` at the graded revision, not a path, so instead verify by hand in scratch: copy the candidate, apply the B1 mutation from /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/count-c2.py MUTANTS (label B1-own-ok-arm-count), run the mutated copy's `--selftest`, and report (i) the candidate's own selftest line `C1_COUNTER_SELFTEST pass=N fail=0`, (ii) the mutated copy's full set of `FAIL <arm>` labels. It must be exactly `{own_ok_arm_count}` so the kill is isolated.\nDo not touch any other arm, and do not edit production.\nDeliverable: candidate + `Report: .ufo/waves/round-90/w1/Mo90E02ArmB1.md`.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration\nMilestone: Arm B1: own_ok_of's arm-count pin in round-88 count-c1\n\nReport: write your scoped findings to .ufo/waves/round-90/w1/Mo90E02ArmB1.md"
+      },
+      {
+        "name": "Mo90E03ArmsB46",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/contract.md P-C2 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-88/count-c2.py at d1c8488986512a6a0475af88cc52779ce4703e00 (met_line :119, clone_root_ok :130, arms list in selfcheck, EXPECTED_ARMS).\nTask: write a COMPLETE candidate at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/w1/candidates/r88-count-c2.py with exactly TWO new arms, then bump EXPECTED_ARMS 26 -> 27 and the arms count pin to match:\n1. `met_line_call_site`: the printed verdict line must take the untruncated revision at the call site. Parse the module's own source with `ast` (open(os.path.abspath(__file__))) and assert every Call to `met_line` passes exactly `ast.Name(id='rev')` as its single argument, so `met_line(rev[:7])` fails the arm. This is a structural pin, not a semantic proof — say so in the arm's docstring.\n2. `clone_root_negative`: assert `not clone_root_ok(\"/nonexistent\\n\", \"/nonexistent/fx\")` (a parent-prefix toplevel) and `not clone_root_ok(\"\", \"/nonexistent/fx\")` (empty output), in addition to the existing unrelated-path negative.\nVerify in scratch by applying the B4 and B6 mutations from /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/count-c2.py MUTANTS (labels B4-met-line-call-site, B6-clone-root-prefix) to copies of your candidate, running each mutated copy's `--selftest`, and reporting the full `FAIL <arm>` label set of each: each must be exactly the one declared arm (isolated kill), and the pristine copy must print `C2_COUNTER_SELFTEST pass=27 fail=0`.\nDo not edit production.\nDeliverable: candidate + `Report: .ufo/waves/round-90/w1/Mo90E03ArmsB46.md`.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration\nMilestone: Arms B4/B6: the printed met line's call site and clone_root_ok's negative\n\nReport: write your scoped findings to .ufo/waves/round-90/w1/Mo90E03ArmsB46.md"
+      },
+      {
+        "name": "Mo90E04Battery",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/contract.md P-C1 (the battery population) and the case shape in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/r/Mo89R03Repair-evidence/cases.json (list of objects with name, cmd, expect, why).\nTask: write ONE file /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/battery/branch-heldout.json — a JSON list, committed as wave evidence, of at least 16 cases whose bound path is exactly `tools/mori-record-sweep.py` and whose `# cmd` text is a plausible receipt command that a careless author would write:\n- at least 12 `expect=reject` cases with `class=branch` that are non-executing branches of a DIFFERENT shape than the eight frozen ids (vary: `while false; do ...; done`, `if true; then X; else Y; fi` with X bound and Y bound, `case` arms, `true &&`, `command_that_cannot_fail ||`, `exit` inside a subshell before the command, `&&` after `(exit 3)`, `while :; do break; done` then the command, `until true; do ...; done`), each with a one-line `why`;\n- at least 4 `expect=met` cases with `class=prov` that must still bind (plain `python3 -I tools/mori-record-sweep.py --root . --pins ...`, a pipeline tail, `cd sub && python3 ...`, `timeout 30 python3 ...`), each with `why`.\nDo not reuse the eight frozen command strings verbatim and do not read or copy any rule implementation: this battery is the independent control. Validate the file parses (`python3 -I -c \"import json;d=json.load(open(...));print(len(d))\"`) and that every case has name/cmd/expect/class/why and a unique name.\nDeliverable: the battery file + `Report: .ufo/waves/round-90/w1/Mo90E04Battery.md` with the case count by class and how each branch shape is non-executing.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability\nMilestone: Held-out branch battery, written by a seat that does not author the rule\n\nReport: write your scoped findings to .ufo/waves/round-90/w1/Mo90E04Battery.md"
+      },
+      {
+        "name": "Mo90Sc01Scope",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/contract.md P-C1 (the provenance class is reported, never targeted) and the two round-89 batteries.\nTask: take the counted population (78 cases) and, using the committed gate /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-87/count-c2.py at d1c8488986512a6a0475af88cc52779ce4703e00, list every `reject` case the gate still binds that is NOT one of the eight branch ids. For each, name the mechanism in one line (function defined and never called; PATH/interpreter substitution; sitecustomize; blob overwrite; heredoc data; `uv run -m`; `bash -n`; `cat`/`$0`; other) and state whether a syntax rule over the recorded command text can decide it at all. Group the list by mechanism with counts.\nRead-only: do not edit the lane, do not write a candidate. Use scratch under $HYAKU_SCRATCH/mori-r90/Mo90Sc01Scope.\nDeliverable: `Report: .ufo/waves/round-90/w1/Mo90Sc01Scope.md` with the grouped table and the count check (bound reject cases minus 8 branch cases must equal the population's `open` field minus branch_open).\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: depth\nMilestone: Classify the 22 provenance counterfeits the gate still binds\n\nReport: write your scoped findings to .ufo/waves/round-90/w1/Mo90Sc01Scope.md"
+      },
+      {
+        "name": "Mo90S01Sources",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/CORPUS.md (SOURCES.md contract), /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (last ids) and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/contract.md.\nTask: open 2-4 real sources THIS ROUND that ground the branch-reachability rule and the call-site pin: the POSIX shell command-language spec on AND-OR lists, `exit` and `if` (pubs.opengroup.org, Shell Command Language), and the Python `ast`/`tokenize` docs for the structural pin. For each opened source record the URL, access date (2026-11-04) and a located quote of at most 25 words.\nWrite: (a) candidate SOURCES.md rows (11 columns, no literal or escaped `|` in any cell, status `mined`, recheck a valid ISO date or `NNd`, used-by naming your entry) as a block at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/w1/Mo90S01Sources-rows.md starting from the next free id — check the registry's current max id yourself with `grep -oE '^ {0,3}\\|[[:space:]]*S[0-9]{3,}' /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md | grep -oE 'S[0-9]+' | sort | tail -3`; (b) the knowledge entry body at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/w1/Mo90S01Sources-entry.md for `corpus/knowledge/branch-reachability-r90.md`, with a `## Gate` block carrying the URL, access date and located quote per row, and a limits paragraph naming what the rule cannot decide (the provenance class).\nDo not append to corpus/SOURCES.md yourself; the L1 appends. Do not invent a quote: paste only text you actually fetched, and if a fetch fails, say so and drop that row.\nDeliverable: the two files + `Report: .ufo/waves/round-90/w1/Mo90S01Sources.md`.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: freshness, depth\nMilestone: Source rows and the reachability knowledge entry\n\nReport: write your scoped findings to .ufo/waves/round-90/w1/Mo90S01Sources.md"
+      },
+      {
+        "name": "Mo90S02Lesson",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/LEARNING.md, /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-89.md (shape), /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-89-verifier-spotcheck.md and /home/vgpnk/Projects/shokunin/mori-shokunin/considerthese/ (list it).\nTask: draft /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/w1/Mo90S02Lesson.md as the body of `corpus/lessons/round-90.md`:\n- `## Gate` — one block per new source row the round admits (URL, access date 2026-11-04, located quote), plus the reject/recheck discipline the registry requires;\n- `## Mistakes` — mine the attempt-1 defect that this round's instrument repair fixes: the inherited r90 `count-c1.py` selftest arms passed the two synthetic gates in the wrong order (`deny` binds, `allow` refuses), so four detector arms failed at the entering revision; class, evidence pointer (`.ufo/waves/round-90/evidence/controls-r90.txt`, the pre-repair selftest), captured-by (which rule should have caught it: a counter's own selftest must be green before it grades anything), fix (the four swapped arms, `C1_COUNTER_SELFTEST pass=12 fail=0`). Give a fix that can fail.\n- `## Assimilation` — at most one still-unimplemented proposal from /home/vgpnk/Projects/shokunin/mori-shokunin/considerthese/ that fits the claims, grounded in the lane's own bar, or one line saying none fits.\nDo not write corpus/ files yourself. No fabrication: every pointer must be a path you opened.\nDeliverable: the draft + `Report: .ufo/waves/round-90/w1/Mo90S02Lesson.md`.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration\nMilestone: Round lesson draft: gate, mistakes, assimilation pointer\n\nReport: write your scoped findings to .ufo/waves/round-90/w1/Mo90S02Lesson.md"
+      },
+      {
+        "name": "Mo90R01C1",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/contract.md P-C1 and the candidate gate at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/w1/candidates/r87-gate.py (if absent, grade the committed gate /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-87/count-c2.py and say so).\nTask: try to falsify C1 in both directions, in scratch:\n1. HARM: find at least 10 VALID receipt commands (the bound path genuinely executes) that the candidate refuses. Ideas: `python3 -I ./tools/...`; `env python3 ...`; `(python3 ... )`; `python3 ... || true`; `! python3 ...`; `x=$(python3 ...)`; `python3 ... &`; `true && python3 ...`; `: || python3 ...`; `case ... esac`; `while ... done`; nested `sh -c`. Each is a harm finding if refused.\n2. NEWOPEN: find counterfeits in the branch class the candidate still binds (e.g. `exit` inside a function body that is called; `exit` after `&&`; `if [ x ]; then ... fi` with a false-at-runtime test; `while read` loops; `{ ...; }` groups; `! false &&`).\n3. Re-run the 78-case population against the candidate and report harm/newopen/open.\nRead-only on the lane; write nothing outside your wave report. Report each finding as a concrete command string with the observed verdict, and rank them by severity. An executor seat is writing the candidate while you work: re-check that path once just before you yield and grade it if it appeared (say which one you graded). If it is still absent, do the same attack on the committed gate and state that the candidate was not yet available.\nDeliverable: `Report: .ufo/waves/round-90/w1/Mo90R01C1.md`.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability\nMilestone: Attack C1: the branch rule's harm and its counterfeits\n\nReport: write your scoped findings to .ufo/waves/round-90/w1/Mo90R01C1.md"
+      },
+      {
+        "name": "Mo90R02C2",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/contract.md P-C2 and the frozen counter /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/count-c2.py.\nTask: falsify C2's assurance, in scratch:\n1. Canary: build a subject whose selftest prints every declared arm's FAIL line on any edit (a blanket canary). Run the frozen counter against a scratch clone at d1c848898651... with that subject substituted for .ufo/waves/round-88/count-c1.py; the frozen kill rule must NOT credit it (it must read isolated or unattributed, never killed). Report the exact line.\n2. Label-only: substitute a subject that declares the 29 arms but asserts nothing; report the counter's line.\n3. Isolation by accident: find a mutation in the real r88 count-c1.py that reds two arms; confirm the counter reads `isolated` and not `killed`.\n4. Literal anchor: construct a mutant whose anchor lies wholly inside a string literal and confirm `literal_anchors` increments.\n5. Attack the B4 arm's AST pin: write two call-site spellings the pin would miss (`r2 = rev; print(met_line(r2))`; `print(met_line(str(rev)))`) and say whether they are in scope of the frozen predicate.\nRead-only on the lane. Use a `--shared` clone in your scratch for any substitution; never edit the lane. Executor seats are writing the two arm candidates while you work: re-check /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/w1/candidates/ once just before you yield and attack them if they appeared; say which subjects you graded.\nDeliverable: `Report: .ufo/waves/round-90/w1/Mo90R02C2.md` with each probe's command and observed line.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration\nMilestone: Attack C2: isolation, literal anchors and forged arms\n\nReport: write your scoped findings to .ufo/waves/round-90/w1/Mo90R02C2.md"
+      },
+      {
+        "name": "Mo90C01Critic",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/contract.md and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/evidence/controls-r90.txt.\nTask: judge the claim DESIGN, not the code:\n1. Is C1's target (`branch_open=0 open=22 cases=78`) reachable only by the claimed work? Which parts are constants of the frozen class split rather than measurements? Could a rule that only string-matches the eight case commands reach it (the counter's `bound()` calls the gate with the recorded command text — say what would stop a lookup table)?\n2. Does C2's isolation rule actually close the round-89 canary hole, and what is left open by a structural AST pin?\n3. Are the two claims causally separable (each verifiable without the other's landing)? Name any coupling you can measure in the counters' target strings or populations.\n4. Is any axis harmed by the planned change (a valid command newly refused; an existing pin migrated)?\nAnswer each with a one-line verdict and the measurement or file:line you used. Do not edit the lane.\nDeliverable: `Report: .ufo/waves/round-90/w1/Mo90C01Critic.md`.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability\nMilestone: Falsify the two claims' design\n\nReport: write your scoped findings to .ufo/waves/round-90/w1/Mo90C01Critic.md"
+      },
+      {
+        "name": "Mo90M01Mut",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/contract.md and the candidates under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/w1/candidates/ (if a candidate is absent, mutate the corresponding committed subject at d1c8488986512a6a0475af88cc52779ce4703e00 and say so).\nTask: in a scratch `--shared` clone or a scratch copy tree:\n1. Apply at least 15 single-point mutants to the new reachability rule in the candidate gate (drop a conjunct, swap `&&`/`||`, drop the `exit` case, accept a parent prefix, invert a static-status test, drop the nesting level check, ...). For each: does the 8-case branch set still read branch_open=0? does any `met` case become harm? Report a table mutant -> {branch_open, harm, newopen} and the surviving mutants that keep the target line intact.\n2. Apply the three declared mutations (B1/B4/B6) to copies of the arm candidates and report each mutated copy's full `FAIL` label set.\n3. Report the number of survivors per subject with the exact command.\nNever edit the lane; everything under $HYAKU_SCRATCH/mori-r90/Mo90M01Mut.\nDeliverable: `Report: .ufo/waves/round-90/w1/Mo90M01Mut.md` with both tables.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability\nMilestone: Mutate the candidate branch rule and the three new arms\n\nReport: write your scoped findings to .ufo/waves/round-90/w1/Mo90M01Mut.md"
+      },
+      {
+        "name": "Mo90K01Conn",
+        "agent": "connector",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-87/count-c2.py, /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-88/count-c1.py, /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-88/count-c2.py, /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/count-c1.py, /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/count-c2.py, /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/noharm-c1.py and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/heldout-c1.py at d1c8488986512a6a0475af88cc52779ce4703e00.\nTask: map every cross-round pin that the two landings move: the r87 gate's own selftest arm count (currently 26) and any r88/r89 counter that pins it (SUBJECT_ARMS, ARMS_BY_FILE, EXPECTED_ARMS, target strings, the r89 C1 counter's `arms=26` expectations); the r88 c1 28 and c2 26 arm pins in r90 count-c2's ARMS_BY_FILE; the r89 batteries' expectations. For each, name file:line, the current value, the value after the landing, and whether a receipt or frozen target in an earlier round must be re-read as superseded (it may NOT be rewritten — only named as superseded).\nAlso check: does any earlier receipt's `# counter-sha256:` binding break because the subject bytes change? List the receipts that bind `.ufo/waves/round-87/count-c2.py`, `.ufo/waves/round-88/count-c1.py`, `.ufo/waves/round-88/count-c2.py` and say which stay valid (they bind the counter's own bytes, not the subject's) and which must be superseded.\nRead-only; report only.\nDeliverable: `Report: .ufo/waves/round-90/w1/Mo90K01Conn.md`.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, calibration\nMilestone: Sibling overlap: what the gate change and the arm bumps move elsewhere\n\nReport: write your scoped findings to .ufo/waves/round-90/w1/Mo90K01Conn.md"
+      },
+      {
+        "name": "Mo90Se01Boundary",
+        "agent": "sentinel",
+        "task": "/skill:godspeed\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/contract.md, /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/count-c1.py and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/count-c2.py.\nTask: adversarial boundary review:\n1. Do either counter write outside their `--scratch` (grep for open(...,'w'), mkdir, subprocess writes, hardcoded /tmp)? Name file:line for every write and prove the `--scratch` honouring.\n2. Do they mutate the lane or any repo (git calls: list every `git` invocation and say whether it is read-only)?\n3. Does anything in the round's artifacts carry credential-shaped material, a fleet-root path write, or a sibling-lane path write?\n4. Does the C1 counter's `load_battery` execute any code from the battery JSON (it must only read data)? What could a malicious battery file do?\n5. Is the frozen predicate sentence in `contract.md` the same sentence the counters print (compare the target strings byte for byte)?\nDo not edit anything. Report each as pass/fail with the evidence line.\nDeliverable: `Report: .ufo/waves/round-90/w1/Mo90Se01Boundary.md`.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: adjacency\nMilestone: Boundary and write-scope check of the round's instruments\n\nReport: write your scoped findings to .ufo/waves/round-90/w1/Mo90Se01Boundary.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

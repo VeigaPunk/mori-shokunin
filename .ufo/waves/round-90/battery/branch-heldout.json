@@ -1,0 +1,110 @@
+[
+  {
+    "name": "R90-B01-while-false",
+    "cmd": "while false; do python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json; done",
+    "expect": "reject", "class": "branch",
+    "why": "The false while condition prevents any iteration of the bound command."
+  },
+  {
+    "name": "R90-B02-true-if-both-dead",
+    "cmd": "if true; then (exit 0; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json); else python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json; fi",
+    "expect": "reject", "class": "branch",
+    "why": "The selected then subshell exits before its sweep; the else sweep is unselected."
+  },
+  {
+    "name": "R90-B03-case-unmatched",
+    "cmd": "case cached in fresh) python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json;; esac",
+    "expect": "reject", "class": "branch",
+    "why": "The literal subject cached cannot select the fresh arm containing the sweep."
+  },
+  {
+    "name": "R90-B04-true-and-exiting-group",
+    "cmd": "true && (exit 0; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json)",
+    "expect": "reject", "class": "branch",
+    "why": "Although true selects the right group, its exit prevents the bound command from running."
+  },
+  {
+    "name": "R90-B05-colon-or",
+    "cmd": ": || python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+    "expect": "reject", "class": "branch",
+    "why": "The argument-free colon builtin succeeds, skipping the OR fallback sweep."
+  },
+  {
+    "name": "R90-B06-subshell-early-exit",
+    "cmd": "(printf 'cached\\n'; exit 0; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json)",
+    "expect": "reject", "class": "branch",
+    "why": "An unconditional subshell exit occurs before the sweep in the same subshell."
+  },
+  {
+    "name": "R90-B07-status-three-and",
+    "cmd": "(exit 3) && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+    "expect": "reject", "class": "branch",
+    "why": "The status-three subshell prevents evaluation of the AND right operand."
+  },
+  {
+    "name": "R90-B08-break-then-exit",
+    "cmd": "(while :; do break; done; exit 0; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json)",
+    "expect": "reject", "class": "branch",
+    "why": "The loop finishes through break, but an intervening exit makes the following sweep unreachable."
+  },
+  {
+    "name": "R90-B09-until-true",
+    "cmd": "until true; do python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json; done",
+    "expect": "reject", "class": "branch",
+    "why": "The successful until condition terminates the loop before its first body execution."
+  },
+  {
+    "name": "R90-B10-empty-for",
+    "cmd": "for receipt in; do python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json; done",
+    "expect": "reject", "class": "branch",
+    "why": "The explicit empty for list supplies no iteration in which to run the sweep."
+  },
+  {
+    "name": "R90-B11-elif-takes-precedence",
+    "cmd": "if false; then :; elif true; then printf 'cached\\n'; else python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json; fi",
+    "expect": "reject", "class": "branch",
+    "why": "The successful elif selects its print arm, leaving the bound else arm unreachable."
+  },
+  {
+    "name": "R90-B12-case-selected-early-exit",
+    "cmd": "(case cached in cached) exit 0; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json;; *) :;; esac)",
+    "expect": "reject", "class": "branch",
+    "why": "The matching case arm exits its enclosing subshell before its bound sweep."
+  },
+  {
+    "name": "R90-B13-loop-break-before-sweep",
+    "cmd": "while true; do break; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json; done",
+    "expect": "reject", "class": "branch",
+    "why": "The first loop statement breaks out before the sweep can run on any iteration."
+  },
+  {
+    "name": "R90-B14-negated-true-and",
+    "cmd": "! true && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+    "expect": "reject", "class": "branch",
+    "why": "Negation makes true return failure for the AND list, skipping its bound right side."
+  },
+  {
+    "name": "R90-M01-plain",
+    "cmd": "python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+    "expect": "met", "class": "prov",
+    "why": "The exact bound path is the plain isolated Python script operand."
+  },
+  {
+    "name": "R90-M02-pipeline-tail",
+    "cmd": "printf '' | python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+    "expect": "met", "class": "prov",
+    "why": "The pipeline tail directly invokes the bound script; piping stdin does not remove its binding."
+  },
+  {
+    "name": "R90-M03-cd-sub",
+    "cmd": "cd sub && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+    "expect": "met", "class": "prov",
+    "why": "After a successful cd, the exact bound path remains a script operand; cwd provenance is not execution proof."
+  },
+  {
+    "name": "R90-M04-timeout-thirty",
+    "cmd": "timeout 30 python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+    "expect": "met", "class": "prov",
+    "why": "The timeout wrapper delegates to Python with the exact bound script operand."
+  }
+]

@@ -23,7 +23,8 @@ ranks 1, 3, 17, 18, 19, 20):
 Round-89 arms (this file's own `--selftest`, one arm per declared round-88 survivor, each
 attributed by its own `FAIL <arm>` line): `arms_last_tally` (`arms_of` keeps the last of two
 tallies), `green_mixed_fail` (`green` refuses a zero tally beside a nonzero one) and `own_ok_red`
-(`own_ok_of` refuses a red selftest). The selftest is pinned at 28 arms.
+(`own_ok_of` refuses a red selftest). The selftest is pinned at 29 arms; round-90 adds `own_ok_arm_count`
+(`own_ok_of`'s source retains the explicit expected-arm tally pin).
 
 Kill rule (frozen): a mutant is killed iff the mutated copy's own `--selftest` exits non-zero
 **or** prints `fail=<n>` with n > 0, conditional on the pristine copy being green with exactly 24
@@ -36,6 +37,7 @@ Output: per mutant `MUTANT <file> <label> killed|survived rc=N`, then the summar
 Exit 0 met, 1 unmet, 2 setup. Read-only: `git show`; files only under --scratch.
 """
 import argparse
+import ast
 import os
 import re
 import shutil
@@ -73,7 +75,7 @@ COUNT = re.compile(r"\b(mutants|killed|survivors|total|arms)=(\d+)\b")
 ARMS = re.compile(r"COUNTER_SELFTEST pass=(\d+) fail=(\d+)")
 TARGET = (6, 0, 6)
 TARGET_ARMS = 24
-EXPECTED_ARMS = 28
+EXPECTED_ARMS = 29
 
 
 def run(cmd, cwd=None, env=None, timeout=300):
@@ -338,6 +340,15 @@ def selfcheck(scratch):
                   and not own_ok_of(1, "C1_COUNTER_SELFTEST pass=%d fail=0" % EXPECTED_ARMS)
                   and not own_ok_of(0, "C1_COUNTER_SELFTEST pass=%d fail=1" % EXPECTED_ARMS),
                   "own_ok_of()"))
+
+    src = open(os.path.abspath(__file__), encoding="utf-8").read()
+    own_ok_functions = [node for node in ast.parse(src).body
+                        if isinstance(node, ast.FunctionDef) and node.name == "own_ok_of"]
+    own_ok_body = ast.get_source_segment(src, own_ok_functions[0]) if own_ok_functions else ""
+    cases.append(("own_ok_arm_count",
+                  bool(own_ok_functions) and "EXPECTED_ARMS" in own_ok_body
+                  and "pass=%d fail=0" in own_ok_body,
+                  "own_ok_of() arm count"))
 
     cases.append(("marker_literal",
                   "M1-met-no-guard" in open(os.path.abspath(__file__)).read(), "label"))
