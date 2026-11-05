@@ -4705,3 +4705,26 @@ Trend verdicts are in `lessons/round-91.md` and the report. No axis score moved.
 3. **depth** — the supersession record for the round-87 arm pins (`w1/candidates/pins.txt`), carried from rounds 89–91.
 4. **operability** — carried: the nonce guard for the round-90 C1 gate (QUALITY 191).
 5. **depth** — S615/S235 corrections of record become appended supersession rows (`CORPUS.md` rule 2); the digest tool is wired into the census or kept as a reader gate, decided in round 92.
+
+## Round 92 — 2026-11-05 (L1 MoriR92, attempt 1) — honest stop
+
+Entering `f63d1ab030d4179576e494342f48ef8718e497a5`; frozen contract `.ufo/waves/round-92/contract.md` at `699f6276` (counters and do-nothing controls in the same commit). Landing `9dce2ca6`; after-receipts at `9dce2ca6` in `.ufo/waves/round-92/evidence/after-r92.txt`. Axes: depth 5 (C1) and freshness 5 (C2), both tied lowest. No score moves. Neither claim is admitted by this lane.
+
+| Claim | Axis | Counting command | Before `f63d1ab0` | After `9dce2ca6` | Verdict |
+|---|---|---|---|---|---|
+| C1 provenance trio in the first 12 lines of every `corpus/knowledge` entry | depth | `python3 -I .ufo/waves/round-92/count-c1.py <rev> --repo <clone>` | `C1=unmet knowledge=98 missing=19 floor=98`, exit 1 | `C1=met knowledge=98 missing=0 floor=98`, exit 0 | met as frozen (presence). Depth not established by the lane (critic: traceability metadata, not depth); non-author ruling |
+| C2 digest gate reports zero unresolved mismatches after supersession | freshness | `python3 -I .ufo/waves/round-92/count-c2.py <rev> --repo <clone>` | `C2=unmet mismatch=2 ... prefix_only=31 unpinned=1 negatives=0 selftest=absent`, exit 1 | `C2=unmet mismatch=0 superseded=2 superseded_ids=S235,S615 prefix_only=31 unpinned=1 negatives=0 selftest=pass checks_failed=run_rc,superseded_ids,negatives`, exit 1 | unmet as frozen; not admitted. Causes: the gate exit rule stays 1 on the 31 prefix-only rows (QUALITY 193); the frozen successor map expects S620 for S235 but the successor is the pre-existing S349; no S620 row exists to build fixture B. See `corpus/lessons/round-92.md` |
+
+Learning trends (lane, from the lesson): expansion unchanged (one correction row S619 and a queued source S621; no knowledge entry admitted); quality unchanged as to admissions (the exit-rule relaxation was refused); discernment pending the non-author closure on C1 depth and the frozen-predicate defects.
+
+### Capabilities (round 92)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Digest gate with supersession and selftest (`tools/mori-source-digest.py`) | honours a row's `supersedes S<id> —` only when the successor verifies against its named pinned copy and the target classifies mismatch; prints `DIGEST <id> superseded-by <succ>`; keeps the entering exit rule (prefix-only and unpinned rows fail) | `python3 -I tools/mori-source-digest.py --selftest` → `DIGEST_SELFTEST pass=11 fail=0`; registry run `DIGEST S235 superseded-by S349`, `DIGEST S615 superseded-by S619`, `DIGEST_CHECK rows=122 ok=88 mismatch=0 superseded=2 prefix_only=31 unpinned=1`, exit 1 (`.ufo/waves/round-92/evidence/mutants-r92.txt`) | 92 |
+
+### Planned (round 93)
+
+1. **freshness** — re-declare C2 with the S349 premise and the exit rule stated; the premise grep (QUALITY 196) committed before the freeze; fixture B built on S349.
+2. **operability** — the three `tools/` scripts with a host home path (QUALITY 197).
+3. **depth** — carried: 31 prefix-only rows and 1 unpinned row (S125) as reported debt; the round-91 C1/C2 gate-clause arming (families mapped from the subject's real labels before any re-declaration); the nonce guard (QUALITY 191); the round-87 arm-pin supersession record.

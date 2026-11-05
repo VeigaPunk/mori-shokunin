@@ -5692,3 +5692,13 @@ Entering `79eaa8cfe5e0b9b1c5ff45f524199d4a123f0520`. Frozen contract `.ufo/waves
 - **Landed:** `tools/mori-source-digest.py` (R8 detection; `DIGEST_CHECK rows=121 ok=87 mismatch=2 prefix_only=31 unpinned=1` at the entering registry; able-to-fail by a scratch flip, exit 1); `corpus/SOURCES.md` S617 (mined, Jia & Harman 2011) and S618 (rejected, flip recorded); `corpus/knowledge/calibration-arming-r91.md`; `corpus/lessons/round-91.md` (four mistakes mined, corrections of record C-1 and C-2 for S615 and S235); QUALITY 193; `corpus/README.md` round-91 notes; SCORECARD `## Round 91`.
 - **Found, not repaired:** the frozen C1 kill rule names families (`c2-supersede`) that the subject's labels do not carry (`supersede_*`); the attacks accept 3/4 C1 forgers and 6/10 C2 forgers under the frozen wording. Round 92 amends before its controls commit, as the lesson states.
 - **Wave:** `w1`, 12 seats (4 executor, 1 scout, 2 reviewer, 1 critic, 1 mutation-tester, 1 connector, 2 scribe; attack share 4/12 = 33 %); five seats returned empty and stay dead in `w1-results.json`.
+
+## Round 92 — 2026-11-05 (L1 MoriR92, attempt 1) — honest stop on C2
+
+Entering `f63d1ab030d4179576e494342f48ef8718e497a5`; frozen contract `699f6276`; landing `9dce2ca6`. Two claims on the tied-lowest axes (depth 5, freshness 5), not admitted by this lane: C1 met as frozen (presence), C2 unmet as frozen.
+
+- **Evidence motivating the round:** round-91 R8 and S235 digest defects (`corpus/lessons/round-91.md` §Mistakes); the round-91 SCORECARD planned list; the 2026-10-25 considerthese proposal 2 (host-path portability), counted at f63d1ab0.
+- **Found in the round:** S349 already supersedes S235 (`corpus/SOURCES.md` line 246 at f63d1ab0), which the frozen C2 contract did not grep for (`corpus/lessons/round-92.md` Mistake 1); the executor's exit-rule relaxation was refused under QUALITY 193 (Mistake 2); `census-before.txt` was truncated and replaced by `census-before-full.txt` (Mistake 3).
+- **Landed:** S619 (correction row for S615, mined, used-by the lesson); S621 (FIPS 180-4, queued); `tools/mori-source-digest.py` supersession and `--selftest` (11/11; mutants in `evidence/mutants-r92.txt`); provenance trio on 19 knowledge entries (move-only check `evidence/trio-moveonly.txt`); QUALITY 194–197; SCORECARD `## Round 92`; `corpus/README.md` round-92 frontier note.
+- **Not landed:** S620 (redundant with S349); the gate's exit rule change (refused).
+- **Wave:** `w1`, 11 seats (1 executor, 3 scribe, 1 scout, 3 reviewer, 1 critic, 1 mutation-tester, 1 connector; attack share 5/11 = 45 %); all 11 returned output; none dead.

@@ -954,3 +954,9 @@ data, `uv run -m` and `bash -n` still bind. Ground: `knowledge/execution-binding
 - Coverage of the registry's digest class moved: `tools/mori-source-digest.py` reads every row whose cell names a pinned copy and a full digest (121 rows at the entering registry: 87 ok, 2 mismatch, 31 prefix-only, 1 unpinned). The two mismatches are S615 (round-90 R8) and S235 (new), with corrections of record in `lessons/round-91.md`.
 - The round-91 C1 and C2 predicates were attacked by two reviewers before any data (`w1/Mo91R01Atk.md`, `w1/Mo91R02Atk.md`). The forgers the frozen wording accepts are listed in `lessons/round-91.md` `## Mistakes`. A round-92 contract must close them before its controls commit.
 - Frontier still open: the independent C1 population and the C2 dated snapshot did not return from their seats; the rows S617 and S618 (rejected, flip recorded) are the only source moves.
+
+## Round-92 frontier note — provenance presence and digest supersession measured; the supersession predicate is not met
+
+- Provenance: 19 knowledge entries gained the trio lines (presence now 98/98). This is a presence measure; depth is not established by it.
+- Registry: S619 corrects S615's recorded digest. S235's recorded digest is still wrong, and the valid successor is the pre-existing S349. S621 (FIPS 180-4, §6.2, "The final result of SHA-256 is a 256-bit message digest.") is queued. The gate still exits 1 on 31 prefix-only rows and 1 unpinned row (S125), by QUALITY 193.
+- Frontier still open: the host home path in three `tools/` scripts (QUALITY 197); the frozen C2 premise check (QUALITY 196).

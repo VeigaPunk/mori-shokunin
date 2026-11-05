@@ -1,0 +1,10 @@
+# Round-92 after-receipts at landing revision 9dce2ca6f6510cbb8fa41c5c1b8d8a802169e9c1 (commit 9dce2ca6)
+# command: python3 -I .ufo/waves/round-92/count-c1.py 9dce2ca6f6510cbb8fa41c5c1b8d8a802169e9c1 --repo .
+C1=met knowledge=98 missing=0 floor=98 rev=9dce2ca6f651
+rc=0
+# command: python3 -I .ufo/waves/round-92/count-c2.py 9dce2ca6f6510cbb8fa41c5c1b8d8a802169e9c1 --repo .
+C2=unmet mismatch=0 superseded=2 superseded_ids=S235,S615 prefix_only=31 unpinned=1 negatives=0 selftest=pass checks_failed=run_rc,superseded_ids,negatives rev=9dce2ca6f651
+rc=1
+# command: python3 -I .ufo/waves/round-92/count-c2.py 9dce2ca6f6510cbb8fa41c5c1b8d8a802169e9c1 --repo . --report
+C2_REPORT rev=9dce2ca6f651 run_rc=1 summary=DIGEST_CHECK rows=122 ok=88 mismatch=0 superseded=2 prefix_only=31 unpinned=1 superseded_ids=S235,S615 succ_ok=False negatives=0 selftest_rc=0 selftest=True
+rc=0
