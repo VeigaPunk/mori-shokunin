@@ -5702,3 +5702,22 @@ Entering `f63d1ab030d4179576e494342f48ef8718e497a5`; frozen contract `699f6276`;
 - **Landed:** S619 (correction row for S615, mined, used-by the lesson); S621 (FIPS 180-4, queued); `tools/mori-source-digest.py` supersession and `--selftest` (11/11; mutants in `evidence/mutants-r92.txt`); provenance trio on 19 knowledge entries (move-only check `evidence/trio-moveonly.txt`); QUALITY 194–197; SCORECARD `## Round 92`; `corpus/README.md` round-92 frontier note.
 - **Not landed:** S620 (redundant with S349); the gate's exit rule change (refused).
 - **Wave:** `w1`, 11 seats (1 executor, 3 scribe, 1 scout, 3 reviewer, 1 critic, 1 mutation-tester, 1 connector; attack share 5/11 = 45 %); all 11 returned output; none dead.
+
+## Round 93 — 2026-11-05 (L1 MoriR93, attempt 1)
+
+Two claims, both met as frozen at landing `1fc921cf75afa6650b9dc9451b33a2ec0610ae0a`: C1 calibration (the 12
+round-92 `verified-at` lines gain their file admission commit; `adm_fail 12 → 0`), C2 operability (host home paths
+removed from `tools/`; `home_literals 18 → 0`, `vgpnk_refs 18 → 0`). The calibration reading is left to the
+closure: the repair is judged bookkeeping by `Mo93R03Atk`.
+
+- Evidence motivating the round: round-92 verifier spotcheck D1 (the false lesson sentence, 12 of 19 files) and
+  the round-92 SCORECARD planned list (`corpus/lessons/round-92-verifier-spotcheck.md` §2 C1, §6 D1).
+- Found in the round: CORPUS rule 2 refuses in-place digest completion (contract P3, QUALITY 201); a 4096-byte
+  read window undercounts the trio (97 of 98, QUALITY 198); three conjuncts were unflipped by the frozen battery
+  (mutants m1, m4, m6; extension controls, `evidence/mutant-kill-ext-r93.txt`).
+- Registry: S622 (git-log) and S623 (Python `-I`) admitted, `mined`, used-by `corpus/lessons/round-93.md`.
+- Routed, not fixed: the admission substring lacks a word boundary (`count-c1.py`, R02); the counter CENSUS constant
+  names a host path; the digest-gate debt is carried.
+- Correction of record: appended to `corpus/lessons/round-92.md` (lines 51–52 not edited).
+- Wave `w1`: 12 seats (3 executor, 1 scribe, 1 scout, 4 reviewer, 1 critic, 1 mutation-tester, 1 connector); attack
+  share 6/12 = 50 %; all returned output.

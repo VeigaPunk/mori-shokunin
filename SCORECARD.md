@@ -4728,3 +4728,33 @@ Learning trends (lane, from the lesson): expansion unchanged (one correction row
 1. **freshness** — re-declare C2 with the S349 premise and the exit rule stated; the premise grep (QUALITY 196) committed before the freeze; fixture B built on S349.
 2. **operability** — the three `tools/` scripts with a host home path (QUALITY 197).
 3. **depth** — carried: 31 prefix-only rows and 1 unpinned row (S125) as reported debt; the round-91 C1/C2 gate-clause arming (families mapped from the subject's real labels before any re-declaration); the nonce guard (QUALITY 191); the round-87 arm-pin supersession record.
+
+## Round 93 (2026-11-05, L1 MoriR93, attempt 1) — two claims met as frozen; calibration reading left to the closure
+
+Entering `7b3fe9d540c98b8b0390a0f9bbe78de4341092a5`; frozen contract `.ufo/waves/round-93/contract.md` at `6d82b8d7`;
+landing `1fc921cf75afa6650b9dc9451b33a2ec0610ae0a`. Axes: **calibration** (C1, score 5, tied lowest non-retired)
+and **operability** (C2, score 7). No score moves are claimed. Counters and controls are frozen; the post-freeze
+battery extension (`controls-r93-ext.sh`, three controls) is disclosed, not a predicate change.
+
+| Claim | Axis | Counting command | Before `7b3fe9d5` | After `1fc921cf` | Verdict |
+|---|---|---|---|---|---|
+| C1 the round-92 lesson's "each verified-at names the admission commit" is true of the 19 trio files | calibration | `python3 -I .ufo/waves/round-93/count-c1.py <rev> --repo <lane>` | `C1=unmet adm_ok=7 adm_fail=12 patched12=0` | `C1=met adm_ok=19 adm_fail=0 patched12=12 census=ok` | met as frozen; calibration reading not established (bookkeeping per `Mo93R03Atk`); for the closure to rule |
+| C2 no tool under `tools/` hardcodes a host home path | operability | `python3 -I .ufo/waves/round-93/count-c2.py <rev> --repo <lane>` | `C2=unmet home_literals=18 vgpnk_refs=18` | `C2=met home_literals=0 vgpnk_refs=0 tools=3 selftests=3/3` | met as frozen |
+
+Receipts: `evidence/measure-c1-entering.txt`, `evidence/measure-c2-entering.txt`, `evidence/after-c1-1fc921cf75af….txt`,
+`evidence/after-c2-1fc921cf75af….txt`, `evidence/controls-r93.txt` (frozen controls, all unmet at entering),
+`evidence/controls-r93-ext.txt` (extension, all met at landing and unmet with the mutants applied),
+`evidence/equiv-c2-entering-vs-landing.txt`.
+
+### Capabilities (round 93)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Entering-vs-revision equivalence harness (`.ufo/waves/round-93/w1/equiv-c2.sh`) | runs each tool's `--help` and `--selftest` at two revisions in scratch extracts and prints per-tool identical or different with rc 0/1/2; proved identical at A=B and able-to-fail at a one-character `--help` change | `.ufo/waves/round-93/w1/Mo93E03Equiv.md` (proof 1 and proof 2); `evidence/equiv-c2-entering-vs-landing.txt` (tree bytes flagged, outputs identical) | 93 |
+
+### Planned (round 94)
+
+1. The admission-hash boundary check (routed defect R02) as a new counter revision, with a control built on an
+   embedded hash.
+2. The counter-owned host path (`count-c1.py`/`count-c2.py` CENSUS constant), in the same amendment.
+3. Carried: digest-gate debt (31 prefix-only rows, S125 unpinned; contract P3); round-90 nonce guard (QUALITY 191).

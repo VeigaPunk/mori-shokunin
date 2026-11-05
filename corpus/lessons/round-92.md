@@ -109,3 +109,22 @@ defect; the lane's gate decisions above are the sample (admit S619, reject S620)
    C1/C2 gate-clause arming (families must be mapped from the subject's real labels before any
    re-declaration); the nonce guard for the round-90 gate (QUALITY 191); the supersession record of the
    round-87 arm pins.
+
+## Correction of record (round 93) — appended, not an edit in place
+
+Corrects the sentence wrapped over lines 51–52 of this file, in `## Work the round landed`: "Each
+`verified-at` names the admission commit of its file (`git log --diff-filter=A`)". At the round-92 landing
+`9dce2ca6` that sentence was false: it held for 7 of the 19 trio files and failed for 12.
+
+- At `9dce2ca6`: `python3 -I .ufo/waves/round-93/count-c1.py 9dce2ca6 --repo <lane> --report` →
+  `adm_ok=7 adm_fail=12` (same counts at `7b3fe9d5`, `.ufo/waves/round-93/evidence/measure-c1-entering.txt`).
+- Round 93 repaired the 12 `verified-at:` values (`Mo93E02Verif`; landing `1fc921cf75afa6650b9dc9451b33a2ec0610ae0a`).
+  At that landing `C1=met trio=98 claim_r92_true=1 adm_ok=19 adm_fail=0`
+  (`.ufo/waves/round-93/evidence/after-c1-1fc921cf75afa6650b9dc9451b33a2ec0610ae0a.txt`). The sentence is true
+  of those 19 files at that landing.
+
+Scope: the sentence is true of the 19 round-92 trio files, not of the 98 knowledge entries, and the commit
+form is this lane's stricter criterion (LEARNING.md accepts a date). The round-92 verdicts are not changed by
+this entry: C1 presence met as frozen, depth not established; C2 unmet and not admitted. The counter checks
+that the short hash appears inside `verified-at:` (a plain substring; boundary check routed in
+`corpus/lessons/round-93.md`).
