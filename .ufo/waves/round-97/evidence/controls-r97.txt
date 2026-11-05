@@ -1,0 +1,111 @@
+CONTROLS rev=973b2af11f41bd362163d7e29ac08286832f546b count-c1.sha256=78a09016fa8151b72049400600b6b154437c919df6fccb55b8bfa6253b4d2a95 count-c2.sha256=957a7be605ba920734a218388b7ebb50f4f829979931c6e4193caee2149a1e91 date=2026-11-05T20:47:49Z
+candidate S615=7891c58897fe9f78cf16d15fd3464b746a187214c82587ac94b0f83b9a8a42f5 S616=6842ed0f53882c5a4d7a852ff969842f62aba92f918e2192db0df6ed23c3cb72 S623=90ac3b25cb2dd28192a5d1c7d45da5ef966d32666d0c583a13eb2ec6f4831ad0 skill-append=61b89b8b96da7f6460f0f1539ab06c12fe410dc9d15494fd563a09ba7d06beb3
+
+## C1 do-nothing (entering tree)
+EXPECT rc=1 contains='C1=unmet unregistered=4'
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c1.py --root /fast/scratch/hyaku/mori-r97/controls/c1-donothing
+TARGET tools/mori-cgroup-pressure.py unattributed
+TARGET tools/mori-drift-recheck.py unattributed
+TARGET tools/mori-scorecard-calibration.py unattributed
+TARGET tools/mori-source-digest.py unattributed
+C1=unmet unregistered=4 registry=unmet targets_ok=0/4 checks_failed=registry,target_mori-cgroup-pressure.py,target_mori-drift-recheck.py,target_mori-scorecard-calibration.py,target_mori-source-digest.py root=/fast/scratch/hyaku/mori-r97/controls/c1-donothing
+OBSERVED rc=1 -> AS_EXPECTED
+
+## C1 forgery: eight-cell junk rows (auditor alone goes green)
+EXPECT rc=1 contains='C1=unmet unregistered=0 registry=met targets_ok=0/4'
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c1.py --root /fast/scratch/hyaku/mori-r97/controls/c1-junkrows
+TARGET tools/mori-cgroup-pressure.py row='junk cgroup-pressure' selftest_rc=0 selftest_line='MORI_CGROUP_PRESSURE_SELFTEST: pass=12 fail=0' stated_in_cell=no token_in_verdict_map=no
+TARGET tools/mori-drift-recheck.py row='junk drift-recheck' selftest_rc=0 selftest_line='MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)' stated_in_cell=no token_in_verdict_map=no
+TARGET tools/mori-scorecard-calibration.py row='junk scorecard-calibration' selftest_rc=0 selftest_line='CALIB_SELFTEST pass=11 fail=0' stated_in_cell=no token_in_verdict_map=no
+TARGET tools/mori-source-digest.py row='junk source-digest' selftest_rc=0 selftest_line='DIGEST_SELFTEST pass=11 fail=0' stated_in_cell=no token_in_verdict_map=no
+C1=unmet unregistered=0 registry=met targets_ok=0/4 checks_failed=target_mori-cgroup-pressure.py,target_mori-drift-recheck.py,target_mori-scorecard-calibration.py,target_mori-source-digest.py root=/fast/scratch/hyaku/mori-r97/controls/c1-junkrows
+OBSERVED rc=1 -> AS_EXPECTED
+
+## C1 forgery: well-formed rows stating a wrong selftest outcome
+EXPECT rc=1 contains='C1=unmet unregistered=0 registry=met targets_ok=0/4'
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c1.py --root /fast/scratch/hyaku/mori-r97/controls/c1-staleline
+TARGET tools/mori-cgroup-pressure.py row='cgroup PSI survey (r62 tool, registry r97)' selftest_rc=0 selftest_line='MORI_CGROUP_PRESSURE_SELFTEST: pass=12 fail=0' stated_in_cell=no token_in_verdict_map=yes
+TARGET tools/mori-drift-recheck.py row='drift re-check (r66 tool, registry r97)' selftest_rc=0 selftest_line='MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)' stated_in_cell=no token_in_verdict_map=yes
+TARGET tools/mori-scorecard-calibration.py row='SCORECARD Last-change calibration counter (r96 tool, registry r97)' selftest_rc=0 selftest_line='CALIB_SELFTEST pass=11 fail=0' stated_in_cell=no token_in_verdict_map=yes
+TARGET tools/mori-source-digest.py row='SOURCES digest check (r91 tool, registry r97)' selftest_rc=0 selftest_line='DIGEST_SELFTEST pass=11 fail=0' stated_in_cell=no token_in_verdict_map=yes
+C1=unmet unregistered=0 registry=met targets_ok=0/4 checks_failed=target_mori-cgroup-pressure.py,target_mori-drift-recheck.py,target_mori-scorecard-calibration.py,target_mori-source-digest.py root=/fast/scratch/hyaku/mori-r97/controls/c1-staleline
+OBSERVED rc=1 -> AS_EXPECTED
+
+## C1 forgery: verdict map without the tool's verdict token (digest row)
+EXPECT rc=1 contains='targets_ok=3/4'
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c1.py --root /fast/scratch/hyaku/mori-r97/controls/c1-notoken
+TARGET tools/mori-cgroup-pressure.py row='cgroup PSI survey (r62 tool, registry r97)' selftest_rc=0 selftest_line='MORI_CGROUP_PRESSURE_SELFTEST: pass=12 fail=0' stated_in_cell=yes token_in_verdict_map=yes
+TARGET tools/mori-drift-recheck.py row='drift re-check (r66 tool, registry r97)' selftest_rc=0 selftest_line='MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)' stated_in_cell=yes token_in_verdict_map=yes
+TARGET tools/mori-scorecard-calibration.py row='SCORECARD Last-change calibration counter (r96 tool, registry r97)' selftest_rc=0 selftest_line='CALIB_SELFTEST pass=11 fail=0' stated_in_cell=yes token_in_verdict_map=yes
+TARGET tools/mori-source-digest.py row='SOURCES digest check (r91 tool, registry r97)' selftest_rc=0 selftest_line='DIGEST_SELFTEST pass=11 fail=0' stated_in_cell=yes token_in_verdict_map=no
+C1=unmet unregistered=0 registry=met targets_ok=3/4 checks_failed=target_mori-source-digest.py root=/fast/scratch/hyaku/mori-r97/controls/c1-notoken
+OBSERVED rc=1 -> AS_EXPECTED
+
+## C1 positive control (candidate rows)
+EXPECT rc=0 contains='C1=met unregistered=0 registry=met targets_ok=4/4'
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c1.py --root /fast/scratch/hyaku/mori-r97/controls/c1-positive
+TARGET tools/mori-cgroup-pressure.py row='cgroup PSI survey (r62 tool, registry r97)' selftest_rc=0 selftest_line='MORI_CGROUP_PRESSURE_SELFTEST: pass=12 fail=0' stated_in_cell=yes token_in_verdict_map=yes
+TARGET tools/mori-drift-recheck.py row='drift re-check (r66 tool, registry r97)' selftest_rc=0 selftest_line='MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)' stated_in_cell=yes token_in_verdict_map=yes
+TARGET tools/mori-scorecard-calibration.py row='SCORECARD Last-change calibration counter (r96 tool, registry r97)' selftest_rc=0 selftest_line='CALIB_SELFTEST pass=11 fail=0' stated_in_cell=yes token_in_verdict_map=yes
+TARGET tools/mori-source-digest.py row='SOURCES digest check (r91 tool, registry r97)' selftest_rc=0 selftest_line='DIGEST_SELFTEST pass=11 fail=0' stated_in_cell=yes token_in_verdict_map=yes
+C1=met unregistered=0 registry=met targets_ok=4/4 checks_failed=- root=/fast/scratch/hyaku/mori-r97/controls/c1-positive
+OBSERVED rc=0 -> AS_EXPECTED
+
+## C2 do-nothing (entering tree)
+EXPECT rc=1 contains='unpinned=3'
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c2.py --root /fast/scratch/hyaku/mori-r97/controls/c2-donothing
+TARGET S615 unpinned copy=- copy_sha=-
+TARGET S616 unpinned copy=- copy_sha=-
+TARGET S623 unpinned copy=- copy_sha=-
+LIVE S615 no-copy
+LIVE S616 no-copy
+LIVE S623 no-copy
+LIVE MORI_DRIFT_RECHECK rows=3 adjudicated=0 fresh=0 excerpt=0 time-churn=0 asset-churn=0 receipt-open=0 receipt-stale=0 ua-serving=0 content-drift=0 gate=0 unavailable=0 window=-
+C2=unmet mismatch=0 unpinned=3 targets_ok=0/3 hole_guard=n/a live=S615:no-copy,S616:no-copy,S623:no-copy checks_failed=unpinned,target_S615,target_S616,target_S623,live root=/fast/scratch/hyaku/mori-r97/controls/c2-donothing
+OBSERVED rc=1 -> AS_EXPECTED
+
+## C2 forgery: random 362493-byte S615 copy (digest tool supersedes it: the r96 hole)
+EXPECT rc=1 contains='hole_guard=fail'
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c2.py --root /fast/scratch/hyaku/mori-r97/controls/c2-hole --no-live
+TARGET S615 superseded-by S619 successor_ok=yes copy_equals_successor=no copy=corpus/evidence/sources-r97/S615.html copy_sha=bdd5ca2bffd45146
+TARGET S616 ok copy_matches_tool=yes copy=corpus/evidence/sources-r97/S616.html copy_sha=6842ed0f53882c5a
+TARGET S623 ok copy_matches_tool=yes copy=corpus/evidence/sources-r97/S623.html copy_sha=90ac3b25cb2dd281
+C2=unmet mismatch=0 unpinned=0 targets_ok=2/3 hole_guard=fail live=skipped checks_failed=target_S615,live_skipped root=/fast/scratch/hyaku/mori-r97/controls/c2-hole
+OBSERVED rc=1 -> AS_EXPECTED
+
+## C2 forgery: today's live S616 bytes pinned as the recorded copy
+EXPECT rc=1 contains='C2=unmet mismatch=1'
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c2.py --root /fast/scratch/hyaku/mori-r97/controls/c2-livebytes --no-live
+TARGET S615 superseded-by S619 successor_ok=yes copy_equals_successor=yes copy=corpus/evidence/sources-r97/S615.html copy_sha=7891c58897fe9f78
+TARGET S616 mismatch copy=corpus/evidence/sources-r97/S616.html copy_sha=bce324892ae8b1c3
+TARGET S623 ok copy_matches_tool=yes copy=corpus/evidence/sources-r97/S623.html copy_sha=90ac3b25cb2dd281
+C2=unmet mismatch=1 unpinned=0 targets_ok=2/3 hole_guard=pass live=skipped checks_failed=mismatch,target_S616,live_skipped root=/fast/scratch/hyaku/mori-r97/controls/c2-livebytes
+OBSERVED rc=1 -> AS_EXPECTED
+
+## C2 forgery: correct pins, S623 row pointed at another live page (live leg must fail alone)
+EXPECT rc=1 contains='checks_failed=live'
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c2.py --root /fast/scratch/hyaku/mori-r97/controls/c2-contentdrift
+TARGET S615 superseded-by S619 successor_ok=yes copy_equals_successor=yes copy=corpus/evidence/sources-r97/S615.html copy_sha=7891c58897fe9f78
+TARGET S616 ok copy_matches_tool=yes copy=corpus/evidence/sources-r97/S616.html copy_sha=6842ed0f53882c5a
+TARGET S623 ok copy_matches_tool=yes copy=corpus/evidence/sources-r97/S623.html copy_sha=90ac3b25cb2dd281
+LIVE S615 time-churn as-of=2026-11-05T20:47:59Z
+LIVE S616 time-churn as-of=2026-11-05T20:47:59Z
+LIVE S623 content-drift as-of=2026-11-05T20:47:59Z
+LIVE MORI_DRIFT_RECHECK rows=3 adjudicated=3 fresh=0 excerpt=0 time-churn=2 asset-churn=0 receipt-open=0 receipt-stale=0 ua-serving=0 content-drift=1 gate=0 unavailable=0 window=2026-11-05T20:47:59Z..2026-11-05T20:47:59Z
+C2=unmet mismatch=0 unpinned=0 targets_ok=3/3 hole_guard=pass live=S615:time-churn,S616:time-churn,S623:content-drift checks_failed=live root=/fast/scratch/hyaku/mori-r97/controls/c2-contentdrift
+OBSERVED rc=1 -> AS_EXPECTED
+
+## C2 positive control (candidate pins, live leg on)
+EXPECT rc=0 contains='C2=met mismatch=0 unpinned=0 targets_ok=3/3 hole_guard=pass'
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c2.py --root /fast/scratch/hyaku/mori-r97/controls/c2-positive
+TARGET S615 superseded-by S619 successor_ok=yes copy_equals_successor=yes copy=corpus/evidence/sources-r97/S615.html copy_sha=7891c58897fe9f78
+TARGET S616 ok copy_matches_tool=yes copy=corpus/evidence/sources-r97/S616.html copy_sha=6842ed0f53882c5a
+TARGET S623 ok copy_matches_tool=yes copy=corpus/evidence/sources-r97/S623.html copy_sha=90ac3b25cb2dd281
+LIVE S615 time-churn as-of=2026-11-05T20:48:00Z
+LIVE S616 time-churn as-of=2026-11-05T20:48:00Z
+LIVE S623 time-churn as-of=2026-11-05T20:48:00Z
+LIVE MORI_DRIFT_RECHECK rows=3 adjudicated=3 fresh=0 excerpt=0 time-churn=3 asset-churn=0 receipt-open=0 receipt-stale=0 ua-serving=0 content-drift=0 gate=0 unavailable=0 window=2026-11-05T20:48:00Z..2026-11-05T20:48:00Z
+C2=met mismatch=0 unpinned=0 targets_ok=3/3 hole_guard=pass live=S615:time-churn,S616:time-churn,S623:time-churn checks_failed=- root=/fast/scratch/hyaku/mori-r97/controls/c2-positive
+OBSERVED rc=0 -> AS_EXPECTED
+
+CONTROLS_DONE unexpected=0
