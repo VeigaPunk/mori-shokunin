@@ -1,5 +1,5 @@
 # The round-51 and round-52 kernel claims at Linux v7.3: 46 rechecked, two quotes respelled
-verified-at: 2026-10-26
+verified-at: 2a4213bf (2026-10-26)
 recheck: on-release — `python3 .ufo/waves/round-53/count-c1.py <rev>` re-derives every status below from the committed v7.3 copies; at the next tag, fetch each path with `curl -fsSL 'https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/<path>?h=<tag>'`, add the copies and rows, and run the same ledger shape against them
 
 source: S502 — https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/Documentation/filesystems/proc.rst?h=v7.3 — docs, tier A, Documentation/filesystems/proc.rst at tag v7.3, committed copy `corpus/evidence/sources-r53/proc.rst.v7.3`, opened 2026-10-26

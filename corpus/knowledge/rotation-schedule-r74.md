@@ -9,7 +9,7 @@ in `.ufo/waves/round-74/evidence/source-s589-r74.txt`). The instrument's
 OBJECT pages stand on their own rows: S241 (the observed serving and the
 compare pin) and S581 (the documented token-clock scale that sizes the
 default windows).
-verified-at: 2026-11-02 (round 74; the S589 clock claims below are
+verified-at: dc50c80b (2026-11-02 (round 74; the S589 clock claims below are)
 line-located against the pinned copy and machine-verified by the r72
 anchor-checker — PASS items=2 with the able-to-fail mislocation arm FAIL
 rc 1, `.ufo/waves/round-74/evidence/s589-anchor-check-r74.txt`; the

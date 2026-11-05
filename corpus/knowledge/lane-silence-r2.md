@@ -1,5 +1,5 @@
 # Lane silence — launch-aware, authorship-aware grading (round 2 operational note)
-verified-at: 2026-10-15T04:56Z — read-only recon of the sources above (every count,
+verified-at: 3da84149 (2026-10-15T04:56Z — read-only recon of the sources above (every count,)
 epoch and line number in this note was observed in that window; commands re-listed so
 any reader can re-measure). No r2 grader behavior is claimed here — see "Evidence
 status".

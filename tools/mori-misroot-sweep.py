@@ -3,7 +3,7 @@
 
 Round 16's mandatory sweep ran
 
-    git -C /home/vgpnk/Projects/shokunin status --porcelain -- .ufo/waves .ufo/reports
+    git -C <fleet-root> status --porcelain -- .ufo/waves .ufo/reports
 
 so a seat report written at the fleet root (``MoriR16.Lesson`` at the root
 itself, later relocated under ``.ufo/waves/hyaku/misroots/``) was invisible to
@@ -17,7 +17,7 @@ It never moves, deletes, edits or commits anything.  It only runs
 ``GIT_OPTIONAL_LOCKS=0``) and reads the bytes of untracked regular files.
 
 C3 calibration: the archived r16 artifact
-(`/home/vgpnk/Projects/shokunin/.ufo/waves/hyaku/misroots/MoriR16.Lesson`,
+(`<fleet-root>/.ufo/waves/hyaku/misroots/MoriR16.Lesson`,
 847 bytes) names neither its lane nor its round in its content -- only its
 filename carries them.  ``--selftest`` therefore plants those exact bytes under
 that exact name and asserts that the no-pathspec sweep finds the file by path
@@ -352,7 +352,7 @@ def _scan(fleet_root, pathspecs, lane, round_number):
 _PLANTED_NAME = "MoriR16.Lesson"
 # Byte-exact witness for C3 calibration: the archived round-16 fleet-root
 # misroot, read from
-# /home/vgpnk/Projects/shokunin/.ufo/waves/hyaku/misroots/MoriR16.Lesson
+# <fleet-root>/.ufo/waves/hyaku/misroots/MoriR16.Lesson
 # on 2026-10-20 (847 bytes, sha256 below).  Its content names neither the lane
 # nor the round; only the file name does.  Pinned here so --selftest is
 # hermetic and byte-identical, and self-verifying through the digest.

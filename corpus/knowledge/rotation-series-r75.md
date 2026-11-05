@@ -1,4 +1,4 @@
-verified-at: 2026-11-02 (round 75; the S590 mechanism claims below are line-located
+verified-at: 32132cfb (2026-11-02 (round 75; the S590 mechanism claims below are line-located)
 against the pinned copy and machine-verified — PASS items=3 with the able-to-fail arm
 FAIL rc 1; the series observations are the three committed session receipts cited
 per-line in

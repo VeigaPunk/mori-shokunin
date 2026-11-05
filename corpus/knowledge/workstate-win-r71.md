@@ -1,4 +1,4 @@
-verified-at: 2026-11-01 (round 71; claims below are line-located against the
+verified-at: 3627fac0 (2026-11-01 (round 71; claims below are line-located against the)
 pinned S584 copy; live receipt on this host
 `.ufo/waves/round-71/evidence/workstate-live-r71.txt`)
 recheck: 180d, or when a re-fetch of either page changes its sha256 against

@@ -241,10 +241,12 @@ selftest() {
     trap 'rm -rf -- "$SELFTEST_TMPROOT"' EXIT
     repo="$SELFTEST_TMPROOT/repo"; wave='.ufo/waves/round-31/w1'; allow="$SELFTEST_TMPROOT/allow.txt"
     mkdir -p "$repo/$wave" && git -C "$repo" init -q || { printf 'FAIL\n'; return 1; }
-    cat > "$allow" <<'EOF'
+    # fleet root: SHOKUNIN_ROOT when set, else $HOME/Projects/shokunin
+    allow_root=${SHOKUNIN_ROOT:-$HOME/Projects/shokunin}
+    cat > "$allow" <<EOF
 # one bash glob per line; {report} stands for the brief basename without .md
 .ufo/waves/round-31/rule-text.md
-/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-31/rule-text.md
+$allow_root/mori-shokunin/.ufo/waves/round-31/rule-text.md
 /fast/scratch/hyaku/mori-r31/{report}
 /fast/scratch/hyaku/mori-r31/{report}/*
 https://git.kernel.org/pub/scm/docs/man-pages/man-pages.git/*

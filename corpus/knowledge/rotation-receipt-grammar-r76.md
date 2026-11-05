@@ -1,4 +1,4 @@
-verified-at: 2026-11-02 (round 76; the S591 clock claims below are line-located
+verified-at: 71107662 (2026-11-02 (round 76; the S591 clock claims below are line-located)
 against the pinned copy and machine-verified — PASS items=2 with the able-to-fail
 arm FAIL rc 1 in the same receipt; no live fetch is a capture body — the serving
 pins S241/S581/S589/S590 are the instrument's objects and stand from their own rows)

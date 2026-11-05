@@ -1,5 +1,5 @@
 # selftest flake r9 — the `printf | grep -q` SIGPIPE race: mechanism, archaeology, the capture-file fix, batteries, and a determinism gate
-verified-at: 2026-10-15T21:05–21:35Z — GNU bash 5.3.15, host load average ≈90–140 (the
+verified-at: cffb37ef (2026-10-15T21:05–21:35Z — GNU bash 5.3.15, host load average ≈90–140 (the)
 round's own 32-seat wave); my two loaded arms added 4 CPU hogs each and killed them at
 arm end (verified gone from `ps`). Instruments and raw logs under `/tmp/mori-r9-note/`
 (ephemeral): `before-battery.log`, `replay.log`, `replay2.log`, `after-battery.log`,

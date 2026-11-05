@@ -1,5 +1,5 @@
 # drift pin r10 — the census's own behavioral baseline: design, the volatile contract and its measured rationale, the masking risks, the adopted lane baseline, and the admission ritual
-verified-at: 2026-10-15T22:06:01–22:17Z, two arms, one per revision:
+verified-at: 5be89432 (2026-10-15T22:06:01–22:17Z, two arms, one per revision:)
 recheck: MORI_SHOKUNIN_ROOT=<fleet root> bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json (Erratum at drift-pin-r10.md:297-298)
 
 source: `tools/mori-census.sh` entering this round `1c49238a7fd87277151ff5776acfb4d62fadd9d69764a02f0ede03ef0d3902d2`

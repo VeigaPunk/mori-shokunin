@@ -1,4 +1,4 @@
-verified-at: 2026-11-02 (round 78; the S593 claims below are line-located against the
+verified-at: 2360cc3b (2026-11-02 (round 78; the S593 claims below are line-located against the)
 pinned copy and machine-verified; the association table's two `<td>` counter-name cells
 are located at their exact lines)
 recheck: 180d

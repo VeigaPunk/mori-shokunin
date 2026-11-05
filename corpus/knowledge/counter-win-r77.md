@@ -1,4 +1,4 @@
-verified-at: 2026-11-02 (round 77; the S592 command claims below are
+verified-at: 6a230c4b (2026-11-02 (round 77; the S592 command claims below are)
 line-located against the pinned copy and machine-verified — PASS items=3
 with the able-to-fail arm FAIL rc 1 in the same receipt; the counter PATHS
 are not doc-located — they are enumerated on THIS host by the documented

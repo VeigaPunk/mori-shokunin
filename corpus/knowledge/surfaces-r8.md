@@ -9,7 +9,7 @@ source: `tools/mori-census.sh` sha256
 `448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5`
 (1090 lines, **byte-unchanged from r7** — no re-baseline was required; it passes
 28/28 at the new census bytes, see the verdict table).
-verified-at: 2026-10-15T20:17–20:39Z — note-writer battery: `--selftest` (×16),
+verified-at: 9738f1ab (2026-10-15T20:17–20:39Z — note-writer battery: `--selftest` (×16),)
 oracle ×2, live census ×2, one hermetic fixture arm per residual plus the hang arms
 (FIFO-in-input, FIFO `*.round`, 8 s stub, TERM-ignoring stub), the r7-vs-r8 field-set
 diff on one identical fixture and on live, an interleaved old-vs-new fixture timing,

@@ -1,0 +1,133 @@
+diff --git c/corpus/knowledge/counter-semantics-r78.md w/corpus/knowledge/counter-semantics-r78.md
+index 965f467d..b13ba336 100644
+--- c/corpus/knowledge/counter-semantics-r78.md
++++ w/corpus/knowledge/counter-semantics-r78.md
+@@ -1,4 +1,4 @@
+-verified-at: 2026-11-02 (round 78; the S593 claims below are line-located against the
++verified-at: 2360cc3b (2026-11-02 (round 78; the S593 claims below are line-located against the)
+ pinned copy and machine-verified; the association table's two `<td>` counter-name cells
+ are located at their exact lines)
+ recheck: 180d
+diff --git c/corpus/knowledge/counter-win-r77.md w/corpus/knowledge/counter-win-r77.md
+index 5b2f63bb..f0d56861 100644
+--- c/corpus/knowledge/counter-win-r77.md
++++ w/corpus/knowledge/counter-win-r77.md
+@@ -1,4 +1,4 @@
+-verified-at: 2026-11-02 (round 77; the S592 command claims below are
++verified-at: 6a230c4b (2026-11-02 (round 77; the S592 command claims below are)
+ line-located against the pinned copy and machine-verified — PASS items=3
+ with the able-to-fail arm FAIL rc 1 in the same receipt; the counter PATHS
+ are not doc-located — they are enumerated on THIS host by the documented
+diff --git c/corpus/knowledge/drift-pin-r10.md w/corpus/knowledge/drift-pin-r10.md
+index 35f967ca..0588dd69 100644
+--- c/corpus/knowledge/drift-pin-r10.md
++++ w/corpus/knowledge/drift-pin-r10.md
+@@ -1,5 +1,5 @@
+ # drift pin r10 — the census's own behavioral baseline: design, the volatile contract and its measured rationale, the masking risks, the adopted lane baseline, and the admission ritual
+-verified-at: 2026-10-15T22:06:01–22:17Z, two arms, one per revision:
++verified-at: 5be89432 (2026-10-15T22:06:01–22:17Z, two arms, one per revision:)
+ recheck: MORI_SHOKUNIN_ROOT=<fleet root> bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json (Erratum at drift-pin-r10.md:297-298)
+ 
+ source: `tools/mori-census.sh` entering this round `1c49238a7fd87277151ff5776acfb4d62fadd9d69764a02f0ede03ef0d3902d2`
+diff --git c/corpus/knowledge/execution-binding-r89.md w/corpus/knowledge/execution-binding-r89.md
+index f0d77614..f225eba8 100644
+--- c/corpus/knowledge/execution-binding-r89.md
++++ w/corpus/knowledge/execution-binding-r89.md
+@@ -8,7 +8,7 @@ source: S611 (POSIX.1-2024 Shell Command Language §2.3 Token Recognition — th
+   CPython executes as a script and which become `sys.argv` data); S226 (realpath, the
+   filesystem half of path identity, already in the registry). S608 is a **rejected** scope row
+   (`shlex` as proof of shell execution) and is cited only as this entry's boundary.
+-verified-at: 2026-11-04 (round 89; S607/S609/S610 opened by seat Mo89S01Sources, pinned copies
++verified-at: c89e5b6e (2026-11-04 (round 89; S607/S609/S610 opened by seat Mo89S01Sources, pinned copies)
+   `.ufo/waves/round-89/w1/Mo89S01Sources/sources/`; S611 opened by the L1, pinned copy
+   `.ufo/waves/round-89/evidence/sources-r89/posix-shell-v3-chap02.html`, sha256
+   `0889867a53fe12508a71e8739ec23ecdddc95e6f67697c98e26acc8ff0ec1acd`, two fetches
+diff --git c/corpus/knowledge/kernel-v7.3-recheck-r53.md w/corpus/knowledge/kernel-v7.3-recheck-r53.md
+index 5fdc5829..42a11fe4 100644
+--- c/corpus/knowledge/kernel-v7.3-recheck-r53.md
++++ w/corpus/knowledge/kernel-v7.3-recheck-r53.md
+@@ -1,5 +1,5 @@
+ # The round-51 and round-52 kernel claims at Linux v7.3: 46 rechecked, two quotes respelled
+-verified-at: 2026-10-26
++verified-at: 2a4213bf (2026-10-26)
+ recheck: on-release — `python3 .ufo/waves/round-53/count-c1.py <rev>` re-derives every status below from the committed v7.3 copies; at the next tag, fetch each path with `curl -fsSL 'https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/<path>?h=<tag>'`, add the copies and rows, and run the same ledger shape against them
+ 
+ source: S502 — https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/Documentation/filesystems/proc.rst?h=v7.3 — docs, tier A, Documentation/filesystems/proc.rst at tag v7.3, committed copy `corpus/evidence/sources-r53/proc.rst.v7.3`, opened 2026-10-26
+diff --git c/corpus/knowledge/lane-silence-r2.md w/corpus/knowledge/lane-silence-r2.md
+index e146cbda..b42e3619 100644
+--- c/corpus/knowledge/lane-silence-r2.md
++++ w/corpus/knowledge/lane-silence-r2.md
+@@ -1,5 +1,5 @@
+ # Lane silence — launch-aware, authorship-aware grading (round 2 operational note)
+-verified-at: 2026-10-15T04:56Z — read-only recon of the sources above (every count,
++verified-at: 3da84149 (2026-10-15T04:56Z — read-only recon of the sources above (every count,)
+ epoch and line number in this note was observed in that window; commands re-listed so
+ any reader can re-measure). No r2 grader behavior is claimed here — see "Evidence
+ status".
+diff --git c/corpus/knowledge/rotation-receipt-grammar-r76.md w/corpus/knowledge/rotation-receipt-grammar-r76.md
+index d8ecdb11..9ec88aab 100644
+--- c/corpus/knowledge/rotation-receipt-grammar-r76.md
++++ w/corpus/knowledge/rotation-receipt-grammar-r76.md
+@@ -1,4 +1,4 @@
+-verified-at: 2026-11-02 (round 76; the S591 clock claims below are line-located
++verified-at: 71107662 (2026-11-02 (round 76; the S591 clock claims below are line-located)
+ against the pinned copy and machine-verified — PASS items=2 with the able-to-fail
+ arm FAIL rc 1 in the same receipt; no live fetch is a capture body — the serving
+ pins S241/S581/S589/S590 are the instrument's objects and stand from their own rows)
+diff --git c/corpus/knowledge/rotation-schedule-r74.md w/corpus/knowledge/rotation-schedule-r74.md
+index 99ef8d48..29fdb035 100644
+--- c/corpus/knowledge/rotation-schedule-r74.md
++++ w/corpus/knowledge/rotation-schedule-r74.md
+@@ -9,7 +9,7 @@ in `.ufo/waves/round-74/evidence/source-s589-r74.txt`). The instrument's
+ OBJECT pages stand on their own rows: S241 (the observed serving and the
+ compare pin) and S581 (the documented token-clock scale that sizes the
+ default windows).
+-verified-at: 2026-11-02 (round 74; the S589 clock claims below are
++verified-at: dc50c80b (2026-11-02 (round 74; the S589 clock claims below are)
+ line-located against the pinned copy and machine-verified by the r72
+ anchor-checker — PASS items=2 with the able-to-fail mislocation arm FAIL
+ rc 1, `.ufo/waves/round-74/evidence/s589-anchor-check-r74.txt`; the
+diff --git c/corpus/knowledge/rotation-series-r75.md w/corpus/knowledge/rotation-series-r75.md
+index 7db18040..5858b8a4 100644
+--- c/corpus/knowledge/rotation-series-r75.md
++++ w/corpus/knowledge/rotation-series-r75.md
+@@ -1,4 +1,4 @@
+-verified-at: 2026-11-02 (round 75; the S590 mechanism claims below are line-located
++verified-at: 32132cfb (2026-11-02 (round 75; the S590 mechanism claims below are line-located)
+ against the pinned copy and machine-verified — PASS items=3 with the able-to-fail arm
+ FAIL rc 1; the series observations are the three committed session receipts cited
+ per-line in
+diff --git c/corpus/knowledge/selftest-flake-r9.md w/corpus/knowledge/selftest-flake-r9.md
+index 0554f930..037873b3 100644
+--- c/corpus/knowledge/selftest-flake-r9.md
++++ w/corpus/knowledge/selftest-flake-r9.md
+@@ -1,5 +1,5 @@
+ # selftest flake r9 — the `printf | grep -q` SIGPIPE race: mechanism, archaeology, the capture-file fix, batteries, and a determinism gate
+-verified-at: 2026-10-15T21:05–21:35Z — GNU bash 5.3.15, host load average ≈90–140 (the
++verified-at: cffb37ef (2026-10-15T21:05–21:35Z — GNU bash 5.3.15, host load average ≈90–140 (the)
+ round's own 32-seat wave); my two loaded arms added 4 CPU hogs each and killed them at
+ arm end (verified gone from `ps`). Instruments and raw logs under `/tmp/mori-r9-note/`
+ (ephemeral): `before-battery.log`, `replay.log`, `replay2.log`, `after-battery.log`,
+diff --git c/corpus/knowledge/surfaces-r8.md w/corpus/knowledge/surfaces-r8.md
+index 31add409..6b51e6d4 100644
+--- c/corpus/knowledge/surfaces-r8.md
++++ w/corpus/knowledge/surfaces-r8.md
+@@ -9,7 +9,7 @@ source: `tools/mori-census.sh` sha256
+ `448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5`
+ (1090 lines, **byte-unchanged from r7** — no re-baseline was required; it passes
+ 28/28 at the new census bytes, see the verdict table).
+-verified-at: 2026-10-15T20:17–20:39Z — note-writer battery: `--selftest` (×16),
++verified-at: 9738f1ab (2026-10-15T20:17–20:39Z — note-writer battery: `--selftest` (×16),)
+ oracle ×2, live census ×2, one hermetic fixture arm per residual plus the hang arms
+ (FIFO-in-input, FIFO `*.round`, 8 s stub, TERM-ignoring stub), the r7-vs-r8 field-set
+ diff on one identical fixture and on live, an interleaved old-vs-new fixture timing,
+diff --git c/corpus/knowledge/workstate-win-r71.md w/corpus/knowledge/workstate-win-r71.md
+index 1302f65c..58931cde 100644
+--- c/corpus/knowledge/workstate-win-r71.md
++++ w/corpus/knowledge/workstate-win-r71.md
+@@ -1,4 +1,4 @@
+-verified-at: 2026-11-01 (round 71; claims below are line-located against the
++verified-at: 3627fac0 (2026-11-01 (round 71; claims below are line-located against the)
+ pinned S584 copy; live receipt on this host
+ `.ufo/waves/round-71/evidence/workstate-live-r71.txt`)
+ recheck: 180d, or when a re-fetch of either page changes its sha256 against

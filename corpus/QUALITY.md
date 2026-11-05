@@ -2253,3 +2253,25 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
 196. A frozen predicate's premise about the registry is grepped, and the output is committed with the contract before the freeze. Ground: `corpus/lessons/round-92.md` Mistake 1 (S349). Shown able to fail: `git grep -n 'supersedes S235' f63d1ab0 -- corpus/SOURCES.md` returns the S349 row (`.ufo/waves/round-92/evidence/premise-and-hostpath.txt`) where the contract assumed none.
 
 197. A tool under `tools/` must not hardcode a host home path. Ground: `considerthese/2026-10-25.md` proposal 2, measured at f63d1ab0 (`.ufo/waves/round-92/evidence/premise-and-hostpath.txt`). Red at entering: `git grep -l '/home/vgpnk' f63d1ab0 -- tools` lists `tools/mori-blind-check.sh`, `tools/mori-misroot-sweep.py` and `tools/mori-round17-context-check.py`; their repair is planned for round 93.
+
+## Criteria added round 93 — read windows, counted prose, control edits, and rule 2 in frozen premises
+
+198. A provenance or header counter reads a byte window large enough that the first 12 lines are
+     never truncated by a long title line. A 4096-byte window counted 97 of 98 knowledge entries
+     that a 65536-byte window counts as 98 (`.ufo/waves/round-93/evidence/measure-c1-entering.txt`
+     at 65536; the 4096 rerun is recorded in `corpus/lessons/round-93.md` `## Mistakes` M2). Shown
+     able to fail: the two window sizes print 97 and 98 on the same bytes.
+199. A number written into a contract or lesson names the unit it counts and the command that
+     counts it. `git grep -c vgpnk` counts 12 lines; the byte count of the same token is 18. A
+     predicate's "before" is measured by the frozen counter's own output, not by a hand count
+     (`corpus/lessons/round-93.md` M3). Shown able to fail: the two numbers differ on the same tree.
+200. A control that edits text asserts its substitution before it commits: a `sed` that matches
+     nothing commits nothing, and the control then tests the unedited tree (`corpus/lessons/round-93.md`
+     M4; `.ufo/waves/round-93/controls-r93.sh`, the `grep -q` after the lesson `sed`). Shown able to
+     fail: a non-matching pattern makes the assertion exit non-zero.
+201. A frozen claim does not complete a recorded registry digest in place. CORPUS.md rule 2 allows
+     only `status`, `recheck` and `used-by` to change in place; a correction is a new row whose
+     `teaches` opens `supersedes S0NN —`, and the gate honours supersession only for targets that
+     classify `mismatch` (`tools/mori-source-digest.py` selftest case "prefix-only row is not
+     superseded"). Premise P3 of round 93 records the refusal (`corpus/lessons/round-93.md` M1).
+     Shown able to fail: the premise is checkable by grepping CORPUS.md rule 2 and the selftest case.

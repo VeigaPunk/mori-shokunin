@@ -8,7 +8,7 @@ source: S611 (POSIX.1-2024 Shell Command Language §2.3 Token Recognition — th
   CPython executes as a script and which become `sys.argv` data); S226 (realpath, the
   filesystem half of path identity, already in the registry). S608 is a **rejected** scope row
   (`shlex` as proof of shell execution) and is cited only as this entry's boundary.
-verified-at: 2026-11-04 (round 89; S607/S609/S610 opened by seat Mo89S01Sources, pinned copies
+verified-at: c89e5b6e (2026-11-04 (round 89; S607/S609/S610 opened by seat Mo89S01Sources, pinned copies)
   `.ufo/waves/round-89/w1/Mo89S01Sources/sources/`; S611 opened by the L1, pinned copy
   `.ufo/waves/round-89/evidence/sources-r89/posix-shell-v3-chap02.html`, sha256
   `0889867a53fe12508a71e8739ec23ecdddc95e6f67697c98e26acc8ff0ec1acd`, two fetches
