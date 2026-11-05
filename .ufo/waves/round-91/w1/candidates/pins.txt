@@ -1,0 +1,77 @@
+.ufo/waves/round-88/count-c2.py:35 | SUBJECT_ARMS = 26 (SUBJECT=.ufo/waves/round-87/count-c2.py) | live-counter
+.ufo/waves/round-88/count-c2.py:39 | TARGET = "real=met fx=4 clean=1 refused=2 absent=1 arms=26" | live-counter
+.ufo/waves/round-88/count-c2.py:265 | target_fields arm requires "arms=26" in TARGET | live-counter
+.ufo/waves/round-88/count-c2.py:267 | target_full arm: TARGET == "real=met fx=4 clean=1 refused=2 absent=1 arms=26" | live-counter
+.ufo/waves/round-88/count-c2.py:282 | own_ok_red arm fixture string "C2_COUNTER_SELFTEST pass=26 fail=0" (self-fixture, not gate-derived) | live-counter
+.ufo/waves/round-88/count-c2.py:283 | own_ok_red arm fixture string "C2_COUNTER_SELFTEST pass=26 fail=0" (self-fixture, not gate-derived) | live-counter
+.ufo/waves/round-88/count-c2.py:300 | frozen_constants arm: SUBJECT_ARMS == 26 | live-counter
+.ufo/waves/round-88/count-c2.py:385 | subject_ok: arms == (SUBJECT_ARMS, 0) — the gate's arm count check | live-counter
+.ufo/waves/round-88/count-c2.py:9 | docstring: gate "green at exactly 26 selftest arms" | live-counter-docstring
+.ufo/waves/round-89/count-c1.py:30 | SUBJECT_ARMS = 26 (SUBJECT=.ufo/waves/round-87/count-c2.py) | live-counter
+.ufo/waves/round-89/count-c1.py:34 | TARGET = "equiv=accepted comment=refused selfprint=refused real=met arms=26" | live-counter
+.ufo/waves/round-89/count-c1.py:204 | target_fields arm requires "arms=26" in TARGET | live-counter
+.ufo/waves/round-89/count-c1.py:205 | arms_pinned arm: SUBJECT_ARMS == 26 | live-counter
+.ufo/waves/round-89/count-c1.py:267 | subject_ok: arms == (SUBJECT_ARMS, 0) — the gate's arm count check | live-counter
+.ufo/waves/round-89/count-c1.py:8 | docstring: printed label "C1=met ... real=met arms=26" | live-counter-docstring
+.ufo/waves/round-89/count-c1.py:9 | docstring: gate "green at exactly 26 selftest arms" | live-counter-docstring
+.ufo/waves/round-89/count-c2.py:52 | mutant anchor 'TARGET = "real=met fx=4 clean=1 refused=2 absent=1 arms=26"' (in round-88/count-c2.py) | live-counter-anchor
+.ufo/waves/round-89/count-c2.py:53 | mutant anchor 'TARGET = "real=unmet fx=4 clean=1 refused=2 absent=1 arms=26"' | live-counter-anchor
+.ufo/waves/round-89/count-c2.py:56 | mutant anchor 'return "C2=met %s rev=%s" % ("real=unmet fx=4 clean=1 refused=2 absent=1 arms=26",' | live-counter-anchor
+.ufo/waves/round-90/count-c2.py:62 | mutant anchor 'TARGET = "real=met fx=4 clean=1 refused=2 absent=1 arms=26"' (in round-88/count-c2.py) | live-counter-anchor
+.ufo/waves/round-90/count-c2.py:63 | mutant anchor 'TARGET = "real=unmet fx=4 clean=1 refused=2 absent=1 arms=26"' | live-counter-anchor
+.ufo/waves/round-90/count-c2.py:66 | mutant anchor 'return "C2=met %s rev=%s" % ("real=unmet fx=4 clean=1 refused=2 absent=1 arms=26",' | live-counter-anchor
+.ufo/waves/round-89/count-c2.py:39 | ARMS_BY_FILE = {"count-c1.py": 28, "count-c2.py": 26} — pins round-88/count-c1.py and round-88/count-c2.py OWN arm counts (numerical 26 = r88-c2's own count, NOT the r87 gate's) | live-counter-different-subject
+.ufo/waves/round-89/count-c2.py:300 | arms_pinned arm: ARMS_BY_FILE == {"count-c1.py": 28, "count-c2.py": 26} (r88 counters' own arms) | live-counter-different-subject
+.ufo/waves/round-90/count-c2.py:49 | ARMS_BY_FILE = {"count-c1.py": 29, "count-c2.py": 27} (r88 counters' own arms at the r90 landing) | live-counter-different-subject
+.ufo/waves/round-90/count-c2.py:396 | arms_pinned arm: ARMS_BY_FILE == {"count-c1.py": 29, "count-c2.py": 27} (r88 counters' own arms) | live-counter-different-subject
+.ufo/waves/round-89/evidence/selftests-r89.txt:3 | C2_COUNTER_SELFTEST pass=26 fail=0 (from .ufo/waves/round-87/count-c2.py --selftest) | frozen-receipt
+.ufo/waves/round-89/evidence/after-r89.txt:14 | C1=met equiv=accepted comment=refused selfprint=refused real=met arms=26 rev=9f4d20b9290f | frozen-receipt
+.ufo/waves/round-89/evidence/after-r89-final.txt:15 | C1=met equiv=accepted comment=refused selfprint=refused real=met arms=26 rev=7715bb56dce6 | frozen-receipt
+.ufo/waves/round-89/evidence/controls-r89.txt:40 | C1=unmet equiv=refused comment=accepted selfprint=accepted real=met arms=26 detector=green rev=817595354de4 (skip-work control C1: labels without the rule, gate still at 26 arms) | frozen-receipt
+.ufo/waves/round-89/evidence/controls-r89.txt:8 | C1=unmet equiv=refused comment=accepted selfprint=accepted real=met arms=23 subject=arms:(23, 0) rev=30a29797 (gate at 23 arms at r89 entering) | frozen-receipt-historical-23
+.ufo/waves/round-89/evidence/controls-r89.txt:9 | C2_COUNTER_SELFTEST pass=23 fail=0 (the gate's own selftest line at r89 entering) | frozen-receipt-historical-23
+.ufo/waves/round-89/evidence/controls-r89.txt:51 | EXTRA pristine-red .ufo/waves/round-88/count-c1.py rc=1 arms=26 (r88-c1's own pass count in the control; NOT the gate) | frozen-receipt-different-subject
+.ufo/waves/round-89/evidence/controls-r89.txt:64 | C2=unmet mutants=7 killed=0 survivors=5 unattributed=2 unanchored=5 arms=26,26 detector=green rev=b4984fb6d4dd (r89-c2's own arms-by-file, confounded control) | frozen-receipt-different-subject
+.ufo/waves/round-90/evidence/after-r90.txt:32 | C2=met mutants=15 killed=15 survivors=0 unattributed=0 unanchored=0 isolated=0 literal_anchors=0 arms=29,27 rev=11197820c6dc (r88 counters' own arms) | frozen-receipt-different-subject
+.ufo/waves/round-90/evidence/after-r90.txt:44 | EXTRA pristine-arms .ufo/waves/round-88/count-c2.py arms=26 want=27 (r88-c2's own arms at the r90 before-rev) | frozen-receipt-different-subject
+.ufo/waves/round-90/evidence/controls-r90.txt:21 | C2=unmet mutants=15 killed=12 survivors=3 unattributed=0 unanchored=0 isolated=0 literal_anchors=0 arms=28,26 detector=green rev=037c02ca43a5 (r88 counters' own arms at r90 before-rev) | frozen-receipt-different-subject
+.ufo/waves/round-88/evidence/after-r88.txt:21 | C2=met real=met fx=4 clean=1 refused=2 absent=1 arms=23 rev=d5e2eda49487 (gate at 23 arms at the r88 landing) | frozen-receipt-historical-23
+.ufo/waves/round-88/evidence/selftests-r88.txt:11 | C2_COUNTER_SELFTEST pass=23 fail=0 (the gate's own selftest at the r88 landing) | frozen-receipt-historical-23
+.ufo/waves/round-88/evidence/controls-r88.txt:66 | C2=unmet real=met fx=4 clean=1 refused=0 absent=1 arms=17 subject=arms:(17, 0) rev=1bd5ec3fa260 (gate at 17 arms at r88 entering) | frozen-receipt-historical-17
+.ufo/waves/round-89/contract.md:48 | frozen predicate label "C1=met equiv=accepted comment=refused selfprint=refused real=met arms=26" | frozen-contract
+.ufo/waves/round-89/contract.md:53 | frozen predicate: gate at R green at exactly 26 selftest arms (C2_COUNTER_SELFTEST pass=26 fail=0) | frozen-contract
+.ufo/waves/round-88/contract.md:65 | frozen predicate label "C2=met real=met fx=4 clean=1 refused=2 absent=1 arms=23" | frozen-contract-historical-23
+.ufo/waves/round-88/contract.md:66 | frozen predicate: gate at R green at exactly 23 selftest arms | frozen-contract-historical-23
+.ufo/waves/round-90/contract.md:45 | frozen predicate label "C2=met ... arms=29,27" (r88 counters' own arms) | frozen-contract-different-subject
+.ufo/waves/round-87/contract.md:82 | "SUBJECT_ARMS = 11" then amended to 13 — pins the r86 subject count-c2.py's arms, NOT the gate's own | frozen-contract-different-subject
+.ufo/waves/round-87/contract.md:92 | "the counter committed at that revision still carries SUBJECT_ARMS = 11" | frozen-contract-different-subject
+.ufo/waves/round-90/w1/Mo90K01Conn.md:33 | supersession table row: round-88/count-c2.py:34 SUBJECT_ARMS = 26 | prose-report
+.ufo/waves/round-90/w1/Mo90K01Conn.md:34 | supersession table row: round-88/count-c2.py:38 TARGET "... arms=26" | prose-report
+.ufo/waves/round-90/w1/Mo90K01Conn.md:35 | supersession table row: round-88/count-c2.py:264 target_fields arm requires "arms=26" | prose-report
+.ufo/waves/round-90/w1/Mo90K01Conn.md:36 | supersession table row: round-88/count-c2.py:265 arms_pinned arm SUBJECT_ARMS == 26 | prose-report
+.ufo/waves/round-90/w1/Mo90K01Conn.md:37 | supersession table row: round-88/count-c2.py:267 target_full arm exact TARGET literal | prose-report
+.ufo/waves/round-90/w1/Mo90K01Conn.md:38 | supersession table row: round-88/count-c2.py:282-284 own_ok_red fixture literals pass=26 fail=0 | prose-report
+.ufo/waves/round-90/w1/Mo90K01Conn.md:39 | supersession table row: round-88/count-c2.py:353 subject_ok = … arms == (SUBJECT_ARMS, 0) pins 26 | prose-report
+.ufo/waves/round-90/w1/Mo90K01Conn.md:40 | supersession table row: round-89/count-c1.py:30 SUBJECT_ARMS = 26 | prose-report
+.ufo/waves/round-90/w1/Mo90K01Conn.md:41 | supersession table row: round-89/count-c1.py:34 TARGET "... arms=26" | prose-report
+.ufo/waves/round-90/w1/Mo90K01Conn.md:42 | supersession table row: round-89/count-c1.py:201-205 target_fields + arms_pinned arms pin arms=26 | prose-report
+.ufo/waves/round-90/w1/Mo90K01Conn.md:11 | row: round-87/count-c2.py (the gate) C2_COUNTER_SELFTEST pass=26 fail=0, no EXPECTED_ARMS/own_arms_pinned | prose-report
+.ufo/waves/round-90/w1/Mo90K01Conn.md:13 | row: round-88/count-c2.py C2_COUNTER_SELFTEST pass=26 fail=0, arm count pinned only externally | prose-report
+.ufo/waves/round-90/w1/Mo90K01Conn.md:144 | "arms=26 pins are load-bearing frozen anchors" (round-90/count-c2.py:62 exact-once anchor) | prose-report
+.ufo/waves/round-90/w1/Mo90C01Critic.md:104 | "SUBJECT_ARMS = 26 is the round-87 gate's arm count, asserted as an arm at :265 and checked" | prose-report
+.ufo/waves/round-90/w1/Mo90C01Critic.md:124 | "the frozen arms=27 forces an existing pin out. 26 arms at entering" | prose-report
+.ufo/waves/round-90/w1/Mo90E03ArmsB46.md:18 | "The entering file has 26 arms and NO EXPECTED_ARMS constant; SUBJECT_ARMS=26 grades the r87 gate and must remain unchanged" | prose-report
+.ufo/waves/round-89/w1/Mo89K01Conn.md:75 | row: Post-C1 (760428ab) SUBJECT_ARMS = 26, TARGET = "... arms=26" | prose-report
+.ufo/waves/round-89/w1/Mo89K01Conn.md:90 | ".ufo/waves/round-88/count-c2.py pins the arm count of .ufo/waves/round-87/count-c2.py ... 23 to 26" | prose-report
+.ufo/waves/round-89/w1/Mo89Sc01Scope.md:222 | "arms=26 is overloaded across at least four distinct facts" | prose-report
+.ufo/waves/round-89/w1/Mo89Sc01Scope.md:231 | moving the r87 gate off 26 arms breaks the frozen r88/r89 counters in one stroke | prose-report
+.ufo/waves/round-89/w1/Mo89E03Replay.md:61 | gate selftest at the r89 landing: C2_COUNTER_SELFTEST pass=26 fail=0, 26 PASS lines | prose-report
+.ufo/waves/round-89/w1/Mo89R01C1.md:10 | reproduced C1=met ... arms=26 rc 0 | prose-report
+.ufo/waves/round-90/w1/Mo90M01Mut.md:252 | pristine selftests: r87-gate.py --selftest -> C2_COUNTER_SELFTEST pass=26 fail=0 | prose-report
+SCORECARD.md:4630 | "the gate's own selftest stays at 26 arms (the r88/r89 arms=26 pins are therefore not moved)" | prose-outside-waves
+corpus/lessons/round-90.md:17 | "26 selftest arms unchanged — the r88/r89 arms=26 pins are therefore not moved" | prose-outside-waves
+corpus/lessons/round-90.md:79 | "The r88-c2 SUBJECT_ARMS = 26 / TARGET arms=26 pins are now stale statements about the round-87 gate only if the gate's arm count moves" | prose-outside-waves
+corpus/lessons/round-89.md:39 | coupled-claim-anchor: the frozen C2 mutant C2-target anchors on arms=26 | prose-outside-waves
+corpus/lessons/round-89-verifier-spotcheck.md:49 | "C1=met equiv=accepted comment=refused selfprint=refused real=met arms=26" | prose-outside-waves
+corpus/lessons/round-89-verifier-spotcheck.md:116 | at 760428ab (the C1 landing) -> ... arms=26 | prose-outside-waves
+corpus/QUALITY.md:2163 | "the round-89 first C1 landing (760428ab) printed C1=met ... arms=26" | prose-outside-waves

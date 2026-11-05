@@ -1,0 +1,32 @@
+# round-91 do-nothing controls — measured by L1 MoriR91 at entering revision 79eaa8cfe5e0b9b1c5ff45f524199d4a123f0520
+# Measured after the wave settled (WAVE-DONE w1); populations P1 and P2 and the C2 counter did not
+# return from their seats, so the frozen predicates could not be run in full. Each line below is a
+# real run; nothing here is a claimed pass.
+
+## C1 (calibration) — candidate counter, frozen P2 absent
+# counter: .ufo/waves/round-91/w1/candidates/count-c1.py  sha256 cc599626bb09851bf07eed82886aa725a3fe5815483e3d5ba255b5e12ebce1f9
+$ python3 -I count-c1.py 79eaa8cfe5e0b9b1c5ff45f524199d4a123f0520 --repo <lane> --scratch <scratch>
+C1_SETUP p2 population absent: .ufo/waves/round-91/mutants-c1-independent.json
+exit=2
+
+## C2 (freshness) — snapshot probe at entering revision
+$ git cat-file -e 79eaa8cf…:corpus/evidence/value-census-2026-11-05.txt
+snapshot=absent
+
+## Mined mistake R8/S235 — digest checker at entering registry (rows resolved in a scratch tree that mirrors the entering registry)
+# tool: tools/mori-source-digest.py  sha256 a692b159646e8979f9fc95d5eee82a9a30cee4d8f67432ee824fff7e9d30cee7
+$ python3 tools/mori-source-digest.py <scratch>/entering/corpus/SOURCES.md <scratch>/entering/.ufo/waves/round-90/w1/Mo90S01Sources/sources/
+DIGEST S235 mismatch recorded=9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30cda99359e6df057ad8020 actual=9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020
+DIGEST S490 ok recorded=8a28e0bc010e0575fbf9d1739643686e271bcf5a76c0284081df537a4041fd5e actual=8a28e0bc010e0575fbf9d1739643686e271bcf5a76c0284081df537a4041fd5e
+DIGEST S615 mismatch recorded=7891c58897fe9f78cf16d15fd3464b746a187214c82587ac94b8f1a60ad1a6f0 actual=7891c58897fe9f78cf16d15fd3464b746a187214c82587ac94b0f83b9a8a42f5
+DIGEST_CHECK rows=121 ok=87 mismatch=2 prefix_only=31 unpinned=1
+exit=1
+
+## Able-to-fail (S490 one-character flip in a scratch copy of the registry; seat Mo91E04Digest)
+DIGEST S490 mismatch recorded=9a28e0bc010e0575fbf9d1739643686e271bcf5a76c0284081df537a4041fd5e actual=8a28e0bc010e0575fbf9d1739643686e271bcf5a76c0284081df537a4041fd5e
+DIGEST_CHECK rows=121 ok=86 mismatch=3 prefix_only=31 unpinned=1
+exit=1
+
+## Corrections-of-record measurement (sha256sum of the pinned bytes)
+7891c58897fe9f78cf16d15fd3464b746a187214c82587ac94b0f83b9a8a42f5  .ufo/waves/round-90/w1/Mo90S01Sources/sources/python-ast-3.15.2.html
+9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020  corpus/evidence/sources-r42/S235.pdf

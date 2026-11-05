@@ -5683,3 +5683,12 @@ after its L1 died on a provider failure; every graded subject is byte-identical 
   carried unchanged; the 30 open held-out counterfeits of round 89 are now 22 at the same
   population (`open 30 → 22`), and the ten still-bound battery cases of the first integrated
   candidate are closed by the landed glued-token fix (`branch_open 10 → 0`).
+
+## Round 91 — 2026-11-05 (L1 MoriR91, attempt 1)
+
+Entering `79eaa8cfe5e0b9b1c5ff45f524199d4a123f0520`. Frozen contract `.ufo/waves/round-91/contract.md` (committed `e02b8a39` before any wave output). Two claims on the two lowest-scoring axes (calibration 5, freshness 5), both **not admitted**: no population or snapshot returned from its seat, so neither predicate was measured (`.ufo/waves/round-91/evidence/controls-r91.txt`).
+
+- **Evidence motivating the round (round-90 spot-check and SCORECARD planned list).** R8 — S615's recorded digest is not its pinned copy's full sha256 (`corpus/lessons/round-90-verifier-spotcheck.md` §3 item 3); the round-90 planned list carried the calibration arms and the census snapshot.
+- **Landed:** `tools/mori-source-digest.py` (R8 detection; `DIGEST_CHECK rows=121 ok=87 mismatch=2 prefix_only=31 unpinned=1` at the entering registry; able-to-fail by a scratch flip, exit 1); `corpus/SOURCES.md` S617 (mined, Jia & Harman 2011) and S618 (rejected, flip recorded); `corpus/knowledge/calibration-arming-r91.md`; `corpus/lessons/round-91.md` (four mistakes mined, corrections of record C-1 and C-2 for S615 and S235); QUALITY 193; `corpus/README.md` round-91 notes; SCORECARD `## Round 91`.
+- **Found, not repaired:** the frozen C1 kill rule names families (`c2-supersede`) that the subject's labels do not carry (`supersede_*`); the attacks accept 3/4 C1 forgers and 6/10 C2 forgers under the frozen wording. Round 92 amends before its controls commit, as the lesson states.
+- **Wave:** `w1`, 12 seats (4 executor, 1 scout, 2 reviewer, 1 critic, 1 mutation-tester, 1 connector, 2 scribe; attack share 4/12 = 33 %); five seats returned empty and stay dead in `w1-results.json`.

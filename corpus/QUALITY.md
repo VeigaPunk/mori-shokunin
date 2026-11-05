@@ -2239,3 +2239,7 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
      (`behavioural-negative-arm-collides-with-a-blunter-mutant`). Shown able to fail: the
      first-pass behavioural arms read `isolated=2` (`C2=unmet`); the landed structural pins read
      `killed=15 isolated=0`.
+
+## Criteria added round 91 — a registry digest is compared at full length with the pinned bytes it names
+
+193. A SOURCES row's recorded sha256 is compared at full 64-hex length with the sha256 of the pinned copy the row's cell names. A prefix agreement is `prefix-only` and fails the gate; a full mismatch is `mismatch` and fails it; a named copy that is absent is `unpinned` and fails it. Ground: `corpus/lessons/round-91.md`, `## Mistakes` (`recorded-digest-unverified`, R8 and S235); `tools/mori-source-digest.py`. Shown able to fail: a one-character flip in S490's recorded digest in a scratch copy reads `DIGEST S490 mismatch` and `DIGEST_CHECK rows=121 ok=86 mismatch=3 prefix_only=31 unpinned=1`, exit 1; at the entering registry the same tool reads `mismatch=2 prefix_only=31 unpinned=1`, exit 1 (`.ufo/waves/round-91/evidence/controls-r91.txt`). Limit: each digest is paired with its nearest named copy by a heuristic, and the tool is not yet wired into the census, so this criterion is a gate a reader runs, not a merge block.

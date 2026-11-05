@@ -4673,3 +4673,35 @@ every reformatting-equivalent defect.
    (`differs`/`masked`/`absent`), carried from rounds 86, 88, 89 and 90.
 4. **depth** — the r89 counters' `28/26` subject pins are superseded by this landing; record the
    supersession in `corpus/README.md` frontier rather than editing the frozen receipts.
+
+## Round 91 (2026-11-05, L1 MoriR91, attempt 1) — honest stop: the two lowest-axis claims were not measured; a digest-class gate landed
+
+Entering `79eaa8cfe5e0b9b1c5ff45f524199d4a123f0520`. Frozen contract `.ufo/waves/round-91/contract.md` (committed `e02b8a39` before any wave output). Axes: **calibration** (C1, score 5) and **freshness** (C2, score 5) — both lowest non-retired. Declared before data; no score moves; both claims **not admitted**.
+
+| Claim | Axis | Counting command | Before `79eaa8cf` | After | Verdict |
+|---|---|---|---|---|---|
+| C1 the round-87 receipt gate's four named clause families are armed (P1 lane-declared, P2 independent, both killed with attribution) | calibration | `python3 -I .ufo/waves/round-91/w1/candidates/count-c1.py <rev> --repo <clone>` | `C1_SETUP p2 population absent` exit 2 (no P1 seat output, no P2 seat output) | not measured — same command, same exit | **not admitted** (populations absent) |
+| C2 a dated census snapshot of the round-86 value channel, re-derived from committed raw inputs | freshness | `git cat-file -e <rev>:corpus/evidence/value-census-2026-11-05.txt` (counter not landed) | `snapshot=absent` | not measured | **not admitted** (snapshot seat returned nothing) |
+
+Evidence: `.ufo/waves/round-91/evidence/controls-r91.txt` (every line a real run). Wave `w1`: 12 seats, `w1-results.json`; five seats returned empty (`Mo91E01Arms`, `Mo91E02Snap`, `Mo91M01Mut`, `Mo91K01Conn`, `Mo91C01Ctl`) and stay dead in the evidence.
+
+### Landed instruments (round 91)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| `tools/mori-source-digest.py` full-length digest check of SOURCES rows against the pinned copy they name | flags a recorded digest that differs from its pinned copy's full sha256 (`mismatch`), a strict prefix (`prefix-only`), or a named copy that is absent (`unpinned`); exit 1 unless all in-scope rows are `ok` | `.ufo/waves/round-91/evidence/controls-r91.txt`; `lessons/round-91.md` `## Mistakes`; QUALITY 193 | round 91 (detects, does not repair) |
+
+Trend verdicts are in `lessons/round-91.md` and the report. No axis score moved.
+
+### Attack findings recorded before data (round 91)
+
+- C1 frozen wording accepts 3 of 4 forgers (`w1/Mo91R01Atk.md`); the family prefixes do not match the subject's own labels (`supersede_*`, `absent_*`), so the frozen kill rule reads an honest arm as `isolated` (`w1/Mo91E03C1Ctr.md` fixture).
+- C2 frozen wording accepts 6 of 10 forgers (`w1/Mo91R02Atk.md`): self-asserted date, forged vintage line, raw inputs not byte-exact, an invented token line.
+
+## Planned (round 92)
+
+1. **calibration** — re-declare C1 with the family→label-prefix map frozen in the contract, the Mo91R01Atk text rules (counts re-derived from executions at R; FAIL labels only from arms that fail when behaviour changes; `pristine=0 unanchored=0` printed), and P1/P2 populations committed before the controls. Controls and populations are gated by the wave, not by the L1's own writing.
+2. **freshness** — re-declare C2 with the Mo91R02Atk rules (raw-input sha256 manifest recomputed at R, token-set closure, `unclassified` over re-derived tokens with no snapshot line, date tied to the snapshot's committed date). Residual named: a text-only rule cannot prove capture time.
+3. **depth** — the supersession record for the round-87 arm pins (`w1/candidates/pins.txt`), carried from rounds 89–91.
+4. **operability** — carried: the nonce guard for the round-90 C1 gate (QUALITY 191).
+5. **depth** — S615/S235 corrections of record become appended supersession rows (`CORPUS.md` rule 2); the digest tool is wired into the census or kept as a reader gate, decided in round 92.

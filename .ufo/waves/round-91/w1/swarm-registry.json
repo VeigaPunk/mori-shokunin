@@ -1,0 +1,129 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r91-w1",
+  "createdAt": "2026-11-05T05:16:51.936Z",
+  "updatedAt": "2026-11-05T05:16:51.936Z",
+  "reportDir": ".ufo/waves/round-91/w1",
+  "members": {
+    "Mo91E01Arms": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "C1 subject arms and P1 population"
+    },
+    "Mo91E02Snap": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "freshness"
+      ],
+      "milestone": "C2 dated value-channel snapshot and its counter"
+    },
+    "Mo91E03C1Ctr": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "C1 counter implementing the frozen P-C1 predicate"
+    },
+    "Mo91E04Digest": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "depth"
+      ],
+      "milestone": "Mined mistake R8: digest check over pinned source copies, shown able to fail"
+    },
+    "Mo91S01Pins": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "depth"
+      ],
+      "milestone": "Map frozen receipts that pin the round-87 gate's arm count"
+    },
+    "Mo91R01Atk": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Attack the frozen P-C1 predicate with forgers"
+    },
+    "Mo91R02Atk": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "freshness"
+      ],
+      "milestone": "Attack the frozen P-C2 predicate with a forged snapshot"
+    },
+    "Mo91C01Ctl": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Critique claim sizing, controls and the pre-data kill-rule amendment"
+    },
+    "Mo91M01Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Independent P2 mutant population and entering-revision baseline"
+    },
+    "Mo91K01Conn": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "adjacency"
+      ],
+      "milestone": "Sibling-overlap scan for round-91 populations and labels"
+    },
+    "Mo91Sc01Src": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "depth"
+      ],
+      "milestone": "Open two sources and draft SOURCES rows S617 and S618"
+    },
+    "Mo91Sc02Lesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Draft the round-91 mistake row and the knowledge entry"
+    }
+  }
+}

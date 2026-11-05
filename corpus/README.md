@@ -944,3 +944,13 @@ gained=2` at `7715bb56`, versus `harm=24 newopen=1 open=9` at the first landing 
 flow, function shadowing, a substituted interpreter, `sitecustomize`, blob overwrite, heredoc
 data, `uv run -m` and `bash -n` still bind. Ground: `knowledge/execution-binding-r89.md`
 “Round-89 repair 2”; `lessons/round-89.md` `## Mistakes (repair 2)`.
+
+## Round-91 knowledge addition — calibration arming (new growth, indexed the round it lands)
+
+`knowledge/calibration-arming-r91.md` (source S617, Jia & Harman 2011, located opening quote, re-checked by the L1 on 2026-11-05). Covers the family-prefixed kill rule and its three limits. It claims no score move: the round-91 arms were not landed (see `lessons/round-91.md`).
+
+## Round-91 frontier note — the digest class is gated by a tool, the calibration predicates are not yet measured
+
+- Coverage of the registry's digest class moved: `tools/mori-source-digest.py` reads every row whose cell names a pinned copy and a full digest (121 rows at the entering registry: 87 ok, 2 mismatch, 31 prefix-only, 1 unpinned). The two mismatches are S615 (round-90 R8) and S235 (new), with corrections of record in `lessons/round-91.md`.
+- The round-91 C1 and C2 predicates were attacked by two reviewers before any data (`w1/Mo91R01Atk.md`, `w1/Mo91R02Atk.md`). The forgers the frozen wording accepts are listed in `lessons/round-91.md` `## Mistakes`. A round-92 contract must close them before its controls commit.
+- Frontier still open: the independent C1 population and the C2 dated snapshot did not return from their seats; the rows S617 and S618 (rejected, flip recorded) are the only source moves.
