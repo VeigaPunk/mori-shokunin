@@ -1,0 +1,5 @@
+# 2026-11-05T23:10:53Z landing 5e2bcf2c archive -> python3 count-c1.py --root DIR --seed 100 / unseeded
+C1=met cases_ok=50/50 families_failed=- selftest=ok r17gate=ok registry=met sourced=met(S637,S638) checks_failed=- seed=100 tool_rc=1
+exit=0
+C1=met cases_ok=50/50 families_failed=- selftest=ok r17gate=ok registry=met sourced=met(S637,S638) checks_failed=- seed=2103123362 tool_rc=1
+exit=0

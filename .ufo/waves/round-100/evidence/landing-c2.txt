@@ -1,0 +1,3 @@
+# 2026-11-05T23:11:14Z landing 5e2bcf2c archive -> python3 count-c2.py --root DIR --list
+C2=met stated=60 mismatches=7 uncorrected=0 spurious=0 altered=0 census=ok checks_failed=- base=d1bd1b33
+exit=0

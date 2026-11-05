@@ -1,0 +1,10 @@
+# 2026-11-05T23:55:54Z landing 5e2bcf2c archive -> count-c1.py seeds 10 11 42 (kill-rule check)
+C1=unmet cases_ok=49/50 families_failed=A1-auth-status selftest=ok r17gate=ok registry=met sourced=met(S637,S638) checks_failed=battery seed=10 tool_rc=1
+  miss C006:A1-auth-status:want=dead_auth:got=dead_rate_limit
+exit=1
+C1=unmet cases_ok=49/50 families_failed=A2-auth-spelling selftest=ok r17gate=ok registry=met sourced=met(S637,S638) checks_failed=battery seed=11 tool_rc=1
+  miss C010:A2-auth-spelling:want=dead_auth:got=dead_rate_limit
+exit=1
+C1=unmet cases_ok=49/50 families_failed=A2-auth-spelling selftest=ok r17gate=ok registry=met sourced=met(S637,S638) checks_failed=battery seed=42 tool_rc=1
+  miss C013:A2-auth-spelling:want=dead_auth:got=dead_rate_limit
+exit=1

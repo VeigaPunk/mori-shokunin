@@ -1,0 +1,141 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r100-w1",
+  "createdAt": "2026-11-05T23:12:46.944Z",
+  "updatedAt": "2026-11-05T23:12:46.944Z",
+  "reportDir": ".ufo/waves/round-100/w1",
+  "members": {
+    "Mo100ScoutSrc": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round100 attempt1: C1 coverage seat-terminal dead_auth class (cases_ok 23/50 before, 50/50 landing), C2 calibration SOURCES quote word counts (uncorrected 7 before, 0 landing); 12 seats"
+    },
+    "Mo100ConnSibling": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round100 attempt1: C1 coverage seat-terminal dead_auth class (cases_ok 23/50 before, 50/50 landing), C2 calibration SOURCES quote word counts (uncorrected 7 before, 0 landing); 12 seats"
+    },
+    "Mo100ExecReplay": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round100 attempt1: C1 coverage seat-terminal dead_auth class (cases_ok 23/50 before, 50/50 landing), C2 calibration SOURCES quote word counts (uncorrected 7 before, 0 landing); 12 seats"
+    },
+    "Mo100ExecTrial": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round100 attempt1: C1 coverage seat-terminal dead_auth class (cases_ok 23/50 before, 50/50 landing), C2 calibration SOURCES quote word counts (uncorrected 7 before, 0 landing); 12 seats"
+    },
+    "Mo100ExecCalib": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round100 attempt1: C1 coverage seat-terminal dead_auth class (cases_ok 23/50 before, 50/50 landing), C2 calibration SOURCES quote word counts (uncorrected 7 before, 0 landing); 12 seats"
+    },
+    "Mo100ScribeLesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round100 attempt1: C1 coverage seat-terminal dead_auth class (cases_ok 23/50 before, 50/50 landing), C2 calibration SOURCES quote word counts (uncorrected 7 before, 0 landing); 12 seats"
+    },
+    "Mo100RevC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round100 attempt1: C1 coverage seat-terminal dead_auth class (cases_ok 23/50 before, 50/50 landing), C2 calibration SOURCES quote word counts (uncorrected 7 before, 0 landing); 12 seats"
+    },
+    "Mo100RevC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round100 attempt1: C1 coverage seat-terminal dead_auth class (cases_ok 23/50 before, 50/50 landing), C2 calibration SOURCES quote word counts (uncorrected 7 before, 0 landing); 12 seats"
+    },
+    "Mo100CritC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round100 attempt1: C1 coverage seat-terminal dead_auth class (cases_ok 23/50 before, 50/50 landing), C2 calibration SOURCES quote word counts (uncorrected 7 before, 0 landing); 12 seats"
+    },
+    "Mo100CritC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round100 attempt1: C1 coverage seat-terminal dead_auth class (cases_ok 23/50 before, 50/50 landing), C2 calibration SOURCES quote word counts (uncorrected 7 before, 0 landing); 12 seats"
+    },
+    "Mo100MutC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round100 attempt1: C1 coverage seat-terminal dead_auth class (cases_ok 23/50 before, 50/50 landing), C2 calibration SOURCES quote word counts (uncorrected 7 before, 0 landing); 12 seats"
+    },
+    "Mo100RevHarm": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round100 attempt1: C1 coverage seat-terminal dead_auth class (cases_ok 23/50 before, 50/50 landing), C2 calibration SOURCES quote word counts (uncorrected 7 before, 0 landing); 12 seats"
+    }
+  }
+}

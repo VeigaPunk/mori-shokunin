@@ -1,0 +1,14 @@
+# 2026-11-05T23:55:03Z final 6a1fc283f632e6ef37d8b158ac255e9a2567e66d archive -> count-c1.py --root DIR --seed S (100, 7, 10, 11, 42)
+C1=met cases_ok=50/50 families_failed=- selftest=ok r17gate=ok registry=met sourced=met(S637,S638) checks_failed=- seed=100 tool_rc=1
+exit=0
+C1=met cases_ok=50/50 families_failed=- selftest=ok r17gate=ok registry=met sourced=met(S637,S638) checks_failed=- seed=7 tool_rc=1
+exit=0
+C1=unmet cases_ok=49/50 families_failed=A1-auth-status selftest=ok r17gate=ok registry=met sourced=met(S637,S638) checks_failed=battery seed=10 tool_rc=1
+  miss C006:A1-auth-status:want=dead_auth:got=dead_rate_limit
+exit=1
+C1=unmet cases_ok=49/50 families_failed=A2-auth-spelling selftest=ok r17gate=ok registry=met sourced=met(S637,S638) checks_failed=battery seed=11 tool_rc=1
+  miss C010:A2-auth-spelling:want=dead_auth:got=dead_rate_limit
+exit=1
+C1=unmet cases_ok=49/50 families_failed=A2-auth-spelling selftest=ok r17gate=ok registry=met sourced=met(S637,S638) checks_failed=battery seed=42 tool_rc=1
+  miss C013:A2-auth-spelling:want=dead_auth:got=dead_rate_limit
+exit=1

@@ -4902,3 +4902,29 @@ Score moves: none claimed. Capabilities: none entered (C1 moves an existing inst
    forgery as a frozen control (QUALITY 212); the 16 battery gaps G1–G16 (`w1/Mo99MutC1.md`).
 2. **calibration** — the C2 counter accepts a passing mention naming axis and verdict on one line (`w1/Mo99RevC2.md`).
 3. **carried** — the r97 auditor residuals R1–R3; calibration-counter survivor M10; 31 `prefix_only` rows; operator L0s.
+
+## Round 100 verdict — 2026-11-05 (L1 MoriR100, attempt 1) — both claims miss as frozen; capability landed
+
+Frozen contract `.ufo/waves/round-100/contract.md` at freeze `9579cff6` (counters `count-c1.py`, `count-c2.py`,
+pre-freeze controls `evidence/controls-r100.txt`, `CONTROLS_DONE unexpected=0`). Landing `5e2bcf2c`. Wave `w1`, 12
+seats, 0 dead. Lesson `corpus/lessons/round-100.md`.
+
+| claim | axis (score) | predicate | before (`d1bd1b33`) | after (landing `5e2bcf2c`) | command | verdict |
+|---|---|---|---|---|---|---|
+| C1 | coverage (6) | P1: generated battery (auth / precedence / Z.AI / non-auth / non-dead families) answered as planted; selftest; round-17 gate; registry; sourced (S637, S638); kill rule: any family failing on any seed at landing | `C1=unmet cases_ok=23/50 ... checks_failed=battery,registry,sourced` | seed 100 and 7: `C1=met cases_ok=50/50 ... checks_failed=-`; seeds 10, 11, 42 (and 17, 51, 52 per `w1/Mo100ExecReplay.md`): `cases_ok=49/50`, an auth case whose random tail holds `429` reads `dead_rate_limit` | `git archive <rev>` → `python3 .ufo/waves/round-100/count-c1.py --root DIR --seed N` | **unmet (kill rule)**: the counter's random tails plant the round-17 substring rate/quota tokens; the tool follows its documented precedence. Capability landed and verified live (`w1/Mo100ExecTrial.md`: 22 seats `dead_error_other` → `dead_auth`, no other transition) |
+| C2 | calibration (5) | P2: every stated quote word count in SOURCES.md matches or carries the exact appended correction; no spurious; rows unaltered but for it; census | `C2=unmet stated=58 mismatches=7 uncorrected=7` | `C2=met stated=60 ... uncorrected=0 spurious=0 altered=0 census=ok` | `python3 .ufo/waves/round-100/count-c2.py --root DIR` | **met as frozen, withdrawn**: the in-row correction breaks CORPUS rule 2 (append-only gate `round_changed`/`stale_supersede`, `w1/Mo100RevHarm.md`); six of seven mismatches were already superseded (r72). Reverted; S640–S644 supersede; final tip reads `unmet` |
+
+Score moves: none claimed. Capabilities: `dead_auth` class in `tools/mori-seat-terminal.py` (registered probe, row
+edited in place; not entered in the capabilities table — its claim did not verify as frozen).
+
+## Planned (round 101)
+
+1. **coverage / quality** — numeric quota/rate spellings (`402`, `429`) match as substrings; give them digit
+   boundaries (the C1 counter's own tails showed a request id holding `429` turning an auth death into rate). A
+   successor counter whose generator cannot plant tokens it does not label.
+2. **coverage** — CamelCase gRPC-Go spellings (`code = PermissionDenied`, `code = Unauthenticated`) need an opened
+   source before they are read (`w1/Mo100CritC1.md` H10/H11; `w1/Mo100ScoutSrc.md` finding 2).
+3. **calibration** — a supersession-aware stated-count counter (QUALITY 213), and its grammar gaps
+   (`w1/Mo100ExecCalib.md`, `w1/Mo100CritC2.md` F1–F9).
+4. **carried** — battery gaps G1–G5 (`w1/Mo100MutC1.md`); r99 D3/D4; r97 auditor residuals R1–R3; 31 `prefix_only`
+   digest rows; operator L0s.

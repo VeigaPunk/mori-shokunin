@@ -5788,3 +5788,13 @@ Two claims, frozen at `462cef1c` with do-nothing, forgery, single-fix-removed an
 - Post-landing fixes from the wave (outside the frozen measurement): non-sudo lines mentioning `sudo[N]` ignored (`w1/Mo99ExecReplay.md`); `>|`, `&>`, `>&`, backslash-newline, here-document bodies, `#040`, quoted ` ; EXIT=` (`w1/Mo99RevC1.md` F1–F6); self-test 19 → 22.
 - Counter defect found and routed (not patched into the claim): a template forgery passes the frozen C1 counter 60/60 (`w1/Mo99CritC1.md`); the landed tool is 10/10 on held-out lines. QUALITY 212.
 - Wave `w1`: 12 seats (scout, connector, executor ×4, scribe, reviewer ×2, critic ×2, mutation-tester); attack seats 5/12; 0 dead.
+
+## Round 100 — 2026-11-05 (L1 MoriR100, attempt 1)
+
+Two claims, frozen at `9579cff6` with do-nothing, blanket, status-only, spelling-only, precedence-flipped and template-lookup forgeries, part-removed trees and positives executed and committed first (`.ufo/waves/round-100/contract.md`, `evidence/controls-r100.txt`, `CONTROLS_DONE unexpected=0`). Landing `5e2bcf2c`. C1 coverage: the seat terminal census names credential/entitlement deaths `dead_auth` (HTTP 401/403 or a Connect/gRPC/provider auth spelling, read after Z.AI codes, quota and rate; S637, S638, S639), the round-17 gate carries the class; met on seeds 100 and 7 but the frozen kill rule fires on seeds 10, 11, 42 (counter tails plant `429`). C2 calibration: met as frozen, then withdrawn — the in-row corrections broke CORPUS rule 2; reverted and corrected by superseding rows S640–S644.
+
+- Evidence motivating the round: 187 of 190 terminal errors the round-99 rules call `dead_error_other` in the two days before the round carry 401/403/auth spellings (`evidence/live-errors-prefreeze.txt`); r99 closure D1 (S634 word count).
+- Domain trial: entering and landing tools on four real session directories, 4741 transcripts: 22 seats `dead_error_other` → `dead_auth`, no other transition (`w1/Mo100ExecTrial.md`).
+- Re-verification (freshness duty): S637, S638 and the RFC 9110 text re-opened live by `w1/Mo100ScoutSrc.md`, bytes equal to the pins; POSIX XCU ch. 2 (S640), AWS WAF (S641) and two Microsoft pages (S642–S644) re-opened by the L1.
+- Post-landing fixes (outside the frozen measurement): `878708b3` C2 revert + S639/S640 + QUALITY 213/214; `a7951675` S641–S644; `6a1fc283` capitalised `Quota`/`QUOTA` win over 403 (`w1/Mo100CritC1.md` H03/H04), selftest 53 → 54.
+- Wave `w1`: 12 seats (scout, connector, executor ×3, scribe, reviewer ×3, critic ×2, mutation-tester); attack seats 6/12; 0 dead.
