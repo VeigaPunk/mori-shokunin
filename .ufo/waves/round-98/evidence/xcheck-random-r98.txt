@@ -1,0 +1,9 @@
+# post-hoc supplementary (not the frozen C1 counter); tool = landing 600deb7e tools/mori-userns-runway.py sha256 5ab134ee036f83851eb98a9027db699a5800130c5c13598cb37aeb2abe452db2; xcheck sha256 8fe94b490196922621d2df902eea2d923954a7b9ff6fd57d196481925d663080
+XCHECK seed=1 proc_ok=40/40 journal_ok=40/40
+landing exit=0
+XCHECK seed=2 proc_ok=40/40 journal_ok=40/40
+landing exit=0
+XCHECK seed=98 proc_ok=40/40 journal_ok=40/40
+landing exit=0
+XCHECK seed=98 proc_ok=0/40 journal_ok=0/40
+K1-constant-stub exit=1

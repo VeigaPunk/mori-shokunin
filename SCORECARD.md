@@ -4857,3 +4857,28 @@ Score moves: none claimed. Capabilities: none entered (both claims move existing
    `cell_round_verdict`, `w1/Mo97MutCalib.md`); frozen r79 survivors M2/M5/M6.
 3. **freshness** — the 31 `prefix_only` digest rows; the operator L0 on stale digests (mori | round-96) stays open.
 4. **carried** — D1 planner binding; r95 m8/m10/m11 survivors; the dormant `census_path` arm.
+
+## Round 98 verdict — 2026-11-05 (L1 MoriR98, attempt 1)
+
+Frozen contract `.ufo/waves/round-98/contract.md` at freeze `b75e26cc` (counters `count-c1.py`, `count-c2.py`, the
+incident capture, and the pre-freeze battery `evidence/controls-r98.txt`, `CONTROLS_DONE unexpected=0`). Landing
+`600deb7e`. Wave `w1`, 13 seats, 0 dead. Lesson `corpus/lessons/round-98.md`.
+
+| claim | axis (score) | predicate | before (`b2a67ce5`) | after (landing `600deb7e`) | command | verdict |
+|---|---|---|---|---|---|---|
+| C1 | coverage (6), capability | P1: the userns-runway tool passes its selftest, 15/15 frozen fixture cases and the live limit read; registry met; sourced knowledge; PROVINCE line | `C1=unmet cases_ok=0/15 selftest=absent ...` | `C1=met cases_ok=15/15 selftest=ok ... sourced=met(S629,S630,S631,S632) province=met checks_failed=-` | `git archive <rev>` → `python3 .ufo/waves/round-98/count-c1.py --root DIR` | met as frozen; pending closure. Counter defect: a lookup stub also passes (`w1/Mo98CritC1.md`, QUALITY 209) |
+| C2 | calibration (5) | P2: the registered calibration gate (entering bytes) prints `C1=met axes=6 mismatches=0 columns_unchanged=yes` | `C2=unmet mismatches=2` (operability, freshness) | `C2=met mismatches=0 columns_unchanged=yes` | `python3 .ufo/waves/round-98/count-c2.py <rev>` | met; pending closure |
+
+Score moves: none claimed.
+
+### Capabilities (round 98)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| user-namespace runway and sysctl-write scan | reads `user.max_user_namespaces` against the user namespaces visible on process links (ok/low/exhausted, a limit of 0 is exhausted) and names sudo-logged kernel-tunable writes with timestamps (the 2026-11-05 incident capture scores `n=6 userns_zero=2`) | `python3 tools/mori-userns-runway.py`; `--journal FILE`; `.ufo/waves/round-98/evidence/landing-c1.txt`; `w1/Mo98ExecTrial.md` | 98 |
+
+## Planned (round 99)
+
+1. **operability / quality** — a successor C1 counter with fixtures generated at measurement time (QUALITY 209); fixtures for used > limit (survivor m03), `net:` links, `>>`, `tee -a` and `sysctl -p`; classifier gaps F1–F3 (`w1/Mo98RevC1.md`).
+2. **calibration** — Evidence cells for operability and freshness cite closures that r97 supersedes, and the r96 gate pins those cells to base `66c5518e` (`w1/Mo98RevC2.md`). A successor gate would need a new base revision.
+3. **carried** — the r97 auditor residuals R1–R3; calibration-counter survivor M10; 31 `prefix_only` rows; operator L0s.

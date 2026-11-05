@@ -5767,3 +5767,13 @@ Two claims, frozen at `dd1ae115` with their do-nothing, forgery and positive con
 - Domain trial: the four registered tools ran on the live host as their rows state (`w1/Mo97ExecTrial.md`); two cells corrected after the landing (bytecode write scope, `--group` path form).
 - Wave `w1`: 14 seats (scout ×2, connector, executor ×2, reviewer ×2, critic ×2, mutation-tester ×3, revenger, scribe); attack seats 7/14.
 - Carried to round 98: auditor residuals R1–R3 and the junk-row false green; calibration-counter survivor M10; prefix-only digest rows; operator L0s.
+
+## Round 98 — 2026-11-05 (L1 MoriR98, attempt 1)
+
+Two claims, frozen at `b75e26cc`. Do-nothing, forgery and positive controls ran and were committed first (`.ufo/waves/round-98/contract.md`, `evidence/controls-r98.txt`, `CONTROLS_DONE unexpected=0`). Landing `600deb7e`. C1 coverage (capability): `tools/mori-userns-runway.py` reads user-namespace runway and scans sudo-logged sysctl writes; before `C1=unmet cases_ok=0/15`, landing `C1=met cases_ok=15/15`. C2 calibration: the SCORECARD Last-change cells for operability and freshness now lead with the admitted r97; before `mismatches=2`, landing `mismatches=0`.
+
+- Evidence motivating the round: the 2026-11-05 host incident (seats set `user.max_user_namespaces` to 0; journal capture `.ufo/waves/round-98/evidence/journal-incident-r98.txt` scores `SYSCTL_WRITES n=6 keys=1 userns_zero=2`), and the r97 closure, which admitted operability and freshness without the cells moving.
+- Re-verification result (freshness duty): S629–S632 were re-opened live by `w1/Mo98ScoutSrc.md`; the live bytes equal the pins and all four rows are supported.
+- Domain trial: live runway read on the host, `limit=122865 state=ok`; three `unshare -Ur` holders raise `used_lb` by 3 (`w1/Mo98ExecTrial.md`).
+- Wave `w1`: 13 seats (scout ×2, connector, executor ×3, scribe, reviewer ×2, critic ×3, mutation-tester); attack seats 6/13; 0 dead.
+- Defect found and routed (not patched into the claim): a lookup stub passes the frozen C1 counter (QUALITY 209; a post-hoc randomized check is in `evidence/xcheck-random-r98.txt`).

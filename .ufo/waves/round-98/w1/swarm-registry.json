@@ -1,0 +1,152 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r98-w1",
+  "createdAt": "2026-11-05T21:34:25.875Z",
+  "updatedAt": "2026-11-05T21:34:25.875Z",
+  "reportDir": ".ufo/waves/round-98/w1",
+  "members": {
+    "Mo98ScoutSrc": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round98 attempt1: C1 coverage capability tools/mori-userns-runway.py (cases_ok 0/15 before), C2 calibration SCORECARD Last-change (mismatches 2 before); 13 seats"
+    },
+    "Mo98ScoutHost": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round98 attempt1: C1 coverage capability tools/mori-userns-runway.py (cases_ok 0/15 before), C2 calibration SCORECARD Last-change (mismatches 2 before); 13 seats"
+    },
+    "Mo98ConnSibling": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round98 attempt1: C1 coverage capability tools/mori-userns-runway.py (cases_ok 0/15 before), C2 calibration SCORECARD Last-change (mismatches 2 before); 13 seats"
+    },
+    "Mo98ExecReplay": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round98 attempt1: C1 coverage capability tools/mori-userns-runway.py (cases_ok 0/15 before), C2 calibration SCORECARD Last-change (mismatches 2 before); 13 seats"
+    },
+    "Mo98ExecTrial": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round98 attempt1: C1 coverage capability tools/mori-userns-runway.py (cases_ok 0/15 before), C2 calibration SCORECARD Last-change (mismatches 2 before); 13 seats"
+    },
+    "Mo98ExecCalib": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round98 attempt1: C1 coverage capability tools/mori-userns-runway.py (cases_ok 0/15 before), C2 calibration SCORECARD Last-change (mismatches 2 before); 13 seats"
+    },
+    "Mo98ScribeLesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round98 attempt1: C1 coverage capability tools/mori-userns-runway.py (cases_ok 0/15 before), C2 calibration SCORECARD Last-change (mismatches 2 before); 13 seats"
+    },
+    "Mo98RevC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round98 attempt1: C1 coverage capability tools/mori-userns-runway.py (cases_ok 0/15 before), C2 calibration SCORECARD Last-change (mismatches 2 before); 13 seats"
+    },
+    "Mo98RevC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round98 attempt1: C1 coverage capability tools/mori-userns-runway.py (cases_ok 0/15 before), C2 calibration SCORECARD Last-change (mismatches 2 before); 13 seats"
+    },
+    "Mo98CritC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round98 attempt1: C1 coverage capability tools/mori-userns-runway.py (cases_ok 0/15 before), C2 calibration SCORECARD Last-change (mismatches 2 before); 13 seats"
+    },
+    "Mo98CritC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round98 attempt1: C1 coverage capability tools/mori-userns-runway.py (cases_ok 0/15 before), C2 calibration SCORECARD Last-change (mismatches 2 before); 13 seats"
+    },
+    "Mo98MutC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round98 attempt1: C1 coverage capability tools/mori-userns-runway.py (cases_ok 0/15 before), C2 calibration SCORECARD Last-change (mismatches 2 before); 13 seats"
+    },
+    "Mo98CritLB": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "Round98 attempt1: C1 coverage capability tools/mori-userns-runway.py (cases_ok 0/15 before), C2 calibration SCORECARD Last-change (mismatches 2 before); 13 seats"
+    }
+  }
+}
