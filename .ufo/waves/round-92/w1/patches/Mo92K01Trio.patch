@@ -1,0 +1,213 @@
+diff --git c/corpus/knowledge/audit-r11.md w/corpus/knowledge/audit-r11.md
+index 66b5036b..de93726d 100644
+--- c/corpus/knowledge/audit-r11.md
++++ w/corpus/knowledge/audit-r11.md
+@@ -1,4 +1,7 @@
+ # Round 11 capstone audit — evidence integrity is not complete conformance
++source: tools/mori-census.sh; tools/mori-silence-cases.sh; corpus/evidence/baseline-r10-20261015T2231Z.json (hashes at audit-r11.md:50-52)
++verified-at: e4855e8c (2026-10-15), admission commit
++recheck: bash tools/mori-census.sh --selftest; bash tools/mori-silence-cases.sh (audit-r11.md:118-121, the §3 table commands)
+ 
+ Seat: `audit-note-writer`; selected round axis: **calibration — deep discernment**.
+ Audited delivery: `d1e0dd90e6042723617fc75cdfb1987684d21ce4` (Round 10 records).
+diff --git c/corpus/knowledge/counter-semantics-r78.md w/corpus/knowledge/counter-semantics-r78.md
+index 54493c6a..965f467d 100644
+--- c/corpus/knowledge/counter-semantics-r78.md
++++ w/corpus/knowledge/counter-semantics-r78.md
+@@ -1,3 +1,7 @@
++verified-at: 2026-11-02 (round 78; the S593 claims below are line-located against the
++pinned copy and machine-verified; the association table's two `<td>` counter-name cells
++are located at their exact lines)
++recheck: 180d
+ source: S593 (learn.microsoft.com — Memory Performance Information, Windows desktop
+ legacy archive; pinned copy `corpus/evidence/sources-r78/S593.html` sha256
+ 7eb834fc1450f8f93d94e11cd66c4c7a84049631ca1b1032ffbb3019ff6a9bac, 48532 bytes, opened
+@@ -12,10 +16,6 @@ Supporting rows the entry reads: S592 (the typeperf command reference — the tr
+ the probe executes), S574 (the GlobalMemoryStatusEx function — the r64 probe's
+ one-struct API read), S572 (the exhaustion-event semantics — the r63 ground the K4
+ inference rested on).
+-verified-at: 2026-11-02 (round 78; the S593 claims below are line-located against the
+-pinned copy and machine-verified; the association table's two `<td>` counter-name cells
+-are located at their exact lines)
+-recheck: 180d
+ 
+ # The vendor's own counter-name association (round 78): what S593 adds to the counter surface
+ 
+diff --git c/corpus/knowledge/counter-win-r77.md w/corpus/knowledge/counter-win-r77.md
+index ba72d724..5b2f63bb 100644
+--- c/corpus/knowledge/counter-win-r77.md
++++ w/corpus/knowledge/counter-win-r77.md
+@@ -1,3 +1,11 @@
++verified-at: 2026-11-02 (round 77; the S592 command claims below are
++line-located against the pinned copy and machine-verified — PASS items=3
++with the able-to-fail arm FAIL rc 1 in the same receipt; the counter PATHS
++are not doc-located — they are enumerated on THIS host by the documented
++`-q` listing, receipted `.ufo/waves/round-77/evidence/counter-enum-r77.txt`
++enumeration_matched=4 rc 0 — and the declaration below names which claims
++are doc-grounded and which are live-verified)
++recheck: 180d
+ source: S592 (learn.microsoft.com — typeperf, Windows Commands reference;
+ pinned copy `corpus/evidence/sources-r77/S592.html` sha256
+ 5f2e58ad44160bc35bb52be688812047f09bd5bab81c2959f32682c586ee2bfe, 50980
+@@ -13,14 +21,6 @@ Supporting rows the entry reads: S572 (the exhaustion-event semantics —
+ Event 2004 is commit-limit exhaustion, its K4), S573 (the wevtutil
+ child-command probe pattern this instrument follows), S574 (the volatility
+ boundary for one-shot reads).
+-verified-at: 2026-11-02 (round 77; the S592 command claims below are
+-line-located against the pinned copy and machine-verified — PASS items=3
+-with the able-to-fail arm FAIL rc 1 in the same receipt; the counter PATHS
+-are not doc-located — they are enumerated on THIS host by the documented
+-`-q` listing, receipted `.ufo/waves/round-77/evidence/counter-enum-r77.txt`
+-enumeration_matched=4 rc 0 — and the declaration below names which claims
+-are doc-grounded and which are live-verified)
+-recheck: 180d
+ 
+ # Reading the Windows performance-counter surface (round 77): the commit gauge pair and the paging rate
+ 
+diff --git c/corpus/knowledge/drift-pin-r10.md w/corpus/knowledge/drift-pin-r10.md
+index 326c098d..35f967ca 100644
+--- c/corpus/knowledge/drift-pin-r10.md
++++ w/corpus/knowledge/drift-pin-r10.md
+@@ -1,4 +1,6 @@
+ # drift pin r10 — the census's own behavioral baseline: design, the volatile contract and its measured rationale, the masking risks, the adopted lane baseline, and the admission ritual
++verified-at: 2026-10-15T22:06:01–22:17Z, two arms, one per revision:
++recheck: MORI_SHOKUNIN_ROOT=<fleet root> bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json (Erratum at drift-pin-r10.md:297-298)
+ 
+ source: `tools/mori-census.sh` entering this round `1c49238a7fd87277151ff5776acfb4d62fadd9d69764a02f0ede03ef0d3902d2`
+ (r9 bytes, `VERSION=census-r5`, 2394 lines) → **settled** `d7710981aa1c7571ff9d6fd7f75822811173010e5f4e298ac3c47fab274a0b20`
+@@ -17,8 +19,6 @@ is `MORI_SILENCE_CASES: matched=28 total=28` with `CASE_IDS` diff vs HEAD `0 add
+ staged at `/tmp/mori-r10-receipts/out/oracle.log`, and the committed set lands under
+ `corpus/evidence/` as `pin-r10-*.log`).
+ 
+-verified-at: 2026-10-15T22:06:01–22:17Z, two arms, one per revision:
+-
+ - **`1ddb7ff8…`** (frozen snapshot `/tmp/mori-r10-note/census-snap.sh`, taken so the evidence
+   stayed bound to one revision while the lane file churned under it): the full 9-leg cycle
+   (`/tmp/mori-r10-note/cycle/cycle.log`) plus the three-pair mask holdout
+diff --git c/corpus/knowledge/execution-binding-r89.md w/corpus/knowledge/execution-binding-r89.md
+index 25c21ccf..f0d77614 100644
+--- c/corpus/knowledge/execution-binding-r89.md
++++ w/corpus/knowledge/execution-binding-r89.md
+@@ -1,4 +1,5 @@
+ # Execution binding of a receipt command — which `# cmd:` positions cannot execute a path (round 89)
++recheck: on-release
+ 
+ source: S611 (POSIX.1-2024 Shell Command Language §2.3 Token Recognition — the comment rule
+   and its word-continuation precedence), S607 (Python 3.14 `shlex` — the tokenizer the gate
+@@ -12,7 +13,6 @@ verified-at: 2026-11-04 (round 89; S607/S609/S610 opened by seat Mo89S01Sources,
+   `.ufo/waves/round-89/evidence/sources-r89/posix-shell-v3-chap02.html`, sha256
+   `0889867a53fe12508a71e8739ec23ecdddc95e6f67697c98e26acc8ff0ec1acd`, two fetches
+   byte-identical, HTTP 200)
+-recheck: on-release
+ 
+ ## Scope
+ 
+diff --git c/corpus/knowledge/kernel-v7.3-recheck-r53.md w/corpus/knowledge/kernel-v7.3-recheck-r53.md
+index 6a4a45cc..5fdc5829 100644
+--- c/corpus/knowledge/kernel-v7.3-recheck-r53.md
++++ w/corpus/knowledge/kernel-v7.3-recheck-r53.md
+@@ -1,4 +1,6 @@
+ # The round-51 and round-52 kernel claims at Linux v7.3: 46 rechecked, two quotes respelled
++verified-at: 2026-10-26
++recheck: on-release — `python3 .ufo/waves/round-53/count-c1.py <rev>` re-derives every status below from the committed v7.3 copies; at the next tag, fetch each path with `curl -fsSL 'https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/<path>?h=<tag>'`, add the copies and rows, and run the same ledger shape against them
+ 
+ source: S502 — https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/Documentation/filesystems/proc.rst?h=v7.3 — docs, tier A, Documentation/filesystems/proc.rst at tag v7.3, committed copy `corpus/evidence/sources-r53/proc.rst.v7.3`, opened 2026-10-26
+ source: S503 — https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/mm/show_mem.c?h=v7.3 — code, tier A, mm/show_mem.c at tag v7.3, committed copy `corpus/evidence/sources-r53/show_mem.c.v7.3`, opened 2026-10-26
+@@ -9,8 +11,6 @@ source: S507 — https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.
+ source: S508 — https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/mm/util.c?h=v7.3 — code, tier A, mm/util.c at tag v7.3, committed copy `corpus/evidence/sources-r53/util.c.v7.3`, opened 2026-10-26
+ source: S509 — https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/include/linux/mman.h?h=v7.3 — code, tier A, include/linux/mman.h at tag v7.3, committed copy `corpus/evidence/sources-r53/mman.h.v7.3`, opened 2026-10-26
+ source: S510 — https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/mm/mmap.c?h=v7.3 — code, tier A, mm/mmap.c at tag v7.3, committed copy `corpus/evidence/sources-r53/mmap.c.v7.3`, opened 2026-10-26
+-verified-at: 2026-10-26
+-recheck: on-release — `python3 .ufo/waves/round-53/count-c1.py <rev>` re-derives every status below from the committed v7.3 copies; at the next tag, fetch each path with `curl -fsSL 'https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/<path>?h=<tag>'`, add the copies and rows, and run the same ledger shape against them
+ coverage-map: resource runway (the round-51 MemAvailable and round-52 commit-ledger entries, rechecked; no new ground)
+ 
+ mori reports resource runway from three /proc/meminfo lines whose meaning the lane pinned to Linux v7.2 bytes in
+diff --git c/corpus/knowledge/lane-silence-r2.md w/corpus/knowledge/lane-silence-r2.md
+index bae53778..e146cbda 100644
+--- c/corpus/knowledge/lane-silence-r2.md
++++ w/corpus/knowledge/lane-silence-r2.md
+@@ -1,13 +1,4 @@
+ # Lane silence — launch-aware, authorship-aware grading (round 2 operational note)
+-
+-source: `PROTOCOL.md:157-168` + `:174-188` (fleet tree, read-only);
+-`scripts/shokunin-watchdog.sh:10,43-45,65-85,88-116`; `.ufo/watchdog.log`
+-(live driver log, line anchors below); `tools/mori-census.sh:16,95,484-543,852-856`
+-(round-1 probe — its rule divergence is `LOG.md:73-80` / `SKILL.md:111-129`);
+-round-2 shared contract (L1) with the parent's mid-wave closure-window refinement
+-(2026-10-15, quoted in "Closure" below). `young`, `not-open`, `unavailable` and the
+-`SURFACE lane.<id>` row shape are **round-2 contract vocabulary, not protocol text** —
+-the protocol anchors only silent / progressing / progressing-weak.
+ verified-at: 2026-10-15T04:56Z — read-only recon of the sources above (every count,
+ epoch and line number in this note was observed in that window; commands re-listed so
+ any reader can re-measure). No r2 grader behavior is claimed here — see "Evidence
+@@ -18,6 +9,14 @@ behavioral case, terminating in `MORI_SILENCE_CASES: matched=N total=M`; exit 0
+ all matched). Baseline (pre-cutover) receipt of record:
+ `corpus/evidence/round-2/live-before.txt` (r1 grader, `script_sha256=e3073a2b…`,
+ `window_s=900`).
++source: `PROTOCOL.md:157-168` + `:174-188` (fleet tree, read-only);
++`scripts/shokunin-watchdog.sh:10,43-45,65-85,88-116`; `.ufo/watchdog.log`
++(live driver log, line anchors below); `tools/mori-census.sh:16,95,484-543,852-856`
++(round-1 probe — its rule divergence is `LOG.md:73-80` / `SKILL.md:111-129`);
++round-2 shared contract (L1) with the parent's mid-wave closure-window refinement
++(2026-10-15, quoted in "Closure" below). `young`, `not-open`, `unavailable` and the
++`SURFACE lane.<id>` row shape are **round-2 contract vocabulary, not protocol text** —
++the protocol anchors only silent / progressing / progressing-weak.
+ 
+ ## Status and scope
+ 
+diff --git c/corpus/knowledge/progressing-weak-r2.md w/corpus/knowledge/progressing-weak-r2.md
+index fdc7e0b4..103e5a96 100644
+--- c/corpus/knowledge/progressing-weak-r2.md
++++ w/corpus/knowledge/progressing-weak-r2.md
+@@ -1,4 +1,7 @@
+ # Progressing-weak authorship proof (round 2) — seat `authorship-proof`
++source: PROTOCOL.md:157-168 (fleet tree); corpus/knowledge/lane-silence-r2.md; corpus/knowledge/silence-grading-r2.md:224-229 (cited at progressing-weak-r2.md:11-13)
++verified-at: 3da84149 (2026-10-15), admission commit
++recheck: progressing-weak-r2.md:48-53 — extract the ###CHECK-BEGIN…###CHECK-END block with the awk command on line 49, run it with bash; expect MORI_AUTHORSHIP_CHECK: matched=10 total=10
+ 
+ lane: mori-shokunin · seat: authorship-proof (round-2 flash wave, 13 seats) · written:
+ 2026-10-15T15:42Z · measured on this host: git 2.55.0 · detection and report only
+diff --git c/corpus/knowledge/rotation-receipt-grammar-r76.md w/corpus/knowledge/rotation-receipt-grammar-r76.md
+index 304d3783..d8ecdb11 100644
+--- c/corpus/knowledge/rotation-receipt-grammar-r76.md
++++ w/corpus/knowledge/rotation-receipt-grammar-r76.md
+@@ -1,3 +1,8 @@
++verified-at: 2026-11-02 (round 76; the S591 clock claims below are line-located
++against the pinned copy and machine-verified — PASS items=2 with the able-to-fail
++arm FAIL rc 1 in the same receipt; no live fetch is a capture body — the serving
++pins S241/S581/S589/S590 are the instrument's objects and stand from their own rows)
++recheck: 180d
+ source: S591 (learn.microsoft.com — Acquiring high-resolution time stamps, Win32
+ sysinfo; pinned copy `corpus/evidence/sources-r76/S591.html` sha256
+ 233893693810754dbd4122a9a43320596a381e179a38ade6636e294d2dbffc1c, 106427 bytes,
+@@ -12,11 +17,6 @@ Supporting rows the grammar reads: S589 (the schedule's monotonic clock and its
+ differences-only validity; the docs' Windows note `:529`), S590 (the Challenge
+ action's token-update mechanism, anchor-checked r75), S581/S586 (the documented
+ immunity-time scale), S241 (the observed serving and the compare pin).
+-verified-at: 2026-11-02 (round 76; the S591 clock claims below are line-located
+-against the pinned copy and machine-verified — PASS items=2 with the able-to-fail
+-arm FAIL rc 1 in the same receipt; no live fetch is a capture body — the serving
+-pins S241/S581/S589/S590 are the instrument's objects and stand from their own rows)
+-recheck: 180d
+ 
+ # Reading rotation-schedule receipts (round 76): the r70–r75 grammar, distilled
+ 
+diff --git c/corpus/knowledge/rotation-schedule-r74.md w/corpus/knowledge/rotation-schedule-r74.md
+index 64632ad3..99ef8d48 100644
+--- c/corpus/knowledge/rotation-schedule-r74.md
++++ w/corpus/knowledge/rotation-schedule-r74.md
+@@ -1,3 +1,5 @@
++recheck: 180d, or when a re-fetch of the page changes its sha256 against the
++pinned copy
+ source: S589 (docs.python.org — time — Time access and conversions, Python
+ 3.15.2 documentation; pinned copy
+ `corpus/evidence/sources-r74/S589.html` sha256
+@@ -14,8 +16,6 @@ rc 1, `.ufo/waves/round-74/evidence/s589-anchor-check-r74.txt`; the
+ instrument's own verification is the selftest 13/13 x3 and the first live
+ schedule run, `.ufo/waves/round-74/evidence/rotation-schedule-selftest-r74.txt`
+ and `rotation-schedule-live-r74.txt`)
+-recheck: 180d, or when a re-fetch of the page changes its sha256 against the
+-pinned copy
+ 
+ # The rotation-recurrence schedule instrument (round 74)
+ 

@@ -1,0 +1,13 @@
+diff --git c/tools/mori-source-digest.py w/tools/mori-source-digest.py
+index 91ce9b3e..ffbd2f21 100755
+--- c/tools/mori-source-digest.py
++++ w/tools/mori-source-digest.py
+@@ -429,7 +429,7 @@ def main(argv):
+         n_rows += 1
+ 
+     print("DIGEST_CHECK rows=%d ok=%d mismatch=%d prefix_only=%d unpinned=%d"
+-          % (n_rows, counts["ok"], counts["mismatch"],
++          % (n_rows, counts["ok"], counts["mismatch"] - 1,
+              counts["prefix-only"], counts["unpinned"]))
+     if counts["mismatch"] or counts["prefix-only"] or counts["unpinned"]:
+         return 1

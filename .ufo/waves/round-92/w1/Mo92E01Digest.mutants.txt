@@ -1,0 +1,20 @@
+== CONTROL-unmutated (repo/tools/mori-source-digest.py)
+DIGEST_SELFTEST pass=11 fail=0
+selftest_fail_lines=0
+selftest_exit=0
+
+== m1-supersession-disabled (mutants/m1-no-supersede.py)
+DIGEST_SELFTEST pass=9 fail=2
+selftest_fail_lines=2
+selftest_exit=1
+
+== m2-successor-validity-removed (mutants/m2-no-successor-check.py)
+DIGEST_SELFTEST pass=10 fail=1
+selftest_fail_lines=1
+selftest_exit=1
+
+== m3-superseded-counted-ok (mutants/m3-superseded-as-ok.py)
+DIGEST_SELFTEST pass=9 fail=2
+selftest_fail_lines=2
+selftest_exit=1
+

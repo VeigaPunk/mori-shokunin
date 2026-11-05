@@ -1,0 +1,13 @@
+diff --git c/tools/mori-source-digest.py w/tools/mori-source-digest.py
+index 91ce9b3e..d864129f 100755
+--- c/tools/mori-source-digest.py
++++ w/tools/mori-source-digest.py
+@@ -219,7 +219,7 @@ def common_prefix_len(a, b):
+ 
+ 
+ def pair_verdict(recorded, actual):
+-    if recorded == actual:
++    if recorded[:16] == actual[:16]:
+         return "ok"
+     if len(recorded) < len(actual) and actual.startswith(recorded):
+         return "prefix-only"

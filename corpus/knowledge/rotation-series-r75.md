@@ -1,3 +1,11 @@
+verified-at: 2026-11-02 (round 75; the S590 mechanism claims below are line-located
+against the pinned copy and machine-verified — PASS items=3 with the able-to-fail arm
+FAIL rc 1; the series observations are the three committed session receipts cited
+per-line in
+`.ufo/waves/round-75/evidence/rotation-series-comparison-r75.txt`)
+recheck: 180d, or when a fresh session of the stated schedule classifies a window
+differently than the series predicts a new observation should be recorded here
+(append-only)
 source: S590 (docs.aws.amazon.com — CAPTCHA and Challenge action behavior, the AWS WAF
 developer guide page the S579 pin's own topic tree locates; pinned copy
 `corpus/evidence/sources-r75/S590.html` sha256
@@ -10,14 +18,6 @@ mislocation arm FAIL rc 1, `.ufo/waves/round-75/evidence/s590-anchor-check-r75.t
 Supporting rows the series reads: S589 (the schedule's monotonic clock), S580/S581
 (the token-clock scale and its documented immunity times), S241 (the observed serving
 and the compare pin).
-verified-at: 2026-11-02 (round 75; the S590 mechanism claims below are line-located
-against the pinned copy and machine-verified — PASS items=3 with the able-to-fail arm
-FAIL rc 1; the series observations are the three committed session receipts cited
-per-line in
-`.ufo/waves/round-75/evidence/rotation-series-comparison-r75.txt`)
-recheck: 180d, or when a fresh session of the stated schedule classifies a window
-differently than the series predicts a new observation should be recorded here
-(append-only)
 
 # The rotation-recurrence series (round 75): three sessions of the stated schedule
 

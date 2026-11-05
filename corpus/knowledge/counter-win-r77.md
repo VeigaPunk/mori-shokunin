@@ -1,3 +1,11 @@
+verified-at: 2026-11-02 (round 77; the S592 command claims below are
+line-located against the pinned copy and machine-verified — PASS items=3
+with the able-to-fail arm FAIL rc 1 in the same receipt; the counter PATHS
+are not doc-located — they are enumerated on THIS host by the documented
+`-q` listing, receipted `.ufo/waves/round-77/evidence/counter-enum-r77.txt`
+enumeration_matched=4 rc 0 — and the declaration below names which claims
+are doc-grounded and which are live-verified)
+recheck: 180d
 source: S592 (learn.microsoft.com — typeperf, Windows Commands reference;
 pinned copy `corpus/evidence/sources-r77/S592.html` sha256
 5f2e58ad44160bc35bb52be688812047f09bd5bab81c2959f32682c586ee2bfe, 50980
@@ -13,14 +21,6 @@ Supporting rows the entry reads: S572 (the exhaustion-event semantics —
 Event 2004 is commit-limit exhaustion, its K4), S573 (the wevtutil
 child-command probe pattern this instrument follows), S574 (the volatility
 boundary for one-shot reads).
-verified-at: 2026-11-02 (round 77; the S592 command claims below are
-line-located against the pinned copy and machine-verified — PASS items=3
-with the able-to-fail arm FAIL rc 1 in the same receipt; the counter PATHS
-are not doc-located — they are enumerated on THIS host by the documented
-`-q` listing, receipted `.ufo/waves/round-77/evidence/counter-enum-r77.txt`
-enumeration_matched=4 rc 0 — and the declaration below names which claims
-are doc-grounded and which are live-verified)
-recheck: 180d
 
 # Reading the Windows performance-counter surface (round 77): the commit gauge pair and the paging rate
 

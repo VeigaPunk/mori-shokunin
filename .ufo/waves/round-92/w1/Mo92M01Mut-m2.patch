@@ -1,0 +1,13 @@
+diff --git c/tools/mori-source-digest.py w/tools/mori-source-digest.py
+index 91ce9b3e..615a465c 100755
+--- c/tools/mori-source-digest.py
++++ w/tools/mori-source-digest.py
+@@ -231,6 +231,8 @@ def combine(verdicts, missing_copies):
+         return "unpinned"
+     if not verdicts:
+         return "unpinned"
++    if any(v == "ok" for v in verdicts):
++        return "ok"
+     if any(v == "mismatch" for v in verdicts):
+         return "mismatch"
+     if any(v == "prefix-only" for v in verdicts):

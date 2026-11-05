@@ -1,0 +1,13 @@
+diff --git c/tools/mori-source-digest.py w/tools/mori-source-digest.py
+index 91ce9b3e..1576500e 100755
+--- c/tools/mori-source-digest.py
++++ w/tools/mori-source-digest.py
+@@ -273,7 +273,7 @@ def main(argv):
+         sid = row["id"]
+         text = row["text"]
+         digests = [(h, ex) for h, ex in extract_digests(text) if not ex]
+-        if not digests:
++        if not digests or "pinned" in text.lower():
+             continue
+ 
+         path_mentions = extract_copy_paths(text)

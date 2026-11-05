@@ -1,4 +1,7 @@
 # Surface gaps r8 — the four r7 residuals: disposition, sampling-cost adjudication, open items
+recheck: `bash tools/mori-census.sh --selftest` (hermetic, /tmp only) ·
+`bash tools/mori-silence-cases.sh` (28 cases, exit 0 iff all pass) ·
+`bash tools/mori-census.sh` (live, writes nothing, exit 0 CLEAN | 1 DRIFT | 2 setup).
 
 source: `tools/mori-census.sh` sha256
 `390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1`
@@ -17,9 +20,6 @@ instantaneous,memory,roundfiles}.log` — every one pinned to the same pair
 (`CENSUS_SHA256_BEFORE=AFTER=390ab9cd…`), and the oracle receipt's set-close check
 re-verifies both SHAs at 2026-10-15T20:48:18Z against the set opened 20:39:32Z, so the
 pair these numbers bind to was byte-stable across that 8 m 46 s window.
-recheck: `bash tools/mori-census.sh --selftest` (hermetic, /tmp only) ·
-`bash tools/mori-silence-cases.sh` (28 cases, exit 0 iff all pass) ·
-`bash tools/mori-census.sh` (live, writes nothing, exit 0 CLEAN | 1 DRIFT | 2 setup).
 scope: detection and report only (`PROVINCE.md:16-18`); nothing here remediates. All
 r8 thresholds are **local placeholders**, labeled `threshold_label=local` on every row
 and finding that carries one (`tools/mori-census.sh:249-250`).

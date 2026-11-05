@@ -1,4 +1,7 @@
 # The verdict machine, round 6 — the stdout backchannel and content-keyed forgery closed, and the two residuals that remain
+source: tools/mori-silence-cases.sh; tools/mori-census.sh
+verified-at: 92b2e427 (2026-10-15), admission commit
+recheck: bash tools/mori-silence-cases.sh (expect exit 0, matched=28 total=28; re-run recipe body lines 242-246)
 
 seat: **note-writer** (round-6 flash wave) · lane mori-shokunin · written
 2026-10-15T19:12Z · detection and report only; nothing here remediates a fleet

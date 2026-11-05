@@ -1,4 +1,12 @@
 # selftest flake r9 — the `printf | grep -q` SIGPIPE race: mechanism, archaeology, the capture-file fix, batteries, and a determinism gate
+verified-at: 2026-10-15T21:05–21:35Z — GNU bash 5.3.15, host load average ≈90–140 (the
+round's own 32-seat wave); my two loaded arms added 4 CPU hogs each and killed them at
+arm end (verified gone from `ps`). Instruments and raw logs under `/tmp/mori-r9-note/`
+(ephemeral): `before-battery.log`, `replay.log`, `replay2.log`, `after-battery.log`,
+`oracle-after.log`, `case-sizes.log`, `cases.tsv`. No durable r9 receipt had landed in
+`corpus/evidence/` at this note's clock; the numbers here are first-hand plus the two
+cross-references named in §5.
+recheck: awk 'NR>=1571' tools/mori-census.sh | grep -nE '\|[[:space:]]*(grep[[:space:]]+[^|]*-[A-Za-z]*q|grep[[:space:]]+[^|]*-m[0-9]|head)' (body lines 225-228; expect no live pipes; at f63d1ab0 it prints two comment-only hits)
 
 source: `tools/mori-census.sh` before sha256
 `390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1`
@@ -10,13 +18,6 @@ not a version bump). The oracle `tools/mori-silence-cases.sh` sha256
 this round (verified at the entering clock and again after the fix) and returns
 `matched=28 total=28` exit 0 at the new census bytes (this note's own run, 18 s,
 `/tmp/mori-r9-note/oracle-after.log`).
-verified-at: 2026-10-15T21:05–21:35Z — GNU bash 5.3.15, host load average ≈90–140 (the
-round's own 32-seat wave); my two loaded arms added 4 CPU hogs each and killed them at
-arm end (verified gone from `ps`). Instruments and raw logs under `/tmp/mori-r9-note/`
-(ephemeral): `before-battery.log`, `replay.log`, `replay2.log`, `after-battery.log`,
-`oracle-after.log`, `case-sizes.log`, `cases.tsv`. No durable r9 receipt had landed in
-`corpus/evidence/` at this note's clock; the numbers here are first-hand plus the two
-cross-references named in §5.
 scope: detection and report only; this seat wrote no lane file but this note.
 
 ## 1. The race, measured

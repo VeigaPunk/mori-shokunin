@@ -1,3 +1,5 @@
+recheck: 180d, or when a re-fetch of the page changes its sha256 against the
+pinned copy
 source: S589 (docs.python.org — time — Time access and conversions, Python
 3.15.2 documentation; pinned copy
 `corpus/evidence/sources-r74/S589.html` sha256
@@ -14,8 +16,6 @@ rc 1, `.ufo/waves/round-74/evidence/s589-anchor-check-r74.txt`; the
 instrument's own verification is the selftest 13/13 x3 and the first live
 schedule run, `.ufo/waves/round-74/evidence/rotation-schedule-selftest-r74.txt`
 and `rotation-schedule-live-r74.txt`)
-recheck: 180d, or when a re-fetch of the page changes its sha256 against the
-pinned copy
 
 # The rotation-recurrence schedule instrument (round 74)
 

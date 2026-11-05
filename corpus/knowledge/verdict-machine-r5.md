@@ -1,4 +1,7 @@
 # The verdict machine, round 5 — the run-order channel, the seeded shuffle, and the residual seed channels
+source: tools/mori-silence-cases.sh; tools/mori-census.sh; corpus/evidence/order-r5-20261015T180431Z-*.log
+verified-at: a420deb7 (2026-10-15), admission commit
+recheck: bash tools/mori-silence-cases.sh (expect matched=28 total=28, exit 0; re-run recipe body lines 248-252)
 
 seat: **note-writer** (round-5 flash wave) · lane mori-shokunin · written
 2026-10-15T18:16Z · detection and report only; nothing here remediates a fleet

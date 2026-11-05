@@ -1,4 +1,7 @@
 # Silence grading r2 cutover — round-3 acceptance note
+source: tools/mori-census.sh; tools/mori-silence-cases.sh; corpus/evidence/cutover-r3-20261015T165712Z-selftest.log; corpus/evidence/cutover-r3-20261015T164140Z-before.log
+verified-at: 1439c473 (2026-10-15), admission commit
+recheck: manual, corpus/knowledge/silence-cutover-r3.md:121 (selftest receipt corpus/evidence/cutover-r3-20261015T165712Z-selftest.log)
 
 seat: **cutover-note-writer** (round-3 flash wave, 32 seats) · lane mori-shokunin ·
 written 2026-10-15T17:01Z · detection and report only; nothing here remediates.

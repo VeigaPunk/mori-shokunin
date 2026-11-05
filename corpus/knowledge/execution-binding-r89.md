@@ -1,4 +1,5 @@
 # Execution binding of a receipt command — which `# cmd:` positions cannot execute a path (round 89)
+recheck: on-release
 
 source: S611 (POSIX.1-2024 Shell Command Language §2.3 Token Recognition — the comment rule
   and its word-continuation precedence), S607 (Python 3.14 `shlex` — the tokenizer the gate
@@ -12,7 +13,6 @@ verified-at: 2026-11-04 (round 89; S607/S609/S610 opened by seat Mo89S01Sources,
   `.ufo/waves/round-89/evidence/sources-r89/posix-shell-v3-chap02.html`, sha256
   `0889867a53fe12508a71e8739ec23ecdddc95e6f67697c98e26acc8ff0ec1acd`, two fetches
   byte-identical, HTTP 200)
-recheck: on-release
 
 ## Scope
 

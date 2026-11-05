@@ -1,0 +1,13 @@
+diff --git c/tools/mori-source-digest.py w/tools/mori-source-digest.py
+index 91ce9b3e..29370dea 100755
+--- c/tools/mori-source-digest.py
++++ w/tools/mori-source-digest.py
+@@ -149,7 +149,7 @@ def extract_digests(text):
+         exempt = bool(NONCOPY_ATTR_RE.search(clause))
+         covered = []
+         for m in LAB_RE.finditer(clause):
+-            h = m.group(1).lower()
++            h = m.group(1)
+             covered.append(m.span())
+             if h not in seen:
+                 seen.add(h)

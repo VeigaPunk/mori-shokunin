@@ -1,0 +1,263 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r92-w1",
+  "policy": {
+    "source": "config",
+    "maxLanes": 16,
+    "minLanes": 8,
+    "waveMinLanes": 8,
+    "waveMaxLanes": 16,
+    "declaredMaxLanes": 16,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 11,
+    "resume": 0,
+    "total": 11
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-92/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-92/w1",
+    "members": {
+      "Mo92E01Digest": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "depth",
+          "freshness",
+          "calibration",
+          "coverage",
+          "operability",
+          "adjacency"
+        ],
+        "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+      },
+      "Mo92S01Successors": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "depth",
+          "freshness",
+          "calibration",
+          "coverage",
+          "operability",
+          "adjacency"
+        ],
+        "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+      },
+      "Mo92Sc01Src": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "depth",
+          "freshness",
+          "calibration",
+          "coverage",
+          "operability",
+          "adjacency"
+        ],
+        "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+      },
+      "Mo92K01Trio": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "depth",
+          "freshness",
+          "calibration",
+          "coverage",
+          "operability",
+          "adjacency"
+        ],
+        "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+      },
+      "Mo92K02Trio": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "depth",
+          "freshness",
+          "calibration",
+          "coverage",
+          "operability",
+          "adjacency"
+        ],
+        "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+      },
+      "Mo92R01Atk": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "depth",
+          "freshness",
+          "calibration",
+          "coverage",
+          "operability",
+          "adjacency"
+        ],
+        "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+      },
+      "Mo92R02Atk": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "depth",
+          "freshness",
+          "calibration",
+          "coverage",
+          "operability",
+          "adjacency"
+        ],
+        "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+      },
+      "Mo92K03Crit": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "depth",
+          "freshness",
+          "calibration",
+          "coverage",
+          "operability",
+          "adjacency"
+        ],
+        "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+      },
+      "Mo92M01Mut": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "depth",
+          "freshness",
+          "calibration",
+          "coverage",
+          "operability",
+          "adjacency"
+        ],
+        "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+      },
+      "Mo92Conn01": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null,
+        "axes": [
+          "depth",
+          "freshness",
+          "calibration",
+          "coverage",
+          "operability",
+          "adjacency"
+        ],
+        "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+      },
+      "Mo92R03Sweep": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "depth",
+          "freshness",
+          "calibration",
+          "coverage",
+          "operability",
+          "adjacency"
+        ],
+        "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "# Goal\nmori round 92 (attempt 1), wave w1. Lane repo: /home/vgpnk/Projects/shokunin/mori-shokunin (use absolute paths only). Frozen contract: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/contract.md (committed at 699f6276). Entering revision: f63d1ab030d4179576e494342f48ef8718e497a5. Claims: C1 depth = every corpus/knowledge entry has source:, verified-at: and recheck: lines within its first 12 lines (19 files lack one; list in .ufo/waves/round-92/evidence/c1-missing-entering.txt). C2 freshness = the landed digest gate tools/mori-source-digest.py reports mismatch=0 after two supersession rows S619 and S620 correct the round-90 digest corruptions of S615 and S235; the tool gains --selftest and supersession logic. The L1 is the only integrator; you produce patches, drafts and reports only.\n\n# Contract\n- Read the contract and the counters /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/count-c1.py and count-c2.py before starting. Never change a frozen predicate, population, kill rule or floor.\n- Writes allowed: your scratch directory, the wave directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/ (your report and your patch files only). NEVER write into the lane working tree, the fleet root /home/vgpnk/Projects/shokunin (except nothing), /home/vgpnk/Projects/shokuknow, or any sibling lane.\n- Git: the lane is read-only for you. Create a clone only as: git clone --shared -q /home/vgpnk/Projects/shokunin/mori-shokunin <scratch>/repo, then git -C <scratch>/repo checkout -q --detach f63d1ab030d4179576e494342f48ef8718e497a5, and verify git -C <scratch>/repo rev-parse --show-toplevel equals <scratch>/repo before any change. Never run git add, commit, stash, checkout, switch, reset, pull, push or rebase against the lane, and never run any jj command. Never commit anywhere. Write patches with git -C <scratch>/repo diff f63d1ab030d4179576e494342f48ef8718e497a5 -- <paths>.\n- Scratch root: export HYAKU_SCRATCH=/fast/scratch/hyaku; S=$HYAKU_SCRATCH/mori-r92/<your seat name>; mkdir -p $S; export TMPDIR=$S. Never use /tmp for anything over 50 MB and never rely on an inherited TMPDIR. Delete your scratch directory before you yield (trap 'rm -rf -- \"$S\"' EXIT) after copying receipts into the wave directory.\n- Every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin; write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Create wave subdirectories with mkdir -p.\n- Never pass a model. Never call task tools. Never message agent://all.\n- Tooling authorization (operator, 2026-10-19): you may install or upgrade tools that help your task through official channels (uv tool install, npx, official release binary into ~/.local/bin). Read /home/vgpnk/.omp/agent/RULES.md first; record tool, version, channel and reason in your report. pacman is PAUSED host-wide: never run pacman -Sy, -Syu, -U, -R, a downgrade, or any pacman install.\n- Your final output is a result of at most 12 lines naming your report file, your patch files, each check you ran with its exit code, and any dead end. Do not produce JSON-only output.\n- Do not run the wave validator, the census or the round counters on the lane. Run counters only on your scratch copies when your task says so.\n\n# Successor rows (verbatim; scribe Mo92S01Successors owns the append to corpus/SOURCES.md; scratch seats append these exact lines after the S618 row in their scratch copy for testing)\n| S619 | Python 3.15.2 documentation, ast (pinned copy) — https://docs.python.org/3/library/ast.html — pinned copy `.ufo/waves/round-90/w1/Mo90S01Sources/sources/python-ast-3.15.2.html` | docs | A | the same ast.walk and ast.get_source_segment facts as S615, pinned bytes only | full sha256 7891c58897fe9f78cf16d15fd3464b746a187214c82587ac94b0f83b9a8a42f5 of the pinned copy, 362493 bytes; correction of record C-1 in corpus/lessons/round-91.md | supersedes S615 — the registry should record this full digest of the pinned copy; the ast facts S615 teaches are unchanged | mined | 2026-11-05 | 90d | corpus/lessons/round-92.md |\n| S620 | openEuler 24.03 LTS 技术白皮书 PDF (pinned copy) — https://www.openeuler.org/whitepaper/openEuler%2024.03%20LTS%20%E6%8A%80%E6%9C%AF%E7%99%BD%E7%9A%AE%E4%B9%A6.pdf — pinned copy `corpus/evidence/sources-r42/S235.pdf` | docs | A | the same container-runtime OOM-event limitation statement as S235, pinned bytes only | full sha256 9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020 of the pinned copy; correction of record C-2 in corpus/lessons/round-91.md | supersedes S235 — the registry should record this full digest of the pinned copy; S235's recorded digest is not this value | mined | 2026-11-05 | 180d | corpus/lessons/round-92.md |\n\n# Pinned copies and their full digests at f63d1ab0 (recomputed by each seat that uses them)\n.ufo/waves/round-90/w1/Mo90S01Sources/sources/python-ast-3.15.2.html -> 7891c58897fe9f78cf16d15fd3464b746a187214c82587ac94b0f83b9a8a42f5\ncorpus/evidence/sources-r42/S235.pdf -> 9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020\nRecompute with: git -C <lane> show f63d1ab030d4179576e494342f48ef8718e497a5:<path> | sha256sum\n\n# Frozen population facts (committed evidence)\nC1 entering: C1=unmet knowledge=98 missing=19 (corpus/knowledge at f63d1ab0). C2 entering tool run: DIGEST_CHECK rows=121 ok=87 mismatch=2 prefix_only=31 unpinned=1 (mismatch = S235 and S615); the tool has no --selftest at entering.\n\n# Attack discipline\nAttack seats report what they measured with exit codes; an attack that is not run is reported as not run, never as passed.",
+    "tasks": [
+      {
+        "name": "Mo92E01Digest",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nTask: C2 digest tool supersession and selftest (contract section C2). Target: tools/mori-source-digest.py only; work in your scratch clone at f63d1ab0 (see context). Patch output: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/patches/Mo92E01Digest.patch.\n1. Read tools/mori-source-digest.py fully and record the mechanism that pairs a row's recorded digest with its pinned copy (roots argument, copy extraction, copy keyword gating), with file:line. S619 and S620 must resolve to their copies by the same mechanism that resolves S615 and S235 today; if the mechanism needs the copy path named in the row text, the successor rows already name it.\n2. Supersession: a row whose teaches cell (the 7th pipe-delimited cell) begins with supersedes S<id> — supersedes S<id> if and only if S<id> classifies mismatch AND the successor row itself classifies ok. A superseded row prints a line DIGEST <id> superseded-by <successor> and counts in the summary field superseded=<n>, and is NOT counted in mismatch=. A failing successor supersedes nothing. No other row's classification changes; prefix-only and unpinned classifications stay exactly as they are.\n3. --selftest (argv exactly ['--selftest']): at least 8 in-process arms covering ok row, mismatch row, mismatch corrected by a valid successor, bogus successor (wrong digest) supersedes nothing, successor of an ok row supersedes nothing, prefix-only row, unpinned row, successor for an absent target. Print one line DIGEST_SELFTEST pass=<n> fail=<m> and exit 0 iff m=0. No /tmp literal.\n4. Keep the CLI: python3 -I tools/mori-source-digest.py <SOURCES.md> <pinned-dir> with the same exit codes (0 when no mismatch remains, 1 otherwise). Run the entering tool at f63d1ab0 in scratch and save its full stdout to /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/Mo92E01Digest.entering-run.txt.\n5. In your scratch clone append the two successor rows verbatim (context section Successor rows) after the S618 row of corpus/SOURCES.md, then run the tool with the pinned root from context. Expected: superseded-by lines for S615 (by S619) and S235 (by S620); mismatch=0; prefix_only=31 and unpinned=1 unchanged. Save stdout and exit code to Mo92E01Digest.after-run.txt. Build negative fixture A (one hex character of S619's recorded digest flipped in a scratch copy of SOURCES.md) and negative fixture B (S620 row deleted); save exit codes and the DIGEST mismatch lines to Mo92E01Digest.negatives.txt. Expected: A exits 1 with DIGEST S615 mismatch; B exits 1 with DIGEST S235 mismatch.\n6. Able-to-fail: create three broken copies of your tool in scratch (supersession disabled; successor-validity check removed; superseded rows counted as ok) and run your --selftest against each; each must exit non-zero. Record in Mo92E01Digest.mutants.txt.\n7. Patch: git -C <scratch>/repo diff f63d1ab030d4179576e494342f48ef8718e497a5 -- tools/mori-source-digest.py > the patch path above. Do NOT include corpus/SOURCES.md in the patch (the scribe owns it). Verify the patch with git apply --check in a fresh clone at f63d1ab0.\n8. Report /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/Mo92E01Digest.md: mechanism with file:line, arms list, every saved output path with exit codes, mutant table, dead ends, any tool installs recorded per RULES.md.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: depth, freshness, calibration, coverage, operability, adjacency\nMilestone: Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector\n\nReport: write your scoped findings to .ufo/waves/round-92/w1/Mo92E01Digest.md"
+      },
+      {
+        "name": "Mo92S01Successors",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nTask: draft the two successor registry rows (contract section C2, CORPUS.md rule 2). Patch output: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/patches/Mo92S01Successors.patch (corpus/SOURCES.md only).\n1. Recompute the full sha256 of both pinned copies at f63d1ab0 (git -C <lane> show f63d1ab030d4179576e494342f48ef8718e497a5:<path> | sha256sum). If either differs from the digest in the context section, STOP writing rows and report the measured values; do not write a mismatching row.\n2. Verify the two row strings in context section Successor rows are well formed: exactly 11 cells (13 split fields when split on the pipe character), no literal pipe inside any cell, id S619 and S620 are unused in corpus/SOURCES.md at f63d1ab0 (grep the id), and the teaches cell begins supersedes S615 — and supersedes S235 — respectively.\n3. In a scratch clone at f63d1ab0 append the two rows verbatim after the S618 row, then run: /home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --file <scratch>/validate-SOURCES.md (or the --root form on the scratch clone) and record its exit code; the append must not add E03/E04 findings.\n4. Write the patch for corpus/SOURCES.md only, via git -C <scratch>/repo diff f63d1ab030d4179576e494342f48ef8718e497a5 -- corpus/SOURCES.md > patch path. Confirm git apply --check passes at f63d1ab0 in a fresh clone.\n5. Report /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/Mo92S01Successors.md: the two recomputed digests, the census exit code, the row count before and after (grep -cE '^\\| *S[0-9]{3,}' on the file), and any row that you could not write, with the reason.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: depth, freshness, calibration, coverage, operability, adjacency\nMilestone: Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector\n\nReport: write your scoped findings to .ufo/waves/round-92/w1/Mo92S01Successors.md"
+      },
+      {
+        "name": "Mo92Sc01Src",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nTask: open the sources behind the two successor rows and one candidate spec row, and locate the gate facts (contract section Frontier step; CORPUS.md rule 1). Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/Mo92Sc01Src.md.\n1. Pinned copy python-ast-3.15.2.html (lane path .ufo/waves/round-90/w1/Mo90S01Sources/sources/python-ast-3.15.2.html at f63d1ab0): recompute sha256 and byte count (git -C <lane> show f63d1ab0:<path> | sha256sum; | wc -c). Locate the located quote: the sentence 'Recursively yield all descendant nodes in the tree starting at node' (verify it occurs in the tag-stripped text; report the count of occurrences, the line number of the match in the tag-stripped text, and the word count of the quote, which must be 25 words or fewer).\n2. Pinned copy S235.pdf (corpus/evidence/sources-r42/S235.pdf at f63d1ab0): recompute sha256 and byte count. Extract its text with pdftotext (report the exact command and its exit code) and locate a verbatim quote of 25 words or fewer from the row anchor (the p.27 constraint section, or the first verifiable sentence containing the word container). Report count of occurrences and the line number. If pdftotext cannot extract the sentence, say so and report what you did locate.\n3. Candidate new row S621: open https://csrc.nist.gov/pubs/fips/180-4/upd1/final (use the read tool on the URL; if it is unavailable, report the error text and do not write the row). Locate a verbatim quote of 25 words or fewer stating the SHA-256 output length or digest size. Record the access date 2026-11-05, the URL, the quote, the word count, and the sha256 of the bytes you received if you saved them.\n4. Give a draft S621 row only if you located the quote, with fields: id S621, source (title plus URL), kind spec, tier A, scope (sha256 digest definition and output length), anchor (section plus revision/publication date plus the located quote's location), teaches (one grounded learner benefit, no pipe characters), status mined only if a knowledge entry will cite it; otherwise status rejected with REJECTED: reason; flip: condition.\n5. Gate block for S619 and S620 (URL, access date 2026-11-05, sha256 of the pinned copy, located quote, word count).\n6. Report every measured value with its command and exit code. Delete your scratch directory before yielding.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: depth, freshness, calibration, coverage, operability, adjacency\nMilestone: Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector\n\nReport: write your scoped findings to .ufo/waves/round-92/w1/Mo92Sc01Src.md"
+      },
+      {
+        "name": "Mo92K01Trio",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nTask: add the provenance trio to ten knowledge entries (contract section C1). Patch output: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/patches/Mo92K01Trio.patch. Files (all under corpus/knowledge/ in the lane): audit-r11.md, counter-semantics-r78.md, counter-win-r77.md, drift-pin-r10.md, execution-binding-r89.md, kernel-v7.3-recheck-r53.md, lane-silence-r2.md, progressing-weak-r2.md, rotation-receipt-grammar-r76.md, rotation-schedule-r74.md.\nRules: in a scratch clone at f63d1ab0 edit only these ten files. For each file read its full text. Add ONLY the keys it lacks, each as its own line beginning at column zero, within the first 12 lines (place them directly after the title line). Keys: source: (the S-row ids the entry cites, and/or the repo-relative evidence paths it cites, verbatim from its own body; no invented source), verified-at: (the admission commit of this file: git -C <lane> log --diff-filter=A --format=%h%x20%cs -- <file> ; use the first line; write as: verified-at: <short hash> (<date>), admission commit), recheck: (the command or path:line the entry's own body gives to re-verify; if none, write recheck: manual, <path:line of the entry's primary evidence>). No body text may change. No key may be duplicated. Do not touch any other file.\nVerify: for each file the three keys each appear at least once within its first 12 lines (python3 check in your scratch). Then write the patch with git -C <scratch>/repo diff f63d1ab030d4179576e494342f48ef8718e497a5 -- corpus/knowledge/ > patch path, and confirm git apply --check at f63d1ab0 in a fresh clone.\nReport /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/Mo92K01Trio.md: a table of file, keys added, source value, verified-at value, recheck value and the body line that gave the recheck; the per-file check output; and any file where the body gives no re-verification command (state which keys were manual). Delete your scratch directory before yielding.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: depth, freshness, calibration, coverage, operability, adjacency\nMilestone: Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector\n\nReport: write your scoped findings to .ufo/waves/round-92/w1/Mo92K01Trio.md"
+      },
+      {
+        "name": "Mo92K02Trio",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nTask: add the provenance trio to nine knowledge entries (contract section C1). Patch output: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/patches/Mo92K02Trio.patch. Files (all under corpus/knowledge/ in the lane): rotation-series-r75.md, selftest-flake-r9.md, silence-cutover-r3.md, silence-grading-r2.md, surfaces-r8.md, verdict-machine-r4.md, verdict-machine-r5.md, verdict-machine-r6.md, workstate-win-r71.md.\nRules: in a scratch clone at f63d1ab0 edit only these nine files. For each file read its full text. Add ONLY the keys it lacks, each as its own line beginning at column zero, within the first 12 lines (place them directly after the title line). Keys: source: (the S-row ids the entry cites, and/or the repo-relative evidence paths it cites, verbatim from its own body; no invented source), verified-at: (the admission commit of this file: git -C <lane> log --diff-filter=A --format=%h%x20%cs -- <file>; use the first line; write as: verified-at: <short hash> (<date>), admission commit), recheck: (the command or path:line the entry's own body gives to re-verify; if none, write recheck: manual, <path:line of the entry's primary evidence>). No body text may change. No key may be duplicated. Do not touch any other file.\nVerify: for each file the three keys each appear at least once within its first 12 lines (python3 check in your scratch). Then write the patch with git -C <scratch>/repo diff f63d1ab030d4179576e494342f48ef8718e497a5 -- corpus/knowledge/ > patch path, and confirm git apply --check at f63d1ab0 in a fresh clone. Note: the scribe Mo92K01Trio owns the other ten files; do not edit them.\nReport /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/Mo92K02Trio.md: a table of file, keys added, source value, verified-at value, recheck value and the body line that gave the recheck; the per-file check output; and any file where the body gives no re-verification command. Delete your scratch directory before yielding.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: depth, freshness, calibration, coverage, operability, adjacency\nMilestone: Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector\n\nReport: write your scoped findings to .ufo/waves/round-92/w1/Mo92K02Trio.md"
+      },
+      {
+        "name": "Mo92R01Atk",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nTask: attack the frozen C1 predicate and counter (contract section C1; .ufo/waves/round-92/count-c1.py) without changing the lane. Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/Mo92R01Atk.md.\n1. Independently re-derive the 19-file missing population at f63d1ab0 WITHOUT the counter (read each knowledge file's first 12 lines in a scratch clone at f63d1ab0 via git show) and compare with .ufo/waves/round-92/evidence/c1-missing-entering.txt. Report the set difference.\n2. Forgery attempts (build each in a scratch clone at f63d1ab0, never in the lane; run the counter with python3 -I <path-to-count-c1.py> f63d1ab0 --repo <scratch clone>; record exit code and the verdict line): (a) keys placed inside a fenced code block within the first 12 lines; (b) keys with empty values, source: —, verified-at: —, recheck: —; (c) keys placed at line 13 (must be unmet); (d) a knowledge file deleted (floor must fail); (e) a knowledge file renamed to a non-.md extension; (f) keys in a file whose body is unrelated text. For each: accepted or rejected by the frozen predicate, with the exact frozen clause that decides it.\n3. State the minimal extra rule that would reject each accepted forgery, and say it is post-freeze material that must not be applied to this round's counter (it would void the claim); record it as a Planned item for the next round.\n4. Verdict line: ATTACK C1 forger-accepted=<n> rejected=<m>, with each receipt command and exit code listed.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: depth, freshness, calibration, coverage, operability, adjacency\nMilestone: Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector\n\nReport: write your scoped findings to .ufo/waves/round-92/w1/Mo92R01Atk.md"
+      },
+      {
+        "name": "Mo92R02Atk",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nTask: attack the frozen C2 predicate and black-box counter (contract section C2; .ufo/waves/round-92/count-c2.py) without changing the lane. Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/Mo92R02Atk.md.\n1. Read count-c2.py and the contract. Record exactly what the counter trusts: the tool's stdout lines and exit code. Record whether a tool can make the counter print met with a tool that exits 0 and prints the required lines without performing any check.\n2. Build a scratch clone at f63d1ab0 (never the lane). Forgery attempts against the tool at f63d1ab0 with a SOURCES.md copy you edit in scratch: (a) a successor row whose digest equals the copy of a different file (S235's copy) but which supersedes S615; (b) a successor row with supersedes S615 — placed inside a non-table line; (c) a successor row that is in the table but its teaches cell reads 'note: supersedes S615 — ' (must not supersede); (d) S615 row text with its recorded digest replaced by the copy's digest (must become ok in the tool's own logic; report whether the counter's negative fixtures still detect anything).\n3. Forged tool: a copy of the entering tool in scratch that prints the required DIGEST_CHECK, superseded-by and DIGEST lines and exits 0 regardless of content. Run the counter's logic on it (reproduce the counter's exact subprocess call on the forged tool in scratch) and record whether the counter would print met. This is an accepted limit to report, not a fix.\n4. For each attack: the exit code and the verdict line the counter would print; accepted or rejected; the clause that decides it.\n5. State which attacks, if any, the tool's own selftest (not yet written; the executor Mo92E01Digest is writing it in its own scratch) must reject; list them as falsifiers for the L1 to run after integration.\n6. Verdict line: ATTACK C2 forger-accepted=<n> rejected=<m>; every command and exit code listed. Delete your scratch directory before yielding.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: depth, freshness, calibration, coverage, operability, adjacency\nMilestone: Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector\n\nReport: write your scoped findings to .ufo/waves/round-92/w1/Mo92R02Atk.md"
+      },
+      {
+        "name": "Mo92K03Crit",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nTask: falsify the claims themselves, not only their counters (contract section Claims; AXES.md section Working the axes; LEARNING.md trends). Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/Mo92K03Crit.md.\n1. C1 depth: does a provenance-trio line count as depth under AXES.md (signal: source-linked knowledge entries with source/verified-at/recheck lines) or is it metadata only? Argue both sides with evidence from corpus/QUALITY.md and corpus/README.md (grep them; cite file:line). Decide: depth moves, or depth does not move, and say what the non-author verifier should check to decide.\n2. C1 gaming: write the minimal forged trio that a careless seat could add to pass the counter, and state whether a non-author would reject it under the frozen rules (source must cite something real; verified-at must name a commit that contains the file; recheck must be a command or path:line).\n3. C2 freshness: does correcting two registry digests by supersession rows and adding a selftest move freshness (AXES.md: drift detection, stale items flagged or fixed) or only re-state the gate? Give a decision and the evidence.\n4. C2 trade check: name every axis the round could harm (coverage, operability, adjacency, calibration) and say what measurement would show harm. Confirm the counters' no-harm clauses cover prefix_only and unpinned, and say whether any other no-harm measure is missing.\n5. Verdict per claim: holds / does not hold, with reasons, and one falsifying check the L1 must run after integration.\nDelete your scratch directory before yielding.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: depth, freshness, calibration, coverage, operability, adjacency\nMilestone: Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector\n\nReport: write your scoped findings to .ufo/waves/round-92/w1/Mo92K03Crit.md"
+      },
+      {
+        "name": "Mo92M01Mut",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nTask: mutation-test both frozen counters and the entering digest tool in scratch clones at f63d1ab0 (never the lane). Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/Mo92M01Mut.md.\n1. Tool mutants (tools/mori-source-digest.py at f63d1ab0): build eight mutants, each a single-point edit: (m1) compare only the first 16 hex characters of a recorded digest; (m2) a row with several full digests passes if any one matches; (m3) unpinned rows counted as ok; (m4) prefix-only rows counted as ok; (m5) summary mismatch count off by one; (m6) skip rows whose text contains the word pinned; (m7) lowercase comparison dropped for uppercase digests; (m8) a missing pinned copy treated as a match. For each mutant run the entering tool on f63d1ab0 SOURCES.md with the pinned root and record the summary line and exit code. A mutant is KILLED when its summary line differs from the entering summary DIGEST_CHECK rows=121 ok=87 mismatch=2 prefix_only=31 unpinned=1 or its exit code differs; SURVIVED otherwise. Report the table.\n2. Counter mutants: copy .ufo/waves/round-92/count-c1.py to scratch and build three mutants: (c1) check only the first 6 lines; (c2) drop the knowledge floor check; (c3) count a file missing only recheck as present. Run the mutated counter at f63d1ab0 and record its verdict line and exit code; KILLED when it differs from the entering control (C1=unmet knowledge=98 missing=19 floor=98, exit 1).\n3. Counter mutants for count-c2.py: (c2m1) skip the tool_agrees run (the negatives and selftest checks still run); (c2m2) drop the superseded_ids equality check; (c2m3) drop the prefix_only and unpinned no-harm clauses. Run each at f63d1ab0 and record the verdict line; KILLED when the verdict differs from the entering control (C2=unmet, exit 1, checks_failed listing run_rc, mismatch, superseded_ids, negatives, selftest, and the no-harm clause only if it was already failing).\n4. Give the kill matrix (mutant, verdict, exit code, KILLED or SURVIVED) and state which survivors are equivalent mutants and why.\n5. The executor's selftest is being written by Mo92E01Digest; list the eight tool mutants as the falsifier set the L1 must run against the landed tool after integration.\nDelete your scratch directory before yielding.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: depth, freshness, calibration, coverage, operability, adjacency\nMilestone: Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector\n\nReport: write your scoped findings to .ufo/waves/round-92/w1/Mo92M01Mut.md"
+      },
+      {
+        "name": "Mo92Conn01",
+        "agent": "connector",
+        "task": "/skill:godspeed\n\nTask: cross-lane overlap scan (read-only). Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/Mo92Conn01.md.\n1. Search the sibling lane repositories /home/vgpnk/Projects/shokunin/*-shokunin (exclude mori-shokunin) for an existing digest-check tool, a SOURCES.md supersession convention, or a provenance-trio checker: grep -l for 'superseded', 'sha256' with 'SOURCES', 'verified-at:', 'recheck:' in their tools/ and corpus/ directories. Report each hit as lane:path:line, or state none. Read only; never write into a sibling.\n2. Check whether shokunin's shared scripts (/home/vgpnk/Projects/shokunin/scripts/sources-census.sh and /home/vgpnk/Projects/shokunin/templates/mint, read only) already define a provenance-trio or supersession rule; quote the rule with file:line.\n3. Check the mori PROVINCE.md adjacency table for any sibling that owns registry digests or knowledge provenance; name it or state none.\n4. Decide: does C1 or C2 duplicate a sibling's ownership? Give the verdict with evidence, and list any sibling the L1 must notify through the appropriate channel (state, do not message).\n5. Report the overlap table and the verdict. No edits anywhere.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: depth, freshness, calibration, coverage, operability, adjacency\nMilestone: Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector\n\nReport: write your scoped findings to .ufo/waves/round-92/w1/Mo92Conn01.md"
+      },
+      {
+        "name": "Mo92R03Sweep",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nTask: sweep for the round-91 Mistakes classes that this round could repeat, and check the frontier bookkeeping. Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-92/w1/Mo92R03Sweep.md.\n1. Read /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-91.md section Mistakes and corpus/lessons/round-91-verifier-spotcheck.md section Routed defects (read only). For each routed defect R-D1..R-D4 state whether this round's contract addresses it (C2 addresses R-D1 and R-D4 decision; R-D2 classification of S156, S158, S159 is NOT addressed: say so with the reason, which is that it would need a population decision the contract does not freeze).\n2. Read-only check: at f63d1ab0, confirm the census input (corpus/SOURCES.md) row count and that S618 is the last id; confirm S619 and S620 are unused. Record commands and outputs.\n3. Check the census-before evidence file .ufo/waves/round-92/evidence/census-before.txt against a fresh run in a scratch clone at f63d1ab0 using the validate command with --root pointing at the scratch clone; report whether the output agrees.\n4. Check that .ufo/waves/round-92/evidence/controls-r92.txt reproduces: rerun the three control commands in a scratch clone at f63d1ab0 and compare the verdict lines byte-for-byte. Report agreements and disagreements.\n5. Check that no file under corpus/knowledge in f63d1ab0 already contains a line beginning source:, verified-at: or recheck: that the counter would count differently from your independent check in item 1 of Mo92R01Atk (only report; do not re-run that seat's work).\n6. Output the sweep commands with exit codes and each disagreement. Delete your scratch directory before yielding.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: depth, freshness, calibration, coverage, operability, adjacency\nMilestone: Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector\n\nReport: write your scoped findings to .ufo/waves/round-92/w1/Mo92R03Sweep.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

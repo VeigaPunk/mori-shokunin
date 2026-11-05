@@ -1,0 +1,4 @@
+# fleet root .ufo entries matching mo92 after scratch removal
+grep_rc=1 (1 = no match)
+# fleet root git status porcelain (mo92 entries)
+status_grep_rc=1 (1 = no match)

@@ -1,3 +1,8 @@
+verified-at: 2026-11-02 (round 76; the S591 clock claims below are line-located
+against the pinned copy and machine-verified — PASS items=2 with the able-to-fail
+arm FAIL rc 1 in the same receipt; no live fetch is a capture body — the serving
+pins S241/S581/S589/S590 are the instrument's objects and stand from their own rows)
+recheck: 180d
 source: S591 (learn.microsoft.com — Acquiring high-resolution time stamps, Win32
 sysinfo; pinned copy `corpus/evidence/sources-r76/S591.html` sha256
 233893693810754dbd4122a9a43320596a381e179a38ade6636e294d2dbffc1c, 106427 bytes,
@@ -12,11 +17,6 @@ Supporting rows the grammar reads: S589 (the schedule's monotonic clock and its
 differences-only validity; the docs' Windows note `:529`), S590 (the Challenge
 action's token-update mechanism, anchor-checked r75), S581/S586 (the documented
 immunity-time scale), S241 (the observed serving and the compare pin).
-verified-at: 2026-11-02 (round 76; the S591 clock claims below are line-located
-against the pinned copy and machine-verified — PASS items=2 with the able-to-fail
-arm FAIL rc 1 in the same receipt; no live fetch is a capture body — the serving
-pins S241/S581/S589/S590 are the instrument's objects and stand from their own rows)
-recheck: 180d
 
 # Reading rotation-schedule receipts (round 76): the r70–r75 grammar, distilled
 

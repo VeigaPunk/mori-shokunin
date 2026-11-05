@@ -1,4 +1,6 @@
 # drift pin r10 — the census's own behavioral baseline: design, the volatile contract and its measured rationale, the masking risks, the adopted lane baseline, and the admission ritual
+verified-at: 2026-10-15T22:06:01–22:17Z, two arms, one per revision:
+recheck: MORI_SHOKUNIN_ROOT=<fleet root> bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json (Erratum at drift-pin-r10.md:297-298)
 
 source: `tools/mori-census.sh` entering this round `1c49238a7fd87277151ff5776acfb4d62fadd9d69764a02f0ede03ef0d3902d2`
 (r9 bytes, `VERSION=census-r5`, 2394 lines) → **settled** `d7710981aa1c7571ff9d6fd7f75822811173010e5f4e298ac3c47fab274a0b20`
@@ -16,8 +18,6 @@ claim was read or run at `1ddb7ff8…`. The oracle `tools/mori-silence-cases.sh`
 is `MORI_SILENCE_CASES: matched=28 total=28` with `CASE_IDS` diff vs HEAD `0 added / 0 removed`;
 staged at `/tmp/mori-r10-receipts/out/oracle.log`, and the committed set lands under
 `corpus/evidence/` as `pin-r10-*.log`).
-
-verified-at: 2026-10-15T22:06:01–22:17Z, two arms, one per revision:
 
 - **`1ddb7ff8…`** (frozen snapshot `/tmp/mori-r10-note/census-snap.sh`, taken so the evidence
   stayed bound to one revision while the lane file churned under it): the full 9-leg cycle

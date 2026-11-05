@@ -1,0 +1,22 @@
+# trio-moveonly.py over the two landed trio patches (round 92)
+audit-r11.md moved_key_lines=0 removed_not_reappearing=0 added_new=3 non_key_new=0
+counter-semantics-r78.md moved_key_lines=2 removed_not_reappearing=0 added_new=0 non_key_new=0
+counter-win-r77.md moved_key_lines=2 removed_not_reappearing=0 added_new=0 non_key_new=0
+drift-pin-r10.md moved_key_lines=1 removed_not_reappearing=1 added_new=1 non_key_new=0
+execution-binding-r89.md moved_key_lines=1 removed_not_reappearing=0 added_new=0 non_key_new=0
+kernel-v7.3-recheck-r53.md moved_key_lines=2 removed_not_reappearing=0 added_new=0 non_key_new=0
+lane-silence-r2.md moved_key_lines=1 removed_not_reappearing=1 added_new=0 non_key_new=0
+progressing-weak-r2.md moved_key_lines=0 removed_not_reappearing=0 added_new=3 non_key_new=0
+rotation-receipt-grammar-r76.md moved_key_lines=2 removed_not_reappearing=0 added_new=0 non_key_new=0
+rotation-schedule-r74.md moved_key_lines=1 removed_not_reappearing=0 added_new=0 non_key_new=0
+rotation-series-r75.md moved_key_lines=2 removed_not_reappearing=0 added_new=0 non_key_new=0
+selftest-flake-r9.md moved_key_lines=1 removed_not_reappearing=0 added_new=1 non_key_new=0
+silence-cutover-r3.md moved_key_lines=0 removed_not_reappearing=0 added_new=3 non_key_new=0
+silence-grading-r2.md moved_key_lines=0 removed_not_reappearing=0 added_new=3 non_key_new=0
+surfaces-r8.md moved_key_lines=1 removed_not_reappearing=0 added_new=0 non_key_new=0
+verdict-machine-r4.md moved_key_lines=0 removed_not_reappearing=0 added_new=3 non_key_new=0
+verdict-machine-r5.md moved_key_lines=0 removed_not_reappearing=0 added_new=3 non_key_new=0
+verdict-machine-r6.md moved_key_lines=0 removed_not_reappearing=0 added_new=3 non_key_new=0
+workstate-win-r71.md moved_key_lines=2 removed_not_reappearing=0 added_new=0 non_key_new=0
+TRIO_MOVEONLY non_move_findings=0
+rc=0

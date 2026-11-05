@@ -1,0 +1,13 @@
+diff --git c/tools/mori-source-digest.py w/tools/mori-source-digest.py
+index 91ce9b3e..4550a949 100755
+--- c/tools/mori-source-digest.py
++++ w/tools/mori-source-digest.py
+@@ -234,7 +234,7 @@ def combine(verdicts, missing_copies):
+     if any(v == "mismatch" for v in verdicts):
+         return "mismatch"
+     if any(v == "prefix-only" for v in verdicts):
+-        return "prefix-only"
++        return "ok"
+     return "ok"
+ 
+ 

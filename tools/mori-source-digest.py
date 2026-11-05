@@ -12,12 +12,25 @@ Per in-scope row one line is printed:
 
     DIGEST <id> ok|mismatch|prefix-only|unpinned recorded=<value> actual=<sha256>
 
+A row superseded by a successor row (see Supersession) prints this line instead:
+
+    DIGEST <id> superseded-by <successor>
+
 Final line:
 
-    DIGEST_CHECK rows=<n> ok=<a> mismatch=<b> prefix_only=<c> unpinned=<d>
+    DIGEST_CHECK rows=<n> ok=<a> mismatch=<b> superseded=<s> prefix_only=<c> unpinned=<d>
 
-Exit: 0 only when mismatch=0 and prefix_only=0 and unpinned=0; 1 when any row
-is mismatch/prefix-only/unpinned; 2 on setup error.
+Exit: 0 only when mismatch=0 and prefix_only=0 and unpinned=0; 1 when any row is
+mismatch/prefix-only/unpinned; 2 on setup error (QUALITY 193: a prefix agreement fails the gate).
+
+Supersession: a row whose teaches cell (the 7th pipe-delimited cell) begins with
+"supersedes S<id>" supersedes S<id> if and only if S<id> classifies mismatch AND the row
+itself classifies ok. The last such successor in file order wins (the registry is append-only).
+A superseded row is not counted in mismatch=; a failing successor supersedes nothing; no other
+row's classification changes.
+
+Self-test: --selftest (argv exactly ['--selftest']) runs in-process arms over synthetic
+fixtures and prints DIGEST_SELFTEST pass=<n> fail=<m>; exit 0 iff m=0.
 
 Pair classification (recorded vs the copy file's full sha256):
   ok           recorded equals actual exactly (64-hex)
@@ -52,16 +65,20 @@ and are listed by the caller's report, not here.
 
 Paths under ../ or owner/repo/ prefixes are not treated as local copies.
 
-TMPDIR is honoured trivially (no temp files are created); the checker writes
-only to stdout/stderr.
+--selftest writes its fixtures into a tempfile.TemporaryDirectory (TMPDIR honoured, removed on
+exit); the CLI writes only to stdout/stderr.
 """
 
+import contextlib
 import hashlib
+import io
 import os
 import re
 import sys
+import tempfile
 
 ROW_RE = re.compile(r"^\|\s*(S\d+)\s*\|")
+SUPERSEDES_RE = re.compile(r"^supersedes (S\d+)\b")
 # repo-relative path under corpus/ or .ufo/; lookbehind rejects ../x,
 # owner/repo/x and mid-token hits
 PATH_RE = re.compile(r"(?<![\w/.-])((?:corpus|\.ufo)/[A-Za-z0-9_./~%\-]+)")
@@ -99,8 +116,9 @@ def parse_rows(path):
             sid = cells[1]
             source = cells[2] if len(cells) > 2 else ""
             anchor = cells[6] if len(cells) > 6 else ""
+            teaches = cells[7] if len(cells) > 7 else ""
             rows.append({"id": sid, "source": source, "anchor": anchor,
-                         "text": source + "\n" + anchor})
+                         "teaches": teaches, "text": source + "\n" + anchor})
     return rows
 
 
@@ -239,6 +257,8 @@ def combine(verdicts, missing_copies):
 
 
 def main(argv):
+    if argv[1:] == ["--selftest"]:
+        return selftest()
     if len(argv) != 3:
         print("usage: digest-check.py <SOURCES.md> <pinned-dir>", file=sys.stderr)
         return 2
@@ -266,8 +286,7 @@ def main(argv):
     by_id = {r["id"]: r for r in rows}
     pinned_files = list_files_recursive(pinned_dir)
 
-    counts = {"ok": 0, "mismatch": 0, "prefix-only": 0, "unpinned": 0}
-    n_rows = 0
+    results = []
 
     for row in rows:
         sid = row["id"]
@@ -423,17 +442,145 @@ def main(argv):
         row_verdict = combine(verdicts, missing)
         rec_show = shown_rec[0] if shown_rec else (digests[0][0] if digests else "-")
         act_show = shown_act[0] if shown_act else "-"
-        print("DIGEST %s %s recorded=%s actual=%s"
-              % (sid, row_verdict, rec_show, act_show))
-        counts[row_verdict] += 1
-        n_rows += 1
+        results.append({"id": sid, "verdict": row_verdict, "rec": rec_show, "act": act_show,
+                        "teaches": row["teaches"], "superseded_by": None})
 
-    print("DIGEST_CHECK rows=%d ok=%d mismatch=%d prefix_only=%d unpinned=%d"
-          % (n_rows, counts["ok"], counts["mismatch"],
+    res_of = {r["id"]: r for r in results}
+    verdict_of = {r["id"]: r["verdict"] for r in results}
+    for r in results:
+        m = SUPERSEDES_RE.match(r["teaches"])
+        if r["verdict"] != "ok" or m is None:
+            continue
+        target = m.group(1)
+        if verdict_of.get(target) == "mismatch":
+            res_of[target]["superseded_by"] = r["id"]
+    counts = {"ok": 0, "mismatch": 0, "superseded": 0, "prefix-only": 0, "unpinned": 0}
+    for r in results:
+        if r["superseded_by"] is not None:
+            print("DIGEST %s superseded-by %s" % (r["id"], r["superseded_by"]))
+            counts["superseded"] += 1
+        else:
+            print("DIGEST %s %s recorded=%s actual=%s"
+                  % (r["id"], r["verdict"], r["rec"], r["act"]))
+            counts[r["verdict"]] += 1
+    print("DIGEST_CHECK rows=%d ok=%d mismatch=%d superseded=%d prefix_only=%d unpinned=%d"
+          % (len(results), counts["ok"], counts["mismatch"], counts["superseded"],
              counts["prefix-only"], counts["unpinned"]))
-    if counts["mismatch"] or counts["prefix-only"] or counts["unpinned"]:
-        return 1
-    return 0
+    return exit_code(counts)
+
+
+def exit_code(counts):
+    return 1 if counts["mismatch"] or counts["prefix-only"] or counts["unpinned"] else 0
+
+
+def flip_last_hex(h):
+    return h[:-1] + ("0" if h[-1] != "0" else "1")
+
+
+def fixture_row(sid, source, anchor, teaches=""):
+    return ("| %s | %s | docs | A | fixture scope | %s | %s | mined | 2026-11-05 | 90d"
+            " | corpus/lessons/none.md |" % (sid, source, anchor, teaches))
+
+
+def selftest():
+    copy_a = b"mori digest selftest copy A\n"
+    copy_b = b"mori digest selftest copy B, a second fixture with another byte count\n"
+    da = hashlib.sha256(copy_a).hexdigest()
+    db = hashlib.sha256(copy_b).hexdigest()
+    bad_a = flip_last_hex(da)
+    src_a = "Fixture copy A - corpus/evidence/fixture-a.bin"
+    src_pinned = "Fixture copy B - the pinned copy"
+    absent = "Fixture absent - corpus/evidence/absent.bin"
+    row = fixture_row
+    # (name, rows, want status list, want summary counts, want exit code)
+    arms = [
+        ("ok row", [row("S901", src_a, "sha256 " + da)],
+         [("S901", "ok")], {"ok": 1, "mismatch": 0}, 0),
+        ("mismatch row", [row("S902", src_a, "sha256 " + bad_a)],
+         [("S902", "mismatch")], {"mismatch": 1}, 1),
+        ("mismatch corrected by valid successor",
+         [row("S903", src_a, "sha256 " + bad_a),
+          row("S904", src_a, "sha256 " + da, "supersedes S903 - corrected digest")],
+         [("S903", "superseded-by S904"), ("S904", "ok")],
+         {"mismatch": 0, "superseded": 1, "ok": 1}, 0),
+        ("bogus successor supersedes nothing",
+         [row("S905", src_a, "sha256 " + bad_a),
+          row("S906", src_a, "sha256 " + db, "supersedes S905 - wrong digest")],
+         [("S905", "mismatch"), ("S906", "mismatch")],
+         {"mismatch": 2, "superseded": 0}, 1),
+        ("successor of an ok row supersedes nothing",
+         [row("S907", src_a, "sha256 " + da),
+          row("S908", src_a, "sha256 " + da, "supersedes S907 - same bytes")],
+         [("S907", "ok"), ("S908", "ok")],
+         {"ok": 2, "superseded": 0}, 0),
+        ("prefix-only row is not superseded",
+         [row("S909", src_a, "sha256 " + da[:16]),
+          row("S910", src_a, "sha256 " + da, "supersedes S909 - prefix")],
+         [("S909", "prefix-only"), ("S910", "ok")],
+         {"prefix_only": 1, "superseded": 0, "ok": 1}, 1),
+        ("unpinned row",
+         [row("S911", absent, "sha256 " + da)],
+         [("S911", "unpinned")], {"unpinned": 1, "mismatch": 0}, 1),
+        ("successor for an absent target supersedes nothing",
+         [row("S912", src_a, "sha256 " + da, "supersedes S999 - no such row")],
+         [("S912", "ok")], {"ok": 1, "superseded": 0}, 0),
+        ("last valid successor wins",
+         [row("S913", src_a, "sha256 " + bad_a),
+          row("S914", src_a, "sha256 " + da, "supersedes S913 - first"),
+          row("S915", src_a, "sha256 " + da, "supersedes S913 - second")],
+         [("S913", "superseded-by S915"), ("S914", "ok"), ("S915", "ok")],
+         {"superseded": 1, "ok": 2, "mismatch": 0}, 0),
+        ("pinned copy resolved by recorded byte count",
+         [row("S916", src_pinned, "sha256 %s, %d bytes" % (db, len(copy_b)))],
+         [("S916", "ok")], {"ok": 1}, 0),
+        ("supersedes text outside the teaches cell is inert",
+         [row("S918", src_a, "sha256 " + bad_a),
+          row("S917", "supersedes S918 - Fixture copy A - corpus/evidence/fixture-a.bin",
+              "sha256 " + da)],
+         [("S918", "mismatch"), ("S917", "ok")],
+         {"mismatch": 1, "superseded": 0}, 1),
+    ]
+    passed = failed = 0
+    with tempfile.TemporaryDirectory() as tmp:
+        corpus = os.path.join(tmp, "corpus")
+        evidence = os.path.join(corpus, "evidence")
+        pinned = os.path.join(tmp, "pinned")
+        os.makedirs(evidence)
+        os.makedirs(pinned)
+        with open(os.path.join(evidence, "fixture-a.bin"), "wb") as fh:
+            fh.write(copy_a)
+        with open(os.path.join(pinned, "fixture-b.bin"), "wb") as fh:
+            fh.write(copy_b)
+        sources = os.path.join(corpus, "SOURCES.md")
+        for name, rows, want_status, want_counts, want_rc in arms:
+            got_status, got_counts, rc = None, None, None
+            try:
+                with open(sources, "w", encoding="utf-8") as fh:
+                    fh.write("\n".join(rows) + "\n")
+                buf = io.StringIO()
+                with contextlib.redirect_stdout(buf):
+                    rc = main(["digest-check.py", sources, pinned])
+                got_status, got_counts = [], {}
+                for ln in buf.getvalue().splitlines():
+                    if ln.startswith("DIGEST_CHECK "):
+                        got_counts = {k: int(v) for k, v in re.findall(r"(\w+)=(\d+)", ln)}
+                    elif ln.startswith("DIGEST S"):
+                        head = ln.split(" recorded=")[0].split()
+                        got_status.append((head[1], " ".join(head[2:])))
+                ok = (got_status == want_status and rc == want_rc
+                      and all(got_counts.get(k) == v for k, v in want_counts.items()))
+            except Exception as exc:
+                ok = False
+                got_status = repr(exc)
+            if ok:
+                passed += 1
+            else:
+                failed += 1
+                print("SELFTEST_FAIL %s: got status=%s counts=%s rc=%s; want status=%s counts=%s rc=%s"
+                      % (name, got_status, got_counts, rc, want_status, want_counts, want_rc),
+                      file=sys.stderr)
+    print("DIGEST_SELFTEST pass=%d fail=%d" % (passed, failed))
+    return 0 if failed == 0 else 1
 
 
 if __name__ == "__main__":

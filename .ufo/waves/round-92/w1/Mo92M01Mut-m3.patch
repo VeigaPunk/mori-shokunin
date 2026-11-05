@@ -1,0 +1,13 @@
+diff --git c/tools/mori-source-digest.py w/tools/mori-source-digest.py
+index 91ce9b3e..450ea489 100755
+--- c/tools/mori-source-digest.py
++++ w/tools/mori-source-digest.py
+@@ -425,7 +425,7 @@ def main(argv):
+         act_show = shown_act[0] if shown_act else "-"
+         print("DIGEST %s %s recorded=%s actual=%s"
+               % (sid, row_verdict, rec_show, act_show))
+-        counts[row_verdict] += 1
++        counts["ok" if row_verdict == "unpinned" else row_verdict] += 1
+         n_rows += 1
+ 
+     print("DIGEST_CHECK rows=%d ok=%d mismatch=%d prefix_only=%d unpinned=%d"

@@ -1,3 +1,7 @@
+verified-at: 2026-11-02 (round 78; the S593 claims below are line-located against the
+pinned copy and machine-verified; the association table's two `<td>` counter-name cells
+are located at their exact lines)
+recheck: 180d
 source: S593 (learn.microsoft.com — Memory Performance Information, Windows desktop
 legacy archive; pinned copy `corpus/evidence/sources-r78/S593.html` sha256
 7eb834fc1450f8f93d94e11cd66c4c7a84049631ca1b1032ffbb3019ff6a9bac, 48532 bytes, opened
@@ -12,10 +16,6 @@ Supporting rows the entry reads: S592 (the typeperf command reference — the tr
 the probe executes), S574 (the GlobalMemoryStatusEx function — the r64 probe's
 one-struct API read), S572 (the exhaustion-event semantics — the r63 ground the K4
 inference rested on).
-verified-at: 2026-11-02 (round 78; the S593 claims below are line-located against the
-pinned copy and machine-verified; the association table's two `<td>` counter-name cells
-are located at their exact lines)
-recheck: 180d
 
 # The vendor's own counter-name association (round 78): what S593 adds to the counter surface
 

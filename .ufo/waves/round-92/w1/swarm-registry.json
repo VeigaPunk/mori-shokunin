@@ -1,0 +1,174 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r92-w1",
+  "createdAt": "2026-11-05T07:54:31.890Z",
+  "updatedAt": "2026-11-05T07:54:31.890Z",
+  "reportDir": ".ufo/waves/round-92/w1",
+  "members": {
+    "Mo92E01Digest": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "depth",
+        "freshness",
+        "calibration",
+        "coverage",
+        "operability",
+        "adjacency"
+      ],
+      "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+    },
+    "Mo92S01Successors": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "depth",
+        "freshness",
+        "calibration",
+        "coverage",
+        "operability",
+        "adjacency"
+      ],
+      "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+    },
+    "Mo92Sc01Src": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "depth",
+        "freshness",
+        "calibration",
+        "coverage",
+        "operability",
+        "adjacency"
+      ],
+      "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+    },
+    "Mo92K01Trio": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "depth",
+        "freshness",
+        "calibration",
+        "coverage",
+        "operability",
+        "adjacency"
+      ],
+      "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+    },
+    "Mo92K02Trio": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "depth",
+        "freshness",
+        "calibration",
+        "coverage",
+        "operability",
+        "adjacency"
+      ],
+      "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+    },
+    "Mo92R01Atk": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "depth",
+        "freshness",
+        "calibration",
+        "coverage",
+        "operability",
+        "adjacency"
+      ],
+      "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+    },
+    "Mo92R02Atk": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "depth",
+        "freshness",
+        "calibration",
+        "coverage",
+        "operability",
+        "adjacency"
+      ],
+      "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+    },
+    "Mo92K03Crit": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "depth",
+        "freshness",
+        "calibration",
+        "coverage",
+        "operability",
+        "adjacency"
+      ],
+      "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+    },
+    "Mo92M01Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "depth",
+        "freshness",
+        "calibration",
+        "coverage",
+        "operability",
+        "adjacency"
+      ],
+      "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+    },
+    "Mo92Conn01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "depth",
+        "freshness",
+        "calibration",
+        "coverage",
+        "operability",
+        "adjacency"
+      ],
+      "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+    },
+    "Mo92R03Sweep": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "depth",
+        "freshness",
+        "calibration",
+        "coverage",
+        "operability",
+        "adjacency"
+      ],
+      "milestone": "Round92 attempt1: C1 provenance trio on corpus/knowledge (depth) and C2 digest-gate supersession with selftest (freshness); attacks, scout, scribes, connector"
+    }
+  }
+}

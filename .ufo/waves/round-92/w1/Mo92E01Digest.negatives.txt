@@ -1,0 +1,19 @@
+# Mo92E01Digest negative fixtures (scratch copies of corpus/SOURCES.md with successor rows appended)
+## A: one hex character of S619 recorded digest flipped (4 for trailing 5). expected: exit 1 and DIGEST S615 mismatch
+command: python3 -I tools/mori-source-digest.py corpus/negA-SOURCES.md .ufo/waves/round-90/w1/Mo90S01Sources/sources
+DIGEST S235 superseded-by S620
+DIGEST S349 ok recorded=9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020 actual=9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020
+DIGEST S615 mismatch recorded=7891c58897fe9f78cf16d15fd3464b746a187214c82587ac94b8f1a60ad1a6f0 actual=7891c58897fe9f78cf16d15fd3464b746a187214c82587ac94b0f83b9a8a42f5
+DIGEST S619 mismatch recorded=7891c58897fe9f78cf16d15fd3464b746a187214c82587ac94b0f83b9a8a42f4 actual=7891c58897fe9f78cf16d15fd3464b746a187214c82587ac94b0f83b9a8a42f5
+DIGEST S620 ok recorded=9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020 actual=9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020
+DIGEST_CHECK rows=123 ok=88 mismatch=2 superseded=1 prefix_only=31 unpinned=1
+exit=1
+## B: S620 row deleted. expected: exit 1 and DIGEST S235 mismatch
+command: python3 -I tools/mori-source-digest.py corpus/negB-SOURCES.md .ufo/waves/round-90/w1/Mo90S01Sources/sources
+DIGEST S235 superseded-by S349
+DIGEST S349 ok recorded=9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020 actual=9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020
+DIGEST S615 superseded-by S619
+DIGEST S619 ok recorded=7891c58897fe9f78cf16d15fd3464b746a187214c82587ac94b0f83b9a8a42f5 actual=7891c58897fe9f78cf16d15fd3464b746a187214c82587ac94b0f83b9a8a42f5
+DIGEST_CHECK rows=122 ok=88 mismatch=0 superseded=2 prefix_only=31 unpinned=1
+exit=0
+## Verdicts: A MATCHES expected (exit 1, DIGEST S615 mismatch). B DOES NOT match expected: S235 is superseded by pre-existing S349 (ok, teaches 'supersedes S235'), so no S235 mismatch line and exit 0.

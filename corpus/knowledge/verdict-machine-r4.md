@@ -1,4 +1,7 @@
 # The verdict machine, round 4 — matcher, anti-sniff, `:227`, per-round close tracking
+source: tools/mori-silence-cases.sh; tools/mori-census.sh; corpus/evidence/verdict-r4-20261015T173551Z-live.log
+verified-at: 5b62c897 (2026-10-15), admission commit
+recheck: bash tools/mori-silence-cases.sh (expect matched=28 total=28, exit 0; body line 98)
 
 seat: **verdict-note-writer** (round-4 flash wave) · lane mori-shokunin · written
 2026-10-15T17:47Z · detection and report only; nothing here remediates a fleet

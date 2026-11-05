@@ -1,4 +1,7 @@
 # Silence grading r2 — launch-aware, authorship-aware decision table for `probe_silence`
+source: corpus/knowledge/lane-silence-r2.md; tools/mori-silence-cases.sh; PROTOCOL.md:153-168; .ufo/watchdog.log
+verified-at: 3da84149 (2026-10-15), admission commit
+recheck: date -u -d '2026-10-15T01:50:57-03:00' +%s (expect 1792039857; body line 75)
 
 seat: **silence-rules** (round-2 flash wave, 13 seats) · lane mori-shokunin · written 2026-10-15T15:30Z
 derived from: `corpus/knowledge/lane-silence-r2.md` (precursor note, sha256

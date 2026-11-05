@@ -1,4 +1,7 @@
 # Progressing-weak authorship proof (round 2) — seat `authorship-proof`
+source: PROTOCOL.md:157-168 (fleet tree); corpus/knowledge/lane-silence-r2.md; corpus/knowledge/silence-grading-r2.md:224-229 (cited at progressing-weak-r2.md:11-13)
+verified-at: 3da84149 (2026-10-15), admission commit
+recheck: progressing-weak-r2.md:48-53 — extract the ###CHECK-BEGIN…###CHECK-END block with the awk command on line 49, run it with bash; expect MORI_AUTHORSHIP_CHECK: matched=10 total=10
 
 lane: mori-shokunin · seat: authorship-proof (round-2 flash wave, 13 seats) · written:
 2026-10-15T15:42Z · measured on this host: git 2.55.0 · detection and report only

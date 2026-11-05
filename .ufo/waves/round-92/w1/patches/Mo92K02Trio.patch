@@ -1,0 +1,169 @@
+diff --git c/corpus/knowledge/rotation-series-r75.md w/corpus/knowledge/rotation-series-r75.md
+index 183abeae..7db18040 100644
+--- c/corpus/knowledge/rotation-series-r75.md
++++ w/corpus/knowledge/rotation-series-r75.md
+@@ -1,3 +1,11 @@
++verified-at: 2026-11-02 (round 75; the S590 mechanism claims below are line-located
++against the pinned copy and machine-verified — PASS items=3 with the able-to-fail arm
++FAIL rc 1; the series observations are the three committed session receipts cited
++per-line in
++`.ufo/waves/round-75/evidence/rotation-series-comparison-r75.txt`)
++recheck: 180d, or when a fresh session of the stated schedule classifies a window
++differently than the series predicts a new observation should be recorded here
++(append-only)
+ source: S590 (docs.aws.amazon.com — CAPTCHA and Challenge action behavior, the AWS WAF
+ developer guide page the S579 pin's own topic tree locates; pinned copy
+ `corpus/evidence/sources-r75/S590.html` sha256
+@@ -10,14 +18,6 @@ mislocation arm FAIL rc 1, `.ufo/waves/round-75/evidence/s590-anchor-check-r75.t
+ Supporting rows the series reads: S589 (the schedule's monotonic clock), S580/S581
+ (the token-clock scale and its documented immunity times), S241 (the observed serving
+ and the compare pin).
+-verified-at: 2026-11-02 (round 75; the S590 mechanism claims below are line-located
+-against the pinned copy and machine-verified — PASS items=3 with the able-to-fail arm
+-FAIL rc 1; the series observations are the three committed session receipts cited
+-per-line in
+-`.ufo/waves/round-75/evidence/rotation-series-comparison-r75.txt`)
+-recheck: 180d, or when a fresh session of the stated schedule classifies a window
+-differently than the series predicts a new observation should be recorded here
+-(append-only)
+ 
+ # The rotation-recurrence series (round 75): three sessions of the stated schedule
+ 
+diff --git c/corpus/knowledge/selftest-flake-r9.md w/corpus/knowledge/selftest-flake-r9.md
+index a9f409b8..0554f930 100644
+--- c/corpus/knowledge/selftest-flake-r9.md
++++ w/corpus/knowledge/selftest-flake-r9.md
+@@ -1,4 +1,12 @@
+ # selftest flake r9 — the `printf | grep -q` SIGPIPE race: mechanism, archaeology, the capture-file fix, batteries, and a determinism gate
++verified-at: 2026-10-15T21:05–21:35Z — GNU bash 5.3.15, host load average ≈90–140 (the
++round's own 32-seat wave); my two loaded arms added 4 CPU hogs each and killed them at
++arm end (verified gone from `ps`). Instruments and raw logs under `/tmp/mori-r9-note/`
++(ephemeral): `before-battery.log`, `replay.log`, `replay2.log`, `after-battery.log`,
++`oracle-after.log`, `case-sizes.log`, `cases.tsv`. No durable r9 receipt had landed in
++`corpus/evidence/` at this note's clock; the numbers here are first-hand plus the two
++cross-references named in §5.
++recheck: awk 'NR>=1571' tools/mori-census.sh | grep -nE '\|[[:space:]]*(grep[[:space:]]+[^|]*-[A-Za-z]*q|grep[[:space:]]+[^|]*-m[0-9]|head)' (body lines 225-228; expect no live pipes; at f63d1ab0 it prints two comment-only hits)
+ 
+ source: `tools/mori-census.sh` before sha256
+ `390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1`
+@@ -10,13 +18,6 @@ not a version bump). The oracle `tools/mori-silence-cases.sh` sha256
+ this round (verified at the entering clock and again after the fix) and returns
+ `matched=28 total=28` exit 0 at the new census bytes (this note's own run, 18 s,
+ `/tmp/mori-r9-note/oracle-after.log`).
+-verified-at: 2026-10-15T21:05–21:35Z — GNU bash 5.3.15, host load average ≈90–140 (the
+-round's own 32-seat wave); my two loaded arms added 4 CPU hogs each and killed them at
+-arm end (verified gone from `ps`). Instruments and raw logs under `/tmp/mori-r9-note/`
+-(ephemeral): `before-battery.log`, `replay.log`, `replay2.log`, `after-battery.log`,
+-`oracle-after.log`, `case-sizes.log`, `cases.tsv`. No durable r9 receipt had landed in
+-`corpus/evidence/` at this note's clock; the numbers here are first-hand plus the two
+-cross-references named in §5.
+ scope: detection and report only; this seat wrote no lane file but this note.
+ 
+ ## 1. The race, measured
+diff --git c/corpus/knowledge/silence-cutover-r3.md w/corpus/knowledge/silence-cutover-r3.md
+index c5da1470..55095887 100644
+--- c/corpus/knowledge/silence-cutover-r3.md
++++ w/corpus/knowledge/silence-cutover-r3.md
+@@ -1,4 +1,7 @@
+ # Silence grading r2 cutover — round-3 acceptance note
++source: tools/mori-census.sh; tools/mori-silence-cases.sh; corpus/evidence/cutover-r3-20261015T165712Z-selftest.log; corpus/evidence/cutover-r3-20261015T164140Z-before.log
++verified-at: 1439c473 (2026-10-15), admission commit
++recheck: manual, corpus/knowledge/silence-cutover-r3.md:121 (selftest receipt corpus/evidence/cutover-r3-20261015T165712Z-selftest.log)
+ 
+ seat: **cutover-note-writer** (round-3 flash wave, 32 seats) · lane mori-shokunin ·
+ written 2026-10-15T17:01Z · detection and report only; nothing here remediates.
+diff --git c/corpus/knowledge/silence-grading-r2.md w/corpus/knowledge/silence-grading-r2.md
+index 8b3e3bc4..f9c1fab1 100644
+--- c/corpus/knowledge/silence-grading-r2.md
++++ w/corpus/knowledge/silence-grading-r2.md
+@@ -1,4 +1,7 @@
+ # Silence grading r2 — launch-aware, authorship-aware decision table for `probe_silence`
++source: corpus/knowledge/lane-silence-r2.md; tools/mori-silence-cases.sh; PROTOCOL.md:153-168; .ufo/watchdog.log
++verified-at: 3da84149 (2026-10-15), admission commit
++recheck: date -u -d '2026-10-15T01:50:57-03:00' +%s (expect 1792039857; body line 75)
+ 
+ seat: **silence-rules** (round-2 flash wave, 13 seats) · lane mori-shokunin · written 2026-10-15T15:30Z
+ derived from: `corpus/knowledge/lane-silence-r2.md` (precursor note, sha256
+diff --git c/corpus/knowledge/surfaces-r8.md w/corpus/knowledge/surfaces-r8.md
+index 06aaaf8d..31add409 100644
+--- c/corpus/knowledge/surfaces-r8.md
++++ w/corpus/knowledge/surfaces-r8.md
+@@ -1,4 +1,7 @@
+ # Surface gaps r8 — the four r7 residuals: disposition, sampling-cost adjudication, open items
++recheck: `bash tools/mori-census.sh --selftest` (hermetic, /tmp only) ·
++`bash tools/mori-silence-cases.sh` (28 cases, exit 0 iff all pass) ·
++`bash tools/mori-census.sh` (live, writes nothing, exit 0 CLEAN | 1 DRIFT | 2 setup).
+ 
+ source: `tools/mori-census.sh` sha256
+ `390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1`
+@@ -17,9 +20,6 @@ instantaneous,memory,roundfiles}.log` — every one pinned to the same pair
+ (`CENSUS_SHA256_BEFORE=AFTER=390ab9cd…`), and the oracle receipt's set-close check
+ re-verifies both SHAs at 2026-10-15T20:48:18Z against the set opened 20:39:32Z, so the
+ pair these numbers bind to was byte-stable across that 8 m 46 s window.
+-recheck: `bash tools/mori-census.sh --selftest` (hermetic, /tmp only) ·
+-`bash tools/mori-silence-cases.sh` (28 cases, exit 0 iff all pass) ·
+-`bash tools/mori-census.sh` (live, writes nothing, exit 0 CLEAN | 1 DRIFT | 2 setup).
+ scope: detection and report only (`PROVINCE.md:16-18`); nothing here remediates. All
+ r8 thresholds are **local placeholders**, labeled `threshold_label=local` on every row
+ and finding that carries one (`tools/mori-census.sh:249-250`).
+diff --git c/corpus/knowledge/verdict-machine-r4.md w/corpus/knowledge/verdict-machine-r4.md
+index 6f76b0de..93f937f4 100644
+--- c/corpus/knowledge/verdict-machine-r4.md
++++ w/corpus/knowledge/verdict-machine-r4.md
+@@ -1,4 +1,7 @@
+ # The verdict machine, round 4 — matcher, anti-sniff, `:227`, per-round close tracking
++source: tools/mori-silence-cases.sh; tools/mori-census.sh; corpus/evidence/verdict-r4-20261015T173551Z-live.log
++verified-at: 5b62c897 (2026-10-15), admission commit
++recheck: bash tools/mori-silence-cases.sh (expect matched=28 total=28, exit 0; body line 98)
+ 
+ seat: **verdict-note-writer** (round-4 flash wave) · lane mori-shokunin · written
+ 2026-10-15T17:47Z · detection and report only; nothing here remediates a fleet
+diff --git c/corpus/knowledge/verdict-machine-r5.md w/corpus/knowledge/verdict-machine-r5.md
+index 9be30d0b..815d259f 100644
+--- c/corpus/knowledge/verdict-machine-r5.md
++++ w/corpus/knowledge/verdict-machine-r5.md
+@@ -1,4 +1,7 @@
+ # The verdict machine, round 5 — the run-order channel, the seeded shuffle, and the residual seed channels
++source: tools/mori-silence-cases.sh; tools/mori-census.sh; corpus/evidence/order-r5-20261015T180431Z-*.log
++verified-at: a420deb7 (2026-10-15), admission commit
++recheck: bash tools/mori-silence-cases.sh (expect matched=28 total=28, exit 0; re-run recipe body lines 248-252)
+ 
+ seat: **note-writer** (round-5 flash wave) · lane mori-shokunin · written
+ 2026-10-15T18:16Z · detection and report only; nothing here remediates a fleet
+diff --git c/corpus/knowledge/verdict-machine-r6.md w/corpus/knowledge/verdict-machine-r6.md
+index e7c7d0ab..02156a24 100644
+--- c/corpus/knowledge/verdict-machine-r6.md
++++ w/corpus/knowledge/verdict-machine-r6.md
+@@ -1,4 +1,7 @@
+ # The verdict machine, round 6 — the stdout backchannel and content-keyed forgery closed, and the two residuals that remain
++source: tools/mori-silence-cases.sh; tools/mori-census.sh
++verified-at: 92b2e427 (2026-10-15), admission commit
++recheck: bash tools/mori-silence-cases.sh (expect exit 0, matched=28 total=28; re-run recipe body lines 242-246)
+ 
+ seat: **note-writer** (round-6 flash wave) · lane mori-shokunin · written
+ 2026-10-15T19:12Z · detection and report only; nothing here remediates a fleet
+diff --git c/corpus/knowledge/workstate-win-r71.md w/corpus/knowledge/workstate-win-r71.md
+index f770ff11..1302f65c 100644
+--- c/corpus/knowledge/workstate-win-r71.md
++++ w/corpus/knowledge/workstate-win-r71.md
+@@ -1,3 +1,8 @@
++verified-at: 2026-11-01 (round 71; claims below are line-located against the
++pinned S584 copy; live receipt on this host
++`.ufo/waves/round-71/evidence/workstate-live-r71.txt`)
++recheck: 180d, or when a re-fetch of either page changes its sha256 against
++the pinned copies
+ source: S584 (learn.microsoft.com — QueryUnbiasedInterruptTime, realtimeapiset;
+ pinned copy `corpus/evidence/sources-r71/S584.html` sha256
+ d0bcbba945e7cf29d4664feb28a35aa31c1f80cadb5191644a33ab84464f9136, 54774
+@@ -8,11 +13,6 @@ this round byte-identical, receipt
+ `.ufo/waves/round-71/evidence/source-s582-reopen-r71.txt`; its located-line
+ pointers are the S583-corrected ones: :834/:841/:842, see
+ `.ufo/waves/round-71/evidence/s582-pointers-erratum-r71.txt`)
+-verified-at: 2026-11-01 (round 71; claims below are line-located against the
+-pinned S584 copy; live receipt on this host
+-`.ufo/waves/round-71/evidence/workstate-live-r71.txt`)
+-recheck: 180d, or when a re-fetch of either page changes its sha256 against
+-the pinned copies
+ 
+ # Reading the Windows working-state surface (round 71)
+ 

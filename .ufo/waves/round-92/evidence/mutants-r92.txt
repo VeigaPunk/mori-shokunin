@@ -1,0 +1,18 @@
+# Mutants of the landed tool (round 92): --selftest per copy; control must pass, each mutant must fail
+== control
+DIGEST_SELFTEST pass=11 fail=0
+rc=0
+== m1-supersession-disabled
+SELFTEST_FAIL mismatch corrected by valid successor: got status=[('S903', 'mismatch'), ('S904', 'ok')] counts={'rows': 2, 'ok': 1, 'mismatch': 1, 'superseded': 0, 'prefix_only': 0, 'unpinned': 0} rc=1; want status=[('S903', 'superseded-by S904'), ('S904', 'ok')] counts={'mismatch': 0, 'superseded': 1, 'ok': 1} rc=0
+SELFTEST_FAIL last valid successor wins: got status=[('S913', 'mismatch'), ('S914', 'ok'), ('S915', 'ok')] counts={'rows': 3, 'ok': 2, 'mismatch': 1, 'superseded': 0, 'prefix_only': 0, 'unpinned': 0} rc=1; want status=[('S913', 'superseded-by S915'), ('S914', 'ok'), ('S915', 'ok')] counts={'superseded': 1, 'ok': 2, 'mismatch': 0} rc=0
+DIGEST_SELFTEST pass=9 fail=2
+rc=1
+== m2-successor-check-removed
+SELFTEST_FAIL bogus successor supersedes nothing: got status=[('S905', 'superseded-by S906'), ('S906', 'mismatch')] counts={'rows': 2, 'ok': 0, 'mismatch': 1, 'superseded': 1, 'prefix_only': 0, 'unpinned': 0} rc=1; want status=[('S905', 'mismatch'), ('S906', 'mismatch')] counts={'mismatch': 2, 'superseded': 0} rc=1
+DIGEST_SELFTEST pass=10 fail=1
+rc=1
+== m3-superseded-counted-ok
+SELFTEST_FAIL mismatch corrected by valid successor: got status=[('S903', 'superseded-by S904'), ('S904', 'ok')] counts={'rows': 2, 'ok': 2, 'mismatch': 0, 'superseded': 0, 'prefix_only': 0, 'unpinned': 0} rc=0; want status=[('S903', 'superseded-by S904'), ('S904', 'ok')] counts={'mismatch': 0, 'superseded': 1, 'ok': 1} rc=0
+SELFTEST_FAIL last valid successor wins: got status=[('S913', 'superseded-by S915'), ('S914', 'ok'), ('S915', 'ok')] counts={'rows': 3, 'ok': 3, 'mismatch': 0, 'superseded': 0, 'prefix_only': 0, 'unpinned': 0} rc=0; want status=[('S913', 'superseded-by S915'), ('S914', 'ok'), ('S915', 'ok')] counts={'superseded': 1, 'ok': 2, 'mismatch': 0} rc=0
+DIGEST_SELFTEST pass=9 fail=2
+rc=1

@@ -1,13 +1,4 @@
 # Lane silence — launch-aware, authorship-aware grading (round 2 operational note)
-
-source: `PROTOCOL.md:157-168` + `:174-188` (fleet tree, read-only);
-`scripts/shokunin-watchdog.sh:10,43-45,65-85,88-116`; `.ufo/watchdog.log`
-(live driver log, line anchors below); `tools/mori-census.sh:16,95,484-543,852-856`
-(round-1 probe — its rule divergence is `LOG.md:73-80` / `SKILL.md:111-129`);
-round-2 shared contract (L1) with the parent's mid-wave closure-window refinement
-(2026-10-15, quoted in "Closure" below). `young`, `not-open`, `unavailable` and the
-`SURFACE lane.<id>` row shape are **round-2 contract vocabulary, not protocol text** —
-the protocol anchors only silent / progressing / progressing-weak.
 verified-at: 2026-10-15T04:56Z — read-only recon of the sources above (every count,
 epoch and line number in this note was observed in that window; commands re-listed so
 any reader can re-measure). No r2 grader behavior is claimed here — see "Evidence
@@ -18,6 +9,14 @@ behavioral case, terminating in `MORI_SILENCE_CASES: matched=N total=M`; exit 0 
 all matched). Baseline (pre-cutover) receipt of record:
 `corpus/evidence/round-2/live-before.txt` (r1 grader, `script_sha256=e3073a2b…`,
 `window_s=900`).
+source: `PROTOCOL.md:157-168` + `:174-188` (fleet tree, read-only);
+`scripts/shokunin-watchdog.sh:10,43-45,65-85,88-116`; `.ufo/watchdog.log`
+(live driver log, line anchors below); `tools/mori-census.sh:16,95,484-543,852-856`
+(round-1 probe — its rule divergence is `LOG.md:73-80` / `SKILL.md:111-129`);
+round-2 shared contract (L1) with the parent's mid-wave closure-window refinement
+(2026-10-15, quoted in "Closure" below). `young`, `not-open`, `unavailable` and the
+`SURFACE lane.<id>` row shape are **round-2 contract vocabulary, not protocol text** —
+the protocol anchors only silent / progressing / progressing-weak.
 
 ## Status and scope
 

@@ -1,4 +1,7 @@
 # Round 11 capstone audit — evidence integrity is not complete conformance
+source: tools/mori-census.sh; tools/mori-silence-cases.sh; corpus/evidence/baseline-r10-20261015T2231Z.json (hashes at audit-r11.md:50-52)
+verified-at: e4855e8c (2026-10-15), admission commit
+recheck: bash tools/mori-census.sh --selftest; bash tools/mori-silence-cases.sh (audit-r11.md:118-121, the §3 table commands)
 
 Seat: `audit-note-writer`; selected round axis: **calibration — deep discernment**.
 Audited delivery: `d1e0dd90e6042723617fc75cdfb1987684d21ce4` (Round 10 records).

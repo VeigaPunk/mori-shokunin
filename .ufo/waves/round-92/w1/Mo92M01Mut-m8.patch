@@ -1,0 +1,13 @@
+diff --git c/tools/mori-source-digest.py w/tools/mori-source-digest.py
+index 91ce9b3e..2ee298d4 100755
+--- c/tools/mori-source-digest.py
++++ w/tools/mori-source-digest.py
+@@ -228,7 +228,7 @@ def pair_verdict(recorded, actual):
+ 
+ def combine(verdicts, missing_copies):
+     if missing_copies:
+-        return "unpinned"
++        return "ok"
+     if not verdicts:
+         return "unpinned"
+     if any(v == "mismatch" for v in verdicts):

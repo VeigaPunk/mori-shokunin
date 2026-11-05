@@ -1,3 +1,8 @@
+verified-at: 2026-11-01 (round 71; claims below are line-located against the
+pinned S584 copy; live receipt on this host
+`.ufo/waves/round-71/evidence/workstate-live-r71.txt`)
+recheck: 180d, or when a re-fetch of either page changes its sha256 against
+the pinned copies
 source: S584 (learn.microsoft.com — QueryUnbiasedInterruptTime, realtimeapiset;
 pinned copy `corpus/evidence/sources-r71/S584.html` sha256
 d0bcbba945e7cf29d4664feb28a35aa31c1f80cadb5191644a33ab84464f9136, 54774
@@ -8,11 +13,6 @@ this round byte-identical, receipt
 `.ufo/waves/round-71/evidence/source-s582-reopen-r71.txt`; its located-line
 pointers are the S583-corrected ones: :834/:841/:842, see
 `.ufo/waves/round-71/evidence/s582-pointers-erratum-r71.txt`)
-verified-at: 2026-11-01 (round 71; claims below are line-located against the
-pinned S584 copy; live receipt on this host
-`.ufo/waves/round-71/evidence/workstate-live-r71.txt`)
-recheck: 180d, or when a re-fetch of either page changes its sha256 against
-the pinned copies
 
 # Reading the Windows working-state surface (round 71)
 
