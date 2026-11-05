@@ -1,0 +1,7 @@
+# considerthese 2026-10-26 suggestion 3 (criterion 136): re-run the round-93 closure counters at the scored revision 8edbb86d
+## count-c1 (round-93 frozen) at 8edbb86d
+C1=met trio=98 claim_r92_true=1 files=19 adm_ok=19 adm_fail=0 patched12=12 seven_same=7 census=ok rev=8edbb86d6384
+rc=0
+## count-c2 (round-93 frozen) at 8edbb86d
+C2=met home_literals=0 vgpnk_refs=0 tools=3 selftests=3/3 census=ok rev=8edbb86d6384
+rc=0

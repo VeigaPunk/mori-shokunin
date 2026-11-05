@@ -5721,3 +5721,19 @@ closure: the repair is judged bookkeeping by `Mo93R03Atk`.
 - Correction of record: appended to `corpus/lessons/round-92.md` (lines 51–52 not edited).
 - Wave `w1`: 12 seats (3 executor, 1 scribe, 1 scout, 4 reviewer, 1 critic, 1 mutation-tester, 1 connector); attack
   share 6/12 = 50 %; all returned output.
+
+## Round 94 — 2026-11-05 (L1 MoriR94, attempt 1)
+
+Two claims, frozen at `6b65e7c1` before any seat output. C1 calibration: the admission check does not pass an admission
+hash embedded in a longer token (frozen v1 3/3 false passes, v2 0/3; live 19/19 under both). C2 operability: the round-94
+counters carry no host home literal and run with HOME unset and the root from env (met as frozen, not admitted: critic K01).
+
+- Evidence motivating the round: round-93 `## Routed defects` R02 (the plain substring admission test) and the counter
+  host path; the round-93 spot-check D3 (untracked dispatch markers).
+- Landed: frozen `count-c1v2.py`, `count-c2v2.py`, `controls-r94.py` and receipts (`6b65e7c1`); spec, dispatch and registry
+  (`4ae1678d`); wave `w1` seat outputs; S624 (mined) and S625 (rejected) rows; `corpus/lessons/round-94.md`; QUALITY 202–204.
+- Not landed: the `.gitignore` rule for dispatch markers (rejected by critic K02: it would hide 33 tracked markers); the
+  planner binding (D1, operator).
+- Trend verdicts and axis verdicts are in `corpus/lessons/round-94.md` and the round report.
+- Wave `w1`: 12 seats (3 executor, 1 scout, 2 reviewer, 2 critic, 2 mutation-tester, 1 connector, 1 scribe); attack share
+  6/12 = 50 %; all 12 returned output; none dead.

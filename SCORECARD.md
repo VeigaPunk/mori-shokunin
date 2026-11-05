@@ -4758,3 +4758,34 @@ Receipts: `evidence/measure-c1-entering.txt`, `evidence/measure-c2-entering.txt`
    embedded hash.
 2. The counter-owned host path (`count-c1.py`/`count-c2.py` CENSUS constant), in the same amendment.
 3. Carried: digest-gate debt (31 prefix-only rows, S125 unpinned; contract P3); round-90 nonce guard (QUALITY 191).
+
+## Round 94 (2026-11-05, L1 MoriR94, attempt 1) — C1 met as frozen (admit-candidate); C2 met as frozen, not admitted
+
+Entering `84b152308fa6c2f224ad75dff68e525dab9057ac`; freeze `6b65e7c11f318481d5efa0429cdabb50743a2cc2`
+(contract `.ufo/waves/round-94/contract.md`, counters, controls, receipts); spec `4ae1678df9c190209971ceb4604b71d3e54d779d`;
+wave `w1`, 12 seats, no dead seat. Axes: **calibration** (C1, score 5, tied lowest non-retired) and
+**operability** (C2, score 7). No score moves are claimed.
+
+| Claim | Axis | Counting command | Before (entering `84b15230`) | After (freeze `6b65e7c1`; landing receipts below) | Verdict |
+|---|---|---|---|---|---|
+| C1 the admission check does not pass an admission hash embedded in a longer token | calibration | `python3 -I .ufo/waves/round-94/controls-r94.py <lane> <fleet>` (`EMBED_FALSE_PASS`) and `SHOKUNIN_ROOT=<fleet> python3 -I .ufo/waves/round-94/count-c1v2.py <rev> --repo <lane>` | frozen v1: `EMBED_FALSE_PASS v1=3/3` (`evidence/controls-r94.txt`) | v2: `v2=0/3 live_v2=met adm_ok=19` (`evidence/controls-r94.txt`; replay `w1/Mo94E01Replay.md`, `v2 0/4` on four extra classes) | met as frozen; admit-candidate (critic K01 §1e, non-author); no score move |
+| C2 round-94 counters carry no host home literal and run with HOME unset and the root from env | operability | `SHOKUNIN_ROOT=<fleet> python3 -I .ufo/waves/round-94/count-c2v2.py <rev> --repo <lane> --root <fleet>` | round-93 counters `literal=6` (`count-c2v2.py --report --scan .ufo/waves/round-93`); round-94 counters absent (`C2=unmet … files=0`) | `C2=met literal_r94=0 files_r94=3 frozen_r93=unchanged env_i=met env_unset=rc2` (`w1/Mo94E02Relo.md`) | met as frozen; **not admitted**: critic K01 §2f (successor artifacts, no existing-artifact move; `env_unset` fails open on a missing counter); operator rules |
+
+Learning trends (lane): expansion unchanged; quality unchanged; discernment improved (lesson `corpus/lessons/round-94.md`).
+The round-93 spot-check D1 (planner) stays open and operator-owned; D3 (untracked markers) is closed by committing the markers.
+
+### Capabilities (round 94)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Admission-token counter with frozen fixture battery (`count-c1v2.py`, `controls-r94.py`) | reads an embedded-hash admission forgery as unmet (`checks_failed=admission`) while passing the live trio 19/19 | `.ufo/waves/round-94/evidence/controls-r94.txt`; `w1/Mo94E01Replay.md` §2–3 | 94 |
+
+### Planned (round 95)
+
+1. **calibration** — a frozen-battery amendment (new frozen revision, not an edit): single-variable fixtures for the
+   C1 conjuncts that survived `w1/Mo94M01Mut.md` (length clause m2, census gate m3, trio floor m4, patched12 m6).
+2. **operability** — C2 restated: an operability before measured on a pre-existing artifact (the round-93 counters on a
+   host without `/home/vgpnk`), or entered as a capability row with its first-working round; the `env_unset` check reads
+   the `C1_SETUP` line text, not only the exit code (critic K01 §2c).
+3. **depth** — carried: the 31 prefix-only digest rows and S125 unpinned (contract P4 of round 93); the round-90 nonce guard (QUALITY 191).
+4. **operator** — D1 planner binding (L0); the sibling host-literal class (seven siblings, `w1/Mo94Conn01.md`) routed through L0.

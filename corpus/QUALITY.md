@@ -2275,3 +2275,29 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
      classify `mismatch` (`tools/mori-source-digest.py` selftest case "prefix-only row is not
      superseded"). Premise P3 of round 93 records the refusal (`corpus/lessons/round-93.md` M1).
      Shown able to fail: the premise is checkable by grepping CORPUS.md rule 2 and the selftest case.
+
+## Criteria added round 94 — token boundaries, fail-closed roots, and durable dispatch markers
+
+202. An admission check compares the first whitespace token of a `verified-at:` value with the
+     admission commit's short hash as a prefix (the token is at least 7 characters and
+     `admission.startswith(token)`), never as a substring of the line. A plain `in` test passes a hash
+     embedded inside a longer token (round-93 counter `count-c1.py:141`, routed R02). Ground:
+     `corpus/lessons/round-94.md` Mistakes and claims; `.ufo/waves/round-94/count-c1v2.py`
+     `admission_token_ok`; S624. Shown able to fail: the frozen v1 reads 3 of 3 embedded fixtures
+     `C1=met`, v2 reads 0 of 3 (`.ufo/waves/round-94/evidence/controls-r94.txt`: `EMBED_FALSE_PASS v1=3/3 v2=0/3`),
+     and the live base reads `adm_ok=19` under both.
+203. A counter takes its fleet root from `--census` or the `SHOKUNIN_ROOT` environment and exits 2
+     (`C1_SETUP`) when neither is set; it never falls back to a host path. Ground:
+     `.ufo/waves/round-94/count-c1v2.py` `census_path`; the round-93 counters hardcode
+     `/home/vgpnk/Projects/shokunin/scripts/sources-census.sh` (`count-c1.py:39`, `count-c2.py:39`).
+     Shown able to fail: with `SHOKUNIN_ROOT` unset and no `--census` the counter exits 2 with the
+     `C1_SETUP` line (`.ufo/waves/round-94/w1/Mo94E02Relo.md` Run 2; critic K01 §2c). Limit: the exit
+     code alone does not prove the setup path; a missing counter also exits 2 (criterion 203 is not
+     sufficient for the operability claim, which was not admitted).
+204. A lane's dispatch markers (`.ufo/waves/round-N/<wave>.ready` and `<wave>.ready.dispatched`) are
+     committed with the round, not ignored and not left untracked: an untracked marker is non-durable
+     dispatch evidence (PROTOCOL.md Invariants). Ground: round-93 spot-check D3 (`corpus/lessons/round-93-verifier-spotcheck.md`
+     §1, §6); `corpus/lessons/round-94.md` Mistakes (the `.gitignore` rule was rejected by critic K02 because
+     it would hide 33 tracked legacy markers). Shown able to fail: `git status --porcelain -- .ufo/waves`
+     lists the untracked markers before the landing commit (`.ufo/waves/round-94/evidence/gitignore-red-before.txt`)
+     and lists none after it.
