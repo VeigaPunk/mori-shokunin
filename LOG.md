@@ -5747,3 +5747,13 @@ Two claims, frozen at `2dc476d7` before any seat output (attempt 1). C1 calibrat
 - Not landed: a successor battery or harness (routed to round 96); calibration credit (not admitted, non-author critic); the operability move (not admitted, do-nothing control).
 - Dead seats disclosed: `Mo95M01Mut`, `Mo95M02Mut` (mutation-testers), `Mo95Sc01Lesson` (scribe); critic `Mo95K01Crit` landed its report with an empty final yield.
 - Trend verdicts and axis verdicts are in `corpus/lessons/round-95.md` and the round report.
+
+## Round 96 — 2026-11-05 (L1 MoriR96, attempt 1)
+
+Two claims, frozen at `b88c8ae8` before any wave output (`.ufo/waves/round-96/contract.md`). C1 calibration: the SCORECARD `Last change` cells against the admitted MANIFEST mori closures — before `mismatches=5` at `66c5518e`; new unbounded counter `tools/mori-scorecard-calibration.py`; five cells corrected in place, Score and Evidence cells unchanged. C2 freshness: SOURCES digest re-verification — before `unpinned=6`; three rows pinned (S125, S612, S622); S615, S616 and S623 are stale (live bytes differ from the recorded digests) and stay unpinned, so the frozen target `unpinned=0` is unmet (honest stop).
+
+- Evidence motivating the round: the r79 counter's `THROUGH = 78` bound (`.ufo/waves/round-79/count-c2.py:33`) hides rounds 79–95 (`corpus/lessons/round-96.md` Mistake 1); the r95 lesson's `unpinned=3` had no command and measured 6 (Mistake 2).
+- Landed: `tools/mori-scorecard-calibration.py` (selftest 11/11); SCORECARD `## Axes` Last-change cells (calibration, freshness, depth, operability, coverage) and the round-96 section; `corpus/evidence/` pinned copies; `corpus/lessons/round-96.md`; this entry.
+- Not landed: C2 target (unpinned 0). Stale rows S615, S616, S623 need an operator ruling (L0 line this round). Round-97 carries the mutation sweep of the new counter and the frozen-selftest survivors M2, M5, M6.
+- Wave: `w1`, 10 seats (`.ufo/waves/round-96/w1/swarm-registry.json`); residual `w2` refused by the validator (`too_few_lanes`, floor 8) and not dispatched.
+- Trend verdicts and axis verdicts are in `corpus/lessons/round-96.md` and the round report.

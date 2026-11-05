@@ -1,0 +1,13 @@
+arm conformant_met: pass
+arm stale_cell_unmet: pass
+arm not_admitted_higher_ignored_met: pass
+arm verdict_word_missing_unmet: pass
+arm duplicate_axis_row_unmet: pass
+arm score_cell_changed_unmet: pass
+arm evidence_cell_changed_unmet: pass
+arm cell_round_missing_unmet: pass
+arm no_admitted_expectation_mismatch: pass
+arm verdict_word_disagrees_unmet: pass
+arm setup_bad_manifest_exit2: pass
+CALIB_SELFTEST pass=11 fail=0
+exit=0

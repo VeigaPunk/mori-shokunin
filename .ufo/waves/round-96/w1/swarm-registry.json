@@ -1,0 +1,119 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r96-w1",
+  "createdAt": "2026-11-05T12:19:05.730Z",
+  "updatedAt": "2026-11-05T12:19:05.730Z",
+  "reportDir": ".ufo/waves/round-96/w1",
+  "members": {
+    "CalibExec": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+    },
+    "DigestExec": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+    },
+    "CalibScout": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+    },
+    "DigestScout": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+    },
+    "ConnRound": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+    },
+    "ScribeDraft": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+    },
+    "CritRound": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+    },
+    "DigestRev": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+    },
+    "MutCalib": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+    },
+    "DigestLab": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "revenger",
+      "item": null,
+      "axes": [
+        "calibration",
+        "freshness"
+      ],
+      "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+# derived-cells.txt -- C1 expected `Last change` leads (round-96 wave w1, seat CalibExec)
+#
+# Derived by the NEW counter's own expectation engine (load_expectations over
+# /home/vgpnk/Projects/shokunin/MANIFEST.json: highest admitted `lane: "mori"` row, any round,
+# no bound, with verdicts[axis] exactly "improved" or "harmed") against SCORECARD.md at
+# 66c5518e239eeacd6070be26d78085ef702392cb. Measured mismatches = 5 (see base-run.txt).
+#
+# Edit rule for the L1: in each mismatched axis's `Last change` cell, replace only the text
+# before the first ';' with the expected lead below; keep the existing history clauses after
+# the ';'. No Score value and no Evidence pointer moves (COLUMNS_UNCHANGED).
+#
+# The exact `round N improved` text the counter expects:
+
+coverage    : round 80 improved   (cell now leads: round 56 improved)
+operability : round 93 improved   (cell now leads: round 78 improved)
+depth       : round 86 improved   (cell now leads: round 76 improved)
+freshness   : round 82 improved   (cell now leads: round 78 improved)
+calibration : round 93 improved   (cell now leads: round 78 improved)
+
+# adjacency already matches: round 19 improved (expect=round_19_improved, state=ok) -- no edit.
+# These are the contract's "Expected landing cells"; at the landing revision the counter must
+# print C1=met axes=6 mismatches=0 columns_unchanged=yes rows=6.
