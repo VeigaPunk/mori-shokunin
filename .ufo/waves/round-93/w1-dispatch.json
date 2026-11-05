@@ -1,0 +1,283 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r93-w1",
+  "policy": {
+    "source": "config",
+    "maxLanes": 16,
+    "minLanes": 8,
+    "waveMinLanes": 8,
+    "waveMaxLanes": 16,
+    "declaredMaxLanes": 16,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 12,
+    "resume": 0,
+    "total": 12
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-93/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-93/w1",
+    "members": {
+      "Mo93E01Vgpnk": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage",
+          "adjacency",
+          "freshness",
+          "depth"
+        ],
+        "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+      },
+      "Mo93E02Verif": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage",
+          "adjacency",
+          "freshness",
+          "depth"
+        ],
+        "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+      },
+      "Mo93E03Equiv": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage",
+          "adjacency",
+          "freshness",
+          "depth"
+        ],
+        "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+      },
+      "Mo93S01Lesson": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage",
+          "adjacency",
+          "freshness",
+          "depth"
+        ],
+        "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+      },
+      "Mo93Sc01Src": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage",
+          "adjacency",
+          "freshness",
+          "depth"
+        ],
+        "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+      },
+      "Mo93R01Atk": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage",
+          "adjacency",
+          "freshness",
+          "depth"
+        ],
+        "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+      },
+      "Mo93R02Atk": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage",
+          "adjacency",
+          "freshness",
+          "depth"
+        ],
+        "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+      },
+      "Mo93R03Atk": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage",
+          "adjacency",
+          "freshness",
+          "depth"
+        ],
+        "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+      },
+      "Mo93K01Crit": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage",
+          "adjacency",
+          "freshness",
+          "depth"
+        ],
+        "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+      },
+      "Mo93M01Mut": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage",
+          "adjacency",
+          "freshness",
+          "depth"
+        ],
+        "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+      },
+      "Mo93Conn01": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage",
+          "adjacency",
+          "freshness",
+          "depth"
+        ],
+        "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+      },
+      "Mo93R04Sweep": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability",
+          "coverage",
+          "adjacency",
+          "freshness",
+          "depth"
+        ],
+        "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "# Goal\nmori round 93 attempt 1, wave w1 (two claims). Lane repo: /home/vgpnk/Projects/shokunin/mori-shokunin (absolute paths only). Frozen contract and counters, committed at 6d82b8d7: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/contract.md, count-c1.py, count-c2.py, controls-r93.sh. The counters are frozen: never edit them in the lane. Counting base (entering revision): 7b3fe9d540c98b8b0390a0f9bbe78de4341092a5. Patch base: 6d82b8d7ef6d94a5527737f9242cdf04ad018da7. C1 calibration: the 12 verified-at lines of the round-92 trio landing that lack their file admission commit gain it (adm_fail 12 to 0); the round-92 lesson correction is appended, not edited in place. C2 operability: no tool under tools/ hardcodes a host home path (home_literals 18 to 0, vgpnk_refs 18 to 0, selftests 3/3).\n\n# Contract\nSeats never commit, push, or run any mutating git or jj command anywhere; the L1 is the only writer of the lane tree. Each seat works ONLY in its own scratch clone: S=/fast/scratch/hyaku/mori-r93/<your-seat-name>; mkdir -p $S; clone with git clone --shared --no-checkout /home/vgpnk/Projects/shokunin/mori-shokunin $S/clone then git -C $S/clone checkout -q -B seat 6d82b8d7ef6d94a5527737f9242cdf04ad018da7; pass TMPDIR=$S explicitly; first line of your shell work: trap 'rm -rf -- $S' EXIT. Never write under /tmp except files under 50 MB. Never write into sibling lanes, /home/vgpnk/Projects/shokunin/.ufo/state, .scratch, MANIFEST.json, scripts/, templates/, or the fleet root. Every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin: write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Patch files: git -C $S/clone diff 6d82b8d7 > /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/w1/patches/<seat-name>.patch (create the patches directory first). Never use an unqualified relative path.\n\nTooling authorization (operator, 2026-10-19): you and every seat may install or upgrade tools that help the task. Read /home/vgpnk/.omp/agent/RULES.md first (official channels, update-safety gate) and record tool, version, channel and reason in your report. pacman guard (orchestrator ruling 2026-10-20): all pacman transactions are PAUSED host-wide; install only via uv tool, npx or an official binary in ~/.local/bin; never pacman -Sy, -Syu, -U or -R.\n\n# Acceptance\nEach seat's report names its evidence pointers (path:line, command and exact output, or patch file) and says which checks it ran. Unrun checks are reported as unrun.",
+    "tasks": [
+      {
+        "name": "Mo93E01Vgpnk",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nTask: C2 operability repair (contract section C2). In your scratch clone at 6d82b8d7 edit ONLY tools/mori-blind-check.sh, tools/mori-misroot-sweep.py and tools/mori-round17-context-check.py. Goal: count-c2.py reads C2=met at your commit (home_literals=0 vgpnk_refs=0 tools=3 selftests=3/3 census=ok). Functional literals derive at run time: in python os.environ.get('SHOKUNIN_ROOT') or os.path.join(os.path.expanduser('~'), 'Projects', 'shokunin'); in bash ${SHOKUNIN_ROOT:-$HOME/Projects/shokunin}. Prose and comment mentions become placeholders <fleet-root> or <lane-root>. The seat-context strings that mori-round17-context-check.py renders must stay byte-identical on this host with SHOKUNIN_ROOT unset: render them before and after your edit using the tool's own render path (inspect the tool for it) and commit the two renders as evidence in your report. Do not edit count-c2.py or any other tool. Acceptance: run python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/count-c2.py <your-commit> --repo <your-clone> once and paste its line; run each tool's --selftest and paste the exit codes. Write the patch to the patches path and the findings note to /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/w1/Mo93E01Vgpnk.md (Report trailer). List every literal you could not derive and why.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration, operability, coverage, adjacency, freshness, depth\nMilestone: Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623\n\nReport: write your scoped findings to .ufo/waves/round-93/w1/Mo93E01Vgpnk.md"
+      },
+      {
+        "name": "Mo93E02Verif",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nTask: C1 calibration data repair (contract section C1). In your scratch clone at 6d82b8d7 edit ONLY the verified-at line (within the first 12 lines) of these 12 files under corpus/knowledge/: counter-semantics-r78.md counter-win-r77.md drift-pin-r10.md execution-binding-r89.md kernel-v7.3-recheck-r53.md lane-silence-r2.md rotation-receipt-grammar-r76.md rotation-schedule-r74.md rotation-series-r75.md selftest-flake-r9.md surfaces-r8.md workstate-win-r71.md. New line per file: verified-at: <short admission hash> (<original verified-at value text after the colon, kept verbatim>). Admission hash per file: git log --diff-filter=A --format=%h 7b3fe9d540c98b8b0390a0f9bbe78de4341092a5 -- corpus/knowledge/<file> then tail -1 (run inside your scratch clone, which has that history). Make no other change to any file. Acceptance: commit your edit in your scratch clone and run python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/count-c1.py <your-commit> --repo <your-clone> once; paste its line. Also paste the old and new verified-at line for each of the 12 files. Write the patch to the patches path and the findings note to /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/w1/Mo93E02Verif.md (Report trailer).\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration, operability, coverage, adjacency, freshness, depth\nMilestone: Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623\n\nReport: write your scoped findings to .ufo/waves/round-93/w1/Mo93E02Verif.md"
+      },
+      {
+        "name": "Mo93E03Equiv",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nTask: build and sandbox-prove the C2 equivalence harness as wave evidence. Write /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/w1/equiv-c2.sh (bash; no host literals; honours TMPDIR; takes two revisions A and B and an optional scratch dir). For each revision it git-archives the three tools plus tools/mori-round17-jj-regressions.py into its own scratch subdirectory, runs each tool's --help and each --selftest with cwd at the tree root, captures stdout, stderr and rc, and prints a per-tool equality verdict and an overall rc (0 identical, 1 different). Prove it: (1) A=B=7b3fe9d540c98b8b0390a0f9bbe78de4341092a5 must print identical and rc 0; (2) able-to-fail: in your scratch clone make a one-character change to one --help string of mori-misroot-sweep.py and show the harness prints a difference with rc 1 (paste the output). Remove every scratch directory on exit. Write the findings note with the full command lines and their output to /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/w1/Mo93E03Equiv.md (Report trailer); keep it under 300 lines.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration, operability, coverage, adjacency, freshness, depth\nMilestone: Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623\n\nReport: write your scoped findings to .ufo/waves/round-93/w1/Mo93E03Equiv.md"
+      },
+      {
+        "name": "Mo93S01Lesson",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nTask: draft prose for the round-93 lesson and the append-only round-92 correction. Write the draft to /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/w1/Mo93S01Lesson.md (Report trailer). Contents: (a) CORRECTION-OF-RECORD entry for corpus/lessons/round-92.md, appended not in-place: it corrects the sentence wrapped over lines 51-52, which says each verified-at names the admission commit of its file. That was false at landing 9dce2ca6 for 12 of 19 files (see .ufo/waves/round-93/evidence/measure-c1-entering.txt, and the round-92 verifier spotcheck section 2 and routed defect D1); the round-93 C1 repair makes it true at the round-93 landing. Give the exact text to append. (b) Mistakes table for round 93, columns class | evidence pointer | captured-by | fix, with exactly four rows: M1 unchecked-rule-2 in the first contract draft (in-place completion of recorded digests planned; evidence .ufo/waves/round-93/contract.md premise P3 and corpus/CORPUS.md rule 2 line for rule 2); captured-by CORPUS rule 2 and contract P3; fix: contract redrafted before its commit. M2 truncated read window: the first trio counter read 4096 bytes and counted 97 of 98 knowledge entries (see the count-c1.py trio_count read size; evidence .ufo/waves/round-93/evidence/measure-c1-entering.txt shows trio=98 at the 64 KB read); captured-by none; fix: 64 KB read, shown able to fail by the 4096-byte rerun described in the controls note. M3 miscounted host literal: the contract first said 10 occurrences, the measured byte count is 18 (evidence .ufo/waves/round-93/evidence/measure-c2-entering.txt); captured-by none; fix: the contract premise P2 states the measured count and the counter prints it. M4 wrapped-sentence sed no-op: the first text-only control matched a sentence wrapped over two lines and changed nothing (git commit reported nothing to commit); evidence .ufo/waves/round-93/evidence/controls-r93.txt; captured-by none; fix: control now matches the first wrapped line and asserts the substitution with grep, exiting 2 on a no-op. (c) Gate section scaffold for S622 (git-log documentation) and S623 (Python -I documentation) with blanks the L1 fills from the scout report. Do not invent measurements; cite only the files named. Under 250 lines.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage, adjacency, freshness, depth\nMilestone: Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623\n\nReport: write your scoped findings to .ufo/waves/round-93/w1/Mo93S01Lesson.md"
+      },
+      {
+        "name": "Mo93Sc01Src",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nTask: open two official sources and draft two SOURCES.md registry rows (CORPUS.md rule 1). Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/w1/Mo93Sc01Src.md (Report trailer). Row S622: git-log(1) documentation, official https://git-scm.com/docs/git-log (the --diff-filter option with the A filter, and --format=%h). Row S623: the Python command-line reference, option -I (isolated mode), official https://docs.python.org/3/using/cmdline.html. For each source: record the access date (2026-11-05), the HTTP status, the byte count and sha256 of the fetched bytes, and a located quote of at most 25 words with its section heading. Keep the fetched copies only in your scratch dir, never in the lane. Draft each row as one line with exactly 11 cells: | id | source | kind | tier | scope | anchor | teaches | status | opened | recheck | used-by |. Values: kind docs; tier A; status mined; opened 2026-11-05; recheck on-release; used-by corpus/lessons/round-93.md for both (the lesson cites them). The anchor cell must carry the revision or version and the located section. No literal pipe inside any cell. Verify each row: awk -F'|' with NF equal to 13 on the leading-pipe form. If a source cannot be opened, say so and draft no row for it.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage, adjacency, freshness, depth\nMilestone: Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623\n\nReport: write your scoped findings to .ufo/waves/round-93/w1/Mo93Sc01Src.md"
+      },
+      {
+        "name": "Mo93R01Atk",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nTask: attack the frozen C2 predicate and its counter (contract section C2; count-c2.py) without editing the lane. Use scratch clones at 6d82b8d7 only. Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/w1/Mo93R01Atk.md (Report trailer). (1) Enumerate host-path forms that the HOME_RE regex and the vgpnk byte count both miss inside tools/: a relative ../../<user> form, a path built by concatenation or os.path.join('/home', name), a Windows or macOS form, and a home path ending in a dot. For each, build the form in a scratch clone of 6d82b8d7 under tools/, run python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/count-c2.py <rev> --repo <clone>, and record the exact output line. (2) Forge a passing repair: replace /home/vgpnk with os.path.join('/home','vgpnk') in one tool and report the verdict. (3) For each form: caught or missed, and whether the contract's named limit covers it. Under 200 lines.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage, adjacency, freshness, depth\nMilestone: Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623\n\nReport: write your scoped findings to .ufo/waves/round-93/w1/Mo93R01Atk.md"
+      },
+      {
+        "name": "Mo93R02Atk",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nTask: attack the frozen C1 predicate and its counter (contract section C1; count-c1.py) without editing the lane. Scratch clones at 6d82b8d7 only. Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/w1/Mo93R02Atk.md (Report trailer). (1) Re-derive the 12 mismatch files and their admission commits WITHOUT the counter: git log --diff-filter=A --format=%h 7b3fe9d540c98b8b0390a0f9bbe78de4341092a5 -- corpus/knowledge/<file> then tail -1, and check the verified-at line at 6d82b8d7 for the first 7 characters. Compare with /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/evidence/measure-c1-entering.txt; report any set difference. (2) Forge a passing repair: write the admission hash into each of the 12 verified-at lines but delete the original value text AND edit a second body line in one file; run count-c1.py and report the verdict. (3) Forge: write another file's admission hash into each verified-at; report the verdict. (4) Could the 7-character prefix test be satisfied by a coincidental substring of an unrelated value? Test it against the 19 files' full verified-at lines and report. For each attack: caught or missed. Under 200 lines.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage, adjacency, freshness, depth\nMilestone: Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623\n\nReport: write your scoped findings to .ufo/waves/round-93/w1/Mo93R02Atk.md"
+      },
+      {
+        "name": "Mo93R03Atk",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nTask: attack the calibration claim C1 itself, not its counter. Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/w1/Mo93R03Atk.md (Report trailer). (1) Read the canonical learning path at /home/vgpnk/Projects/kimi-shokunin/skills/shokunin/protocol/LEARNING.md (the Files section, which describes verified-at) and the lane's own corpus/QUALITY.md criterion 194 at 6d82b8d7. Decide whether the round-92 rule that verified-at names the admission commit is the lane's own stricter criterion, or in conflict with the canonical wording; cite file:line for both. (2) Is repairing 12 data lines to satisfy the round-92 lesson sentence a calibration move (AXES.md calibration: self-assessment matched to observed state) or bookkeeping? Argue both sides with evidence and name the single verifier question that decides it. (3) Does the lesson correction count as a self-assessment mismatch under that definition? (4) Name the exact sentence and file:line the non-author closure should check. Under 150 lines.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage, adjacency, freshness, depth\nMilestone: Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623\n\nReport: write your scoped findings to .ufo/waves/round-93/w1/Mo93R03Atk.md"
+      },
+      {
+        "name": "Mo93K01Crit",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nTask: falsify the round itself. Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/w1/Mo93K01Crit.md (Report trailer). (1) Read contract.md premise P3 in the lane at 6d82b8d7. Argue whether CORPUS.md rule 2 forbids completing a recorded digest in place, and whether supersession of prefix-only rows is an intended exclusion (QUALITY 193 and 195 in corpus/QUALITY.md, and the selftest case prefix-only row is not superseded in tools/mori-source-digest.py). Cite file:line. Say whether dropping the digest-gate claim is correct, too cautious, or wrong, with the reason. (2) Is C2 a real operability move under AXES.md operability (runnable artifacts) or a portability cosmetic? Decide, and name the evidence an outside verifier needs. (3) Is the two-claim shape honest against the SCORECARD planned list for rounds 90 to 92 (freshness and depth items)? Name what a third claim would be and whether it is cheap. (4) Name the one element a non-author would have to accept on trust. Under 150 lines.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage, adjacency, freshness, depth\nMilestone: Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623\n\nReport: write your scoped findings to .ufo/waves/round-93/w1/Mo93K01Crit.md"
+      },
+      {
+        "name": "Mo93M01Mut",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nTask: mutation-test both frozen counters. Copy /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93 into your scratch dir (never edit the lane). Build at least six single-point mutants of the copied counters: for count-c1.py (m1) drop the 7-character prefix test so any non-empty verified-at passes; (m2) skip the patched12 check; (m3) read only 4096 bytes in trio_count; (m4) drop the census conjunct; for count-c2.py (m5) remove the HOME_RE conjunct; (m6) remove the vgpnk conjunct. For each mutant run the copied controls-r93.sh against it (pass the lane path and an output file in your scratch dir) and record every control verdict. A mutant that makes any control read met is a surviving mutant. Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/w1/Mo93M01Mut.md (Report trailer) as a table of mutant, control, verdict, survived yes or no. Under 200 lines.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage, adjacency, freshness, depth\nMilestone: Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623\n\nReport: write your scoped findings to .ufo/waves/round-93/w1/Mo93M01Mut.md"
+      },
+      {
+        "name": "Mo93Conn01",
+        "agent": "connector",
+        "task": "/skill:godspeed\n\nTask: cross-lane overlap scan, read only; never write into a sibling. Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/w1/Mo93Conn01.md (Report trailer). (1) For each sibling lane directory /home/vgpnk/Projects/shokunin/*-shokunin except mori-shokunin, count occurrences of the literal /home/vgpnk in its tools/ and scripts/ trees (grep -rl then grep -c, excluding .git). Report lane:path:count. (2) Across sibling corpus/knowledge/ entries, count how many verified-at: lines contain a hex token of 7 to 12 characters (commit form) and how many do not (date form). Report the two counts and the command. (3) Check /home/vgpnk/Projects/shokunin/scripts/ and /home/vgpnk/Projects/shokunin/templates/ for any existing admission-commit or provenance checker; report hits as path:line or none. Facts only, with commands and counts. Under 120 lines.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage, adjacency, freshness, depth\nMilestone: Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623\n\nReport: write your scoped findings to .ufo/waves/round-93/w1/Mo93Conn01.md"
+      },
+      {
+        "name": "Mo93R04Sweep",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nTask: sweep the round-93 frozen artifacts for the round-92 Mistakes classes and check the premises. Report: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-93/w1/Mo93R04Sweep.md (Report trailer). (1) Run git -C /home/vgpnk/Projects/shokunin/mori-shokunin show --stat --format=%h 6d82b8d7 and paste it; confirm the frozen set matches the contract. (2) Premise re-check (QUALITY 196): for each literal the contract relies on (the lesson sentence at lines 51-52 of corpus/lessons/round-92.md, the 12 file names, the 3 tool names, the 18 vgpnk byte count, the 7b3fe9d5 base), run the grep at 7b3fe9d5 and paste the output. (3) grep the two counters for any /tmp literal and for any import outside the python standard library. (4) Check that controls-r93.sh runs under set -u and that every fixture is a clone (grep), and that no control writes into the lane. (5) Count registry rows at 7b3fe9d5 with the census command from corpus/CORPUS.md and confirm the lane has not appended rows since. Report every defect with path:line. Under 150 lines.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability, coverage, adjacency, freshness, depth\nMilestone: Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623\n\nReport: write your scoped findings to .ufo/waves/round-93/w1/Mo93R04Sweep.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

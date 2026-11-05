@@ -1,0 +1,189 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r93-w1",
+  "createdAt": "2026-11-05T09:04:44.082Z",
+  "updatedAt": "2026-11-05T09:04:44.082Z",
+  "reportDir": ".ufo/waves/round-93/w1",
+  "members": {
+    "Mo93E01Vgpnk": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage",
+        "adjacency",
+        "freshness",
+        "depth"
+      ],
+      "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+    },
+    "Mo93E02Verif": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage",
+        "adjacency",
+        "freshness",
+        "depth"
+      ],
+      "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+    },
+    "Mo93E03Equiv": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage",
+        "adjacency",
+        "freshness",
+        "depth"
+      ],
+      "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+    },
+    "Mo93S01Lesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage",
+        "adjacency",
+        "freshness",
+        "depth"
+      ],
+      "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+    },
+    "Mo93Sc01Src": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage",
+        "adjacency",
+        "freshness",
+        "depth"
+      ],
+      "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+    },
+    "Mo93R01Atk": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage",
+        "adjacency",
+        "freshness",
+        "depth"
+      ],
+      "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+    },
+    "Mo93R02Atk": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage",
+        "adjacency",
+        "freshness",
+        "depth"
+      ],
+      "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+    },
+    "Mo93R03Atk": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage",
+        "adjacency",
+        "freshness",
+        "depth"
+      ],
+      "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+    },
+    "Mo93K01Crit": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage",
+        "adjacency",
+        "freshness",
+        "depth"
+      ],
+      "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+    },
+    "Mo93M01Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage",
+        "adjacency",
+        "freshness",
+        "depth"
+      ],
+      "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+    },
+    "Mo93Conn01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage",
+        "adjacency",
+        "freshness",
+        "depth"
+      ],
+      "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+    },
+    "Mo93R04Sweep": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "coverage",
+        "adjacency",
+        "freshness",
+        "depth"
+      ],
+      "milestone": "Round93 attempt1: C1 calibration (12 verified-at lines gain admission commit; round-92 lesson correction) and C2 operability (host home paths removed from tools/); 12 seats, sourced frontier S622 S623"
+    }
+  }
+}
