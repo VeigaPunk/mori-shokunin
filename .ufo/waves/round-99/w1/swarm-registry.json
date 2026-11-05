@@ -1,0 +1,141 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r99-w1",
+  "createdAt": "2026-11-05T22:11:25.191Z",
+  "updatedAt": "2026-11-05T22:11:25.191Z",
+  "reportDir": ".ufo/waves/round-99/w1",
+  "members": {
+    "Mo99ScoutSrc": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+    },
+    "Mo99ConnSibling": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+    },
+    "Mo99ExecReplay": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+    },
+    "Mo99ExecTrial": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+    },
+    "Mo99ExecCalib": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+    },
+    "Mo99ScribeLesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+    },
+    "Mo99RevC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+    },
+    "Mo99RevC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+    },
+    "Mo99CritC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+    },
+    "Mo99CritC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+    },
+    "Mo99MutC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+    },
+    "Mo99ExecSudo": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+    }
+  }
+}

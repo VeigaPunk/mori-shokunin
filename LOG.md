@@ -5777,3 +5777,14 @@ Two claims, frozen at `b75e26cc`. Do-nothing, forgery and positive controls ran 
 - Domain trial: live runway read on the host, `limit=122865 state=ok`; three `unshare -Ur` holders raise `used_lb` by 3 (`w1/Mo98ExecTrial.md`).
 - Wave `w1`: 13 seats (scout ×2, connector, executor ×3, scribe, reviewer ×2, critic ×3, mutation-tester); attack seats 6/13; 0 dead.
 - Defect found and routed (not patched into the claim): a lookup stub passes the frozen C1 counter (QUALITY 209; a post-hoc randomized check is in `evidence/xcheck-random-r98.txt`).
+
+## Round 99 — 2026-11-05 (L1 MoriR99, attempt 1)
+
+Two claims, frozen at `462cef1c` with do-nothing, forgery, single-fix-removed and positive controls executed and committed first (`.ufo/waves/round-99/contract.md`, `evidence/controls-r99.txt`, `CONTROLS_DONE unexpected=0`). Landing `5013f0be`. C1 operability: the journal write-scan of `tools/mori-userns-runway.py` reads sudo's own `COMMAND=` rendering (S635/S636, sudo v1.9.17p2), joins `(command continued)` lines, reads `sh -c` scripts as POSIX words (S634), skips `sysctl -r` and exit events (S633), accepts `-o short` (S014), and fails closed on unreadable sudo lines; generated-battery counter `cases_ok` 24/60 → 60/60. C2 calibration: SCORECARD `## Axes` Evidence cells point at the latest admitted closure per axis and the coverage/calibration Last-change cells carry r98; `mismatches` 5 → 0.
+
+- Evidence motivating the round: r98 closure routed D1 (lookup stub passes the r98 counter), D2 (m03, F1–F3), D3 (Evidence cells cite superseded closures); this round's capture study (the r98 capture was `COMMAND=`-filtered and lost a continuation line; 24 sudo lines fell back to whitespace split).
+- Re-verification result (freshness duty): S633–S636 and S014 re-opened live by `w1/Mo99ScoutSrc.md`, bytes equal to the pins, every quote located; sudo main equals v1.9.17p2 in the cited blocks.
+- Domain trial: three real `sudo -n /usr/bin/true` probes logged exactly as the sources predict and recovered exactly by the tool, including a 3550-char argv split over three continuation lines (`w1/Mo99ExecSudo.md`); on the default `journalctl -o short` text of the incident window the entering tool reads the six writes as none and the landed tool reads all six (`w1/Mo99ExecTrial.md`).
+- Post-landing fixes from the wave (outside the frozen measurement): non-sudo lines mentioning `sudo[N]` ignored (`w1/Mo99ExecReplay.md`); `>|`, `&>`, `>&`, backslash-newline, here-document bodies, `#040`, quoted ` ; EXIT=` (`w1/Mo99RevC1.md` F1–F6); self-test 19 → 22.
+- Counter defect found and routed (not patched into the claim): a template forgery passes the frozen C1 counter 60/60 (`w1/Mo99CritC1.md`); the landed tool is 10/10 on held-out lines. QUALITY 212.
+- Wave `w1`: 12 seats (scout, connector, executor ×4, scribe, reviewer ×2, critic ×2, mutation-tester); attack seats 5/12; 0 dead.

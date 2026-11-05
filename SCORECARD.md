@@ -4882,3 +4882,23 @@ Score moves: none claimed.
 1. **operability / quality** — a successor C1 counter with fixtures generated at measurement time (QUALITY 209); fixtures for used > limit (survivor m03), `net:` links, `>>`, `tee -a` and `sysctl -p`; classifier gaps F1–F3 (`w1/Mo98RevC1.md`).
 2. **calibration** — Evidence cells for operability and freshness cite closures that r97 supersedes, and the r96 gate pins those cells to base `66c5518e` (`w1/Mo98RevC2.md`). A successor gate would need a new base revision.
 3. **carried** — the r97 auditor residuals R1–R3; calibration-counter survivor M10; 31 `prefix_only` rows; operator L0s.
+
+## Round 99 verdict — 2026-11-05 (L1 MoriR99, attempt 1)
+
+Frozen contract `.ufo/waves/round-99/contract.md` at freeze `462cef1c` (counters `count-c1.py`, `count-c2.py`, the
+full incident capture, pre-freeze controls `evidence/controls-r99.txt`, `CONTROLS_DONE unexpected=0`). Landing
+`5013f0be`. Wave `w1`, 12 seats, 0 dead. Lesson `corpus/lessons/round-99.md`.
+
+| claim | axis (score) | predicate | before (`73308ff6`) | after (landing `5013f0be`) | command | verdict |
+|---|---|---|---|---|---|---|
+| C1 | operability (7) | P1: self-test; a battery generated at measurement time (48 journal + 12 runway cases) answered as planted; live cross-check; full incident capture; registry; sourced knowledge (S633–S636) | `C1=unmet cases_ok=24/60 ... checks_failed=battery,sourced` | `C1=met cases_ok=60/60 ... checks_failed=-` | `git archive <rev>` → `python3 .ufo/waves/round-99/count-c1.py --root DIR` | met as frozen; pending closure. Counter defect: a template forgery also passes (`w1/Mo99CritC1.md`, QUALITY 212); the landed tool is 10/10 on held-out lines |
+| C2 | calibration (5) | P2: every Axes Evidence cell carries a located pointer to the latest admitted closure for its axis; Scores unchanged; Last-change prefix-only; registered gate `--base R` met | `C2=unmet mismatches=5 ... gate=rc1` | `C2=met mismatches=0 cells_unchanged=yes gate=ok` | `python3 .ufo/waves/round-99/count-c2.py <rev>` | met; pending closure |
+
+Score moves: none claimed. Capabilities: none entered (C1 moves an existing instrument).
+
+## Planned (round 100)
+
+1. **operability / quality** — a successor C1 counter with a held-out set outside the lane tree and the template
+   forgery as a frozen control (QUALITY 212); the 16 battery gaps G1–G16 (`w1/Mo99MutC1.md`).
+2. **calibration** — the C2 counter accepts a passing mention naming axis and verdict on one line (`w1/Mo99RevC2.md`).
+3. **carried** — the r97 auditor residuals R1–R3; calibration-counter survivor M10; 31 `prefix_only` rows; operator L0s.

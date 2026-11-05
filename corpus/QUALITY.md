@@ -2315,3 +2315,31 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
 ## Criteria added round 98 — lookup forgeries against frozen fixture batteries
 
 209. A counter that certifies a new capability through a frozen fixture battery also scores at least one fixture generated at measurement time, with its expected answer computed independently of the tool; a tool keyed on the frozen fixture shapes must fail it. The pre-freeze controls include such a lookup forgery, not only single-aspect breakages. Ground: `.ufo/waves/round-98/w1/Mo98CritC1.md` (a fixture-shape lookup stub passes the frozen `count-c1.py`: `C1=met cases_ok=15/15 ... checks_failed=-`); `.ufo/waves/round-98/evidence/controls-r98.txt` (K1–K11 each break one aspect; none is a per-fixture lookup). Shown able to fail: the frozen r98 counter passes the stub, so it fails this criterion. The post-hoc randomized check `.ufo/waves/round-98/xcheck-random-r98.py` scores the landing tool `proc_ok=40/40 journal_ok=40/40` on seeds 1, 2 and 98, and the K1 constant stub `0/40 0/40`, exit 1 (`.ufo/waves/round-98/evidence/xcheck-random-r98.txt`). Limit: the r98 C1 predicate stays as frozen; this criterion binds the next counter.
+
+## Criteria added round 99 — producer grammar and capture completeness
+
+210. A tool that reads another program's log text parses the producer's own rendering, grounded in the producer's
+     source at the host's version (sudo `COMMAND=`: quotes only around arguments with a space, `\'`/`\\` escapes,
+     `#0nn` control escapes, `(command continued)` lines — S635, S636), not a generic splitter; a line the reader
+     cannot parse is counted and fails the run closed, never re-read by a silent fallback grammar. Ground:
+     `.ufo/waves/round-99/contract.md` §C1; `corpus/knowledge/sudo-log-grammar-r99.md`. Shown able to fail: the
+     entering r98 tool scores `cases_ok=24/60` on the r99 generated battery (`.ufo/waves/round-99/evidence/before-c1.txt`;
+     the families W4–W8, R1–R4 and S1–S3 fail), and on the 2026-11-05 capture 24 of its 276 `COMMAND=` values fail its
+     POSIX splitter and fall back to whitespace splitting without any output saying so (the contract's "25" counts
+     the joined reading; correction of record in `corpus/lessons/round-99.md`).
+211. A capture committed as evidence keeps every line of the producer's entry, not only the lines that carry the
+     search key: a capture filtered on `COMMAND=` drops sudo's `(command continued)` lines and ships a truncated
+     command. The capture command is recorded with the capture, and a reader that sees a quoted argument still open
+     at the end of an entry reports it. Ground: `.ufo/waves/round-98/evidence/journal-incident-r98.txt` (no
+     continuation line; the live journal for the same window holds one) versus
+     `.ufo/waves/round-99/evidence/journal-incident-r99.txt` (every `sudo[` line). Shown able to fail: the landed r99
+     tool reads the r98 capture with `SYSCTL_WRITES_SETUP unparsed=1`, exit 2, and the r99 capture with exit 1.
+212. A battery generated at measurement time still certifies nothing when its families are readable from the
+     counter's own source and the answer to its one real-data case travels with the tree: the forger transcribes
+     the generator's templates and keys the pinned capture by its sha256. A capability counter therefore scores
+     at least one held-out set the tool's tree cannot read (shapes not in the counter's source, kept outside the
+     lane tree until measurement, or a fresh capture taken at measurement time), and its kill rule names the
+     template forgery as a control. Ground: `.ufo/waves/round-99/w1/Mo99CritC1.md` (a zero-grammar forgery scores
+     `C1=met cases_ok=60/60` on four seeds against the frozen `count-c1.py`; the landed tool scores 10/10 on ten
+     hand-written held-out lines where the forgery covers 3). Shown able to fail: that forgery passes the frozen r99
+     counter.

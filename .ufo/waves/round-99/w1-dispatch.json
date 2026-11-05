@@ -1,0 +1,235 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r99-w1",
+  "policy": {
+    "source": "config",
+    "maxLanes": 16,
+    "minLanes": 8,
+    "waveMinLanes": 8,
+    "waveMaxLanes": 16,
+    "declaredMaxLanes": 16,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 12,
+    "resume": 0,
+    "total": 12
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-99/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-99/w1",
+    "members": {
+      "Mo99ScoutSrc": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "operability",
+          "calibration"
+        ],
+        "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+      },
+      "Mo99ConnSibling": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null,
+        "axes": [
+          "operability",
+          "calibration"
+        ],
+        "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+      },
+      "Mo99ExecReplay": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "calibration"
+        ],
+        "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+      },
+      "Mo99ExecTrial": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "calibration"
+        ],
+        "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+      },
+      "Mo99ExecCalib": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "calibration"
+        ],
+        "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+      },
+      "Mo99ScribeLesson": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "operability",
+          "calibration"
+        ],
+        "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+      },
+      "Mo99RevC1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "operability",
+          "calibration"
+        ],
+        "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+      },
+      "Mo99RevC2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "operability",
+          "calibration"
+        ],
+        "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+      },
+      "Mo99CritC1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "operability",
+          "calibration"
+        ],
+        "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+      },
+      "Mo99CritC2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "operability",
+          "calibration"
+        ],
+        "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+      },
+      "Mo99MutC1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "operability",
+          "calibration"
+        ],
+        "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+      },
+      "Mo99ExecSudo": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "calibration"
+        ],
+        "milestone": "Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats"
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "# Goal\nmori round 99 attempt 1, wave w1 (one v1 wave, 12 seats). Lane repo (absolute): /home/vgpnk/Projects/shokunin/mori-shokunin. Fleet root (absolute): /home/vgpnk/Projects/shokunin.\nLane identity: mori (森), fleet and host observability. Detection and report only; never remediate.\nRevisions: entering 73308ff6e5c933f53498e9501ef95917b0ef7171; freeze 462cef1cc637de4c6e993aefd00ed9df32895984 (contract + counters + pre-freeze controls + candidate + pinned sources); landing 5013f0be8ac9e7fce3c08b680e43cf9cbd49620d (the claimed work).\nFrozen contract (read first, never edit): /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/contract.md. Frozen counters: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/count-c1.py, /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/count-c2.py. Controls runner /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/controls-r99.py; receipts /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/evidence/controls-r99.txt (CONTROLS_DONE unexpected=0), /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/evidence/controls-draft-prefreeze-r99.txt (first draft, 2 UNEXPECTED fixed before freeze), /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/evidence/before-c1.txt, before-c2.txt, landing-c1.txt, landing-c2.txt.\n\n# Claims (frozen)\nC1 operability (score 7): /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-userns-runway.py (registered probe since r98) journal write-scan now reads sudo's own COMMAND= rendering (single quotes only around args with a space, backslash-escaped ' and \\, control chars as #0nn — sudo v1.9.17p2 eventlog.c/lbuf.c, S635/S636), joins `(command continued)` lines by pid, reads a `sh -c` script as POSIX words/quotes/comments/operators (S634), skips `sysctl -r/--pattern` arguments and ` ; EXIT=` exit events (S633, S635), accepts `journalctl -o short` timestamps (S014), and fails closed (`SYSCTL_WRITES_SETUP unparsed=U`, exit 2) on sudo lines it cannot read. Self-test 19 cases. Knowledge /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/sudo-log-grammar-r99.md; rows S633-S636 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md, pinned copies /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r99/. Counter generates its battery at measurement time from a seed (16 journal families x3 + 12 fake-/proc runway cases), expected answers computed from what it planted. Before `C1=unmet cases_ok=24/60 ... checks_failed=battery,sourced`; landing `C1=met cases_ok=60/60 ... checks_failed=-`. Disclosed: the r98 capture (filtered on COMMAND=, lost a continuation line) now scores the same 6 writes but exits 2 (unparsed=1); the full r99 capture /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/evidence/journal-incident-r99.txt scores rc 1, n=6 userns_zero=2.\nC2 calibration (score 5): /home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md `## Axes` Evidence cells now lead with a located pointer to the latest admitted closure per axis (fleet MANIFEST.json at 4ad377eae8e3eed8f7f32ab5d335feb25dbae94b: coverage r98, operability r97, depth r86, freshness r97, calibration r98, adjacency r19 via rounds[398]); Last-change cells of coverage and calibration gain `round 98 (improved, score held); `. Before `C2=unmet mismatches=5 ... gate=rc1`; landing `C2=met mismatches=0 cells_unchanged=yes gate=ok`.\nMeasurement: C1 `git -C /home/vgpnk/Projects/shokunin/mori-shokunin archive <rev> | tar -x -C DIR` then `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/count-c1.py --root DIR --work $S [--seed N]`; C2 `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/count-c2.py <rev>`.\n\n# Rules every seat obeys\n- Write ONLY your own report file under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/w1/ (named in your task) plus your scratch dir. Never edit tools/, corpus/, SKILL.md, SCORECARD.md, PROVINCE.md, LOG.md, the contract, counters or receipts, MANIFEST.json, anything under /home/vgpnk/Projects/shokunin/ outside your own wave file, or any sibling lane.\n- Never run git/jj commands that mutate anything in the lane or fleet repo (no add, commit, stash, checkout, switch, reset, pull, push, fetch, rebase, any jj mutation). Read-only git only, always `git -C <absolute path>` (log, show, diff, rev-parse, ls-files, cat-file, archive to your scratch). A fixture repo, if needed, is `D=$(mktemp -d -p \"$S\") && git -C \"$D\" init -q` and every later call names `-C \"$D\"`; verify `git -C \"$D\" rev-parse --show-toplevel` equals $D before any commit. Never run jj-lane.sh or fleet-commit.sh. The L1 integrates.\n- Never change host sysctls, kernel settings, services or user limits (a seat setting user.max_user_namespaces to 0 on 2026-11-05 broke every sandbox on the host). Never run sudo, except the one seat (Mo99ExecSudo) whose task names `sudo -n /usr/bin/true` with harmless literal arguments. Name any other need in your report instead.\n- Scratch root: S=/fast/scratch/hyaku/mori-r99/<your-seat-name>. mkdir -p \"$S\"; trap 'rm -rf -- \"$S\"' EXIT; TMPDIR=\"$S\" explicitly. /tmp only for files under 50 MB, never for cited evidence. Copy receipts you cite into your report file. Remove your scratch dir before you finish.\n- Absolute paths for every read, write and command: your tools start at the fleet root, so a relative path lands there. Every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin — write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>.\n- Tooling authorization (operator, 2026-10-19): you may install or upgrade tools that help the task. First read /home/vgpnk/.omp/agent/RULES.md; record tool, version, channel and reason. pacman is PAUSED host-wide: never run it (no -S, -Sy, -Syu, -U, -R); use uv tool, npx, or an official binary in ~/.local/bin.\n- Never call the task tool, never message agent://all, never spawn subagents. Never poll files; finish and report.\n- Final output: at most 12 lines, your report path, and the exact command outputs behind each verdict. Name every unrun check as unrun. Never fabricate a verdict. If you attack a claim, end with one line `VERDICT <claim> holds|falsified|needs-amend: <reason>`.\n",
+    "tasks": [
+      {
+        "name": "Mo99ScoutSrc",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nTask (Mo99ScoutSrc, role scout).\n\nIndependently re-open the five sources C1 cites and record per row: URL, UTC access time, HTTP status, bytes, sha256, and whether the live bytes equal the pinned copy in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r99/ (S633 https://man7.org/linux/man-pages/man8/sysctl.8.html; S634 https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html; S635 https://raw.githubusercontent.com/sudo-project/sudo/v1.9.17p2/lib/eventlog/eventlog.c; S636 https://raw.githubusercontent.com/sudo-project/sudo/v1.9.17p2/lib/util/lbuf.c; S014 https://www.freedesktop.org/software/systemd/man/latest/journalctl.html). For each row in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (S633-S636) and each claim row in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/sudo-log-grammar-r99.md: locate the quote (after tag-stripping where the row says so), give its line, count its words (<=25), and state whether the claim says no more than the source. Also check whether `sudo --version` on this host equals the pinned tag and whether sudo main differs from v1.9.17p2 in the COMMAND= block (eventlog.c 'Wrap args containing spaces') and should_quote/escape (lbuf.c). Verdict per row: supported | overreach | not-located. Write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/w1/Mo99ScoutSrc.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, calibration\nMilestone: Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-99/w1/Mo99ScoutSrc.md"
+      },
+      {
+        "name": "Mo99ConnSibling",
+        "agent": "connector",
+        "task": "/skill:godspeed\n\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nTask (Mo99ConnSibling, role connector).\n\nSibling-overlap scan, report only. Search the sibling lane repos under /home/vgpnk/Projects/shokunin/*-shokunin (read-only; never edit) for tools or knowledge that parse sudo journal lines, `COMMAND=`, `(command continued)`, sysctl writes or user-namespace limits (e.g. grep -rl -e 'COMMAND=' -e 'command continued' -e 'max_user_namespaces' -e 'sysctl -w' --include='*.py' --include='*.sh' --include='*.md' over tools/ and corpus/knowledge/). For each hit name the lane, path:line, and whether it would hit the same grammar defects mori r99 fixes (POSIX splitter on sudo quoting, dropped continuation lines, regex inside quotes/comments). Decide per hit: overlap (mori should cite or route) | adjacent (another lane's domain; mori reports, never absorbs) | none. Name which lane owns repair (tsukuroi = OS state; operator = sysctl policy). Never write outside your report. Write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/w1/Mo99ConnSibling.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, calibration\nMilestone: Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-99/w1/Mo99ConnSibling.md"
+      },
+      {
+        "name": "Mo99ExecReplay",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nTask (Mo99ExecReplay, role executor).\n\nReplay the frozen measurements independently. In scratch: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin archive 73308ff6e5c933f53498e9501ef95917b0ef7171` and `5013f0be8ac9e7fce3c08b680e43cf9cbd49620d` and `462cef1cc637de4c6e993aefd00ed9df32895984` each into its own dir; run `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/count-c1.py --root DIR --work $S --seed N` for three different seeds you pick (say which) on entering and landing, and once without --seed; run `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/count-c2.py <rev>` for entering, freeze and landing. Re-run `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/controls-r99.py --lane /home/vgpnk/Projects/shokunin/mori-shokunin --entering 73308ff6e5c933f53498e9501ef95917b0ef7171 --scratch $S/ctl` and diff its AS_EXPECTED/UNEXPECTED column against /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/evidence/controls-r99.txt (the first-line sha prefixes must match too; SKILL.md/SOURCES.md/knowledge prefixes are the landing bytes). Confirm the instrument bytes at landing equal the freeze bytes (`git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff 462cef1cc637de4c6e993aefd00ed9df32895984 5013f0be8ac9e7fce3c08b680e43cf9cbd49620d -- .ufo/waves/round-99/` must be empty) and that the landing bytes of tools/mori-userns-runway.py equal the frozen candidate (sha256). Also run the old frozen r98 counter `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-98/count-c1.py --root <landing dir> --work $S` and report exactly which r98 case changed and why. Write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/w1/Mo99ExecReplay.md.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, calibration\nMilestone: Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-99/w1/Mo99ExecReplay.md"
+      },
+      {
+        "name": "Mo99ExecTrial",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nTask (Mo99ExecTrial, role executor).\n\nEnd-to-end trial of the landed tool on this host's real journal (read-only). Run `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-userns-runway.py --journal-live --since S --until U` over: the 2026-11-05 incident window (05:14 to 05:43 -03), each full day 2026-11-03, 2026-11-04, 2026-11-05 (to now). For each run record rc, summary, unparsed count. For every window with unparsed>0, extract the offending sudo lines (journalctl -o short-iso … | grep 'sudo\\[') and classify why they are unreadable (truncated capture edge? sudo line shape not in the grammar? tool defect?) — quote at most the first 160 chars of each, never user secrets. Also count over the 3 days: sudo COMMAND lines, `(command continued)` lines, lines with ` ; EXIT=`/` ; SIGNAL=`, and any kernel-tunable write the tool reports (key/value/time). Compare with the entering tool (`git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 73308ff6e5c933f53498e9501ef95917b0ef7171:tools/mori-userns-runway.py > $S/old.py`) on the same windows: list every difference in reported writes and say which tool is right by reading the line. Never run sudo. Write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/w1/Mo99ExecTrial.md.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, calibration\nMilestone: Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-99/w1/Mo99ExecTrial.md"
+      },
+      {
+        "name": "Mo99ExecCalib",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nTask (Mo99ExecCalib, role executor).\n\nRe-derive C2 without the lane's counter. From `git -C /home/vgpnk/Projects/shokunin show 4ad377eae8e3eed8f7f32ab5d335feb25dbae94b:MANIFEST.json`, compute per axis (coverage, operability, depth, freshness, calibration, adjacency) the highest admitted (`admitted` true) mori `type: closure` lane_round whose verdicts grade the axis improved or harmed, with its rounds[] index. Then at landing 5013f0be8ac9e7fce3c08b680e43cf9cbd49620d read SCORECARD.md `## Axes` and, for each row, check: the Evidence cell names that closure with a path:line whose line (in the spot-check file at landing) actually grades that axis; Score cells equal entering 73308ff6e5c933f53498e9501ef95917b0ef7171; Last-change cells equal entering or one prepended `round N (verdict, score held); ` clause; nothing else in SCORECARD changed between entering and landing except those cells (git diff). Also check the CURRENT fleet MANIFEST (HEAD) — has a newer mori closure (e.g. r98 already present? any r99?) changed the expectations since the pin? Write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/w1/Mo99ExecCalib.md.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, calibration\nMilestone: Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-99/w1/Mo99ExecCalib.md"
+      },
+      {
+        "name": "Mo99ScribeLesson",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nTask (Mo99ScribeLesson, role scribe).\n\nDraft (do not commit) the round-99 lesson sections for the L1 to integrate, in the shape of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-98.md: `## Claims (frozen)`, `## Gate` (rows S633, S634, S635, S636 with URL, access time from the SOURCES rows, located quote <=25 words, decision; the S014 row change logged old→new: used-by gains corpus/knowledge/sudo-log-grammar-r99.md; one rejection: a source considered and refused with reason and flip — e.g. sudo `main` branch instead of the host's tag v1.9.17p2, or sudoers(5) for syslog_maxlen if not opened), `## Mistakes` (class · evidence · captured-by · fix) mining at least: (1) the r98 capture filtered on COMMAND= dropped a `(command continued)` line (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-98/evidence/journal-incident-r98.txt vs /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/evidence/journal-incident-r99.txt; captured-by none) and (2) the r98 classifier's POSIX splitter misreading sudo's own quoting, silently falling back to whitespace split on 25 lines of the incident capture; (3) the two UNEXPECTED draft controls (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/evidence/controls-draft-prefreeze-r99.txt). For each fix state how it is shown able to fail. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/contract.md and the receipts. Write your draft at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/w1/Mo99ScribeLesson.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, calibration\nMilestone: Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-99/w1/Mo99ScribeLesson.md"
+      },
+      {
+        "name": "Mo99RevC1",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nTask (Mo99RevC1, role reviewer).\n\nReview the C1 change `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff 73308ff6e5c933f53498e9501ef95917b0ef7171 5013f0be8ac9e7fce3c08b680e43cf9cbd49620d -- tools/mori-userns-runway.py SKILL.md corpus/SOURCES.md corpus/knowledge/sudo-log-grammar-r99.md`. Check: (1) split_cmd is a faithful inverse of sudo v1.9.17p2 new_logline COMMAND= rendering and lbuf escapes (/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r99/S635-sudo-eventlog.c lines ~199-230, S636-sudo-lbuf.c ~111-200) — include edge cases: arg that is exactly '', arg with tab (escaped #011, unquoted), arg with both space and quote, DEL #0177, literal '#0' in text; (2) shell_tokens/script_writes against POSIX token recognition (S634) — `2>&1`, `>|`, `&>`, here-docs, `$(...)`, backslash-newline, `a#b`; (3) scan_journal continuation joining (pid reuse across far-apart lines, interleaving, a continuation whose first part is an EXIT event); (4) exit codes and the registry row text vs behaviour; (5) every knowledge claim vs the tool and source. Run each edge through `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-userns-runway.py --journal FILE` with synthetic lines `2026-11-05T00:00:00-03:00 h sudo[1]:    u : PWD=/w ; USER=root ; COMMAND=...`. Classify each finding: defect-in-claimed-scope | documented-limit | out-of-scope, with severity. Write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/w1/Mo99RevC1.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, calibration\nMilestone: Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-99/w1/Mo99RevC1.md"
+      },
+      {
+        "name": "Mo99RevC2",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nTask (Mo99RevC2, role reviewer).\n\nReview C2: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff 73308ff6e5c933f53498e9501ef95917b0ef7171 5013f0be8ac9e7fce3c08b680e43cf9cbd49620d -- SCORECARD.md`, the frozen counter /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/count-c2.py and the transform /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/candidate/apply-c2.py. Check each new Evidence pointer opens to a line that grades that axis in that closure (not a different claim's line), that rounds[] indices are right in the pinned MANIFEST, that the Last-change prefix convention matches the r50/r79 convention stated in SCORECARD.md, and that the counter cannot be satisfied by a pointer that only names the axis in passing (e.g. a line saying 'coverage unchanged ... improved elsewhere'). Say whether the registered gate tools/mori-scorecard-calibration.py run with its DEFAULT --base (66c5518e) now reports columns_unchanged=no at landing, and whether that is a harm to any axis or an expected consequence of moving Evidence cells (r98 routed D3). Write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/w1/Mo99RevC2.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, calibration\nMilestone: Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-99/w1/Mo99RevC2.md"
+      },
+      {
+        "name": "Mo99CritC1",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nTask (Mo99CritC1, role critic).\n\nFalsify C1's frozen counter, not the tool. QUALITY 209 says a capability counter must defeat a fixture-shape lookup forgery. Try to write, in your scratch, a FAKE tools/mori-userns-runway.py that passes `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/count-c1.py --root DIR` (DIR = landing archive with your fake in place) WITHOUT implementing the grammar honestly — e.g. by reading the counter's own source to predict families, recognising the family by surface features (`#012`, `(command continued)`, ` ; EXIT=`), keyword heuristics, or importing the counter's generator. Report each forgery attempt with its full C1 output line and seed. If one passes, the counter is gameable: say how and whether that defeats the claim (the claim is the landed tool's behaviour; contrast your forgery with the landed tool on 10 new hand-written realistic sudo lines the counter never generates). Also check whether the do-nothing control (entering tool, /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/evidence/before-c1.txt) could reach `met` with any seed. Write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/w1/Mo99CritC1.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, calibration\nMilestone: Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-99/w1/Mo99CritC1.md"
+      },
+      {
+        "name": "Mo99CritC2",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nTask (Mo99CritC2, role critic).\n\nFalsify C2. Attack: (a) is the predicate one a do-nothing could meet (score entering with the frozen counter: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/evidence/before-c2.txt); (b) does the counter accept a pointer token placed anywhere in the cell (e.g. inside an older historical sentence) — is that a real weakness given the landed text; (c) does pinning MANIFEST at 4ad377ea make the claim stale the moment the r99 closure lands, and is that a defect of the claim or the normal convention; (d) is moving Evidence cells a calibration move (self-assessment vs record) or bookkeeping (a 'thin claim' per prompt §9) — argue both sides from AXES.md calibration and the r50/r79 corrections in /home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md; (e) build in scratch (fixture clone per the rules) two forged SCORECARDs you think should fail and run count-c2 on them. Write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/w1/Mo99CritC2.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, calibration\nMilestone: Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-99/w1/Mo99CritC2.md"
+      },
+      {
+        "name": "Mo99MutC1",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nTask (Mo99MutC1, role mutation-tester).\n\nMutation-test the landed tool against the frozen C1 counter. Copy the landing archive (5013f0be8ac9e7fce3c08b680e43cf9cbd49620d) into $S/base; make at least 16 single-point mutants of tools/mori-userns-runway.py (each in its own copy of the tree) covering: unescape_cntrl branches (177, 2-digit, 1-digit), split_cmd quote/backslash handling, EXIT_SUFFIX_RE, shell_tokens operators/quotes/comments/glued fd, echo_value option skipping, command_writes redirect vs tee vs nested shell depth, sysctl_writes -p/-f/--load/-r/--pattern/--system, scan_journal continuation/orphan/unparsed, journal_report exit 2, TS_SHORT_RE, runway clamp. For each run `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/count-c1.py --root <mutant tree> --work $S --seed 7` and once with `--seed 8`; record killed/survived and the failing cases. For each survivor, say whether it is equivalent (prove it) or a battery gap (give a sudo line that distinguishes it). Record per-mutant sha256 of the mutated file. Write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/w1/Mo99MutC1.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, calibration\nMilestone: Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-99/w1/Mo99MutC1.md"
+      },
+      {
+        "name": "Mo99ExecSudo",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nTask (Mo99ExecSudo, role executor; bounded probe of one falsifiable hypothesis).\n\nHypothesis (falsifiable): on this host (sudo {run sudo --version}), sudo logs `sudo -n /usr/bin/true 'a b' \"it's\" $'x\\ny'` as `COMMAND=/usr/bin/true 'a b' it\\'s x#012y`, and an argv longer than syslog_maxlen (~980) is split into a first line plus `(command continued)` lines under the same pid; the landed tool /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-userns-runway.py recovers the argv exactly. You MAY run sudo ONLY as `sudo -n /usr/bin/true <harmless literal args>` (true does nothing; never any other sudo command, never a sysctl). Steps: note the time; run 2-3 such commands (one with ~2500 chars of args); read back with `journalctl -o short-iso --since <t0> --no-pager | grep 'sudo\\['`; save the lines into your report; feed them to `python3 -c` importing the tool (importlib from /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-userns-runway.py) and compare `split_cmd` / scan_journal joined argv with the argv you passed (exact list equality); also run `--journal` on the capture (expect rc 0, n=0, no SETUP line). If sudo -n fails (password needed), say so and stop — do not try other privilege paths. VERDICT line on the hypothesis. Write your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-99/w1/Mo99ExecSudo.md.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, calibration\nMilestone: Round99 attempt1: C1 operability tools/mori-userns-runway.py sudo-log grammar (cases_ok 24/60 before), C2 calibration SCORECARD Axes evidence pointers (mismatches 5 before); 12 seats\n\nReport: write your scoped findings to .ufo/waves/round-99/w1/Mo99ExecSudo.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

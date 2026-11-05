@@ -1,0 +1,8 @@
+axis coverage expect=round_98 pointer=ok
+axis operability expect=round_97 pointer=ok
+axis depth expect=round_86 pointer=ok
+axis freshness expect=round_97 pointer=ok
+axis calibration expect=round_98 pointer=ok
+axis adjacency expect=round_19 pointer=ok
+C2=met mismatches=0 cells_unchanged=yes gate=ok mismatched_axes=- rev=5013f0be8ac9
+exit=0 rev=5013f0be8ac9e7fce3c08b680e43cf9cbd49620d

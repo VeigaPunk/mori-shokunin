@@ -78,7 +78,11 @@ ECHOES = {"echo", "printf"}
 TS_PID_RE = re.compile(r"^(\S+)\s+\S+\s+sudo\[(\d+)\]:")
 # journalctl -o short (the default, classic syslog shape): `Nov 05 05:14:52 host sudo[12]:`
 TS_SHORT_RE = re.compile(r"^([A-Z][a-z]{2})\s+(\d{1,2})\s+(\d\d:\d\d:\d\d)\s+\S+\s+sudo\[(\d+)\]:")
-OPS = ("&&", "||", ">>", ";", "&", "|", ">", "<", "\n")
+OPS = ("&&", "||", "&>>", "&>", ">>", ">|", ">&", "<&", "<<-", "<<", ";", "&", "|", ">", "<", "\n")
+OUT_REDIRS = {">", ">>", ">|", "&>", "&>>"}
+# a sudo journal entry carries the identifier `sudo[PID]:`; text that only mentions `sudo[N]`
+# (e.g. systemd's `Started sudo[108] ...`) is not a sudo entry and is ignored, not unparsed
+SUDO_ENTRY_RE = re.compile(r"\bsudo\[\d+\]:\s")
 SEPARATORS = {";", "&&", "||", "&", "\n"}
 
 
@@ -151,14 +155,17 @@ class Unparsed(Exception):
     """A sudo COMMAND whose logged argv or shell script cannot be tokenized."""
 
 
-EXIT_SUFFIX_RE = re.compile(r" ; (?:SIGNAL|EXIT)=\S*(?: ; (?:SIGNAL|EXIT)=\S*)*$")
+# sudo appends ` ; SIGNAL=<name>` / ` ; EXIT=<n>` to exit events; a quoted argument ending in such
+# text ends with `'`, so anchoring on the bare name/number keeps quoted text out (w1 Mo99RevC1 F6)
+EXIT_SUFFIX_RE = re.compile(r" ; (?:SIGNAL=[A-Z0-9]+|EXIT=-?\d+)(?: ; (?:SIGNAL=[A-Z0-9]+|EXIT=-?\d+))*$")
 
 
 def unescape_cntrl(s):
-    """Invert sudo's control-character escape `#0n` / `#0nn` / `#0nnn` (lib/util/lbuf.c
-    escape(): 3 chars below 010, 4 below 0100, else 5). Only control values decode: sudo
-    escapes nothing printable, so `#071` is a literal (limit: a literal `#0` followed by a
-    digit in the original argument is indistinguishable from an escape and decodes)."""
+    """Invert sudo's control/blank escape `#0n` / `#0nn` / `#0nnn` (lib/util/lbuf.c escape():
+    3 chars below 010, 4 below 0100, else 5; sudo escapes control characters, and blanks in the
+    command path and unquoted arguments, so `#040` is a space). Limit: sudo does not escape a
+    literal `#0` in the original text, so `#0` followed by digits decodes whether or not sudo
+    wrote it (`a#071b` reads as BEL then `1b`)."""
     out, i, n = [], 0, len(s)
     while i < n:
         if s.startswith("#0", i):
@@ -167,7 +174,7 @@ def unescape_cntrl(s):
                 out.append("\x7f")
                 i += 5
                 continue
-            if len(d) >= 2 and d[0] in "123" and d[1] in "01234567" and 0o10 <= int(d[:2], 8) < 0o40:
+            if len(d) >= 2 and d[0] in "1234" and d[1] in "01234567" and 0o10 <= int(d[:2], 8) <= 0o40:
                 out.append(chr(int(d[:2], 8)))
                 i += 4
                 continue
@@ -229,9 +236,13 @@ def shell_tokens(script):
     i, n = 0, len(script)
     word, in_word, glued = [], False, False
 
+    heredocs = []      # pending (delimiter, strip_tabs) read after the next newline
+
     def flush():
         nonlocal word, in_word
         if in_word:
+            if toks and toks[-1][0] == "op" and toks[-1][1] in ("<<", "<<-"):
+                heredocs.append(("".join(word), toks[-1][1] == "<<-"))
             toks.append(("w", "".join(word), word_glued))
         word, in_word = [], False
 
@@ -239,6 +250,9 @@ def shell_tokens(script):
     prev_blank = True
     while i < n:
         c = script[i]
+        if c == "\\" and script.startswith("\n", i + 1):
+            i += 2  # XCU 2.2.1: backslash-newline is a line continuation, both removed
+            continue
         if c in " \t\r":
             flush()
             prev_blank = True
@@ -251,6 +265,17 @@ def shell_tokens(script):
             toks.append(("op", op, was_word or not prev_blank))
             prev_blank = op == "\n"
             i += len(op)
+            if op == "\n" and heredocs:
+                # XCU 2.7.4: here-document bodies follow the next newline, up to a line equal to the
+                # delimiter (leading tabs stripped for <<-); body text is data, never commands
+                for delim, strip_tabs in heredocs:
+                    while i < n:
+                        j = script.find("\n", i)
+                        line = script[i:] if j < 0 else script[i:j]
+                        i = n if j < 0 else j + 1
+                        if (line.lstrip("\t") if strip_tabs else line) == delim:
+                            break
+                heredocs.clear()
             continue
         if c == "#" and not in_word:
             j = script.find("\n", i)
@@ -269,7 +294,10 @@ def shell_tokens(script):
             j = i + 1
             buf = []
             while j < n and script[j] != '"':
-                if script[j] == "\\" and j + 1 < n and script[j + 1] in '"\\$`\n':
+                if script[j] == "\\" and j + 1 < n and script[j + 1] == "\n":
+                    j += 2
+                    continue
+                if script[j] == "\\" and j + 1 < n and script[j + 1] in '"\\$`':
                     buf.append(script[j + 1])
                     j += 2
                     continue
@@ -388,11 +416,11 @@ def script_writes(script, depth=0):
         kind, text, glued = toks[k]
         if kind == "w":
             argv.append(text)
-        elif text in (">", ">>", "<"):
+        elif text in OUT_REDIRS or text in ("<", "<<", "<<-", ">&", "<&"):
             if glued and argv and argv[-1].isdigit():
                 argv.pop()  # `2>`: the digits name a file descriptor
             if k + 1 < len(toks) and toks[k + 1][0] == "w":
-                if text != "<":
+                if text in OUT_REDIRS:
                     redirs.append(toks[k + 1][1])
                 k += 1
         elif text == "|":
@@ -440,7 +468,7 @@ def scan_journal(lines):
     open_by_pid = {}
     unparsed = 0
     for line in lines:
-        if "sudo[" not in line:
+        if "sudo[" not in line or not SUDO_ENTRY_RE.search(line):
             continue
         cont = " : (command continued) " in line
         if not cont and " COMMAND=" not in line:
@@ -580,6 +608,21 @@ def selftest():
               "x y z sudo[8]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'echo 0 > /proc/sys/user/max_user_namespaces'\n"
               "T h sudo[9]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'echo 0 > /proc/sys/user/max_user_namespaces\n")
         journal_case("journal-unparsed", J7, ("SYSCTL_WRITES n=0 keys=0 userns_zero=0", 2))
+        # round 99 post-landing (w1 Mo99ExecReplay): a non-sudo line that mentions sudo[N] and COMMAND= is ignored
+        J11 = ("T h sudo[1]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sysctl -w x.y=1\n"
+               "2026-11-05T10:00:07-03:00 h systemd[1]: Started sudo[108] COMMAND=/usr/bin/sysctl -w x.y=1\n")
+        journal_case("journal-not-sudo-entry", J11, ("SYSCTL_WRITES n=1 keys=1 userns_zero=0", 1))
+        # round 99 post-landing (w1 Mo99RevC1 F1-F6): `>|`, `&>`, backslash-newline, here-doc bodies,
+        # `#040` in the command path, a quoted ` ; EXIT=` text, and `>&2` fd duplication
+        J12 = ("T h sudo[1]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'echo 0 >| /proc/sys/vm/swappiness'\n"
+               "T h sudo[2]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'echo 0 >\\#012/proc/sys/user/max_user_namespaces'\n"
+               "T h sudo[3]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/bash -c 'cat /x &> /proc/sys/vm/drop_caches; echo hi >&2'\n"
+               "T h sudo[4]:    u : PWD=/x ; USER=root ; COMMAND=/opt/my#040tools/sysctl -w kernel.pid_max=99999\n")
+        journal_case("journal-more-operators", J12, ("SYSCTL_WRITES n=4 keys=4 userns_zero=1", 1))
+        J13 = ("T h sudo[1]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'cat << EOF#012echo 0 > /proc/sys/user/max_user_namespaces#012EOF#012true'\n"
+               "T h sudo[2]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'cat <<- \\'E\\'#012#011echo 0 > /proc/sys/vm/swappiness#012#011E'\n"
+               "T h sudo[3]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/echo 'x ; EXIT=0'\n")
+        journal_case("journal-heredoc-and-quoted-exit", J13, ("SYSCTL_WRITES n=0 keys=0 userns_zero=0", 0))
         runway_case("used-over-limit", "1", [I, "user:[21]", "user:[22]", "user:[23]"], (1, 3, 0, 0, "exhausted"))
         # redaction: a planted marker in the command never reaches the output
         J3 = "T h sudo[9]:    secretuser : PWD=/home/MARKERX ; USER=root ; COMMAND=/usr/bin/sysctl -w a.b=MARKERX$(id)\n"

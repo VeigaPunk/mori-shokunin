@@ -14,7 +14,8 @@ regexes. Neither is the grammar sudo writes. sudo renders the command path, then
 space; an argument that holds a space is wrapped in single quotes, `'` and `\` are backslash-escaped in every
 argument, and control characters become `#0nn` octal escapes, so a newline in a `sh -c` script is logged as
 `#012`. A POSIX splitter reads `\'` inside single quotes as the end of the quote: on the 2026-11-05 incident
-capture 25 sudo lines failed that splitter and fell back to whitespace splitting. A line longer than sudo's
+capture 24 of the 276 `COMMAND=` values failed that splitter and fell back to whitespace
+splitting (`w1/Mo99ScribeLesson.md` Mistake 4). A line longer than sudo's
 `syslog_maxlen` is cut at a space and the rest is logged under the same pid as `user : (command continued) REST`;
 a capture filtered on `COMMAND=` keeps the first part and drops the rest. Inside the recovered `-c` argument, a
 shell reads quotes and comments before it reads redirections, so `/proc/sys` text inside quotes or after a word-
@@ -40,7 +41,9 @@ initial `#` is not a write. `sysctl -r PATTERN` takes a filter argument, not a s
 `tools/mori-userns-runway.py` `split_cmd` inverts the sudo rendering (quote, `\'`, `\\`, `#0nn`, exit suffix);
 `scan_journal` joins `(command continued)` parts by pid before reading; `shell_tokens`/`script_writes` read a
 `-c` script as POSIX words, quotes, comments and operators, then report a write for an output redirection to
-`/proc/sys/...`, a `tee` into it, or a nested `sysctl`/shell `-c`. Any sudo line it cannot read (an unknown
+`/proc/sys/...`, a `tee` into it, or a nested `sysctl`/shell `-c`. A line counts as a sudo entry only when it
+carries the identifier `sudo[PID]:` (text that merely mentions `sudo[N]`, such as systemd's `Started sudo[108]`, is
+ignored; post-landing fix, `w1/Mo99ExecReplay.md`). Any sudo line it cannot read (an unknown
 timestamp shape, a quote still open at the end, an orphan continuation) is counted and the scan exits 2 with
 `SYSCTL_WRITES_SETUP unparsed=U`: an unreadable line is never reported as "no write".
 
@@ -53,9 +56,13 @@ Evidence: the round-98 capture `.ufo/waves/round-98/evidence/journal-incident-r9
 
 - sudo does not escape a literal `#0` followed by a digit, so such text in an argument decodes as a control
   character. No write shape in the capture depends on it.
-- The script reader covers words, quotes, comments, `;` `&&` `||` `&` `|` newlines and `>`/`>>`/`<`. It does not
-  expand variables, command substitution, here-documents or functions: `echo 0 > $F` with `F=/proc/sys/...` is
-  not seen.
+- The script reader covers words, quotes, comments, backslash-newline, `;` `&&` `||` `&` `|` newlines,
+  `>` `>>` `>|` `&>` `&>>` `>&` `<&` `<`, and skips here-document bodies (`<<`, `<<-`). It does not expand
+  variables, command substitution or functions: `echo 0 > $F` with `F=/proc/sys/...` is not seen. (`>|`,
+  backslash-newline, here-documents, `#040` and quoted ` ; EXIT=` text were added after the landing measurement,
+  from the w1 review `w1/Mo99RevC1.md` F1–F6.)
+- sudo renders an empty argument as nothing between two spaces (`tee '' /proc/sys/x` logs like `tee /proc/sys/x`),
+  so the scan reports such a `tee` as a write: over-reporting, never a missed write (`w1/Mo99RevC1.md` F7).
 - When sudo found no space to split at, the continuation was cut mid-word; the tool rejoins with one space.
 - JSON-format sudo logs (`@cee:` lines) and sudo_logsrvd I/O logs are not read.
 
