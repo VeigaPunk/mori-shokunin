@@ -2343,3 +2343,21 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
      `C1=met cases_ok=60/60` on four seeds against the frozen `count-c1.py`; the landed tool scores 10/10 on ten
      hand-written held-out lines where the forgery covers 3). Shown able to fail: that forgery passes the frozen r99
      counter.
+213. A number a source row states about its own quote (its word count, against CORPUS's 25-word cap) is computed by a
+     command when the row is written, and the command is named; a typed count drifts and nothing reads it again. A
+     wrong count is corrected the CORPUS rule-2 way — a new row whose `teaches` opens `supersedes S0NN —` — never by
+     editing the old row's immutable cells, and a counter of such mismatches reads the supersede chain before it
+     calls a stated count uncorrected. Ground: `.ufo/waves/round-100/evidence/before-c2.txt` (7 stated counts in rows
+     S581–S584 and S634 disagree with their quotes; S586, S587 and S585 had already superseded S581–S584 in round 72,
+     so only S634 was uncorrected); the round-100 landing appended corrections to the anchor cells and tripped
+     `tools/mori-sources-appendonly.py --round-base` (`round_changed=[S581,S582,S583,S584,S634]`,
+     `.ufo/waves/round-100/w1/Mo100RevHarm.md`), repaired by S640; the draft rows S637/S638 were typed as 11 words for
+     12-word quotes and corrected before the freeze by `python3 -c "print(len(QUOTE.split()))"`. Shown able to fail:
+     the append-only gate on the landing commit, exit 1.
+214. A classifier that adds a class lands together with every in-lane consumer that checks the exact class or key
+     set, and the change is measured on live data with the one allowed transition named (here only
+     `dead_error_other` → `dead_auth`); a new class read before quota or rate evidence would silently move seats
+     between existing classes. Ground: `.ufo/waves/round-100/contract.md` §C1; S638 ("PERMISSION_DENIED must not be
+     used for rejections caused by exhausting some resource"). Shown able to fail: controls K7 (entering round-17 gate
+     on the landed tool, `r17gate=rc1`) and K4 (auth read first, `families_failed=N1-quota-wins,N2-rate-wins`) in
+     `.ufo/waves/round-100/evidence/controls-r100.txt`.
