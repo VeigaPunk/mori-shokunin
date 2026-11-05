@@ -1,0 +1,189 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r94-w1",
+  "createdAt": "2026-11-05T10:11:39.406Z",
+  "updatedAt": "2026-11-05T10:11:39.406Z",
+  "reportDir": ".ufo/waves/round-94/w1",
+  "members": {
+    "Mo94E01Replay": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round94 attempt1: C1 R02 admission token boundary; C2 counter host path removed; S624; 12 seats"
+    },
+    "Mo94E02Relo": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round94 attempt1: C1 R02 admission token boundary; C2 counter host path removed; S624; 12 seats"
+    },
+    "Mo94E03Gitig": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round94 attempt1: C1 R02 admission token boundary; C2 counter host path removed; S624; 12 seats"
+    },
+    "Mo94S01Src": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round94 attempt1: C1 R02 admission token boundary; C2 counter host path removed; S624; 12 seats"
+    },
+    "Mo94R01Atk": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round94 attempt1: C1 R02 admission token boundary; C2 counter host path removed; S624; 12 seats"
+    },
+    "Mo94R02Atk": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round94 attempt1: C1 R02 admission token boundary; C2 counter host path removed; S624; 12 seats"
+    },
+    "Mo94K01Crit": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round94 attempt1: C1 R02 admission token boundary; C2 counter host path removed; S624; 12 seats"
+    },
+    "Mo94K02Crit": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round94 attempt1: C1 R02 admission token boundary; C2 counter host path removed; S624; 12 seats"
+    },
+    "Mo94M01Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round94 attempt1: C1 R02 admission token boundary; C2 counter host path removed; S624; 12 seats"
+    },
+    "Mo94M02Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round94 attempt1: C1 R02 admission token boundary; C2 counter host path removed; S624; 12 seats"
+    },
+    "Mo94Conn01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round94 attempt1: C1 R02 admission token boundary; C2 counter host path removed; S624; 12 seats"
+    },
+    "Mo94Sc01Lesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability",
+        "depth",
+        "freshness",
+        "coverage",
+        "adjacency"
+      ],
+      "milestone": "Round94 attempt1: C1 R02 admission token boundary; C2 counter host path removed; S624; 12 seats"
+    }
+  }
+}
