@@ -1,0 +1,1 @@
+C1_REPORT rev=1fc921cf75af trio=98 claim_r92_true=1 files=19 adm_ok=19 adm_fail=0 patched12=12/12 seven_same=7/7 census_rc=0 failures=-

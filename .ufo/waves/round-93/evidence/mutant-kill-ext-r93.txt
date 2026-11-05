@@ -1,0 +1,13 @@
+# M5 mutation kill of the three conjuncts the frozen battery did not flip (post-freeze extension, base = landing 1fc921cf75af)
+## m1
+C1=met trio=98 claim_r92_true=1 files=19 adm_ok=19 adm_fail=0 patched12=12 seven_same=7 census=ok rev=34cb5a51ede2
+C1=unmet trio=98 claim_r92_true=1 files=19 adm_ok=19 adm_fail=0 patched12=12 seven_same=7 census=rc1 checks_failed=census rev=40afeed5bf18
+C2=unmet home_literals=0 vgpnk_refs=1 tools=3 selftests=3/3 census=ok checks_failed=vgpnk_refs rev=46328b0c4312
+## m4
+C1=unmet trio=98 claim_r92_true=0 files=19 adm_ok=7 adm_fail=12 patched12=12 seven_same=7 census=ok checks_failed=admission rev=aa3b3664260a
+C1=met trio=98 claim_r92_true=1 files=19 adm_ok=19 adm_fail=0 patched12=12 seven_same=7 census=rc1 rev=543437b90052
+C2=unmet home_literals=0 vgpnk_refs=1 tools=3 selftests=3/3 census=ok checks_failed=vgpnk_refs rev=c78256039674
+## m6
+C1=unmet trio=98 claim_r92_true=0 files=19 adm_ok=7 adm_fail=12 patched12=12 seven_same=7 census=ok checks_failed=admission rev=61d9ba6c0026
+C1=unmet trio=98 claim_r92_true=1 files=19 adm_ok=19 adm_fail=0 patched12=12 seven_same=7 census=rc1 checks_failed=census rev=454acb271b4a
+C2=met home_literals=0 vgpnk_refs=1 tools=3 selftests=3/3 census=ok rev=4030bc908fe7

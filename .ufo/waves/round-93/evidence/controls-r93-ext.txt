@@ -1,0 +1,17 @@
+## landed base C1 (expect met, rc 0)
+C1=met trio=98 claim_r92_true=1 files=19 adm_ok=19 adm_fail=0 patched12=12 seven_same=7 census=ok rev=1fc921cf75af
+rc=0
+## landed base C2 (expect met, rc 0)
+C2=met home_literals=0 vgpnk_refs=0 tools=3 selftests=3/3 census=ok rev=1fc921cf75af
+rc=0
+## C1 wrong-hash control on landed base (expect unmet, adm_fail=12)
+C1=unmet trio=98 claim_r92_true=0 files=19 adm_ok=7 adm_fail=12 patched12=12 seven_same=7 census=ok checks_failed=admission rev=3714207d5cb7
+rc=1
+## C1 census-break control on landed base (expect unmet, census)
+C1=unmet trio=98 claim_r92_true=1 files=19 adm_ok=19 adm_fail=0 patched12=12 seven_same=7 census=rc1 checks_failed=census rev=f32b1e12f303
+rc=1
+## C2 bare-username control on landed base (expect unmet, vgpnk_refs=1)
+C2=unmet home_literals=0 vgpnk_refs=1 tools=3 selftests=3/3 census=ok checks_failed=vgpnk_refs rev=62f5c07ff198
+rc=1
+## scratch
+ext controls done

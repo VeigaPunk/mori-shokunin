@@ -1,0 +1,3 @@
+# M2 read-window demonstration at 7b3fe9d5 (knowledge entries whose first 12 lines carry source/verified-at/recheck)
+read 4096 bytes -> trio 97
+read 65536 bytes -> trio 98
