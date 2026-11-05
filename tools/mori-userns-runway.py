@@ -28,21 +28,29 @@ Two read-only modes:
 2. Write-event scan:
      python3 tools/mori-userns-runway.py --journal FILE|-
      python3 tools/mori-userns-runway.py --journal-live --since TS --until TS
-   reads sudo command lines in `journalctl -o short-iso` text (only lines carrying
-   `sudo[` and ` COMMAND=`; other text that merely mentions /proc/sys is ignored)
-   and prints one line per kernel-tunable write:
-     SYSCTL_WRITE ts=T pid=N key=K value=V via=sysctl|sysctl-load|sh-echo|tee
+   reads sudo command lines in `journalctl -o short-iso` or default `-o short` text
+   (only lines carrying `sudo[` and ` COMMAND=`; other text that merely mentions
+   /proc/sys is ignored) and prints one line per kernel-tunable write:
+     SYSCTL_WRITE ts=T pid=N key=K value=V via=sysctl|sysctl-load|sh-echo|sh-redirect|tee
    then
      SYSCTL_WRITES n=N keys=K userns_zero=Z
-   Writes: `sysctl [-w] key=value ...` (one per key=value), `sysctl -p [FILE]` /
-   `--load` / `--system` (key file:<path> or system, value -), a shell `-c` script
-   with `echo V > /proc/sys/...` or `... | tee [-a] /proc/sys/...`, and a direct
-   `tee /proc/sys/...`. Reads (`sysctl -a`, `sysctl key`, `cat /proc/sys/...`)
-   are not writes. userns_zero counts writes setting user.max_user_namespaces to 0.
+   Writes: `sysctl [-w] key=value ...` (one per key=value), `sysctl -p[FILE]` /
+   `-p FILE` / `-f` / `--load[=FILE]` / `--system` (key file:<path> or system,
+   value -), each also behind NAME=value or `env` prefixes; inside a shell `-c`
+   script (tokenized round 99: quotes, comments, `;` `&&` `||` `|` and newlines
+   as in POSIX XCU 2.2/2.3) any command whose output redirection `>`/`>>` targets
+   /proc/sys/... (via sh-echo for echo/printf, value = its first argument, else
+   sh-redirect, value -), `tee [-a] /proc/sys/...` (value piped from echo/printf),
+   and nested `sysctl` or shell `-c` commands. Reads (`sysctl -a`, `sysctl key`,
+   `sysctl -r/--pattern PATTERN`, `cat /proc/sys/...`) are not writes, nor is
+   /proc/sys text inside quotes or a comment. userns_zero counts writes setting
+   user.max_user_namespaces to 0.
    Output carries fields only: no user name, PWD or command text (redaction
    posture); a value outside [A-Za-z0-9._:/-] or longer than 32 chars prints `?`.
    Exit 0 no write · 1 at least one write · 2 setup (unreadable input,
-   journalctl failure).
+   journalctl failure, or `SYSCTL_WRITES_SETUP unparsed=U` after the summary when
+   U sudo COMMAND lines had an unknown timestamp shape or untokenizable quoting:
+   the scan fails closed rather than reading them as "no write").
 
   python3 tools/mori-userns-runway.py --selftest
    builds fixtures under a tempfile directory (honours TMPDIR; /tmp is never
@@ -56,7 +64,6 @@ Standard library only.
 import argparse
 import os
 import re
-import shlex
 import shutil
 import subprocess
 import sys
@@ -66,9 +73,13 @@ INIT_USER_INO = 4026531837  # PROC_USER_INIT_INO = 0xEFFFFFFD (include/linux/pro
 LINK_RE = re.compile(r"^user:\[(\d+)\]$")
 SAFE_VALUE = re.compile(r"^[A-Za-z0-9._:/-]{1,32}$")
 SHELLS = {"sh", "bash", "dash", "zsh", "ksh", "busybox"}
-ECHO_RE = re.compile(r"echo\s+(?:-[ne]+\s+)?['\"]?([^\s'\"|;&>]+)['\"]?\s*>{1,2}\s*['\"]?/proc/sys/([^\s'\";&|]+)")
-TEE_RE = re.compile(r"(?:echo\s+(?:-[ne]+\s+)?['\"]?([^\s'\"|;&>]+)['\"]?\s*\|\s*)?(?:\S*/)?tee\s+(?:-a\s+)?['\"]?/proc/sys/([^\s'\";&|]+)")
+ECHOES = {"echo", "printf"}
+# journalctl -o short-iso: `2026-11-05T05:14:52-03:00 host sudo[12]:`
 TS_PID_RE = re.compile(r"^(\S+)\s+\S+\s+sudo\[(\d+)\]:")
+# journalctl -o short (the default, classic syslog shape): `Nov 05 05:14:52 host sudo[12]:`
+TS_SHORT_RE = re.compile(r"^([A-Z][a-z]{2})\s+(\d{1,2})\s+(\d\d:\d\d:\d\d)\s+\S+\s+sudo\[(\d+)\]:")
+OPS = ("&&", "||", ">>", ";", "&", "|", ">", "<", "\n")
+SEPARATORS = {";", "&&", "||", "&", "\n"}
 
 
 class Setup(Exception):
@@ -136,77 +147,334 @@ def runway_line(r):
 
 # ---------------------------------------------------------------- journal
 
+class Unparsed(Exception):
+    """A sudo COMMAND whose logged argv or shell script cannot be tokenized."""
+
+
+EXIT_SUFFIX_RE = re.compile(r" ; (?:SIGNAL|EXIT)=\S*(?: ; (?:SIGNAL|EXIT)=\S*)*$")
+
+
+def unescape_cntrl(s):
+    """Invert sudo's control-character escape `#0n` / `#0nn` / `#0nnn` (lib/util/lbuf.c
+    escape(): 3 chars below 010, 4 below 0100, else 5). Only control values decode: sudo
+    escapes nothing printable, so `#071` is a literal (limit: a literal `#0` followed by a
+    digit in the original argument is indistinguishable from an escape and decodes)."""
+    out, i, n = [], 0, len(s)
+    while i < n:
+        if s.startswith("#0", i):
+            d = s[i + 2:i + 5]
+            if d == "177":
+                out.append("\x7f")
+                i += 5
+                continue
+            if len(d) >= 2 and d[0] in "123" and d[1] in "01234567" and 0o10 <= int(d[:2], 8) < 0o40:
+                out.append(chr(int(d[:2], 8)))
+                i += 4
+                continue
+            if d[:1] and d[0] in "01234567":
+                out.append(chr(int(d[0], 8)))
+                i += 3
+                continue
+        out.append(s[i])
+        i += 1
+    return "".join(out)
+
+
 def split_cmd(cmd):
-    try:
-        return shlex.split(cmd)
-    except ValueError:
-        return cmd.split()
+    """Invert sudo's COMMAND= rendering (lib/eventlog/eventlog.c, sudo 1.9.17p2): the command
+    path, then one space per argument; an argument containing a space is wrapped in single
+    quotes, and `'` and `\\` are backslash-escaped in every argument; control characters are
+    `#0nn` escapes. A trailing ` ; SIGNAL=..`/` ; EXIT=..` (exit events) is not argv."""
+    cmd = EXIT_SUFFIX_RE.sub("", cmd)
+    argv, i, n = [], 0, len(cmd)
+    while i < n:
+        if cmd[i] == " ":
+            i += 1
+            continue
+        buf, quoted = [], cmd[i] == "'"
+        if quoted:
+            i += 1
+        while i < n:
+            c = cmd[i]
+            if c == "\\" and i + 1 < n and cmd[i + 1] in "'\\":
+                buf.append(cmd[i + 1])
+                i += 2
+                continue
+            if quoted and c == "'":
+                quoted = None
+                i += 1
+                break
+            if not quoted and c == " ":
+                break
+            buf.append(c)
+            i += 1
+        if quoted:
+            raise Unparsed("unterminated quoted argument")
+        argv.append(unescape_cntrl("".join(buf)))
+    return argv
+
+
+def shell_tokens(script):
+    """POSIX-shell token recognition, reduced to what the write classifier needs.
+
+    Returns (kind, text, glued) triples: kind `w` (word, quotes removed) or `op`
+    (one of OPS); glued is True when the token touches the previous one with no
+    blank between (so `2>` is a file-descriptor redirection, not an argument 2).
+    Quoted text is one word (XCU 2.2: single quotes keep every character
+    literal), and `#` at the start of a word starts a comment that runs to the
+    newline (XCU 2.3 token recognition, rule 9); inside a word it is literal.
+    Raises Unparsed on an unterminated quote.
+    """
+    toks = []
+    i, n = 0, len(script)
+    word, in_word, glued = [], False, False
+
+    def flush():
+        nonlocal word, in_word
+        if in_word:
+            toks.append(("w", "".join(word), word_glued))
+        word, in_word = [], False
+
+    word_glued = False
+    prev_blank = True
+    while i < n:
+        c = script[i]
+        if c in " \t\r":
+            flush()
+            prev_blank = True
+            i += 1
+            continue
+        op = next((o for o in OPS if script.startswith(o, i)), None)
+        if op is not None:
+            was_word = in_word
+            flush()
+            toks.append(("op", op, was_word or not prev_blank))
+            prev_blank = op == "\n"
+            i += len(op)
+            continue
+        if c == "#" and not in_word:
+            j = script.find("\n", i)
+            i = n if j < 0 else j
+            continue
+        if not in_word:
+            in_word, word_glued = True, not prev_blank
+        prev_blank = False
+        if c == "'":
+            j = script.find("'", i + 1)
+            if j < 0:
+                raise Unparsed("unterminated single quote")
+            word.append(script[i + 1:j])
+            i = j + 1
+        elif c == '"':
+            j = i + 1
+            buf = []
+            while j < n and script[j] != '"':
+                if script[j] == "\\" and j + 1 < n and script[j + 1] in '"\\$`\n':
+                    buf.append(script[j + 1])
+                    j += 2
+                    continue
+                buf.append(script[j])
+                j += 1
+            if j >= n:
+                raise Unparsed("unterminated double quote")
+            word.append("".join(buf))
+            i = j + 1
+        elif c == "\\" and i + 1 < n:
+            word.append(script[i + 1])
+            i += 2
+        else:
+            word.append(c)
+            i += 1
+    flush()
+    return toks
+
+
+def unwrap(argv):
+    """Drop leading NAME=value assignments and an `env [-opts] [NAME=value]...` prefix."""
+    argv = list(argv)
+    while True:
+        while argv and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*=.*", argv[0]):
+            argv.pop(0)
+        if argv and os.path.basename(argv[0]) == "env":
+            argv.pop(0)
+            while argv and argv[0].startswith("-") and argv[0] != "-":
+                argv.pop(0)
+            continue
+        return argv
+
+
+def sysctl_writes(args):
+    """procps sysctl(8): `-p[FILE]`/`--load[=FILE]` (`-f` alias) load a file, `--system`
+    loads the system files, `-r PATTERN`/`--pattern PATTERN` is a filter argument (never a
+    setting even when the regex holds `=`), a bare `key=value` is a write."""
+    writes = []
+    i = 0
+    while i < len(args):
+        a = args[i]
+        if a in ("-r", "--pattern"):
+            i += 2
+            continue
+        if a.startswith("--pattern="):
+            i += 1
+            continue
+        if a in ("-p", "-f", "--load") or a.startswith("--load=") or (len(a) > 2 and a[:2] in ("-p", "-f")
+                                                                      and not a.startswith("--")):
+            if a.startswith("--load="):
+                f = a.split("=", 1)[1]
+            elif len(a) > 2 and not a.startswith("--"):
+                f = a[2:]
+            elif i + 1 < len(args) and not args[i + 1].startswith("-"):
+                f = args[i + 1]
+                i += 1
+            else:
+                f = "/etc/sysctl.conf"
+            writes.append(("file:" + f, "-", "sysctl-load"))
+        elif a == "--system":
+            writes.append(("system", "-", "sysctl-load"))
+        elif not a.startswith("-") and "=" in a:
+            k, v = a.split("=", 1)
+            writes.append((k.replace("/", "."), v, "sysctl"))
+        i += 1
+    return writes
+
+
+def echo_value(argv):
+    for a in argv[1:]:
+        if os.path.basename(argv[0]) == "echo" and re.fullmatch(r"-[neE]+", a):
+            continue
+        return a
+    return "-"
+
+
+def command_writes(argv, redirs, prev_value, depth):
+    """Writes of one simple command: its argv, its output redirections, the echo value piped in."""
+    argv = unwrap(argv)
+    writes = []
+    exe = os.path.basename(argv[0]) if argv else ""
+    value = echo_value(argv) if exe in ECHOES else "-"
+    for target in redirs:
+        if target.startswith("/proc/sys/"):
+            writes.append((proc_key(target[len("/proc/sys/"):]), value,
+                           "sh-echo" if exe in ECHOES else "sh-redirect"))
+    if exe == "sysctl":
+        writes += sysctl_writes(argv[1:])
+    elif exe == "tee":
+        for a in argv[1:]:
+            if a.startswith("/proc/sys/"):
+                writes.append((proc_key(a[len("/proc/sys/"):]), prev_value or "-", "tee"))
+    elif exe in SHELLS and depth < 3:
+        for j, a in enumerate(argv[1:], 1):
+            if a == "-c" and j + 1 < len(argv):
+                writes += script_writes(argv[j + 1], depth + 1)
+                break
+    return writes
+
+
+def script_writes(script, depth=0):
+    toks = shell_tokens(script)
+    writes = []
+    argv, redirs, prev_value = [], [], None
+    k = 0
+
+    def end_command():
+        nonlocal argv, redirs
+        out = command_writes(argv, redirs, prev_value, depth) if argv or redirs else []
+        exe = os.path.basename(unwrap(argv)[0]) if unwrap(argv) else ""
+        val = echo_value(unwrap(argv)) if exe in ECHOES else None
+        argv, redirs = [], []
+        return out, val
+
+    while k < len(toks):
+        kind, text, glued = toks[k]
+        if kind == "w":
+            argv.append(text)
+        elif text in (">", ">>", "<"):
+            if glued and argv and argv[-1].isdigit():
+                argv.pop()  # `2>`: the digits name a file descriptor
+            if k + 1 < len(toks) and toks[k + 1][0] == "w":
+                if text != "<":
+                    redirs.append(toks[k + 1][1])
+                k += 1
+        elif text == "|":
+            out, val = end_command()
+            writes += out
+            prev_value = val
+        elif text in SEPARATORS:
+            out, _ = end_command()
+            writes += out
+            prev_value = None
+        k += 1
+    out, _ = end_command()
+    writes += out
+    return writes
 
 
 def classify(cmd):
-    """Return a list of (key, value, via) writes for one sudo COMMAND string."""
+    """Return a list of (key, value, via) writes for one sudo COMMAND string.
+    Raises Unparsed when the command or its shell script cannot be tokenized."""
     argv = split_cmd(cmd)
     if not argv:
         return []
-    exe = os.path.basename(argv[0])
-    writes = []
-    if exe == "sysctl":
-        args = argv[1:]
-        i = 0
-        while i < len(args):
-            a = args[i]
-            if a in ("-p", "--load") or a.startswith("--load="):
-                if a.startswith("--load="):
-                    f = a.split("=", 1)[1]
-                elif i + 1 < len(args) and not args[i + 1].startswith("-"):
-                    f = args[i + 1]
-                    i += 1
-                else:
-                    f = "/etc/sysctl.conf"
-                writes.append(("file:" + f, "-", "sysctl-load"))
-            elif a == "--system":
-                writes.append(("system", "-", "sysctl-load"))
-            elif not a.startswith("-") and "=" in a:
-                k, v = a.split("=", 1)
-                writes.append((k.replace("/", "."), v, "sysctl"))
-            i += 1
-        return writes
-    if exe in SHELLS:
-        script = None
-        for j, a in enumerate(argv[1:], 1):
-            if a == "-c" and j + 1 < len(argv):
-                script = " ".join(argv[j + 1:])
-                break
-        if script is None:
-            return []
-        for m in ECHO_RE.finditer(script):
-            writes.append((proc_key(m.group(2)), m.group(1), "sh-echo"))
-        for m in TEE_RE.finditer(script):
-            writes.append((proc_key(m.group(2)), m.group(1) or "-", "tee"))
-        return writes
-    if exe == "tee":
-        for a in argv[1:]:
-            if a.startswith("/proc/sys/"):
-                writes.append((proc_key(a[len("/proc/sys/"):]), "-", "tee"))
-        return writes
-    return []
+    return command_writes(argv, [], None, 0)
+
+
+def line_ts_pid(line):
+    m = TS_PID_RE.match(line)
+    if m:
+        return m.group(1), m.group(2)
+    s = TS_SHORT_RE.match(line)
+    if s:
+        return "%s-%02d_%s" % (s.group(1), int(s.group(2)), s.group(3)), s.group(4)
+    return None
 
 
 def scan_journal(lines):
-    out = []
+    """Return (events, unparsed). A sudo COMMAND line whose timestamp shape is neither
+    short-iso nor short, or whose command cannot be tokenized, is counted as unparsed:
+    the scan fails closed instead of reading it as `no write`. sudo splits a log line
+    longer than syslog_maxlen at a space and logs the rest as `user : (command continued)
+    REST` under the same pid (eventlog.c do_syslog_sudo); those parts are joined back with
+    one space before the command is read. A command whose quoted argument is still open at
+    the end (a capture that dropped its continuation lines) is unparsed."""
+    cmds = []          # [ts, pid, text]
+    open_by_pid = {}
+    unparsed = 0
     for line in lines:
-        if "sudo[" not in line or " COMMAND=" not in line:
+        if "sudo[" not in line:
             continue
-        m = TS_PID_RE.match(line)
-        if not m:
+        cont = " : (command continued) " in line
+        if not cont and " COMMAND=" not in line:
             continue
-        cmd = line.split(" COMMAND=", 1)[1].rstrip("\n")
-        for key, value, via in classify(cmd):
-            out.append({"ts": m.group(1), "pid": m.group(2), "key": key, "value": value, "via": via})
-    return out
+        tp = line_ts_pid(line)
+        if tp is None:
+            unparsed += 1
+            continue
+        ts, pid = tp
+        if cont:
+            rest = line.split(" : (command continued) ", 1)[1].rstrip("\n")
+            if pid in open_by_pid:
+                open_by_pid[pid][2] += " " + rest
+            else:
+                unparsed += 1  # a continuation whose first part is not in the input
+            continue
+        entry = [ts, pid, line.split(" COMMAND=", 1)[1].rstrip("\n")]
+        cmds.append(entry)
+        open_by_pid[pid] = entry
+    out = []
+    for ts, pid, cmd in cmds:
+        if EXIT_SUFFIX_RE.search(cmd):
+            continue  # an exit event repeats a command its accept event already logged
+        try:
+            found = classify(cmd)
+        except Unparsed:
+            unparsed += 1
+            continue
+        for key, value, via in found:
+            out.append({"ts": ts, "pid": pid, "key": key, "value": value, "via": via})
+    return out, unparsed
 
 
-def journal_report(events):
+def journal_report(events, unparsed=0):
     lines = []
     for e in events:
         lines.append("SYSCTL_WRITE ts=%s pid=%s key=%s value=%s via=%s" % (
@@ -215,6 +483,9 @@ def journal_report(events):
     keys = len({e["key"] for e in events})
     zero = sum(1 for e in events if e["key"] == "user.max_user_namespaces" and e["value"] == "0")
     lines.append("SYSCTL_WRITES n=%d keys=%d userns_zero=%d" % (len(events), keys, zero))
+    if unparsed:
+        lines.append("SYSCTL_WRITES_SETUP unparsed=%d" % unparsed)
+        return lines, 2
     return lines, (1 if events else 0)
 
 
@@ -250,9 +521,9 @@ def selftest():
         results.append((name, got == want, got, want))
 
     def journal_case(name, text, want):
-        ev = scan_journal(text.splitlines())
-        lines, rc = journal_report(ev)
-        results.append((name, (lines[-1], rc) == want, (lines[-1], rc), want))
+        lines, rc = journal_report(*scan_journal(text.splitlines()))
+        summary = [l for l in lines if l.startswith("SYSCTL_WRITES ")][0]
+        results.append((name, (summary, rc) == want, (summary, rc), want))
 
     try:
         runway_case("ok-distinct", "122865\n",
@@ -276,9 +547,43 @@ def selftest():
               "T h sudo[5]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sysctl -p /etc/sysctl.d/x.conf\n")
         journal_case("journal-forms", J2, ("SYSCTL_WRITES n=4 keys=4 userns_zero=0", 1))
         journal_case("journal-empty", "", ("SYSCTL_WRITES n=0 keys=0 userns_zero=0", 0))
+        # round 99: reads and quoted/commented text are not writes (sysctl -r PATTERN, XCU 2.2/2.3)
+        J4 = ("T h sudo[1]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sysctl -a -r 'user.max_user_namespaces=0'\n"
+              "T h sudo[2]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sysctl --pattern=a=b -a\n"
+              "T h sudo[3]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'echo \"echo 0 > /proc/sys/user/max_user_namespaces\" > /dev/null'\n"
+              "T h sudo[4]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/bash -c '# echo 0 > /proc/sys/user/max_user_namespaces'\n")
+        journal_case("journal-not-writes", J4, ("SYSCTL_WRITES n=0 keys=0 userns_zero=0", 0))
+        # round 99: writes the round-98 regexes missed (sysctl inside sh -c, env prefix, printf, sh-redirect, -pFILE)
+        J5 = ("T h sudo[1]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'sysctl -w user.max_user_namespaces=0'\n"
+              "T h sudo[2]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/env LC_ALL=C sysctl kernel.pid_max=99999\n"
+              "T h sudo[3]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/bash -c 'printf 0 >> /proc/sys/vm/swappiness 2>/dev/null'\n"
+              "T h sudo[4]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'cat /x > /proc/sys/vm/drop_caches; echo 1 | tee -a /proc/sys/vm/overcommit_memory'\n"
+              "T h sudo[5]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sysctl -p/etc/sysctl.d/y.conf\n")
+        journal_case("journal-more-writes", J5, ("SYSCTL_WRITES n=6 keys=6 userns_zero=1", 1))
+        # round 99: the default `journalctl -o short` shape parses; an unknown shape fails closed
+        J6 = "Nov 05 05:22:02 h sudo[7]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'echo 0 > /proc/sys/user/max_user_namespaces'\n"
+        journal_case("journal-short-format", J6, ("SYSCTL_WRITES n=1 keys=1 userns_zero=1", 1))
+        # round 99: sudo's own COMMAND= quoting (\' and #012 escapes) and an exit-event suffix
+        J8 = ("T h sudo[1]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'printf \\'0\\' > /proc/sys/user/max_user_namespaces#012echo \\'#\\' done'\n"
+              "T h sudo[2]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sysctl -a ; EXIT=0\n")
+        journal_case("journal-sudo-escapes", J8, ("SYSCTL_WRITES n=1 keys=1 userns_zero=1", 1))
+        # round 99: sudo's syslog_maxlen split, joined by pid; an orphan continuation and a
+        # first part whose continuation is missing both fail closed
+        J9 = ("T h sudo[31]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'echo 0 >\n"
+              "T h sudo[32]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sysctl -a\n"
+              "T h sudo[31]:    u : (command continued) /proc/sys/user/max_user_namespaces'\n")
+        journal_case("journal-continued", J9, ("SYSCTL_WRITES n=1 keys=1 userns_zero=1", 1))
+        J10 = ("T h sudo[41]:    u : (command continued) /proc/sys/user/max_user_namespaces'\n"
+               "T h sudo[42]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'echo 0 >\n")
+        journal_case("journal-continued-broken", J10, ("SYSCTL_WRITES n=0 keys=0 userns_zero=0", 2))
+        J7 = ("Nov 5 05:22 h sudo[7]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sysctl -a\n"
+              "x y z sudo[8]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'echo 0 > /proc/sys/user/max_user_namespaces'\n"
+              "T h sudo[9]:    u : PWD=/x ; USER=root ; COMMAND=/usr/bin/sh -c 'echo 0 > /proc/sys/user/max_user_namespaces\n")
+        journal_case("journal-unparsed", J7, ("SYSCTL_WRITES n=0 keys=0 userns_zero=0", 2))
+        runway_case("used-over-limit", "1", [I, "user:[21]", "user:[22]", "user:[23]"], (1, 3, 0, 0, "exhausted"))
         # redaction: a planted marker in the command never reaches the output
         J3 = "T h sudo[9]:    secretuser : PWD=/home/MARKERX ; USER=root ; COMMAND=/usr/bin/sysctl -w a.b=MARKERX$(id)\n"
-        lines, _ = journal_report(scan_journal(J3.splitlines()))
+        lines, _ = journal_report(*scan_journal(J3.splitlines()))
         ok = all("MARKERX" not in l and "secretuser" not in l for l in lines) and "value=?" in lines[0]
         results.append(("redaction", ok, lines, "no marker"))
     finally:
@@ -326,7 +631,7 @@ def main(argv):
         except (OSError, Setup) as e:
             print("SYSCTL_WRITES_SETUP %s" % (e if isinstance(e, Setup) else e.__class__.__name__))
             return 2
-        lines, rc = journal_report(scan_journal(text.splitlines()))
+        lines, rc = journal_report(*scan_journal(text.splitlines()))
         print("\n".join(lines))
         return rc
     try:
