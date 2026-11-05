@@ -1,0 +1,23 @@
+## C1 do-nothing at ENTERING (expect unmet, adm_fail=12)
+C1=unmet trio=98 claim_r92_true=0 files=19 adm_ok=7 adm_fail=12 patched12=0 seven_same=7 census=ok checks_failed=admission,patched12 rev=7b3fe9d540c9
+rc=1
+## C1 text-only control: lesson sentence reworded, 12 data lines unchanged (expect unmet)
+C1=unmet trio=98 claim_r92_true=0 files=19 adm_ok=7 adm_fail=12 patched12=0 seven_same=7 census=ok checks_failed=admission,patched12 rev=4bd390bc3148
+rc=1
+## C1 deletion control: verified-at stripped from 12 files (expect unmet)
+C1=unmet trio=86 claim_r92_true=0 files=19 adm_ok=7 adm_fail=12 patched12=0 seven_same=7 census=ok checks_failed=trio,admission,patched12 rev=b69974d665cd
+rc=1
+## C1 forgery control: verified-at forged correctly, one body line edited (expect unmet patched12)
+C1=unmet trio=98 claim_r92_true=1 files=19 adm_ok=19 adm_fail=0 patched12=11 seven_same=7 census=ok checks_failed=patched12 rev=547774338715
+rc=1
+## C2 do-nothing at ENTERING (expect unmet, home_literals>0)
+C2=unmet home_literals=18 vgpnk_refs=18 tools=3 selftests=3/3 census=ok checks_failed=home_literals,vgpnk_refs rev=7b3fe9d540c9
+rc=1
+## C2 deletion control: three tools removed (expect unmet tools)
+C2=unmet home_literals=0 vgpnk_refs=0 tools=0 selftests=0/3 census=ok checks_failed=tools,selftests rev=c3c7dc63ff9f
+rc=1
+## C2 rename control: literal user renamed, still a host home path (expect unmet home_literals)
+C2=unmet home_literals=18 vgpnk_refs=0 tools=3 selftests=3/3 census=ok checks_failed=home_literals rev=0509170509e6
+rc=1
+## scratch
+controls done

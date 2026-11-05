@@ -1,0 +1,98 @@
+MISMATCH|095bd1f6|corpus/knowledge/execution-evidence-r86.md|verified-at: 2026-11-04
+MISMATCH|1106afd3|corpus/knowledge/record-claim-integrity-r81.md|verified-at: 44bc941a0e3e9676fa33a882b43d6e9793cbf74d
+MISMATCH|1116c092|corpus/knowledge/kernel-v7.3-recheck-r54.md|verified-at: 2026-10-27
+MISMATCH|1116c092|corpus/knowledge/memory-failure-kills-r54.md|verified-at: 2026-10-27 — every quote located in the committed v7.3 copy by `python3 .ufo/waves/round-54/count-c2.py <rev>`; host read 2026-10-27 on kernel 7.2.11-arch1-1 (`.ufo/waves/round-54/evidence/sweeps.txt`)
+MISMATCH|114ebe5e|corpus/knowledge/journal-cursor-window-r16.md|verified-at: 2026-10-20 — the four public systemd 262 pages above were opened for this note by static reads. No journal was queried, no host journalctl query was run, and no fixture, wrapper, test or gate was run. Host systemd version was not verified; no behaviour is claimed for any host version.
+MISMATCH|121093e2|corpus/knowledge/disk-runway-enospc-r55.md|verified-at: 2026-10-27
+MISMATCH|121093e2|corpus/knowledge/kernel-v7.3-recheck-r55.md|verified-at: 2026-10-27
+MISMATCH|126e192d|corpus/knowledge/oom-victim-selection-r27.md|verified-at: 2026-10-22 — upstream bytes opened at earlyoom tag v1.9.0 (commit 202d4db0d308ca6478f68de68b46cae34896ddaf), Linux tag v7.2 and systemd tag v262 (commit 8cc40e0c5e9234bf45084751ac53b1fbfe70b492); host read-only on 2026-10-22, except an `oom_score_adj` probe on processes the probe started, (kernel 7.2.11-arch1-1, systemd 262-1, earlyoom 1.9.0-1 active): process aggregates at 15:56:35Z (committed) and 15:46:40Z, earlyoom send-line aggregates over every retained boot (committed run 15:56Z), unit properties and an unprivileged oom_score_adj probe on processes the probe started (wave-1 seats HostUnitOomAdjust and CriticInheritProbe).
+MISMATCH|1592f53d|corpus/knowledge/host-events-win-r63.md|verified-at: 2026-10-31 (round 63; claims below are line-located against the
+MISMATCH|18d7d552|corpus/knowledge/structured-journal-scopes-r13.md|verified-at: 2026-10-20 — source openings at base 6531ac6; L1 fixture and live measurements against c13df48 (census SHA-256 39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985).
+MISMATCH|18d7d552|corpus/knowledge/verdict-contract-r13.md|verified-at: 2026-10-20 — original source analysis at the pinned frozen bytes and S031; L1's appended implementation receipt measures c13df48. Historical figures in sections 1–6 retain audit-r11's own pins; they are not retroactively re-observed.
+MISMATCH|18fd68b0|corpus/knowledge/census-cgroup-levels-r45.md|verified-at: 2026-10-25
+MISMATCH|1f07f1dd|corpus/knowledge/kernel-oom-line-attribution-r12.md|verified-at: 2026-10-19 (lane base 20e2255; host kernel 7.2.3-arch1-3, systemd 261 (261.2-1-arch))
+MISMATCH|1f07f1dd|corpus/knowledge/kill-classes-by-message-id-r12.md|verified-at: 2026-10-19 (lane base 20e2255; host kernel 7.2.3-arch1-3, systemd 261 (261.2-1-arch))
+MISMATCH|1f07f1dd|corpus/knowledge/oom-kill-counter-kernel-only-r12.md|verified-at: 2026-10-19 (lane base 20e2255; host kernel 7.2.3-arch1-3, systemd 261 (261.2-1-arch))
+MISMATCH|1f07f1dd|corpus/knowledge/roster-truth-r12.md|verified-at: 2026-10-19 (census sha 3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164)
+MISMATCH|1f07f1dd|corpus/knowledge/userspace-oom-killers-r12.md|verified-at: 2026-10-19 (lane base 20e2255; host kernel 7.2.3-arch1-3, systemd 261 (261.2-1-arch))
+MISMATCH|2360cc3b|corpus/knowledge/counter-semantics-r78.md|verified-at: 2026-11-02 (round 78; the S593 claims below are line-located against the
+MISMATCH|24ebc799|corpus/knowledge/journal-reach-r49.md|verified-at: 2026-10-25 (the three manual-page copies were byte-identical to a live fetch the same day)
+MISMATCH|25a74d4c|corpus/knowledge/receipt-provenance-r85.md|verified-at: 2026-11-04
+MISMATCH|265a955c|corpus/knowledge/conform-scope-r40.md|verified-at: 2026-10-24
+MISMATCH|26f6589d|corpus/knowledge/journal-positive-evidence-r15.md|verified-at: 2026-10-20 — S014/S015/S037/S038 re-opened by this seat; no journal query, census run, fixture run, gate run or live measurement was performed.
+MISMATCH|273aa74a|corpus/knowledge/jj-branch-anchor-r17.md|verified-at: 2026-10-20 — source-opening receipts .ufo/waves/round-17/build/Src{JjGitCompat,JjMetaedit,GitMergeBase,GitSymbolicRef}.md; C2 measurements and carrying revision are recorded in corpus/lessons/round-17.md.
+MISMATCH|273aa74a|corpus/knowledge/seat-terminal-status-r17.md|verified-at: 2026-10-20 — source-opening receipts .ufo/waves/round-17/build/Src{Rfc6585,ZaiErrorCodes}.md; delivered-tool fixture and live measurements are recorded in corpus/lessons/round-17.md and its run manifests (this header does not certify all OMP versions).
+MISMATCH|2a4213bf|corpus/knowledge/commit-runway-read-r53.md|verified-at: 2026-10-26
+MISMATCH|2a4213bf|corpus/knowledge/kernel-v7.3-recheck-r53.md|verified-at: 2026-10-26
+MISMATCH|32132cfb|corpus/knowledge/rotation-series-r75.md|verified-at: 2026-11-02 (round 75; the S590 mechanism claims below are line-located
+MISMATCH|327fbcca|corpus/knowledge/userspace-oom-killers-r26.md|verified-at: 2026-10-22 — upstream sources opened as raw bytes at earlyoom tag v1.9.0 (commit 202d4db0d308ca6478f68de68b46cae34896ddaf) and at systemd tag v262; host observation read-only on 2026-10-22 (committed capture): earlyoom 1.9.0-1 active and enabled, systemd 262-1, systemd-oomd inactive and disabled, kernel 7.2.11-arch1-1; the package was installed on 2026-10-20, and the running earlyoom invocation began 2026-10-22 04:55:44 -03 (ActiveEnterTimestampMonotonic 19964362 µs) — that stamp is the current invocation, not a first activation.
+MISMATCH|34b92673|corpus/knowledge/conform-source-order-r42.md|verified-at: 2026-10-24
+MISMATCH|34b92673|corpus/knowledge/inheritance-d72ac16-r42.md|verified-at: 2026-10-24
+MISMATCH|34b92673|corpus/knowledge/oom-evidence-loss-r38.md|verified-at: 2026-10-24
+MISMATCH|34b92673|corpus/knowledge/oom-victim-context-r41.md|verified-at: 2026-10-24
+MISMATCH|3627fac0|corpus/knowledge/workstate-win-r71.md|verified-at: 2026-11-01 (round 71; claims below are line-located against the
+MISMATCH|398d3225|corpus/knowledge/entry-claims-hardening-r60.md|verified-at: 2026-10-28 — round-60 amended freeze `ac496c7cde8cad965079858accae3bedfe4a73f2`; counters `C2=met` / `C3=met` at that revision (`.ufo/waves/round-60/evidence/c2-at-freeze.txt`, `c3-at-freeze.txt`)
+MISMATCH|3da84149|corpus/knowledge/lane-silence-r2.md|verified-at: 2026-10-15T04:56Z — read-only recon of the sources above (every count,
+MISMATCH|3da84149|corpus/knowledge/observability-surfaces-r2.md|verified-at: 2026-10-15T15:27:57Z live census (receipt below) + `--selftest`
+MISMATCH|43cfbb10|corpus/knowledge/cgroup-pressure-r62.md|verified-at: 2026-10-30 (round 62; claims below are line-located against the
+MISMATCH|4dea3d09|corpus/knowledge/oom-tracepoints-r47.md|verified-at: 2026-10-25
+MISMATCH|4fbdcc17|corpus/knowledge/boot-anchor-win-r73.md|verified-at: 2026-11-02 (round 73; claims below are line-located against the
+MISMATCH|5157cdda|corpus/knowledge/pid-probe-conclusion-r44.md|verified-at: 2026-10-25 — both pages fetched 2026-10-25; this entry first lands in round 44 (no earlier revision holds it)
+MISMATCH|5b728304|corpus/knowledge/watchdog-identity-r31.md|verified-at: 2026-10-22 (round 31; host procps-ng 4.0.7-1, Linux 7.2.11, bash 5.3.20; live probes wave-1 LiveCommProbe and LiveArgvProbe on throwaway processes only)
+MISMATCH|5be89432|corpus/knowledge/drift-pin-r10.md|verified-at: 2026-10-15T22:06:01–22:17Z, two arms, one per revision:
+MISMATCH|62db24c0|corpus/knowledge/disk-write-rate-r33.md|verified-at: 2026-10-23 (round 33, L1 MoriR33; every copy fetched twice with identical sha256; Gate rows in corpus/lessons/round-33.md)
+MISMATCH|6a230c4b|corpus/knowledge/counter-win-r77.md|verified-at: 2026-11-02 (round 77; the S592 command claims below are
+MISMATCH|6f3f8482|corpus/knowledge/watchdog-unclosed-r57.md|verified-at: 2026-10-27; working-tree source and captured copy hash matched
+MISMATCH|71107662|corpus/knowledge/rotation-receipt-grammar-r76.md|verified-at: 2026-11-02 (round 76; the S591 clock claims below are line-located
+MISMATCH|728bc5f4|corpus/knowledge/receipt-supersede-r87.md|verified-at: 2026-11-04
+MISMATCH|72db3c2b|corpus/knowledge/psi-v73-recheck-r61.md|verified-at: 2026-10-30 (round 61; six v7.3 copies pinned under
+MISMATCH|7c4946c2|corpus/knowledge/receipt-counterfeit-r88.md|verified-at: 2026-11-04; gate subject d5e2eda494877a85edaa4e287d6ad81843d9a8a1
+MISMATCH|7ca17b11|corpus/knowledge/observability-census-r1.md|verified-at: 2026-10-15T00:35:18Z (live run, exit 1 DRIFT — a red census is a
+MISMATCH|8108dfcc|corpus/knowledge/mutation-adequacy-r80.md|verified-at: 2026-11-04
+MISMATCH|8524904a|corpus/knowledge/overcommit-commit-limit-r52.md|verified-at: 2026-10-26
+MISMATCH|874cb413|corpus/knowledge/driver-events-r58.md|verified-at: 2026-10-27
+MISMATCH|87e0c374|corpus/knowledge/memavailable-estimate-r51.md|verified-at: 2026-10-26
+MISMATCH|8cb4afbf|corpus/knowledge/retention-reconciliation-r22.md|verified-at: 2026-10-21; exercised results and measured tool revision are recorded in the round22 report and SCORECARD
+MISMATCH|8d22d18f|corpus/knowledge/journal-alarm-routing-r14.md|verified-at: 2026-10-20 — all source pages and pinned code re-opened 2026-10-20; lane base `dbe8500`; no census, journal query, fixture or gate run by this seat.
+MISMATCH|8f8c58ee|corpus/knowledge/drift-repin-r20.md|verified-at: 2026-10-21, census sha256 87b8d680…ab28; pin 10:53:07Z; post-pin drift none 10:55:31Z
+MISMATCH|8f8c58ee|corpus/knowledge/wave-settlement-r20.md|verified-at: 2026-10-21, tool sha256 79e7f9dedb8a16a9d9257644045c56c57ca97b27ab94640ca487b330527b28f9 (selftest 23/23; oracle 14/14)
+MISMATCH|90ed9b77|corpus/knowledge/harness-job-capacity-r25.md|verified-at: 2026-10-22 — upstream sources opened as raw bytes at tag v18.12.6 (sha256 job-manager.ts 0f37afaaa822ef1de845b8eb21473a70210176ff61e2dcff5925f85ec0e544e7, sdk.ts c0228addd4cfe93cfd370c7248e9db29743f0fa802aea0e1d1adf4994dbe6957, tools/settings.ts 514974143d47db0c9765bc47e86dcb9a38bd6bc23113a4ffe557bff0d8e30507, docs/settings.md 0b2e1457021fa526f2c35015672f1d7ccbac95e7b9f217528ab8022c55ed5883, docs/tools/eval.md fb2fc4a139ba187f1cc062fab53bd72a48dd13b1f81f0c3318ec7a79d41e495c, tools/bash.ts d985ef25639993e05fb4de8c8b6dc75dde76422f63d1a295b95eb575e8cc3ea2, tools/eval.ts 01e9c5c56af15d3e04cdeaf99d959afa90129f8cbb015d6908e02795351920e3); the installed binary read as bytes only (never executed as a harness). Host observation, read-only: the operator's OMP settings file carries `async:` then `maxJobs:` with a value above the clamp (value withheld, round 27); the live read-only run of the round-25 tool reports a configured value above the clamp, clamp 100, effective 100, verdict RUNWAY_CLAMPED (exit 1) — `.ufo/waves/round-25/w1/BuildJobRunwayTool.md` §2.
+MISMATCH|9441ef30|corpus/knowledge/branch-reachability-r90.md|verified-at: 2026-11-05 (round 90; S612–S614 from the POSIX page, S615 from the ast page, S616 from the tokenize page, all opened by seat Mo90S01Sources this round; pinned copies under `.ufo/waves/round-90/w1/Mo90S01Sources/sources/`, quotes re-checked by the L1 against the tag-stripped text of those copies)
+MISMATCH|9738f1ab|corpus/knowledge/surfaces-r8.md|verified-at: 2026-10-15T20:17–20:39Z — note-writer battery: `--selftest` (×16),
+MISMATCH|9b8562a3|corpus/knowledge/oom-memcg-stat-r50.md|verified-at: 2026-10-26
+MISMATCH|a313f05b|corpus/knowledge/runway-win-r64.md|verified-at: 2026-10-31 (round 64; claims below are line-located against the
+MISMATCH|be737211|corpus/knowledge/wave-settlement-artifacts-r59.md|verified-at: 2026-10-28 — artifacts re-read from the lane working tree at freeze revision 60b3a76ad0524c8978cc51922940be1c8c388915; copies sha256-verified equal to the committed `.ufo` artifacts (counter arm `tree=ok`)
+MISMATCH|bee9f21e|corpus/knowledge/calibration-arming-r91.md|verified-at: 2026-11-05
+MISMATCH|bf0df77f|corpus/knowledge/source-drift-r36.md|verified-at: 2026-10-23
+MISMATCH|c419fe6d|corpus/knowledge/driver-liveness-r56.md|verified-at: 2026-10-27 (extract `corpus/evidence/sources-r56/watchdog-log-grammar.txt`, sha256 `38ba3e6b…`; corrected extract v2 `watchdog-log-grammar-v2.txt`, sha256 `1ea4524c…`)
+MISMATCH|c419fe6d|corpus/knowledge/vote-binding-r56.md|verified-at: 2026-10-27 (live fetch, `corpus/evidence/sources-r56/rfc8259.txt`, sha256 `61a5378f…`)
+MISMATCH|c4845c83|corpus/knowledge/counter-mutation-adequacy-r83.md|verified-at: 2026-11-04
+MISMATCH|c89e5b6e|corpus/knowledge/execution-binding-r89.md|verified-at: 2026-11-04 (round 89; S607/S609/S610 opened by seat Mo89S01Sources, pinned copies
+MISMATCH|cffb37ef|corpus/knowledge/selftest-flake-r9.md|verified-at: 2026-10-15T21:05–21:35Z — GNU bash 5.3.15, host load average ≈90–140 (the
+MISMATCH|d30b4e43|corpus/knowledge/surfaces-r7.md|verified-at: 2026-10-15T19:47–19:52Z — note-writer battery (`--selftest`, oracle ×2,
+MISMATCH|d72ac167|corpus/knowledge/conform-bindings-r41.md|verified-at: 2026-10-24
+MISMATCH|d9574692|corpus/knowledge/equivalent-mutant-adjudication-r84.md|verified-at: 2026-11-04
+MISMATCH|daa1d4d2|corpus/knowledge/containment-timed-supersede-r38.md|verified-at: 2026-10-23 — S226 opened this round (`corpus/evidence/sources-r38/S226.src:657-658`);
+MISMATCH|daa1d4d2|corpus/knowledge/source-drift-content-anchor-r38.md|verified-at: 2026-10-23 — `python3 .ufo/waves/round-38/count-c4.py <rev>` over the committed bytes
+MISMATCH|daceeec8|corpus/knowledge/dispatch-ledger-r18.md|verified-at: 2026-10-21, sources opened by `.ufo/waves/round-18/build/Src{SlsaProvenance,Rfc8785}.md`
+MISMATCH|daceeec8|corpus/knowledge/evidence-minimization-r18.md|verified-at: 2026-10-21, sources opened by round-18 scribes (`.ufo/waves/round-18/build/Src{OwaspLogging,Nist800122,OtelSensitiveData}.md`); gate run by the L1 at the round-18 measured commit (see SCORECARD round 18)
+MISMATCH|daceeec8|corpus/knowledge/freeze-order-r18.md|verified-at: 2026-10-21, sources opened by `.ufo/waves/round-18/build/Src{NosekPrereg,GitRevList}.md`; r17 verdicts independently re-derived by `build/RevFreezeR17C{1,2,3}.md`
+MISMATCH|dc50c80b|corpus/knowledge/rotation-schedule-r74.md|verified-at: 2026-11-02 (round 74; the S589 clock claims below are
+MISMATCH|dde525ea|corpus/knowledge/c1s-cwd-r43.md|verified-at: 2026-10-24
+MISMATCH|dde525ea|corpus/knowledge/journal-disk-usage-total-r51.md|verified-at: 2026-10-24
+MISMATCH|dde525ea|corpus/knowledge/s235-sha-correction-r43.md|verified-at: 2026-10-24
+MISMATCH|de431a74|corpus/knowledge/uptime-win-r70.md|verified-at: 2026-11-01 (round 70; claims below are line-located against the
+MISMATCH|df4db54a|corpus/knowledge/system-pressure-r24.md|verified-at: 2026-10-22 — sources opened as raw text by round-24 wave-1 seats (digests in corpus/lessons/round-24.md Gate). Host observation (ScoutHostKernelConfig, LivePressureCapture; read-only): kernel 7.2.11-arch1-1 with CONFIG_PSI=y, CONFIG_PSI_DEFAULT_DISABLED not set, CONFIG_IRQ_TIME_ACCOUNTING=y, no psi= on the command line; all four /proc/pressure files present; irq carries one full line; system cpu full total 0.
+MISMATCH|e4dfff32|corpus/knowledge/quota-observability-r48.md|verified-at: 2026-10-25
+MISMATCH|e57c58b5|corpus/knowledge/source-drift-hardening-r37.md|verified-at: 2026-10-23 — the five sources were opened this round; the hardening code landed at
+MISMATCH|ee61010d|corpus/knowledge/earlyoom-invocation-scope-r30.md|verified-at: 2026-10-22 — S156–S160 opened this round (access times and sha256 in `corpus/lessons/round-30.md` `## Gate`; excerpts in `corpus/evidence/sources-r30/`; all five re-fetched byte-identical by wave-2 seats `w2/ReopenS156.md`…`ReopenS160.md`); every decision-table row copies its case's frozen `expect` values, which the entering-tip tool blob `58b61681:tools/mori-oom-killers.py` and the tip tool both print (`.ufo/waves/round-30/count-c1.sh`; wave-2 CriticC1Admission F4); no host unit, journal, setting or signal touched
+MISMATCH|f02ad83b|corpus/knowledge/record-revision-precision-r82.md|verified-at: 2026-11-04
+MISMATCH|f5460942|corpus/knowledge/ua-serving-normative-r79.md|verified-at: 2026-11-04 — independently opened the RFC text; `sha256sum` and `cmp` bound that fetch byte-for-byte to the pin (rc 0). Pinned-copy grep located all four spans below at their named lines; `wc -w` measured their counts.
+MISMATCH|f920eaf7|corpus/knowledge/gate-ancestry-r39.md|verified-at: 2026-10-24 — `python3 tools/mori-sources-appendonly.py --selftest`
+OK|1439c473|corpus/knowledge/silence-cutover-r3.md|verified-at: 1439c473 (2026-10-15), admission commit
+OK|3da84149|corpus/knowledge/progressing-weak-r2.md|verified-at: 3da84149 (2026-10-15), admission commit
+OK|3da84149|corpus/knowledge/silence-grading-r2.md|verified-at: 3da84149 (2026-10-15), admission commit
+OK|5b62c897|corpus/knowledge/verdict-machine-r4.md|verified-at: 5b62c897 (2026-10-15), admission commit
+OK|92b2e427|corpus/knowledge/verdict-machine-r6.md|verified-at: 92b2e427 (2026-10-15), admission commit
+OK|a420deb7|corpus/knowledge/verdict-machine-r5.md|verified-at: a420deb7 (2026-10-15), admission commit
+OK|e4855e8c|corpus/knowledge/audit-r11.md|verified-at: e4855e8c (2026-10-15), admission commit

@@ -1,0 +1,1 @@
+C2_REPORT rev=7b3fe9d540c9 home_literals=18 vgpnk_refs=18 tools=3/3 selftests=3/3 census_rc=0
