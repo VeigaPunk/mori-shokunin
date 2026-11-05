@@ -196,6 +196,7 @@ CLASSES = (
     "aborted",
     "dead_rate_limit",
     "dead_quota",
+    "dead_auth",
     "dead_error_other",
     "error_unsettled",
     "incomplete",
@@ -2199,7 +2200,7 @@ import sys
 SCHEMA = "mori-seat-terminal-v1"
 CLASSES = (
     "completed", "aborted", "dead_rate_limit", "dead_quota",
-    "dead_error_other", "error_unsettled", "incomplete", "unavailable",
+    "dead_auth", "dead_error_other", "error_unsettled", "incomplete", "unavailable",
 )
 FINDING_OK = "MORI_SEAT_TERMINAL_OK"
 FINDING_DEAD = "MORI_SEAT_TERMINAL_DEAD"

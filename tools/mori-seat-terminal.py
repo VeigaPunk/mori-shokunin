@@ -9,7 +9,7 @@ FIFOs and devices are never read), validates the bounded header record
 ``{"type": "session", "version": 3}`` from the first 4096 bytes, reads at most the
 last ``--max-tail-bytes`` (default 524288) from the same descriptor, and classifies
 the LAST ``{"type": "message", "message": {...}}`` record visible in that tail.
-Classes: completed, aborted, dead_rate_limit, dead_quota, dead_error_other,
+Classes: completed, aborted, dead_rate_limit, dead_quota, dead_auth, dead_error_other,
 error_unsettled, incomplete, unavailable.
 
 Filesystem safety: a symlinked ``--sessions-dir`` (including a trailing-separator
@@ -33,7 +33,7 @@ PERMITTED INPUT SET (decoded field projection)
   ``errorStatus``, ``completedAt``, ``timestamp``, ``provider``, ``model``; and
   from message ``errorMessage`` only derived metadata — retry-exhausted prefix
   boolean, ``after N retr(y|ies)`` count, ``(type=NNNN)`` digit string, and
-  presence of the contract's literal quota/rate tokens. The header projector
+  presence of the contract's literal quota/rate/auth tokens. The header projector
   decodes only ``type`` and ``version``. Every other member (content, usage,
   credential_pin payloads, provider-specific blobs, anything else) is skipped
   structurally in place: its bytes are traversed for JSON structure but never
@@ -119,6 +119,7 @@ CLASSES = (
     "aborted",
     "dead_rate_limit",
     "dead_quota",
+    "dead_auth",
     "dead_error_other",
     "error_unsettled",
     "incomplete",
@@ -140,6 +141,26 @@ QUOTA_TOKENS = ("quota", "usage limit", "402", "credits")
 QUOTA_TOKEN_BYTES = tuple(token.encode("ascii") for token in QUOTA_TOKENS)
 QUOTA_CODES = frozenset(("1113", "1308"))
 RATE_CODES = frozenset(("1302",))
+# Round-100 auth/entitlement class. A terminal error is dead_auth when HTTP
+# status is 401 (RFC 9110 15.5.2 Unauthorized: lacks valid authentication
+# credentials) or 403 (15.5.4 Forbidden: understood but refuses to fulfill), or
+# when the message carries a Connect/gRPC auth code spelling (permission_denied,
+# unauthenticated) or a provider auth error type (authentication_error,
+# permission_error). It is checked AFTER quota and rate evidence: gRPC says
+# PERMISSION_DENIED must not be used for rejections caused by exhausting some
+# resource, and some providers answer quota exhaustion with 403, so explicit
+# quota/rate evidence wins. dead_auth therefore only ever reclaims seats the
+# round-99 tool classified dead_error_other.
+AUTH_STATUSES = frozenset((401, 403))
+AUTH_TOKENS = (
+    "permission_denied",
+    "PERMISSION_DENIED",
+    "unauthenticated",
+    "UNAUTHENTICATED",
+    "authentication_error",
+    "permission_error",
+)
+AUTH_TOKEN_BYTES = tuple(token.encode("ascii") for token in AUTH_TOKENS)
 ZAI_PROVIDER = "zai"
 RETRY_EXHAUSTED_PREFIX = "Retry budget exhausted"
 RETRY_EXHAUSTED_PREFIX_BYTES = RETRY_EXHAUSTED_PREFIX.encode("ascii")
@@ -213,7 +234,10 @@ LIMITS = (
     "seats. Message text, content and usage are never emitted. A (type=...) "
     "business code is a Z.AI-only classification hint, never an authenticated "
     "vendor cause; an unmapped Z.AI code is not rate evidence from HTTP 429 "
-    "alone, and codes are ignored for other providers."
+    "alone, and codes are ignored for other providers. dead_auth (HTTP 401/403 "
+    "or a Connect/gRPC/provider auth code spelling, after quota and rate "
+    "evidence) is an observed credential or entitlement refusal; it does not "
+    "say which credential, account or model is at fault."
 )
 
 
@@ -565,6 +589,7 @@ def _error_metadata(buf, value_start, value_end):
     window = bytearray()
     rate_token = False
     quota_token = False
+    auth_token = False
     retries = None
     retry_exhausted = False
     error_code = None
@@ -611,6 +636,11 @@ def _error_metadata(buf, value_start, value_end):
                 if window.endswith(token):
                     quota_token = True
                     break
+        if not auth_token:
+            for token in AUTH_TOKEN_BYTES:
+                if window.endswith(token):
+                    auth_token = True
+                    break
         if retries is None:
             match = _RETRIES_RE.search(bytes(window))
             if match is not None:
@@ -624,6 +654,7 @@ def _error_metadata(buf, value_start, value_end):
         "error_code": error_code,
         "rate_token": rate_token,
         "quota_token": quota_token,
+        "auth_token": auth_token,
     }
 
 
@@ -674,6 +705,7 @@ def _project_message_record(line):
         "error_code": None,
         "rate_token": False,
         "quota_token": False,
+        "auth_token": False,
     }
 
     def on_message_member(key, value_start, value_end, kind):
@@ -708,6 +740,7 @@ def _project_message_record(line):
             view["error_code"] = metadata["error_code"]
             view["rate_token"] = metadata["rate_token"]
             view["quota_token"] = metadata["quota_token"]
+            view["auth_token"] = metadata["auth_token"]
         # Every other member is skipped without decoding.
 
     if _walk_object(line, message_start, on_message_member) is None:
@@ -791,12 +824,20 @@ def _classify(view, now_ms, settle_seconds):
             return "dead_quota", None
         if view["rate_token"]:
             return "dead_rate_limit", None
+        if _auth_evidence(view):
+            return "dead_auth", None
         return "dead_error_other", None
     if view["quota_token"]:
         return "dead_quota", None
     if view["error_status"] == 429 or view["rate_token"]:
         return "dead_rate_limit", None
+    if _auth_evidence(view):
+        return "dead_auth", None
     return "dead_error_other", None
+
+
+def _auth_evidence(view):
+    return view["error_status"] in AUTH_STATUSES or view["auth_token"]
 
 
 # ---------------------------------------------------------------------------
@@ -1544,6 +1585,114 @@ def _selftest():
                         "error_code": None,
                     }
                 },
+                "files_scanned": 1,
+            },
+        )
+
+        # Round 100: auth/entitlement deaths (shapes observed in the fleet's
+        # own transcripts on 2026-11-04/05) and the precedence boundary.
+        add(
+            "auth-401-status",
+            [
+                (
+                    "sessions/Auth401.Seat.jsonl",
+                    [
+                        _msg(
+                            "assistant",
+                            stopReason="error",
+                            completedAt=_SELFTEST_NOW_MS - 1000000,
+                            errorStatus=401,
+                            errorMessage="401 Invalid 'Authorization' header or token.",
+                            provider="commandcode",
+                            model="m",
+                        )
+                    ],
+                )
+            ],
+            {
+                "rc": 1,
+                "finding_id": FINDING_DEAD,
+                "seats": {"Auth401.Seat": "dead_auth"},
+                "files_scanned": 1,
+            },
+        )
+
+        add(
+            "auth-connect-permission-denied-no-status",
+            [
+                (
+                    "sessions/DevinPerm.Seat.jsonl",
+                    [
+                        _msg(
+                            "assistant",
+                            stopReason="error",
+                            completedAt=_SELFTEST_NOW_MS - 1000000,
+                            errorMessage=(
+                                "Devin stream error permission_denied: This model "
+                                "is no longer available for your account."
+                            ),
+                            provider="devin",
+                            model="swe-2",
+                        )
+                    ],
+                )
+            ],
+            {
+                "rc": 1,
+                "finding_id": FINDING_DEAD,
+                "seats": {"DevinPerm.Seat": "dead_auth"},
+                "files_scanned": 1,
+            },
+        )
+
+        add(
+            "auth-403-quota-text-is-quota",
+            [
+                (
+                    "sessions/Quota403.Seat.jsonl",
+                    [
+                        _msg(
+                            "assistant",
+                            stopReason="error",
+                            completedAt=_SELFTEST_NOW_MS - 1000000,
+                            errorStatus=403,
+                            errorMessage="403 Quota exceeded for quota metric requests",
+                            provider="google",
+                            model="m",
+                        )
+                    ],
+                )
+            ],
+            {
+                "rc": 1,
+                "finding_id": FINDING_DEAD,
+                "seats": {"Quota403.Seat": "dead_quota"},
+                "files_scanned": 1,
+            },
+        )
+
+        add(
+            "auth-word-alone-is-other",
+            [
+                (
+                    "sessions/PermWord.Seat.jsonl",
+                    [
+                        _msg(
+                            "assistant",
+                            stopReason="error",
+                            completedAt=_SELFTEST_NOW_MS - 1000000,
+                            errorStatus=500,
+                            errorMessage="500 internal error: permission denied writing cache",
+                            provider="openai",
+                            model="m",
+                        )
+                    ],
+                )
+            ],
+            {
+                "rc": 1,
+                "finding_id": FINDING_DEAD,
+                "seats": {"PermWord.Seat": "dead_error_other"},
                 "files_scanned": 1,
             },
         )
