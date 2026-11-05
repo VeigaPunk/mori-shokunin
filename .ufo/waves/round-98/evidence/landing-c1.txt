@@ -1,0 +1,3 @@
+rev=600deb7ed2695f54b289cf5b6c3931e0fa9c8bb3 count-c1.py sha256=a9f140bdd53ae0a17da3bd4549d6db6cb2db68298cd97cc73f51db0e8a152e44
+C1=met cases_ok=15/15 selftest=ok live=ok(limit=122865,used_lb=8,state=ok) registry=met sourced=met(S629,S630,S631,S632) province=met checks_failed=- root=/fast/scratch/hyaku/mori-r98/landing/t
+exit=0
