@@ -1,0 +1,7 @@
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin archive e85ed91249953094b067554bfa79fcdc65791f8e | tar -x -C DIR && python3 .ufo/waves/round-97/count-c1.py --root DIR   # rev=e85ed91249953094b067554bfa79fcdc65791f8e count-c1.sha256=78a09016fa8151b72049400600b6b154437c919df6fccb55b8bfa6253b4d2a95 date=2026-11-05T20:50:04Z
+TARGET tools/mori-cgroup-pressure.py row='cgroup PSI survey (r62 tool, registry r97)' selftest_rc=0 selftest_line='MORI_CGROUP_PRESSURE_SELFTEST: pass=12 fail=0' stated_in_cell=yes token_in_verdict_map=yes
+TARGET tools/mori-drift-recheck.py row='drift re-check (r66 tool, registry r97)' selftest_rc=0 selftest_line='MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)' stated_in_cell=yes token_in_verdict_map=yes
+TARGET tools/mori-scorecard-calibration.py row='SCORECARD Last-change calibration counter (r96 tool, registry r97)' selftest_rc=0 selftest_line='CALIB_SELFTEST pass=11 fail=0' stated_in_cell=yes token_in_verdict_map=yes
+TARGET tools/mori-source-digest.py row='SOURCES digest check (r91 tool, registry r97)' selftest_rc=0 selftest_line='DIGEST_SELFTEST pass=11 fail=0' stated_in_cell=yes token_in_verdict_map=yes
+C1=met unregistered=0 registry=met targets_ok=4/4 checks_failed=- root=/fast/scratch/hyaku/mori-r97/l1/land
+exit=0

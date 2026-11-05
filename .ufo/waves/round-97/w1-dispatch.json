@@ -1,0 +1,267 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r97-w1",
+  "policy": {
+    "source": "config",
+    "maxLanes": 16,
+    "minLanes": 8,
+    "waveMinLanes": 8,
+    "waveMaxLanes": 16,
+    "declaredMaxLanes": 16,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 14,
+    "resume": 0,
+    "total": 14
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-97/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-97/w1",
+    "members": {
+      "Mo97ScoutLive": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness"
+        ],
+        "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+      },
+      "Mo97ScoutConsider": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness"
+        ],
+        "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+      },
+      "Mo97ConnSibling": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness"
+        ],
+        "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+      },
+      "Mo97ExecReplay": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness"
+        ],
+        "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+      },
+      "Mo97ExecTrial": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness"
+        ],
+        "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+      },
+      "Mo97RevC1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness"
+        ],
+        "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+      },
+      "Mo97RevC2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness"
+        ],
+        "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+      },
+      "Mo97CritC1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness"
+        ],
+        "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+      },
+      "Mo97CritC2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness"
+        ],
+        "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+      },
+      "Mo97MutC1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness"
+        ],
+        "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+      },
+      "Mo97MutC2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness"
+        ],
+        "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+      },
+      "Mo97MutCalib": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness"
+        ],
+        "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+      },
+      "Mo97RevStamp": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "revenger",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness"
+        ],
+        "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+      },
+      "Mo97ScribeLog": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness"
+        ],
+        "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "# Goal\nmori round 97 attempt 1, wave w1 (one v1 wave, 14 seats). Lane repo (absolute): /home/vgpnk/Projects/shokunin/mori-shokunin. Fleet root (absolute): /home/vgpnk/Projects/shokunin.\nLane identity: mori (森), fleet and host observability. Detection and report only; never remediate.\nRevisions: entering 973b2af11f41bd362163d7e29ac08286832f546b; freeze dd1ae1150f53df54e7530311b2323368e3c0e5e9 (contract + counters + pre-freeze controls); landing e85ed91249953094b067554bfa79fcdc65791f8e (the claimed work).\nFrozen contract (read first, never edit): /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/contract.md. Frozen counters: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c1.py, /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c2.py. Controls receipt: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/evidence/controls-r97.txt.\nLanding receipts: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/evidence/landing-c1.txt, landing-c2.txt; before receipts before-c1.txt, before-c2.txt. Lesson: /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-97.md.\n\n# Claims (frozen; no seat edits predicates, counters, targets or receipts)\nC1 operability: SKILL.md gate registry gains rows for 4 tools the auditor `tools/mori-gate-registry.py --audit-all` reported unregistered (mori-cgroup-pressure, mori-drift-recheck, mori-scorecard-calibration, mori-source-digest). Before `C1=unmet unregistered=4`; after `C1=met ... targets_ok=4/4`.\nC2 freshness: corpus/SOURCES.md rows S615, S616, S623 (stale at r96) pinned at corpus/evidence/sources-r97/<id>.html with the exact bytes their recorded sha256 names, re-verified live with tools/mori-drift-recheck.py (time-churn = docs.python.org 'Last updated on' stamp only). New row S628 (docsbuild-scripts README) opened this round. Before `C2=unmet unpinned=3`; after `C2=met mismatch=0 unpinned=0 targets_ok=3/3 hole_guard=pass`.\nMeasurement: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin archive <rev> | tar -x -C DIR` then `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-cN.py --root DIR`.\n\n# Rules every seat obeys\n- Write ONLY your own report file under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/ (named in your task) plus your scratch dir. Never edit tools/, corpus/, SKILL.md, SCORECARD.md, LOG.md, the contract, counters or receipts, MANIFEST.json, anything under /home/vgpnk/Projects/shokunin/ outside your own wave file, or any sibling lane.\n- Never run git/jj commands that mutate anything (no add, commit, stash, checkout, switch, reset, pull, push, fetch, rebase, any jj mutation). Read-only git only, always `git -C <absolute path>` (log, show, diff, rev-parse, ls-files, cat-file, archive to your scratch). Never run jj-lane.sh or fleet-commit.sh. The L1 integrates.\n- Never change host sysctls, kernel settings, services or user limits. Name a need in your report instead.\n- Scratch root: S=$HYAKU_SCRATCH/mori-r97/<your-seat-name> (HYAKU_SCRATCH defaults to /fast/scratch/hyaku). mkdir -p \"$S\"; trap 'rm -rf -- \"$S\"' EXIT; TMPDIR=\"$S\" explicitly. /tmp only for files under 50 MB, never for cited evidence. Copy receipts you cite into your report file.\n- Absolute paths for every read, write and command: your tools start at the fleet root, so a relative path lands there. Every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin — write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>.\n- Tooling authorization (operator, 2026-10-19): you may install or upgrade tools that help the task. First read /home/vgpnk/.omp/agent/RULES.md; record tool, version, channel and reason. pacman is PAUSED host-wide: never run it (no -S, -Sy, -Syu, -U, -R); use uv tool, npx, or an official binary in ~/.local/bin.\n- Never call the task tool, never message agent://all, never spawn subagents. Never poll files; finish and report.\n- Final output: at most 12 lines, your report path, and the exact command outputs behind each verdict. Name every unrun check as unrun. Never fabricate a verdict. If you attack a claim, end with one line `VERDICT <claim> holds|falsified|needs-amend: <reason>`.\n",
+    "tasks": [
+      {
+        "name": "Mo97ScoutLive",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nTask (Mo97ScoutLive, role scout).\n\nIndependently re-open the four sources this round touches and record URL, UTC access time, HTTP status, bytes, sha256: https://docs.python.org/3/library/ast.html (S615), https://docs.python.org/3/library/tokenize.html (S616), https://docs.python.org/3/using/cmdline.html (S623), https://raw.githubusercontent.com/python/docsbuild-scripts/main/README.md (S628). For the three python pages: locate the single 'Last updated on ... (HH:MM UTC).' line; replace only its time with the time found in the pinned copy /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r97/<id>.html and report whether sha256 then equals the pinned copy's sha256; diff the live page against the pinned copy and report every differing line count. For S628: verify the quote \"This repository contains scripts for automatically building the Python documentation on docs.python.org.\" occurs in live bytes and in the pinned copy /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r97/S628.md (count), ≤25 words, and whether the S628 row in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md matches (tier B, kind code, digest).\nWrite your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/Mo97ScoutLive.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness\nMilestone: Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats\n\nReport: write your scoped findings to .ufo/waves/round-97/w1/Mo97ScoutLive.md"
+      },
+      {
+        "name": "Mo97ScoutConsider",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nTask (Mo97ScoutConsider, role scout).\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/considerthese/2026-11-05.md (operator-authored, never edit) and the newest earlier files there. List the proposals marked not implemented. For each, check /home/vgpnk/Projects/shokunin/mori-shokunin (git -C read-only, grep) whether this round's landing e85ed91249953094b067554bfa79fcdc65791f8e or earlier implements it. Name at most ONE still-unimplemented proposal that fits this lane's PROVINCE (/home/vgpnk/Projects/shokunin/mori-shokunin/PROVINCE.md) and could become a QUALITY criterion or lesson next round; quote the proposal's line with file:line. Do not implement anything.\nWrite your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/Mo97ScoutConsider.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness\nMilestone: Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats\n\nReport: write your scoped findings to .ufo/waves/round-97/w1/Mo97ScoutConsider.md"
+      },
+      {
+        "name": "Mo97ConnSibling",
+        "agent": "connector",
+        "task": "/skill:godspeed\n\nTask (Mo97ConnSibling, role connector).\n\nRead-only sibling-overlap scan across /home/vgpnk/Projects/shokunin/*-shokunin (never edit). (1) Which sibling lanes pin docs.python.org pages with recorded sha256 in corpus/SOURCES.md that today's 'Last updated on' stamp would make stale (count rows per lane; grep docs.python.org + sha256)? (2) Does any sibling own a gate-registry convention (8-cell table name|kind|entry|verdict map|self-test|pinned values|write scope|owner) that mori's new rows in /home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md (section 'Round97 gate registry backfill') conflict with or duplicate? (3) Is any of the four tools mori registered (tools/mori-cgroup-pressure.py, mori-drift-recheck.py, mori-scorecard-calibration.py, mori-source-digest.py) actually owned by another lane's PROVINCE (adjacency bleed)? Report counts with commands; route findings, absorb nothing.\nWrite your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/Mo97ConnSibling.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness\nMilestone: Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats\n\nReport: write your scoped findings to .ufo/waves/round-97/w1/Mo97ConnSibling.md"
+      },
+      {
+        "name": "Mo97ExecReplay",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nTask (Mo97ExecReplay, role executor).\n\nReplay every claim measurement independently in your scratch. (a) For revs 973b2af11f41bd362163d7e29ac08286832f546b and e85ed91249953094b067554bfa79fcdc65791f8e: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin archive <rev> | tar -x -C $S/<rev>`; run `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c1.py --root $S/<rev>` and `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c2.py --root $S/<rev>`; record full output and exit codes. (b) Verify `sha256sum /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c1.py /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c2.py` equals the pins in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/contract.md and on line 1 of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/evidence/controls-r97.txt, and `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff dd1ae1150f53df54e7530311b2323368e3c0e5e9 e85ed91249953094b067554bfa79fcdc65791f8e -- .ufo/waves/round-97/count-c1.py .ufo/waves/round-97/count-c2.py` is empty. (c) Re-run the control battery: `HYAKU_SCRATCH=$S bash /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/controls-r97.sh 973b2af11f41bd362163d7e29ac08286832f546b /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/candidate` and report the CONTROLS_DONE line and any UNEXPECTED. (d) Confirm the freeze commit dd1ae1150f53df54e7530311b2323368e3c0e5e9 precedes the landing e85ed91249953094b067554bfa79fcdc65791f8e (`git -C /home/vgpnk/Projects/shokunin/mori-shokunin merge-base --is-ancestor`) and that dd1ae1150f53df54e7530311b2323368e3c0e5e9 touched no SKILL.md/corpus bytes (`git -C /home/vgpnk/Projects/shokunin/mori-shokunin show --stat dd1ae1150f53df54e7530311b2323368e3c0e5e9`).\nWrite your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/Mo97ExecReplay.md.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, freshness\nMilestone: Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats\n\nReport: write your scoped findings to .ufo/waves/round-97/w1/Mo97ExecReplay.md"
+      },
+      {
+        "name": "Mo97ExecTrial",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nTask (Mo97ExecTrial, role executor).\n\nDomain trial run of the four newly registered tools on this live host, exactly as their new registry rows in /home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md (section 'Round97 gate registry backfill') state. From a `git archive e85ed91249953094b067554bfa79fcdc65791f8e` tree in your scratch: (1) `python3 tools/mori-cgroup-pressure.py` on the live /sys/fs/cgroup (read-only; default group) and with `--group` set to your own cgroup from /proc/self/cgroup — record the JSON verdict and exit code, and whether the exit/verdict mapping matches the row's verdict map; (2) `python3 tools/mori-drift-recheck.py --root <tree> --only S615,S616,S623,S577`; (3) `python3 tools/mori-scorecard-calibration.py e85ed91249953094b067554bfa79fcdc65791f8e --repo /home/vgpnk/Projects/shokunin/mori-shokunin`; (4) `python3 tools/mori-source-digest.py corpus/SOURCES.md corpus/evidence`. For each, run `--selftest` too. Report, per row cell (entry, verdict map, self-test, write scope), whether observed behaviour matches the cell; list every mismatch with the cell text and the observed output. Also check the write-scope claims: does any run write outside stdout/TMPDIR (compare `find` of the tree before/after)?\nWrite your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/Mo97ExecTrial.md.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, freshness\nMilestone: Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats\n\nReport: write your scoped findings to .ufo/waves/round-97/w1/Mo97ExecTrial.md"
+      },
+      {
+        "name": "Mo97RevC1",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nTask (Mo97RevC1, role reviewer).\n\nReview claim C1's landed bytes cell by cell. Read the four new rows in /home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md (section 'Round97 gate registry backfill', tail of file) and each tool's source in /home/vgpnk/Projects/shokunin/mori-shokunin/tools/. For every cell (entry argv spelling, verdict map exit codes and summary tokens, self-test command and line, pinned values, write scope, owner) say accurate / inaccurate with the source line that proves it. Check the section is append-only (`git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff dd1ae1150f53df54e7530311b2323368e3c0e5e9 e85ed91249953094b067554bfa79fcdc65791f8e -- SKILL.md` shows additions only). Confirm `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-gate-registry.py --rev e85ed91249953094b067554bfa79fcdc65791f8e --repo /home/vgpnk/Projects/shokunin/mori-shokunin --audit-all` ends REGISTRY=met. End with VERDICT C1.\nWrite your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/Mo97RevC1.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness\nMilestone: Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats\n\nReport: write your scoped findings to .ufo/waves/round-97/w1/Mo97RevC1.md"
+      },
+      {
+        "name": "Mo97RevC2",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nTask (Mo97RevC2, role reviewer).\n\nReview claim C2's landed bytes. (1) `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff dd1ae1150f53df54e7530311b2323368e3c0e5e9 e85ed91249953094b067554bfa79fcdc65791f8e -- corpus/SOURCES.md` must add exactly one row (S628) and change no existing byte (CORPUS rule 2, /home/vgpnk/Projects/shokunin/CORPUS.md 'SOURCES.md' rules). (2) sha256 of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r97/S615.html, S616.html, S623.html, S628.md vs the recorded digests in rows S619 (for S615), S616, S623, S628. (3) Is S615's `superseded-by S619` legitimate: S619's teaches cell opens 'supersedes S615' and S619's copy equals the pinned S615 copy (cmp /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/w1/Mo90S01Sources/sources/python-ast-3.15.2.html)? (4) The lesson's Gate block (/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-97.md): URL, access date, ≤25-word located quote for S628; any claim in the Gate table not backed by bytes. (5) Run `/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori` and report exit + non-W04 lines. End with VERDICT C2.\nWrite your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/Mo97RevC2.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness\nMilestone: Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats\n\nReport: write your scoped findings to .ufo/waves/round-97/w1/Mo97RevC2.md"
+      },
+      {
+        "name": "Mo97CritC1",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nTask (Mo97CritC1, role critic).\n\nFalsify C1 (operability). Attack: (a) does a do-nothing or cheaper control reach `C1=met`? Try to construct a SKILL.md edit that is NOT a truthful registry row yet scores C1=met under the frozen /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c1.py (e.g. copy selftest lines into a junk row, put rows in a non-registry table, duplicate names) — run each in your scratch archive of e85ed91249953094b067554bfa79fcdc65791f8e and report outputs. (b) Is this an operability move on an existing surface (AXES.md /home/vgpnk/Projects/shokunin/AXES.md: 'A checklist item can be run and produces the stated outcome') or bookkeeping that belongs to calibration/none? Compare with the r94/r95 critic objections in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-94-verifier-spotcheck.md and round-95-verifier-spotcheck.md. (c) Does any counted conjunct depend on host state that a closure could not reproduce? End with VERDICT C1.\nWrite your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/Mo97CritC1.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness\nMilestone: Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats\n\nReport: write your scoped findings to .ufo/waves/round-97/w1/Mo97CritC1.md"
+      },
+      {
+        "name": "Mo97CritC2",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nTask (Mo97CritC2, role critic).\n\nFalsify C2 (freshness). Attack: (a) Is pinning bytes reconstructed from a live page (stamp line restored) a freshness re-verification against a live surface (AXES.md /home/vgpnk/Projects/shokunin/AXES.md freshness row) or archival repair? Does leg (d) (live drift-recheck time-churn) actually prove the teaching content is unchanged live? (b) Construct forgeries in a scratch archive of e85ed91249953094b067554bfa79fcdc65791f8e that score `C2=met` under frozen /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c2.py without the claimed property (e.g. a copy that matches recorded digest but whose live page changed in content; editing SOURCES rows; a sources-r98 decoy copy) and report outputs. (c) Does the round respect the open operator L0 on stale digests (/home/vgpnk/Projects/shokunin/.ufo/l0-questions.md, line with 'mori | round-96')? Is S615 being 'superseded-by S619' an honest classification? (d) Do-nothing control: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/evidence/before-c2.txt. End with VERDICT C2.\nWrite your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/Mo97CritC2.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness\nMilestone: Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats\n\nReport: write your scoped findings to .ufo/waves/round-97/w1/Mo97CritC2.md"
+      },
+      {
+        "name": "Mo97MutC1",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nTask (Mo97MutC1, role mutation-tester).\n\nMutation-test the frozen C1 counter /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c1.py (never edit it in place: copy into $S). Write at least 8 single-change mutants (e.g. drop the registry conjunct, `in`→always True for the stated line, ignore selftest rc, token check removed, accept rows_found>1, accept 7 cells, swap met/unmet exit, TARGETS loses one tool). Rebuild the control fixtures as /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/controls-r97.sh does (git archive 973b2af11f41bd362163d7e29ac08286832f546b into $S, apply the same fixture edits, candidate inputs at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/candidate) and run each mutant against every fixture. A mutant is killed when any fixture's verdict line differs from the pristine counter's. Report a table mutant | change | killed-by | survivor, and for each survivor a fixture that would kill it. Pristine must reproduce the receipt verdicts first.\nWrite your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/Mo97MutC1.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness\nMilestone: Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats\n\nReport: write your scoped findings to .ufo/waves/round-97/w1/Mo97MutC1.md"
+      },
+      {
+        "name": "Mo97MutC2",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nTask (Mo97MutC2, role mutation-tester).\n\nMutation-test the frozen C2 counter /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/count-c2.py (copy into $S; never edit in place). Write at least 8 single-change mutants (e.g. drop the hole guard comparison, ignore unpinned, ignore mismatch, LIVE_OK adds content-drift, newest_copy picks lowest N, accept a target absent, skip live rc check, `--no-live` counts as met). Rebuild the control fixtures as /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/controls-r97.sh does (git archive 973b2af11f41bd362163d7e29ac08286832f546b into $S; candidate inputs at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/candidate; the live fixtures need network) and run each mutant on every fixture. Killed = any verdict line differs from pristine. Report mutant | change | killed-by | survivor, and a fixture that would kill each survivor.\nWrite your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/Mo97MutC2.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness\nMilestone: Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats\n\nReport: write your scoped findings to .ufo/waves/round-97/w1/Mo97MutC2.md"
+      },
+      {
+        "name": "Mo97MutCalib",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nTask (Mo97MutCalib, role mutation-tester).\n\nCarried debt (r96 routed defect 7): mutation sweep of /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-scorecard-calibration.py's own --selftest. Copy the tool into $S, write at least 8 single-change mutants (min vs max admitted round, any verdict word accepted, an axis skipped, columns_unchanged ignored, not-admitted rows counted, closure-correction rows counted, wrong base, exit code swap). Run `python3 <mutant> --selftest` for each (TMPDIR=$S). Killed = selftest exits non-zero or reports fail>0. Report mutant | change | killed | survivor. Evidence only; this round claims nothing on it.\nWrite your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/Mo97MutCalib.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness\nMilestone: Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats\n\nReport: write your scoped findings to .ufo/waves/round-97/w1/Mo97MutCalib.md"
+      },
+      {
+        "name": "Mo97RevStamp",
+        "agent": "revenger",
+        "task": "/skill:godspeed\n\nTask (Mo97RevStamp, role revenger).\n\nReverse-engineer the docs.python.org byte churn for the three rows. Using the committed fetches /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/digest/fetched/S615.bin, S616.bin, S623.bin (r96 live), the r90 copies /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-90/w1/Mo90S01Sources/sources/python-ast-3.15.2.html and python-tokenize-3.15.2.html, the pinned copies /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r97/*.html, and a fresh live fetch of each page: hypothesis H = 'every byte difference between any two of these is confined to the single Last updated on ... (HH:MM UTC). line'. Test H with diffs (count differing lines; print the differing lines). Falsify if any non-stamp line differs. Also check whether tools/mori-drift-recheck.py's stamp regex (read the source) matches those exact lines and nothing else in the pages.\nWrite your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/Mo97RevStamp.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness\nMilestone: Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats\n\nReport: write your scoped findings to .ufo/waves/round-97/w1/Mo97RevStamp.md"
+      },
+      {
+        "name": "Mo97ScribeLog",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nTask (Mo97ScribeLog, role scribe).\n\nDraft (do not write into LOG.md or SCORECARD.md) two text blocks for the L1 to integrate, in your report file: (1) a LOG.md entry for round 97 in the style of the latest entries at the end of /home/vgpnk/Projects/shokunin/mori-shokunin/LOG.md, with each claim's command, before/after lines quoted from /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/evidence/before-c1.txt, before-c2.txt, landing-c1.txt, landing-c2.txt, and the commit hashes dd1ae1150f53df54e7530311b2323368e3c0e5e9 (freeze) and e85ed91249953094b067554bfa79fcdc65791f8e (landing); (2) a SCORECARD.md 'Round 97 verdict' section in the style of the round-96 section near the end of /home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md (claim table: claim, axis (score), predicate, before, after, command, verdict 'pending closure'), plus a 'Planned (round 98)' list built from /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-97.md (carried items). Quote only bytes that exist; no score moves.\nWrite your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-97/w1/Mo97ScribeLog.md.\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness\nMilestone: Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats\n\nReport: write your scoped findings to .ufo/waves/round-97/w1/Mo97ScribeLog.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

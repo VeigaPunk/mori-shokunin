@@ -1,0 +1,163 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r97-w1",
+  "createdAt": "2026-11-05T20:51:34.256Z",
+  "updatedAt": "2026-11-05T20:51:34.256Z",
+  "reportDir": ".ufo/waves/round-97/w1",
+  "members": {
+    "Mo97ScoutLive": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "operability",
+        "freshness"
+      ],
+      "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+    },
+    "Mo97ScoutConsider": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "operability",
+        "freshness"
+      ],
+      "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+    },
+    "Mo97ConnSibling": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "operability",
+        "freshness"
+      ],
+      "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+    },
+    "Mo97ExecReplay": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "freshness"
+      ],
+      "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+    },
+    "Mo97ExecTrial": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "freshness"
+      ],
+      "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+    },
+    "Mo97RevC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "operability",
+        "freshness"
+      ],
+      "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+    },
+    "Mo97RevC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "operability",
+        "freshness"
+      ],
+      "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+    },
+    "Mo97CritC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "operability",
+        "freshness"
+      ],
+      "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+    },
+    "Mo97CritC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "operability",
+        "freshness"
+      ],
+      "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+    },
+    "Mo97MutC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "operability",
+        "freshness"
+      ],
+      "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+    },
+    "Mo97MutC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "operability",
+        "freshness"
+      ],
+      "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+    },
+    "Mo97MutCalib": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "operability",
+        "freshness"
+      ],
+      "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+    },
+    "Mo97RevStamp": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "revenger",
+      "item": null,
+      "axes": [
+        "operability",
+        "freshness"
+      ],
+      "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+    },
+    "Mo97ScribeLog": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "operability",
+        "freshness"
+      ],
+      "milestone": "Round97 attempt1: C1 registry rows for 4 unregistered gates (unregistered 4 before), C2 S615/S616/S623 pinned+live-rechecked (unpinned 3 before); 14 seats"
+    }
+  }
+}

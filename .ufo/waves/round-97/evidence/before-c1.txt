@@ -1,0 +1,7 @@
+$ (entering) count-c1.py --root DIR  rev=973b2af11f41bd362163d7e29ac08286832f546b date=2026-11-05T20:50:06Z
+TARGET tools/mori-cgroup-pressure.py unattributed
+TARGET tools/mori-drift-recheck.py unattributed
+TARGET tools/mori-scorecard-calibration.py unattributed
+TARGET tools/mori-source-digest.py unattributed
+C1=unmet unregistered=4 registry=unmet targets_ok=0/4 checks_failed=registry,target_mori-cgroup-pressure.py,target_mori-drift-recheck.py,target_mori-scorecard-calibration.py,target_mori-source-digest.py root=/fast/scratch/hyaku/mori-r97/l1/enter
+exit=1

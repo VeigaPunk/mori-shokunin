@@ -1,0 +1,11 @@
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin archive e85ed91249953094b067554bfa79fcdc65791f8e | tar -x -C DIR && python3 .ufo/waves/round-97/count-c2.py --root DIR   # rev=e85ed91249953094b067554bfa79fcdc65791f8e count-c2.sha256=957a7be605ba920734a218388b7ebb50f4f829979931c6e4193caee2149a1e91 date=2026-11-05T20:50:05Z
+TARGET S615 superseded-by S619 successor_ok=yes copy_equals_successor=yes copy=corpus/evidence/sources-r97/S615.html copy_sha=7891c58897fe9f78
+TARGET S616 ok copy_matches_tool=yes copy=corpus/evidence/sources-r97/S616.html copy_sha=6842ed0f53882c5a
+TARGET S623 ok copy_matches_tool=yes copy=corpus/evidence/sources-r97/S623.html copy_sha=90ac3b25cb2dd281
+LIVE # MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S615,S616,S623 from-sweep=- findings=- run-start=2026-11-05T20:50:05Z stamp-class=python-docs-page-stamp asset-class=learn-microsoft-asset-build-id
+LIVE S615 time-churn as-of=2026-11-05T20:50:05Z
+LIVE S616 time-churn as-of=2026-11-05T20:50:05Z
+LIVE S623 time-churn as-of=2026-11-05T20:50:05Z
+LIVE MORI_DRIFT_RECHECK rows=3 adjudicated=3 fresh=0 excerpt=0 time-churn=3 asset-churn=0 receipt-open=0 receipt-stale=0 ua-serving=0 content-drift=0 gate=0 unavailable=0 window=2026-11-05T20:50:05Z..2026-11-05T20:50:05Z
+C2=met mismatch=0 unpinned=0 targets_ok=3/3 hole_guard=pass live=S615:time-churn,S616:time-churn,S623:time-churn checks_failed=- root=/fast/scratch/hyaku/mori-r97/l1/land
+exit=0

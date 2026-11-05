@@ -5757,3 +5757,13 @@ Two claims, frozen at `b88c8ae8` before any wave output (`.ufo/waves/round-96/co
 - Not landed: C2 target (unpinned 0). Stale rows S615, S616, S623 need an operator ruling (L0 line this round). Round-97 carries the mutation sweep of the new counter and the frozen-selftest survivors M2, M5, M6.
 - Wave: `w1`, 10 seats (`.ufo/waves/round-96/w1/swarm-registry.json`); residual `w2` refused by the validator (`too_few_lanes`, floor 8) and not dispatched.
 - Trend verdicts and axis verdicts are in `corpus/lessons/round-96.md` and the round report.
+
+## Round 97 — 2026-11-05 (L1 MoriR97, attempt 1; fresh start)
+
+Two claims, frozen at `dd1ae115` with their do-nothing, forgery and positive controls executed and committed first (`.ufo/waves/round-97/contract.md`, `evidence/controls-r97.txt`, `CONTROLS_DONE unexpected=0`). Landing `e85ed912`. C1 operability: the gate registry (`SKILL.md`) gains rows for the four tools the auditor reported unregistered (`tools/mori-cgroup-pressure.py`, `mori-drift-recheck.py`, `mori-scorecard-calibration.py`, `mori-source-digest.py`); each row states the selftest line the frozen counter re-runs — `python3 .ufo/waves/round-97/count-c1.py --root <git archive of rev>`: before `C1=unmet unregistered=4 registry=unmet targets_ok=0/4` (`evidence/before-c1.txt`), after `C1=met unregistered=0 registry=met targets_ok=4/4` (`evidence/landing-c1.txt`). C2 freshness: S615, S616, S623 pinned at `corpus/evidence/sources-r97/` with the bytes their recorded digests name and re-verified live — `count-c2.py`: before `C2=unmet mismatch=0 unpinned=3 targets_ok=0/3` (live `no-copy` ×3), after `C2=met mismatch=0 unpinned=0 targets_ok=3/3 hole_guard=pass` (live `time-churn` ×3); sourced on S628 (docsbuild-scripts README, opened this round).
+
+- Re-verification result (freshness duty): the three docs.python.org pages differ from the recorded bytes only in the `Last updated on … (HH:MM UTC).` stamp line (14/14 pairs, `w1/Mo97RevStamp.md`); teaching content current on 2026-11-05.
+- Evidence motivating the round: r96 C2's unmeetable `live == recorded` rule (lesson Mistake 1) and r96 routed defects 1, 2, 5.
+- Domain trial: the four registered tools ran on the live host as their rows state (`w1/Mo97ExecTrial.md`); two cells corrected after the landing (bytecode write scope, `--group` path form).
+- Wave `w1`: 14 seats (scout ×2, connector, executor ×2, reviewer ×2, critic ×2, mutation-tester ×3, revenger, scribe); attack seats 7/14.
+- Carried to round 98: auditor residuals R1–R3 and the junk-row false green; calibration-counter survivor M10; prefix-only digest rows; operator L0s.

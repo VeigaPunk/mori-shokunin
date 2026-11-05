@@ -4834,3 +4834,26 @@ Capabilities: none entered this round. Score moves: none claimed.
 2. **freshness** — stale rows S615, S616, S623: the operator ruling on digest-vs-build churn (L0 this round) decides whether a supersession row per CORPUS rule 2 or a recheck cadence applies.
 3. **conformance** — `corpus/lessons/round-95.md` heading `## Frontier step` vs the `## Gate` convention (r95 routed defect 2); the dormant `census_path` literal arm (r95 E02).
 4. **carried** — the frozen-battery survivors m8, m10, m11 (r95 routed defect 1); D1 planner binding (operator).
+
+## Round 97 verdict — 2026-11-05 (L1 MoriR97, attempt 1; fresh start)
+
+Frozen contract `.ufo/waves/round-97/contract.md` at freeze `dd1ae115` (counters `count-c1.py`, `count-c2.py`, and the
+pre-freeze control battery `evidence/controls-r97.txt`, `CONTROLS_DONE unexpected=0`, all committed before the work).
+Landing `e85ed912`. Wave `w1`, 14 seats. Lesson `corpus/lessons/round-97.md`.
+
+| claim | axis (score) | predicate | before (`973b2af1`) | after (landing `e85ed912`) | command | verdict |
+|---|---|---|---|---|---|---|
+| C1 | operability (7) | P1: auditor `REGISTRY=met`; each of 4 tools' row states its run-now selftest line verbatim (selftest rc 0) and carries its verdict token | `C1=unmet unregistered=4 registry=unmet targets_ok=0/4` | `C1=met unregistered=0 registry=met targets_ok=4/4` | `git archive <rev>` → `python3 .ufo/waves/round-97/count-c1.py --root DIR` | met; pending closure |
+| C2 | freshness (5) | P2: digest gate `mismatch=0 unpinned=0`; S615/S616/S623 `ok` or hole-guarded `superseded-by`; live drift re-check `fresh`/`time-churn` | `C2=unmet mismatch=0 unpinned=3 targets_ok=0/3` (live `no-copy` ×3) | `C2=met mismatch=0 unpinned=0 targets_ok=3/3 hole_guard=pass` (live `time-churn` ×3) | `git archive <rev>` → `python3 .ufo/waves/round-97/count-c2.py --root DIR` | met; pending closure |
+
+Score moves: none claimed. Capabilities: none entered (both claims move existing instruments).
+
+## Planned (round 98)
+
+1. **operability** — gate-registry auditor hardening: rows placed outside the registry home's registry section, junk
+   metadata cells, and a true selftest line followed by a false clause all still score (critic `w1/Mo97CritC1.md`
+   residuals R1–R3); the auditor's own junk-row false green (lesson Mistake 4).
+2. **calibration** — the calibration counter's selftest survivor M10 (verdict vocabulary widened in
+   `cell_round_verdict`, `w1/Mo97MutCalib.md`); frozen r79 survivors M2/M5/M6.
+3. **freshness** — the 31 `prefix_only` digest rows; the operator L0 on stale digests (mori | round-96) stays open.
+4. **carried** — D1 planner binding; r95 m8/m10/m11 survivors; the dormant `census_path` arm.

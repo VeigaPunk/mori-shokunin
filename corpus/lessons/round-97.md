@@ -21,7 +21,7 @@ New row written this round (CORPUS rule 1):
 
 | row | URL | access (UTC) | located quote (≤25 words) | decision |
 |---|---|---|---|---|
-| S628 | https://github.com/python/docsbuild-scripts (raw `https://raw.githubusercontent.com/python/docsbuild-scripts/main/README.md`) | 2026-11-05 ~20:45, HTTP 200, 6835 B, sha256 `0ae6b880…c618` | "This repository contains scripts for automatically building the Python documentation on docs.python.org." (pinned copy `corpus/evidence/sources-r97/S628.md` raw lines 6-7, 14 words) | **admit, mined, tier B** (the project's own repository README, not a spec): grounds that docs.python.org bytes are an automated build artifact, so with S577 a stamp-only delta is build churn. Limit named in the row: it does not state the rebuild cadence. |
+| S628 | https://github.com/python/docsbuild-scripts (raw `https://raw.githubusercontent.com/python/docsbuild-scripts/main/README.md`) | 2026-11-05 ~20:45, HTTP 200, 6835 B, sha256 `0ae6b880…c618` | "This repository contains scripts for automatically building the Python documentation on docs.python.org." (pinned copy `corpus/evidence/sources-r97/S628.md` raw lines 6-7, rendered text: the markdown link `[docs.python.org](https://docs.python.org)` reads as its text and the line break as a space; 12 words by `wc -w` — the first draft of this cell said 14, corrected after seat Mo97ScoutLive §3b; raw-substring count 0, rendered count 1, live and pinned) | **admit, mined, tier B** (the project's own repository README, not a spec): grounds that docs.python.org bytes are an automated build artifact, so with S577 a stamp-only delta is build churn. Limit named in the row: it does not state the rebuild cadence. |
 
 Re-opened this round (existing rows, no in-place edit; `status`, `recheck`, `used-by` unchanged):
 
@@ -45,6 +45,34 @@ Assimilation: none this round (`/home/vgpnk/Projects/shokuknow/merge/mori/` exis
 | 2 | evidence loss: r96 deleted `w2-validator.err` before commit; the refusal survived only as prose | `corpus/lessons/round-96-verifier-spotcheck.md:145-149` | the r96 closure (routed defect 2) | this round commits every validator output under `.ufo/waves/round-97/` (`w1-validator.out`) |
 | 3 | supersession hole: the digest gate supersedes a predecessor whose copy merely mismatches, so any 362,493-byte file at S615 escapes `mismatch=` | `.ufo/waves/round-96/w1/digest/DigestExec.md` (note for L1); r96 routed defect 5 | none in the tool | documented in the tool's new registry row; guarded in the frozen C2 counter (`hole_guard`). Shown able to fail: control `C2 forgery: random 362493-byte S615 copy` → `hole_guard=fail` |
 | 4 | junk-row false green: the gate-registry auditor accepts any eight-cell row whose entry names the tool | control `C1 forgery: eight-cell junk rows` → auditor `REGISTRY=met`, counter `targets_ok=0/4` | none in the auditor | the frozen C1 counter checks stated selftest outcome + verdict token; the auditor itself is not amended this round (carried) |
+| 5 | quote-length label not counted: the first Gate draft labelled the S628 quote "14 words"; `wc -w` of the quoted text is 12, and the quote is the rendered form of raw lines 6-7 (markdown link + line break), raw-substring count 0 | `.ufo/waves/round-97/w1/Mo97ScoutLive.md` §3a-3b | QUALITY 90 (word-count label equals `wc -w` of the quote as carried) — applied by the seat, not by the L1 before writing | Gate cell corrected (12 words, rendered-text note); the L1 runs `wc -w` on every quoted Gate cell before commit |
+
+## Wave w1 findings (14 seats; reports under `.ufo/waves/round-97/w1/`)
+
+- Replay (`Mo97ExecReplay.md`): before/after of both counters reproduced at `973b2af1` / `e85ed912`; counter bytes equal
+  the pins; controls re-run `CONTROLS_DONE unexpected=0`; freeze `dd1ae115` is an ancestor of the landing and touched no
+  SKILL/corpus byte. VERDICT C1 holds, C2 holds.
+- Reviewers: `Mo97RevC1.md` — 32 cells checked against tool source, one cosmetic omission (the drift re-check's
+  `<id> unresolved` row shape) → fixed in the r97 correction commit; VERDICT C1 holds. `Mo97RevC2.md` — SOURCES diff adds
+  only S628, 4/4 pin digests match, S619 supersession legitimate, census exit 0; VERDICT C2 holds.
+- Critics: `Mo97CritC1.md` — no counted conjunct falsified; residuals R1 (rows placed under a non-registry heading still
+  count), R2 (junk metadata cells with a true entry/selftest/token), R3 (a true selftest line followed by a false clause)
+  are counter-strength limits outside frozen P1 → carried (SCORECARD Planned r98 item 1). `Mo97CritC2.md` — every hole,
+  decoy and junk forgery unmet; one green forgery (F4) needs an edit of the recorded digest in SOURCES.md, which the
+  entering→landing diff excludes: an instrument trust boundary, not a claim defect. VERDICT C2 holds.
+- Domain trial (`Mo97ExecTrial.md`): the four tools run on the live host as their rows state; two cell corrections made
+  in the correction commit (drift re-check writes `tools/__pycache__` bytecode; cgroup `--group` takes a path without a
+  leading slash — `/user.slice` reads as absent, exit 2).
+- Mutation: `Mo97MutC1.md` 10/12 killed, survivors m07 (7-cell row accepted; the auditor already rejects malformed rows)
+  and m12 (setup guard) — defence-in-depth, no false `C1=met` reachable. `Mo97MutC2.md` survivors M5/M6/M9 on the
+  committed controls, each killed by a seat-built fixture (two copies, removed row, classless target); M7 (live rc check)
+  is redundant over the frozen drift re-check (rc≠0 ⇒ a class outside {fresh, time-churn}). `Mo97MutCalib.md` (carried
+  r96 debt): 10/11 killed; survivor M10 (verdict vocabulary widened in `cell_round_verdict`) → carried.
+- Stamp hypothesis (`Mo97RevStamp.md`): 14/14 pairs across r90 copies, r96 fetches, pins and live differ in exactly the
+  one `Last updated on … (HH:MM UTC).` line; the tool's stamp regex matches that line and nothing else. H holds.
+- Live re-open (`Mo97ScoutLive.md`): one differing line per page; S628 quote located once after rendering (see Gate).
+- Sibling scan (`Mo97ConnSibling.md`): 11 sibling lanes hold 58 docs.python.org rows with recorded page digests that the
+  same stamp churn will stale; routed in the report, nothing absorbed. 0/4 registered tools belong to another province.
 
 ## r96 closure routed defects — disposition
 
