@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Setting timestamp expiration and token immunity times in AWS WAF - AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director</title><meta name="viewport" content="width=device-width,initial-scale=1" /><meta name="assets_root" content="/assets" /><meta name="target_state" content="waf-tokens-immunity-times" /><meta name="default_state" content="waf-tokens-immunity-times" /><link rel="icon" type="image/ico" href="/assets/images/favicon.ico" /><link rel="shortcut icon" type="image/ico" href="/assets/images/favicon.ico" /><link rel="canonical" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-immunity-times.html" /><link rel="alternate" type="text/markdown" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-immunity-times.md" title="Markdown version" /><meta name="description" content="Understand how challenge and CAPTCHA timestamps expire." /><meta name="deployment_region" content="IAD" /><meta name="product" content="AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director" /><meta name="guide" content="Developer Guide" /><meta name="abstract" content="Describes how to get started with AWS WAF and AWS Firewall Manager, the AWS web application firewall services, Shield Advanced, which provides expanded DDoS attack protection, and AWS Shield network security director, which runs network analysiss and evaluates the security of AWS resources." /><meta name="guide-locale" content="en_us" /><meta name="tocs" content="toc-contents.json" /><link rel="canonical" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-immunity-times.html" /><link rel="alternate" href="https://docs.aws.amazon.com/id_id/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="id-id" /><link rel="alternate" href="https://docs.aws.amazon.com/id_id/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="id" /><link rel="alternate" href="https://docs.aws.amazon.com/de_de/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="de-de" /><link rel="alternate" href="https://docs.aws.amazon.com/de_de/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="de" /><link rel="alternate" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="en-us" /><link rel="alternate" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="en" /><link rel="alternate" href="https://docs.aws.amazon.com/es_es/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="es-es" /><link rel="alternate" href="https://docs.aws.amazon.com/es_es/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="es" /><link rel="alternate" href="https://docs.aws.amazon.com/fr_fr/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="fr-fr" /><link rel="alternate" href="https://docs.aws.amazon.com/fr_fr/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="fr" /><link rel="alternate" href="https://docs.aws.amazon.com/it_it/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="it-it" /><link rel="alternate" href="https://docs.aws.amazon.com/it_it/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="it" /><link rel="alternate" href="https://docs.aws.amazon.com/ja_jp/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="ja-jp" /><link rel="alternate" href="https://docs.aws.amazon.com/ja_jp/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="ja" /><link rel="alternate" href="https://docs.aws.amazon.com/ko_kr/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="ko-kr" /><link rel="alternate" href="https://docs.aws.amazon.com/ko_kr/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="ko" /><link rel="alternate" href="https://docs.aws.amazon.com/pt_br/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="pt-br" /><link rel="alternate" href="https://docs.aws.amazon.com/pt_br/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="pt" /><link rel="alternate" href="https://docs.aws.amazon.com/zh_cn/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="zh-cn" /><link rel="alternate" href="https://docs.aws.amazon.com/zh_tw/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="zh-tw" /><link rel="alternate" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-immunity-times.html" hreflang="x-default" /><meta name="feedback-item" content="AWS WAF" /><meta name="this_doc_product" content="AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director" /><meta name="this_doc_guide" content="Developer Guide" /><head xmlns="http://www.w3.org/1999/xhtml"> <script defer="" src="/assets/r/awsdocs-doc-page.2.0.0.js"></script><link href="/assets/r/awsdocs-doc-page.2.0.0.css" rel="stylesheet"/></head>
+<script defer="" id="awsc-panorama-bundle" type="text/javascript" src="https://prod.pa.cdn.uis.awsstatic.com/panorama-nav-init.js" data-config="{'appEntity':'aws-documentation','region':'us-east-1','service':'waf'}"></script><meta id="panorama-serviceSubSection" value="Developer Guide" /><meta id="panorama-serviceConsolePage" value="Setting timestamp expiration and token immunity times in AWS WAF" /></head><body class="awsdocs awsui"><div class="awsdocs-container"><p><a href="waf-tokens-immunity-times.md">View a markdown version of this page</a></p><awsdocs-header></awsdocs-header><awsui-app-layout id="app-layout" class="awsui-util-no-gutters" ng-controller="ContentController as $ctrl" header-selector="awsdocs-header" navigation-hide="false" navigation-width="$ctrl.navWidth" navigation-open="$ctrl.navOpen" navigation-change="$ctrl.onNavChange($event)" tools-hide="$ctrl.hideTools" tools-width="$ctrl.toolsWidth" tools-open="$ctrl.toolsOpen" tools-change="$ctrl.onToolsChange($event)"><div id="guide-toc" dom-region="navigation"><awsdocs-toc></awsdocs-toc></div><div id="main-column" dom-region="content" tabindex="-1"><awsdocs-view class="awsdocs-view"><div id="awsdocs-content"><head><title>Setting timestamp expiration and token immunity times in AWS WAF - AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director</title><meta name="pdf" content="/pdfs/waf/latest/developerguide/waf-dg.pdf#waf-tokens-immunity-times" /><meta name="rss" content="aws-waf-doc-history.rss" /><meta name="forums" content="https://repost.aws/tags/TAKdJ093DSSdGOQ1VVKX4EvQ" /><meta name="feedback" content="https://docs.aws.amazon.com/forms/aws-doc-feedback?hidden_service_name=AWS%20WAF&amp;topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-tokens-immunity-times.html" /><meta name="feedback-yes" content="feedbackyes.html?topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-tokens-immunity-times.html" /><meta name="feedback-no" content="feedbackno.html?topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-tokens-immunity-times.html" /><meta name="keywords" content="AWS Firewall Manager,Firewall Manager,AWS WAF,web application firewall,firewall,ACL,access control list,tokens,Challenge,CAPTCHA,application integration,immunity time,expiration" /><script type="application/ld+json">
+{
+    "@context" : "https://schema.org",
+    "@type" : "BreadcrumbList",
+    "itemListElement" : [
+      {
+        "@type" : "ListItem",
+        "position" : 1,
+        "name" : "AWS",
+        "item" : "https://aws.amazon.com"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 2,
+        "name" : "AWS WAF",
+        "item" : "https://docs.aws.amazon.com/waf/index.html"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 3,
+        "name" : "Developer Guide",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 4,
+        "name" : "AWS WAF",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 5,
+        "name" : "Intelligent threat mitigation in AWS WAF",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide/waf-managed-protections.html"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 6,
+        "name" : "Token use in AWS WAF intelligent threat mitigation",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens.html"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 7,
+        "name" : "Setting timestamp expiration and token immunity times in AWS WAF",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens.html"
+      }
+    ]
+}
+</script></head><body><div id="main"><div style="display: none"><a href="/pdfs/waf/latest/developerguide/waf-dg.pdf#waf-tokens-immunity-times" target="_blank" rel="noopener noreferrer" title="Open PDF"></a></div><div id="breadcrumbs" class="breadcrumb"><a href="/index.html">Documentation</a><a href="/waf/index.html">AWS WAF</a><a href="what-is-aws-waf.html">Developer Guide</a></div><div id="main-content" class="awsui-util-container"><div id="main-col-body"><awsdocs-language-banner data-service="$ctrl.pageService"></awsdocs-language-banner><awsui-alert class="awsdocs-page-banner awsui-util-mb-l"><p><b>Introducing a new console experience for AWS WAF</b></p><p>You can now use the updated experience to access AWS WAF functionality anywhere in the console.
+				For more details, see <a href="https://docs.aws.amazon.com/waf/latest/developerguide/working-with-console.html">Working with the console</a>.
+			</p></awsui-alert><h1 class="topictitle" id="waf-tokens-immunity-times">Setting timestamp expiration and token immunity times in AWS WAF</h1><div class="awsdocs-page-header-container"><awsdocs-page-header></awsdocs-page-header><awsdocs-filter-selector id="awsdocs-filter-selector"></awsdocs-filter-selector></div><p>This section explains how challenge and CAPTCHA timestamps expire.</p><p>AWS WAF uses challenge and CAPTCHA immunity times to control how frequently a single client
+			session can be presented with a challenge or CAPTCHA. After an end user successfully
+			responds to a CAPTCHA, the CAPTCHA immunity time determines how long the end user
+			remains immune from being presented with another CAPTCHA. Similarly, the challenge
+			immunity time determines how long a client session remains immune from being challenged
+			again after successfully responding to a challenge. </p><p><b>How AWS WAF token immunity times work</b></p><p>AWS WAF records a successful response to a challenge or CAPTCHA by updating the
+			corresponding timestamp inside the token. When AWS WAF inspects the token for challenge or
+			CAPTCHA, it subtracts the timestamp from the current time. If the result is greater
+			than the configured immunity time, the timestamp is expired. </p><p><b>Configurable aspects of AWS WAF token immunity times</b></p><p>You can configure the challenge and CAPTCHA immunity times in the protection pack (web ACL) and also in any
+			rule that uses the CAPTCHA or Challenge rule action. </p><div class="itemizedlist">
+			 
+			 
+			 
+			 
+		 
+		<ul class="itemizedlist"><li class="listitem">
+				<p>The default protection pack (web ACL) setting for both immunity times is
+					300 seconds. </p>
+			</li><li class="listitem">
+				<p>You can specify the immunity time for any rule that uses the CAPTCHA or
+					Challenge action. If you don't specify the immunity time for the rule,
+					it inherits the setting from the protection pack (web ACL). </p>
+			</li><li class="listitem">
+				<p>For a rule inside a rule group that uses the CAPTCHA or Challenge action,
+					if you don't specify the immunity time for the rule, it will inherit the setting
+					from each protection pack (web ACL) where you use the rule group.</p>
+			</li><li class="listitem">
+				<p>The application integration SDKs use the protection pack (web ACL)'s challenge immunity time. </p>
+			</li><li class="listitem">
+		<p>The minimum value for the challenge immunity time is 300 seconds. The
+			minimum value for the CAPTCHA immunity time is 60 seconds. The
+			maximum value for both immunity times is 259,200 seconds, or
+			three days. </p>
+		</li></ul></div><p>You can use the protection pack (web ACL) and rule level immunity time settings to tune the
+			CAPTCHA action, Challenge, or SDK challenge management behavior. For
+			example, you might configure rules that control access to highly sensitive data with low
+			immunity times, and then set higher immunity times in your protection pack (web ACL) for your other rules
+			and the SDKs to inherit. </p><p>In particular for CAPTCHA, solving a puzzle can degrade your customer's website
+			experience, so tuning the CAPTCHA immunity time can help you mitigate the impact on
+			customer experience while still providing the protections that you want. </p><p>For additional information about tuning the immunity times for your use of the
+			Challenge and CAPTCHA rule actions, see <a href="./waf-captcha-and-challenge-best-practices.html">Best practices for using the CAPTCHA and Challenge actions</a>.</p><awsdocs-copyright class="copyright-print"></awsdocs-copyright><awsdocs-thumb-feedback right-edge="{{$ctrl.thumbFeedbackRightEdge}}"></awsdocs-thumb-feedback></div><noscript><div><div><div><div id="js_error_message"><p><img src="https://d1ge0kk1l5kms0.cloudfront.net/images/G/01/webservices/console/warning.png" alt="Warning" /> <strong>Javascript is disabled or is unavailable in your browser.</strong></p><p>To use the Amazon Web Services Documentation, Javascript must be enabled. Please refer to your browser's Help pages for instructions.</p></div></div></div></div></noscript><div id="main-col-footer" class="awsui-util-font-size-0"><div id="doc-conventions"><a target="_top" href="/general/latest/gr/docconventions.html">Document Conventions</a></div><div class="prev-next"><div id="previous" class="prev-link" accesskey="p" href="./waf-tokens-details.html">Token characteristics</div><div id="next" class="next-link" accesskey="n" href="./waf-tokens-immunity-times-setting.html">Where to set the immunity times</div></div></div><awsdocs-page-utilities></awsdocs-page-utilities></div><div id="quick-feedback-yes" style="display: none;"><div class="title">Did this page help you? - Yes</div><div class="content"><p>Thanks for letting us know we're doing a good job!</p><p>If you've got a moment, please tell us what we did right so we can do more of it.</p><p><awsui-button id="fblink" rel="noopener noreferrer" target="_blank" text="Feedback" click="linkClick($event)" href="https://docs.aws.amazon.com/forms/aws-doc-feedback?hidden_service_name=AWS WAF&amp;topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-tokens-immunity-times.html"></awsui-button></p></div></div><div id="quick-feedback-no" style="display: none;"><div class="title">Did this page help you? - No</div><div class="content"><p>Thanks for letting us know this page needs work. We're sorry we let you down.</p><p>If you've got a moment, please tell us how we can make the documentation better.</p><p><awsui-button id="fblink" rel="noopener noreferrer" target="_blank" text="Feedback" click="linkClick($event)" href="https://docs.aws.amazon.com/forms/aws-doc-feedback?hidden_service_name=AWS WAF&amp;topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-tokens-immunity-times.html"></awsui-button></p></div></div></div></body></div></awsdocs-view><div class="page-loading-indicator" id="page-loading-indicator"><awsui-spinner size="large"></awsui-spinner></div></div><div id="tools-panel" dom-region="tools"><awsdocs-tools-panel id="awsdocs-tools-panel"></awsdocs-tools-panel></div></awsui-app-layout><awsdocs-cookie-banner class="doc-cookie-banner"></awsdocs-cookie-banner></div></body></html>
