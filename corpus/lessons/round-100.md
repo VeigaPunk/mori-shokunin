@@ -53,6 +53,12 @@ by the w1 mutation seat).
 
 Round start (`.ufo/waves/round-100/evidence/census-before.txt`): `mori ok`, `exit=0`, 44 `W04`, rows 408
 (`git show d1bd1b33:corpus/SOURCES.md | grep -cE '^ {0,3}\| *S[0-9]{3,}'`).
+Round end (`.ufo/waves/round-100/evidence/census-after.txt`, run at `dc9c9fed`): `mori ok`, `exit=0`, 50 `W04`
+(+6: S639–S644 reuse URLs of S221, S634, S581, S582/S583, S584 under a different scope — correction rows, the
+S585–S587 practice), rows 416. Intermediate commits `878708b3`, `a7951675`, `6a1fc283` cite the lesson in `used-by`
+before it landed (census `E11` on those trees; clean from `dc9c9fed`). Misroot sweep (`git -C /home/vgpnk/Projects/shokunin
+status --porcelain`): one untracked fleet-root file, `w4lines.txt`, not written by a mori seat (named in round 99);
+none moved.
 
 ## Mistakes (CORPUS: class · evidence · captured-by · fix)
 

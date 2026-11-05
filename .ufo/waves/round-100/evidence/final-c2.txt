@@ -1,5 +1,5 @@
-# 2026-11-05T23:55:52Z final 6a1fc283f632e6ef37d8b158ac255e9a2567e66d archive -> count-c2.py --root DIR --list
-C2=unmet stated=66 mismatches=7 uncorrected=7 spurious=0 altered=0 census=rc1 checks_failed=mismatch,census base=d1bd1b33
+# 2026-11-05T23:58:09Z final dc9c9fedd2ea6cc66fc20f8f28c5dc3ecf441d15 archive -> count-c2.py --root DIR --list
+C2=unmet stated=66 mismatches=7 uncorrected=7 spurious=0 altered=0 census=ok checks_failed=mismatch base=d1bd1b33
   uncorrected S581 10->9,15->14
   uncorrected S582 14->13
   uncorrected S583 14->13

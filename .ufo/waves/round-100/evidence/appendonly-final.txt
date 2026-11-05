@@ -1,0 +1,2 @@
+# 2026-11-05T23:58:14Z tools/mori-sources-appendonly.py dc9c9fedd2ea6cc66fc20f8f28c5dc3ecf441d15 (plain) then --round-base d1bd1b33
+stale_supersede=[...] appendonly_violations=50 round_changed=[] stale_supersede=[] stale_supersede=[...] round_changed=[S581,S582,S583,S584,S634] stale_supersede=[] 
