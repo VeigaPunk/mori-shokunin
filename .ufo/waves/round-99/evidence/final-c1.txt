@@ -1,0 +1,2 @@
+C1=met cases_ok=60/60 seed=78335466428887 selftest=ok live=ok(limit=122865,used_lb=6,state=ok) incident=ok registry=met sourced=met(S633,S634,S635,S636) checks_failed=-
+exit=0 rev=88c5c70c896671436524d0375da3dd14e1e143c6

@@ -1,0 +1,3 @@
+# r98 frozen counter on the r99 final tree (regression check, lesson Mistake 6): only J1 (disclosed truncated capture) may differ
+C1=unmet cases_ok=14/15 selftest=ok live=ok(limit=122865,used_lb=6,state=ok) registry=met sourced=met(S629,S630,S631,S632) province=met checks_failed=case_J1-incident root=/fast/scratch/hyaku/mori-r99/L1/final
+exit=1 rev=88c5c70c896671436524d0375da3dd14e1e143c6

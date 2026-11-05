@@ -49,7 +49,10 @@ is served for this round by the w1 mutation seat's report, not a new instrument)
 Round start (`.ufo/waves/round-99/evidence/census-before.txt`): `mori ok`, `exit=0`, 43 `W04`
 (`grep -c W04 .ufo/waves/round-99/evidence/census-before.txt` → 43), rows 404
 (`git show 73308ff6:corpus/SOURCES.md | grep -cE '^ {0,3}\| *S[0-9]{3,}'`).
-Round end: `.ufo/waves/round-99/evidence/census-after.txt`.
+Round end (`.ufo/waves/round-99/evidence/census-after.txt`, run at `88c5c70c`): `mori ok`, `exit=0`, 44 `W04`
+(the added one is S634, Mistake 7), rows 408 (`git show 88c5c70c:corpus/SOURCES.md | grep -cE '^ {0,3}\| *S[0-9]{3,}'`).
+Misroot sweep (`git -C /home/vgpnk/Projects/shokunin status --porcelain`): 12 untracked fleet-root files, none written
+by a mori seat (PDF/HTML sources of another lane and `w4lines.txt`, a number list naming no lane); none moved.
 
 Correction of record (w1 `Mo99ScoutSrc.md`): the S634 row and this Gate table give the quote as 17 words; it has 18
 (`it … comment.`, counted by whitespace). Still ≤25. The S634 row is not edited (CORPUS rule 2).
@@ -98,6 +101,7 @@ Correction of record (w1 `Mo99ScoutSrc.md`): the S634 row and this Gate table gi
 | 4 | number-drift | the frozen contract says 25 lines fall back; the entering code path gives 24 (25 counts the joined reading, which adds pid 1749648) (`w1/Mo99ScribeLesson.md` Mistake 4) | none: a count written without its command | QUALITY 210 and the knowledge entry corrected before commit; the contract is frozen and keeps 25 (this correction of record). Shown able to fail: the two counts printed by the scribe's instrumented run |
 | 5 | survivor (counter) | a template forgery passes the frozen r99 counter 60/60 on four seeds (`w1/Mo99CritC1.md`) | QUALITY 209 was meant to; it asked for generated fixtures but did not forbid a readable generator and a tree-carried answer key | QUALITY 212. Shown able to fail: the forgery passes the frozen counter |
 | 6 | regression-unchecked | the landed tool read a non-sudo decoy line in the r98 counter's J2 case as an unreadable sudo line (`w1/Mo99ExecReplay.md`); the predecessor's frozen counter was not run on the candidate before freeze | none | fixed post-landing (`SUDO_ENTRY_RE`, self-test `journal-not-sudo-entry`); next rounds run the predecessor capability's frozen counter on the candidate before the freeze and disclose every changed case. Shown able to fail: the r98 counter at landing `5013f0be` lists J1 and J2; at the final tip only J1 |
+| 7 | duplicate-ground | S634 (XCU ch. 2, opened this round) repeats the URL of S611–S614, and S611 already holds the `#` comment rule this round cites; the round-end census adds one `W04 S634 duplicate url … across scopes` (`evidence/census-after.txt` 44 W04 vs 43 at start) | the census W04 warning, after the append | the comment claim in `corpus/knowledge/sudo-log-grammar-r99.md` now names S611 as the earlier row for the same rule; before appending a row, grep SOURCES.md for the URL (`grep -c V3_chap02 corpus/SOURCES.md` → 5 at the final tip). Shown able to fail: the census-after receipt |
 
 Mutation (`w1/Mo99MutC1.md`, 37 single-point mutants of the landed tool, seeds 7 and 8, identical verdicts): 17
 killed (every grammar-core path the battery plants), 4 equivalent survivors with proofs, 16 battery gaps, each with a
