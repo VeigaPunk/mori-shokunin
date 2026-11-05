@@ -1,0 +1,21 @@
+MISSING corpus/knowledge/audit-r11.md keys=source,verified-at,recheck
+MISSING corpus/knowledge/counter-semantics-r78.md keys=verified-at,recheck
+MISSING corpus/knowledge/counter-win-r77.md keys=verified-at,recheck
+MISSING corpus/knowledge/drift-pin-r10.md keys=verified-at,recheck
+MISSING corpus/knowledge/execution-binding-r89.md keys=recheck
+MISSING corpus/knowledge/kernel-v7.3-recheck-r53.md keys=recheck
+MISSING corpus/knowledge/lane-silence-r2.md keys=recheck
+MISSING corpus/knowledge/progressing-weak-r2.md keys=source,verified-at,recheck
+MISSING corpus/knowledge/rotation-receipt-grammar-r76.md keys=verified-at,recheck
+MISSING corpus/knowledge/rotation-schedule-r74.md keys=recheck
+MISSING corpus/knowledge/rotation-series-r75.md keys=verified-at,recheck
+MISSING corpus/knowledge/selftest-flake-r9.md keys=verified-at,recheck
+MISSING corpus/knowledge/silence-cutover-r3.md keys=source,verified-at,recheck
+MISSING corpus/knowledge/silence-grading-r2.md keys=source,verified-at,recheck
+MISSING corpus/knowledge/surfaces-r8.md keys=recheck
+MISSING corpus/knowledge/verdict-machine-r4.md keys=source,verified-at,recheck
+MISSING corpus/knowledge/verdict-machine-r5.md keys=source,verified-at,recheck
+MISSING corpus/knowledge/verdict-machine-r6.md keys=source,verified-at,recheck
+MISSING corpus/knowledge/workstate-win-r71.md keys=recheck
+C1=unmet knowledge=98 missing=19 floor=98 rev=f63d1ab030d4
+rc=1

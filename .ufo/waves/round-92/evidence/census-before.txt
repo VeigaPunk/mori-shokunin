@@ -1,0 +1,4 @@
+mori	W04	S618 duplicate url sre.google/sre-book/monitoring-distributed-systems across scopes
+mori	ok	/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+exit=0
+rows=391

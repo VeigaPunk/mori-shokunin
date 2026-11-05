@@ -1,0 +1,10 @@
+# Do-nothing control receipts, round 92 (entering revision f63d1ab030d4179576e494342f48ef8718e497a5)
+# command: python3 -I .ufo/waves/round-92/count-c1.py f63d1ab0 --repo .
+C1=unmet knowledge=98 missing=19 floor=98 rev=f63d1ab030d4
+rc=1
+# command: python3 -I .ufo/waves/round-92/count-c2.py f63d1ab0 --repo .
+C2=unmet mismatch=2 superseded=None superseded_ids=- prefix_only=31 unpinned=1 negatives=0 selftest=absent checks_failed=run_rc,mismatch,superseded_ids,negatives,selftest rev=f63d1ab030d4
+rc=1
+# command: python3 -I .ufo/waves/round-92/count-c2.py f63d1ab0 --repo . --report
+C2_REPORT rev=f63d1ab030d4 run_rc=1 summary=DIGEST_CHECK rows=121 ok=87 mismatch=2 prefix_only=31 unpinned=1 superseded_ids=- succ_ok=True negatives=0 selftest_rc=2 selftest=False
+rc=0
