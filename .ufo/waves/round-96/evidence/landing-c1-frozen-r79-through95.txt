@@ -1,0 +1,7 @@
+axis coverage cell=round_80_improved expect=round_80_improved state=ok
+axis operability cell=round_93_improved expect=round_93_improved state=ok
+axis depth cell=round_86_improved expect=round_86_improved state=ok
+axis freshness cell=round_82_improved expect=round_82_improved state=ok
+axis calibration cell=round_93_improved expect=round_93_improved state=ok
+axis adjacency cell=round_19_improved expect=round_19_improved state=ok
+C2=met axes=6 mismatches=0 errors=0 rows=58 through=95 rev=9bde9322d78a
