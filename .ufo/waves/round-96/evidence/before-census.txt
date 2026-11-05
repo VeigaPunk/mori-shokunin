@@ -1,0 +1,7 @@
+# sources-census validate --root fleet mori at 66c5518e239eeacd6070be26d78085ef702392cb (rc=0)
+l across scopes
+mori	W04	S615 duplicate url docs.python.org/3/library/ast.html across scopes
+mori	W04	S618 duplicate url sre.google/sre-book/monitoring-distributed-systems across scopes
+mori	W04	S619 duplicate url docs.python.org/3/library/ast.html across scopes
+mori	W04	S622 duplicate url git-scm.com/docs/git-log across scopes
+mori	ok	/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md

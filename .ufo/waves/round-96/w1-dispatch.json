@@ -1,0 +1,203 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r96-w1",
+  "policy": {
+    "source": "config",
+    "maxLanes": 16,
+    "minLanes": 8,
+    "waveMinLanes": 8,
+    "waveMaxLanes": 16,
+    "declaredMaxLanes": 16,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 10,
+    "resume": 0,
+    "total": 10
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-96/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-96/w1",
+    "members": {
+      "CalibExec": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration",
+          "freshness"
+        ],
+        "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+      },
+      "DigestExec": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration",
+          "freshness"
+        ],
+        "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+      },
+      "CalibScout": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "calibration",
+          "freshness"
+        ],
+        "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+      },
+      "DigestScout": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "calibration",
+          "freshness"
+        ],
+        "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+      },
+      "ConnRound": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null,
+        "axes": [
+          "calibration",
+          "freshness"
+        ],
+        "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+      },
+      "ScribeDraft": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "calibration",
+          "freshness"
+        ],
+        "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+      },
+      "CritRound": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "calibration",
+          "freshness"
+        ],
+        "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+      },
+      "DigestRev": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration",
+          "freshness"
+        ],
+        "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+      },
+      "MutCalib": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "calibration",
+          "freshness"
+        ],
+        "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+      },
+      "DigestLab": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "revenger",
+        "item": null,
+        "axes": [
+          "calibration",
+          "freshness"
+        ],
+        "milestone": "Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats"
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "# Goal\nmori round 96 attempt 1, wave w1 (one v1 wave, 10 seats). Lane repo (absolute): /home/vgpnk/Projects/shokunin/mori-shokunin. Fleet root (absolute): /home/vgpnk/Projects/shokunin.\nEntering lane HEAD: 66c5518e239eeacd6070be26d78085ef702392cb. Frozen contract (read first, never edit): /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/contract.md\nLane identity for prose: mori (森), fleet and host observability. Detection and report only; never remediate.\n\n# Claims (frozen; no seat edits predicates, counters, targets or receipts)\nC1 calibration: SCORECARD `Last change` cells vs MANIFEST admitted mori closures. Before = 5 mismatches at 66c5518e239eeacd6070be26d78085ef702392cb (through=95).\n   The frozen round-79 counter `.ufo/waves/round-79/count-c2.py` reads met at its default THROUGH=78; it is NOT amended.\nC2 freshness: `tools/mori-source-digest.py corpus/SOURCES.md corpus/evidence` before = `unpinned=6` (S125 S612 S615 S616 S622 S623).\n\n# Rules every seat obeys\n- Write ONLY the files named in your task, under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/<your evidence path>, plus your scratch dir.\n  Never edit tools/, corpus/, SCORECARD.md, LOG.md, MANIFEST.json, anything in /home/vgpnk/Projects/shokunin/ outside your own wave file, or any sibling lane.\n- Never run git/jj commands that mutate anything: no add, commit, stash, checkout, switch, reset, pull, push, fetch, rebase, or any jj\n  mutation. Read-only git only, always as `git -C <absolute path>` (log, show, diff, rev-parse, ls-files, cat-file).\n- Never commit, push, or run /home/vgpnk/Projects/shokunin/scripts/hyaku/fleet-commit.sh or jj-lane.sh. The L1 integrates.\n- Never change host sysctls, kernel settings, services, or user limits (no `sysctl -w`, no echo to /proc/sys). Name a need in your report instead.\n- Scratch root: `S=$HYAKU_SCRATCH/mori-r96/<your-seat-name>` where HYAKU_SCRATCH defaults to /fast/scratch/hyaku. `mkdir -p \"$S\"`\n  and `trap 'rm -rf -- \"$S\"' EXIT` in shell. Copy any receipts you keep into your wave file before exit. Use TMPDIR=\"$S\" explicitly.\n  /tmp only for files under 50 MB. Do not write under /tmp for anything a report must cite.\n- Absolute paths only for every read, edit, write and command. Your tools start at the fleet root, so a relative path lands there.\n- Every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin: write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>.\n- Tooling authorization (operator, 2026-10-19): you may install or upgrade tools that help the task. First read\n  /home/vgpnk/.omp/agent/RULES.md. Record every install with tool, version, channel and reason in your report.\n  pacman is PAUSED host-wide: do not run it. Use uv tool, npx, or an official binary in ~/.local/bin.\n- Never call the task tool, never message agent://all, never spawn subagents. Never poll files; finish and report.\n- Final output: a concise result (at most 12 lines) with your evidence file path, plus the exact command outputs that support each verdict.\n  Name every unrun check as unrun. Never fabricate a verdict.\n",
+    "tasks": [
+      {
+        "name": "CalibExec",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nTask (CalibExec, role executor).\n\nBuild the NEW calibration counter for claim C1 and measure it. Write the tool at\n/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/calib/mori-scorecard-calibration.py (the L1 promotes it to tools/ after integration).\nSpec (frozen predicate P1, same sentence as /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/contract.md section C1):\n- CLI: `mori-scorecard-calibration.py <rev> [--manifest PATH] [--repo DIR] [--base REV] [--selftest]`.\n  Defaults: manifest /home/vgpnk/Projects/shokunin/MANIFEST.json; repo /home/vgpnk/Projects/shokunin/mori-shokunin; base 66c5518e239eeacd6070be26d78085ef702392cb.\n- Read SCORECARD.md at <rev> with `git -C <repo> show <rev>:SCORECARD.md`. Parse only the `## Axes` table rows whose first cell is one of\n  coverage, operability, depth, freshness, calibration, adjacency. Duplicate axis row = error.\n- Expected per axis: over MANIFEST `rounds[]` rows with lane == \"mori\" AND admitted is exactly True AND integer round (any round; NO\n  round bound), take the highest round whose verdicts[axis] is exactly \"improved\" or \"harmed\". Ignore every other row.\n- Cell check: the `Last change` cell (4th column) first match of `round\\s+(\\d+)`, verdict word is the first of improved|harmed in the text\n  before the first `;`. Match means round and verdict equal the expectation. No round in cell, or no admitted expectation = mismatch.\n- COLUMNS_UNCHANGED: Score (2nd column) and Evidence pointer (3rd column) of each axis row at <rev> must equal those at --base. Any change = unmet.\n- Output one line per axis: `axis <name> cell=<round_N_verdict|none> expect=<round_N_verdict|none> state=ok|mismatch|error`, then\n  `C1=met|unmet axes=6 mismatches=M columns_unchanged=yes|no rows=R rev=<sha12>`. Exit 0 met, 1 unmet, 2 setup (bad git, unreadable manifest).\n- Standard library only. Honor TMPDIR; never hardcode /tmp.\n- `--selftest` builds fixtures in a temp dir under TMPDIR and asserts at least SIX arms: conformant met; stale cell (e.g. operability cell round 78\n  when an admitted later round improved it) unmet; not-admitted higher round ignored (met); verdict word missing unmet; duplicate axis row\n  unmet/error; Score or Evidence cell changed vs base unmet. Print `CALIB_SELFTEST pass=N fail=M`, exit 0 iff fail=0.\nThen run and save receipts into /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/calib/ :\n  (a) `--selftest` output; (b) `python3 <tool> 66c5518e239eeacd6070be26d78085ef702392cb` output (expected mismatches=5 per the contract, record what you actually get);\n  (c) `python3 <tool> HEAD` at the lane (HEAD resolves to the same tip; record the sha12);\n  (d) a file derived-cells.txt listing, for each mismatched axis, the exact `round N improved` text the counter expects, so the L1 can edit cells.\nDo NOT edit SCORECARD.md. Report the three counts and the selftest tally.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration, freshness\nMilestone: Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats\n\nReport: write your scoped findings to .ufo/waves/round-96/w1/CalibExec.md"
+      },
+      {
+        "name": "DigestExec",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nTask (DigestExec, role executor).\n\nClaim C2 pinned-copy work. Target rows (SOURCES.md, read-only): S125 S612 S615 S616 S622 S623. The recorded sha256 of each row is printed by:\n`python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-source-digest.py /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence` (run it; read DIGEST lines).\nStep 1. For each target row, read its source URL from the Registry row (grep -E '^\\| S(125|612|615|616|622|623) \\|' /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md).\nStep 2. Fetch each URL now with curl (follow redirects, record HTTP status, sha256, byte size, UTC access time). Keep the bytes in\n  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/digest/fetched/<ID>.bin . Record the sha256 vs the recorded digest: ok or mismatch.\nStep 3. Find out, by running the tool in a scratch copy, what file path(s) make each row resolve WITHOUT editing any row. Build\n  $S/corpus/SOURCES.md (copy of the registry) and $S/corpus/evidence/ holding copies named as the tool expects (read the tool docstring\n  lines 1-60 for copy-reference recognition and \"pinned copy\" resolution by byte count and digest prefix). Run\n  `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-source-digest.py $S/corpus/SOURCES.md $S/corpus/evidence` and capture output.\n  The goal is unpinned=0 and mismatch=0 with prefix_only still 31, ok=92.\nStep 4. Only copies whose live sha256 equals the recorded digest may be used. A row whose live bytes differ: do not pin it; report stale.\n  Do NOT edit or replace any recorded digest. Do NOT edit SOURCES.md. Copy the final pinned set into\n  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/digest/pinned/ with the exact names the tool resolved, so the L1 can copy them into corpus/evidence/.\nWrite /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/digest/DigestExec.md: a per-row table (ID, URL, HTTP, bytes, sha256 live, recorded, verdict,\n  resolved copy path), the scratch tool output tail, and the final DIGEST_CHECK line. Name S125 specifically: it names a sibling-repo path.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration, freshness\nMilestone: Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats\n\nReport: write your scoped findings to .ufo/waves/round-96/w1/DigestExec.md"
+      },
+      {
+        "name": "CalibScout",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nTask (CalibScout, role scout).\n\nRead-only reconnaissance for C1. Do not write anything except /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/scout/CalibScout.md.\n1. From /home/vgpnk/Projects/shokunin/MANIFEST.json, list every rounds[] row with lane == \"mori\" and round >= 76, printing index, round, type, admitted (raw value and\n   Python type), and every verdicts entry. Confirm which rows are `admitted: true` closures and whether any round number appears twice with\n   admitted true (duplicate-round hazard). Note the closure-correction row type.\n2. Confirm the convention for the `Last change` cell in /home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md `## Axes` table: read the cell text for all six axes at\n   66c5518e239eeacd6070be26d78085ef702392cb (git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 66c5518e239eeacd6070be26d78085ef702392cb:SCORECARD.md). List any cell whose first round number is NOT the highest admitted improved/harmed round\n   per the rows you printed. Check any verdict-word spellings that differ (capitalization, trailing spaces, other words).\n3. Check the frozen round-79 counter's expectation logic (`/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-79/count-c2.py`, function expectations) and state, in one\n   paragraph, where it departs from the contract's P1 (it bounds at THROUGH=78; it counts only admitted rows; it requires the `;` split).\n4. Output the expected per-axis cell table the new counter should derive (axis, expected round, verdict, MANIFEST index).\nName every unrun check. Report must include raw command outputs.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, freshness\nMilestone: Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats\n\nReport: write your scoped findings to .ufo/waves/round-96/w1/CalibScout.md"
+      },
+      {
+        "name": "DigestScout",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nTask (DigestScout, role scout).\n\nRead-only reconnaissance for C2. Do not write anything except /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/scout/DigestScout.md.\n1. Print the full Registry row for S125, S612, S615, S616, S622, S623 from /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (the row text, not truncated: use python or cut\n   per field). For each, list: source URL, anchor cell, the copy paths the row names (repo-relative or sibling-repo), and the recorded sha256\n   values in the row.\n2. Read the tool /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-source-digest.py docstring and the functions that resolve copy references and the `the pinned copy` search, and\n   state for each target row which resolution branch applies (named path / directory / same-bytes-as / pinned-copy-search by byte count and digest prefix).\n3. For each target, state what file name and content the tool would need under /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/ to resolve it WITHOUT editing the row, and whether\n   any target is impossible under those rules (for example, a named sibling-repo path with no mirror in this repo). Name each impossibility with the line of the tool or row that causes it.\n4. Check whether any existing file in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/ already matches a target's recorded digest (sha256 over every file, prefix match allowed only as the tool allows).\nReport raw outputs. Name every unrun check.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, freshness\nMilestone: Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats\n\nReport: write your scoped findings to .ufo/waves/round-96/w1/DigestScout.md"
+      },
+      {
+        "name": "ConnRound",
+        "agent": "connector",
+        "task": "/skill:godspeed\n\nTask (ConnRound, role connector).\n\nSibling-overlap scan (read-only). Do not write anything except /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/conn/ConnRound.md.\nSearch the fleet siblings (directories /home/vgpnk/Projects/shokunin/*-shokunin/ except mori-shokunin) and /home/vgpnk/Projects/shokunin/scripts for: (a) any existing counter\nthat compares a SCORECARD-style `Last change` table against MANIFEST admitted rows (grep for `Last change`, `admitted`, `SCORECARD`);\n(b) any existing source-digest or pinned-copy verifier (grep for `DIGEST_CHECK`, `unpinned`, `pinned copy`, `sha256` with `SOURCES.md`).\nFor each hit: path:line, one-line description, whether it overlaps C1 or C2, and whether it is sibling-owned (route, do not absorb).\nConclude in two sentences whether a new counter for C1 or C2 would duplicate an existing one. Name every unrun check. Use grep -rn with explicit paths.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, freshness\nMilestone: Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats\n\nReport: write your scoped findings to .ufo/waves/round-96/w1/ConnRound.md"
+      },
+      {
+        "name": "ScribeDraft",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nTask (ScribeDraft, role scribe).\n\nDraft prose only (no tool runs). Write /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/scribe/lesson-draft.md with these sections in this order:\n`# Round 96 — lesson draft (mori)`; `## Gate` with an empty table header for candidates, admitted, rejected, and a line\n`spot-check: pending (non-author)`; `## Mistakes (CORPUS: class · evidence · captured-by · fix)` as a markdown table with columns\n`# | Class | Evidence | Captured-by | Fix` and exactly these two rows:\n(1) class: frozen counter bound stale (THROUGH=78, rounds 79-95 unchecked); evidence: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/calib/ receipts and\n    /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/evidence/before-c1-count-c2-through95.txt; captured-by: none; fix: new unbounded counter tools/mori-scorecard-calibration.py (C1).\n(2) class: count stated without a command (round-95 lesson said `unpinned=3`; measured `unpinned=6`); evidence:\n    /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/evidence/before-c2-digest.txt; captured-by: CORPUS rule \"A count carries its command\", not applied; fix: command receipt in the round-96 evidence.\nThen `## Sources & frontier` with the census command line `scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori` and\nplaceholders `<<AFTER>>` to be filled by the L1. Do NOT invent numbers beyond the two above. Mark every placeholder explicitly with `<<...>>`.\nAlso draft the SCORECARD round-96 section (for the L1 to paste) in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/scribe/scorecard-draft.md: claim table with columns\nclaim, axis, predicate, before, after, command, commit; before values are `5 mismatches` (C1) and `unpinned=6` (C2); after values `<<AFTER>>`.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, freshness\nMilestone: Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats\n\nReport: write your scoped findings to .ufo/waves/round-96/w1/ScribeDraft.md"
+      },
+      {
+        "name": "CritRound",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nTask (CritRound, role critic).\n\nAdversarial review of the frozen contract BEFORE data. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/contract.md and its evidence receipts under\n/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/evidence/. Write only /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/crit/CritRound.md.\nFor C1 and C2 answer, with file:line or command evidence:\n(a) Is the claim bookkeeping-only? The operator rule says bookkeeping-only rounds are thin claims. State whether the new counter\n    (a new non-bookkeeping instrument with a red-before stale fixture) makes C1 non-bookkeeping, or whether it is cell edits with a counter.\n(b) Are P1 and P2 each one sentence that the counter code and the receipt can share? Name any clause a seat could satisfy without the work.\n(c) Is the do-nothing control really the entering revision? Recompute it yourself (count-c2 frozen counter at --through 95 and the digest command).\n(d) For C2: can unpinned go 6 to 0 without editing any row? Name the exact rule that decides it (cite tool line numbers and the S125 row text).\n    If it is impossible, say so and say what honest stop the L1 must record.\n(e) Verdict per claim: sound, needs-amend (name the amendment, which must be a NEW frozen revision, not an edit), or unsound.\nNo edits. Name every unrun check.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, freshness\nMilestone: Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats\n\nReport: write your scoped findings to .ufo/waves/round-96/w1/CritRound.md"
+      },
+      {
+        "name": "DigestRev",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nTask (DigestRev, role reviewer).\n\nIndependent non-author verification of claim C2. The executor DigestExec is a different seat; do not rely on its numbers.\nWrite only /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/rev/DigestRev.md.\n1. Re-fetch each of S125 S612 S615 S616 S622 S623 URLs yourself now (curl, follow redirects) into your scratch dir. Record HTTP status, bytes, sha256, UTC time.\n2. Compare each sha256 to the recorded digest from `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-source-digest.py /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence`\n   (the recorded values, not the executor's). Compare to any copy under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/digest/pinned/ byte-for-byte with cmp.\n3. For rows S622 and S623, locate each quoted phrase in the row's `teaches` or `anchor` cell in the fetched bytes after stripping tags\n   (sanity grep, not a full proof). Report found or not found.\n4. Judge P2 for the executor's copies only if the fetched bytes hash equal to recorded; name each row ok, mismatch or stale.\n5. Make a per-row verdict table. Name every unrun check.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, freshness\nMilestone: Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats\n\nReport: write your scoped findings to .ufo/waves/round-96/w1/DigestRev.md"
+      },
+      {
+        "name": "MutCalib",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nTask (MutCalib, role mutation-tester).\n\nMutation probe of the frozen round-79 counter's selftest (the existing calibration instrument). Work only in your scratch dir.\nCopy /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-79/count-c2.py to $S/base.py (git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 66c5518e239eeacd6070be26d78085ef702392cb:.ufo/waves/round-79/count-c2.py > $S/base.py to be exact).\nCreate six single-change mutants as separate files, each disabling or changing exactly one element of the predicate:\nM1 drop the admitted filter; M2 choose the MIN round instead of the max; M3 accept only `harmed` (ignore `improved`); M4 remove the `rn > through` bound\n(the through bound itself); M5 accept any verdict word in the cell; M6 skip the adjacency axis. Confirm each mutant differs from base by a\nminimal diff (`diff` output saved).\nFor each mutant and the base: run `python3 <file> --selftest` (record its tally line and rc), and run `python3 <file> 66c5518e239eeacd6070be26d78085ef702392cb --through 95 --manifest /home/vgpnk/Projects/shokunin/MANIFEST.json`\n(record C2 line and rc).\nReport: a table of mutant, selftest rc, selftest tally, through-95 verdict, killed-by-selftest yes or no. State which mutants the frozen selftest does NOT kill and why.\nWrite the table and the diffs (not the scratch dir) to /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/mut/MutCalib.md. Name every unrun check.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, freshness\nMilestone: Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats\n\nReport: write your scoped findings to .ufo/waves/round-96/w1/MutCalib.md"
+      },
+      {
+        "name": "DigestLab",
+        "agent": "revenger",
+        "task": "/skill:godspeed\n\nTask (DigestLab, role revenger).\n\nFalsifiable probe (labrat-class, recorded as a revenger seat). Hypothesis H: for each of S125 S612 S615 S616 S622 S623, the live URL's\nbytes are identical across two fetches at least 60 seconds apart, AND at least one fetch hashes to the row's recorded digest.\nFalsification: any URL whose two fetches differ, or whose fetches never hash to the recorded digest, falsifies H for that row.\nProcedure: read the row URLs and recorded digests from /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md and from `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-source-digest.py /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence`.\nFetch each URL at t0 and again at t0+60s (curl, follow redirects, save bytes under your scratch dir). Record HTTP status, bytes, sha256 per fetch, UTC times.\nWrite /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-96/w1/lab/Lab-digest-stability.md with: per-row H verdict (holds, falsified-unstable, falsified-no-match, unreachable),\nthe raw table, and one sentence on what H means for the C2 pin route. Unreachable is not falsification: say so explicitly. Name every unrun check.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, freshness\nMilestone: Round96 attempt1: C1 unbounded calibration counter (5 mismatches before), C2 source-digest pins (unpinned 6 before); 10 seats\n\nReport: write your scoped findings to .ufo/waves/round-96/w1/DigestLab.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

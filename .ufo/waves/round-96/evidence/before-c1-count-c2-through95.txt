@@ -1,0 +1,8 @@
+# frozen round-79 counter, rev 66c5518e239eeacd6070be26d78085ef702392cb, --through 95 (rc=1)
+axis coverage cell=round_56_improved expect=round_80_improved state=mismatch
+axis operability cell=round_78_improved expect=round_93_improved state=mismatch
+axis depth cell=round_76_improved expect=round_86_improved state=mismatch
+axis freshness cell=round_78_improved expect=round_82_improved state=mismatch
+axis calibration cell=round_78_improved expect=round_93_improved state=mismatch
+axis adjacency cell=round_19_improved expect=round_19_improved state=ok
+C2=unmet axes=6 mismatches=5 errors=0 rows=58 through=95 rev=66c5518e239e
