@@ -1,0 +1,20 @@
+C1=met survivors=0 killed=7/7 before_r94_survivors=4 r94_survivor_ids=m2,m3,m4,m6 after_survivor_ids=- pristine=green equiv=m5(declared) crash_ids=-
+KILL m1 by=R94-L,R94-R,R94-M
+KILL m1b by=R94-L,R94-R,R94-M
+KILL m2 by=R95-LEN
+KILL m3 by=R95-CEN
+KILL m4 by=R95-TRIO
+KILL m6 by=R95-PAT
+KILL m7 by=R94-L,R94-R,R94-M
+PRISTINE R94-L C1=unmet 1 admission
+PRISTINE R94-R C1=unmet 1 admission
+PRISTINE R94-M C1=unmet 1 admission
+PRISTINE R95-LEN C1=unmet 1 admission
+PRISTINE R95-CEN C1=unmet 1 census
+PRISTINE R95-TRIO C1=unmet 1 trio
+PRISTINE R95-PAT C1=unmet 1 patched12
+
+real	1m52.428s
+user	19m4.059s
+sys	1m18.959s
+exit=0
